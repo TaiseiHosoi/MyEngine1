@@ -33,9 +33,14 @@ void DrawObject3d(Object3d* object, ID3D12GraphicsCommandList* commandList, D3D1
 
 
 
-void Mesh::Init(ID3D12Device* DXCommonDevice) {
+void Mesh::StaticInit(ID3D12Device* DXDevice)
+{
+	device = DXDevice;
+}
 
-	device = DXCommonDevice;
+void Mesh::Init() {
+
+	
 
 #pragma region spriteCommonのinitialize
 	//頂点データの全体サイズ　＝　頂点データ一つ分のサイズ　*　頂点データの要素数
@@ -118,6 +123,7 @@ void Mesh::Init(ID3D12Device* DXCommonDevice) {
 
 	//頂点一つ分のデータサイズ
 	vbView.StrideInBytes = sizeof(vertices[0]);
+
 	ID3DBlob* vsBlob = nullptr;		//頂点シェーダオブジェクト
 	ID3DBlob* psBlob = nullptr;		//ピクセルシェーダオブジェクト
 	ID3DBlob* errorBlob = nullptr;	//エラーオブジェクト
@@ -729,6 +735,33 @@ void Mesh::CreateModel()
 {
 }
 
+void Mesh::CreateBuffer()
+{
+}
+
+void Mesh::InitializeGraphicsPipeline()
+{
+}
+
+void Mesh::InitializeDescriptorHeap()
+{
+
+	HRESULT result = S_FALSE;
+
+	// デスクリプタヒープを生成	
+	D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc = {};
+	descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+	descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//シェーダから見えるように
+	descHeapDesc.NumDescriptors = 1; // シェーダーリソースビュー1つ
+	result = device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&descHeap));//生成
+	if (FAILED(result)) {
+		assert(0);
+	}
+
+	// デスクリプタサイズを取得
+	descriptorHandleIncrementSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+}
+
 void Mesh::LoadModel(const char* fileName) {
 
 	if (fileName) {
@@ -1160,6 +1193,24 @@ void Mesh::LoadFromObjInternal(const std::string& modelname)
 	}
 	//ファイルを閉じる
 	file.close();
+}
+
+Mesh* Mesh::LoadFromOBJ(const std::string& modelname)
+{
+	//新たなModel型のインスタンスをnewする
+	Mesh* model = new Mesh();
+	//デスクリプターヒープの生成
+
+	model->InitializeDescriptorHeap();
+	
+
+	//読み込み
+	model->LoadFromObjInternal(modelname);
+
+	//バッファ生成
+	model->CreateBuffer();
+
+	return model;
 }
 
 

@@ -113,6 +113,7 @@ private:
 	// デスクリプタサイズ
 	UINT descriptorHandleIncrementSize;
 
+	
 	//3Dオブジェクトの数
 	//static const size_t kObjectCount = 50;
 	// 3Dオブジェクトの配列
@@ -194,7 +195,8 @@ public:
 	Mesh();
 	~Mesh();
 
-	void Init(ID3D12Device* device);
+	void StaticInit(ID3D12Device* DXDevice);
+	void Init();
 	void Update( Input* input);
 	void Draw(ID3D12GraphicsCommandList* commandList);
 	
@@ -203,9 +205,15 @@ public:
 	/// </summary>
 	static void CreateModel();
 
+	void CreateBuffer();
+	void InitializeGraphicsPipeline();
+	void InitializeDescriptorHeap();
+
 	void LoadModel(const char* fileName);
 	void LoadModel();
 	void LoadMaterial(const std::string& directoryPath, const std::string& filename);
 	bool LoadTexture(const std::string& directoryPath, const std::string& filename);
 	void LoadFromObjInternal(const std::string& modelname);
+
+	Mesh* LoadFromOBJ(const std::string& modelname);
 };

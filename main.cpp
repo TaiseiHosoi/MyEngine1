@@ -99,8 +99,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Mesh* mesh_ = nullptr;
 	mesh_ = new Mesh();
 	
-	mesh_->Init(dxCommon_->GetDevice());
-	mesh_->LoadFromObjInternal("bume");
+	mesh_->StaticInit(dxCommon_->GetDevice());
+	
+	mesh_->LoadFromOBJ("bume");
+	mesh_->Init();
+	
+	
 	
 	
 	while (true) {
