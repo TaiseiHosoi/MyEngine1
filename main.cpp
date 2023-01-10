@@ -98,10 +98,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	Mesh* mesh_ = nullptr;
 	mesh_ = new Mesh();
-	mesh_->LoadModel("Resources/bumeObj/bume.obj");
-	mesh_->Init(dxCommon_->GetDevice());
 	
-
+	mesh_->Init(dxCommon_->GetDevice());
+	mesh_->LoadFromObjInternal("bume");
+	
 	
 	while (true) {
 		if (winApp_->ProcessMessage()) {
@@ -112,7 +112,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		input_->Update();
 
 		
-		mesh_->Update(dxCommon_->GetDevice(), input_);
+		mesh_->Update(input_);
 		
 		//描画
 		dxCommon_->PreDraw();

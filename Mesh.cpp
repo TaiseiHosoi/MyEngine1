@@ -5,6 +5,8 @@
 #include"WinApp.h"
 #include"MathFunc.h"
 
+//静的メンバ変数の実体
+ID3D12Device* Mesh::device = nullptr;
 
 Mesh::Mesh() {
 
@@ -23,7 +25,7 @@ Mesh::~Mesh() {
 Mesh::Material Mesh::material;
 
 // 3Dオブジェクト初期化
-void InitializeObject3d(Object3d* object, ID3D12Device* device);
+void InitializeObject3d(Object3d* object);
 // 3Dオブジェクト更新
 void UpdateObject3d(Object3d* object, XMMATRIX& matView, XMMATRIX& matProjection);
 // 3Dオブジェクト描画
@@ -31,7 +33,9 @@ void DrawObject3d(Object3d* object, ID3D12GraphicsCommandList* commandList, D3D1
 
 
 
-void Mesh::Init(ID3D12Device* device) {
+void Mesh::Init(ID3D12Device* DXCommonDevice) {
+
+	device = DXCommonDevice;
 
 #pragma region spriteCommonのinitialize
 	//頂点データの全体サイズ　＝　頂点データ一つ分のサイズ　*　頂点データの要素数
@@ -108,6 +112,10 @@ void Mesh::Init(ID3D12Device* device) {
 	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
 	//頂点バッファのサイズ
 	vbView.SizeInBytes = sizeVB;
+
+	//
+	// 
+
 	//頂点一つ分のデータサイズ
 	vbView.StrideInBytes = sizeof(vertices[0]);
 	ID3DBlob* vsBlob = nullptr;		//頂点シェーダオブジェクト
@@ -215,7 +223,7 @@ void Mesh::Init(ID3D12Device* device) {
 	std::copy(indices.begin(), indices.end(), indexMap);
 
 	//編集コマンド
-	
+
 
 	// マッピング解除
 	indexBuff->Unmap(0, nullptr);
@@ -328,7 +336,7 @@ void Mesh::Init(ID3D12Device* device) {
 	rootParams[3].Descriptor.ShaderRegister = 2;                   // 定数バッファ番号
 	rootParams[3].Descriptor.RegisterSpace = 0;                    // デフォルト値
 	rootParams[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;  // 全てのシェーダから見える
-	
+
 
 
 
@@ -419,9 +427,9 @@ void Mesh::Init(ID3D12Device* device) {
 		cbResourceDesc.SampleDesc.Count = 1;
 		cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-		
+
 		// 初期化
-		InitializeObject3d(&object3d, device);
+		InitializeObject3d(&object3d);
 
 #pragma region view
 		//平行投影変換
@@ -636,10 +644,11 @@ void Mesh::Init(ID3D12Device* device) {
 
 	////ハンドルの指す位置にシェーダーリソースビュー作成
 	//device->CreateShaderResourceView(texBuff2, &srvDesc2, srvHandle);
+#pragma endregion シェーダリソースビュー
 
 }
 
-void Mesh::Update(ID3D12Device* device, Input* input) {
+void Mesh::Update(Input* input) {
 	// NULLポインタチェック
 	assert(input);
 
@@ -661,10 +670,10 @@ void Mesh::Update(ID3D12Device* device, Input* input) {
 	if (input->PushKey(DIK_D)) {
 		object3d.rotation.y += 0.1f;
 	}
-	
-		UpdateObject3d(&object3d, matView, matProjection);
-		
-	
+
+	UpdateObject3d(&object3d, matView, matProjection);
+
+
 
 
 	// 値を書き込むと自動的に転送される
@@ -712,7 +721,7 @@ void Mesh::Draw(ID3D12GraphicsCommandList* commandList) {
 
 	// 全オブジェクトについて処理
 	DrawObject3d(&object3d, commandList, vbView, ibView, indices.size());
-	
+
 
 }
 
@@ -729,7 +738,7 @@ void Mesh::LoadModel(const char* fileName) {
 		strcpy_s(fileType, fileName + fileNameLen - 4);
 
 
-#pragma region//.objファイルの場合
+#pragma region .objファイルの場合
 		if (strcmp(fileType, ".obj") == 0) {
 
 			//ファイルストリーム
@@ -832,7 +841,7 @@ void Mesh::LoadModel(const char* fileName) {
 		}
 	}
 	else {
-	LoadModel();
+		LoadModel();
 	}
 }
 
@@ -897,7 +906,7 @@ void Mesh::LoadModel() {
 
 }
 
-void Mesh::LoadMaterial(ID3D12Device* device,const std::string& directoryPath,const std::string& filename)
+void Mesh::LoadMaterial(const std::string& directoryPath, const std::string& filename)
 {
 	//ファイルストリーム
 	std::ifstream file;
@@ -948,7 +957,7 @@ void Mesh::LoadMaterial(ID3D12Device* device,const std::string& directoryPath,co
 			//テクスチャのファイル
 			line_stream >> material.textureFilename;
 			//テクスチャ読み込み
-			LoadTexture(device,directoryPath, material.textureFilename);	//作ってない
+			LoadTexture(directoryPath, material.textureFilename);	//作ってない
 		}
 	}
 
@@ -956,7 +965,7 @@ void Mesh::LoadMaterial(ID3D12Device* device,const std::string& directoryPath,co
 
 }
 
-bool Mesh::LoadTexture(ID3D12Device* device,const std::string& directoryPath, const std::string& filename)
+bool Mesh::LoadTexture(const std::string& directoryPath, const std::string& filename)
 {
 	HRESULT result = S_FALSE;
 
@@ -994,8 +1003,8 @@ bool Mesh::LoadTexture(ID3D12Device* device,const std::string& directoryPath, co
 	// リソース設定
 	CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
 		metadata.format,
-		metadata.width, 
-		(UINT)metadata.height, 
+		metadata.width,
+		(UINT)metadata.height,
 		(UINT16)metadata.arraySize,
 		(UINT16)metadata.mipLevels);
 
@@ -1034,9 +1043,10 @@ bool Mesh::LoadTexture(ID3D12Device* device,const std::string& directoryPath, co
 	srvDesc.Format = resDesc.Format;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
-	srvDesc.Texture2D.MipLevels = 1;
+	srvDesc.Texture2D.MipLevels = /*texresDesc.MipLevels*/0;
 
-	device->CreateShaderResourceView(texBuff, //ビューと関連付けるバッファ
+	device->CreateShaderResourceView(
+		/*texBuff*/0, //ビューと関連付けるバッファ 1毎の時は0	
 		&srvDesc, //テクスチャ設定情報
 		cpuDescHandleSRV
 	);
@@ -1047,8 +1057,114 @@ bool Mesh::LoadTexture(ID3D12Device* device,const std::string& directoryPath, co
 	return true;
 }
 
+void Mesh::LoadFromObjInternal(const std::string& modelname)
+{
 
-void InitializeObject3d(Object3d* object, ID3D12Device* device) {
+	//oBJファイルからデータを読み込む
+		//ファイルストリーム
+	std::ifstream file;
+	//.objファイルを開く
+	/*file.open("Resources/triangle_tex/triangle_tex.obj");*/
+	//const string modelname = "cube";
+	const string filename = modelname + ".obj";//"triangle_mat.obj"
+	const string directoryPath = "Resources/" + modelname + "/";//"Resources/triangle_mat/triangle_mat.obj"
+	file.open(directoryPath + filename);
+	//ファイルオープン失敗をチェック
+	assert(!file.fail());
+	vector<XMFLOAT3>positions;	//頂点座標
+	vector<XMFLOAT3>normals;	//法線ベクトル
+	vector<XMFLOAT2>texcodes;	//テクスチャ
+	//1行ずつ読み込む
+	string line;
+	while (getline(file, line)) {
+
+		//１行分の文字列をストリームに変換して解析しやすくする
+		std::istringstream line_stream(line);
+
+		//半角スペース区切りで行の先頭文字列を取得
+		string key;
+		getline(line_stream, key, ' ');
+
+		//先頭文字がmtllibならマテリアル
+		if (key == "mtllib")
+		{
+			//マテリアルファイル名読み込み
+			string filename;
+			line_stream >> filename;
+			//マテリアル読み込み
+			LoadMaterial(directoryPath, filename);
+		}
+
+		//先頭文字列がvなら頂点座標
+		if (key == "v") {
+			//X,Y,Z座標読み込み
+			XMFLOAT3 position{};
+			line_stream >> position.x;
+			line_stream >> position.y;
+			line_stream >> position.z;
+			//座標データに入力
+			positions.emplace_back(position);
+			//頂点データに追加
+			/*VertexPosNormalUv vertex{};
+			vertex.pos = position;
+			vertices.emplace_back(vertex);*/
+		}
+		//先頭文字列がvtならテクスチャ
+		if (key == "vt") {
+			//U.V成分読み込み
+			XMFLOAT2 texcord{};
+			line_stream >> texcord.x;
+			line_stream >> texcord.y;
+			//V方向反転
+			texcord.y = 1.0f - texcord.y;
+			//テクスチャ座標データに追加
+			texcodes.emplace_back(texcord);
+		}
+		//先頭文字列がvnなら法線ベクトル
+		if (key == "vn") {
+			//X,Y,Z成分読み込み
+			XMFLOAT3 normal{};
+			line_stream >> normal.x;
+			line_stream >> normal.y;
+			line_stream >> normal.z;
+			//法線ベクトルデータに追加
+			normals.emplace_back(normal);
+		}
+
+		//先頭文字列がfならポリゴン(三角形)
+		if (key == "f") {
+
+			//半角スペース区切りで行の続きを読み込む
+			std::string index_string;
+			while (getline(line_stream, index_string, ' ')) {
+
+				//頂点インデックス1個分の文字列をストリームに変換して解析しやすくする
+				std::istringstream index_stream(index_string);
+				unsigned short indexPosition, indexNormal, indexTexcoord;
+				index_stream >> indexPosition;
+				index_stream.seekg(1, std::ios_base::cur);
+				index_stream >> indexTexcoord;
+				index_stream.seekg(1, std::ios_base::cur);
+				index_stream >> indexNormal;
+
+				Vertex vertex{};
+				vertex.pos = positions[indexPosition - 1];
+				vertex.normal = normals[indexNormal - 1];
+				vertex.uv = texcodes[indexTexcoord - 1];
+				vertices.emplace_back(vertex);
+
+				//インデックスデータの追加
+				indices.emplace_back((unsigned short)indices.size());
+			}
+		}
+	}
+	//ファイルを閉じる
+	file.close();
+}
+
+
+
+void InitializeObject3d(Object3d* object) {
 
 	HRESULT result;
 
@@ -1066,7 +1182,7 @@ void InitializeObject3d(Object3d* object, ID3D12Device* device) {
 	resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// 定数バッファの生成
-	result = device->CreateCommittedResource(
+	result = Mesh::device->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resdesc,
@@ -1080,9 +1196,9 @@ void InitializeObject3d(Object3d* object, ID3D12Device* device) {
 	assert(SUCCEEDED(result));
 
 	// B1用
-	resdesc = CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataB1) + 0xff) &~0xff);
+	resdesc = CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataB1) + 0xff) & ~0xff);
 	// 定数バッファの生成
-	result = device->CreateCommittedResource(
+	result = Mesh::device->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resdesc,
@@ -1130,7 +1246,7 @@ void UpdateObject3d(Object3d* object, XMMATRIX& matView, XMMATRIX& matProjection
 	constMap1->ambient = Mesh::material.specular;
 	constMap1->alpha = Mesh::material.alpha;
 	object->constBuffB1->Unmap(0, nullptr);
-	
+
 
 
 }
@@ -1150,7 +1266,7 @@ void DrawObject3d(
 	// 定数バッファビュー（CBV）の設定コマンド
 	commandList->SetGraphicsRootConstantBufferView(2, object->constBuffB0->GetGPUVirtualAddress());	//B0
 	commandList->SetGraphicsRootConstantBufferView(3, object->constBuffB1->GetGPUVirtualAddress()); //B1
-	
+
 	// 描画コマンド
 	commandList->DrawIndexedInstanced(numIndices, 1, 0, 0, 0);
 

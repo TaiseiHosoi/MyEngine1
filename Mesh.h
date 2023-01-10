@@ -83,6 +83,7 @@ struct Object3d {
 class Mesh
 {
 private:
+	
 	// リザルト
 	HRESULT result;
 	// 頂点バッファビューの作成
@@ -162,6 +163,8 @@ private:
 	std::vector<unsigned short> indices;
 
 public:
+	//デバイス
+	static ID3D12Device* device;
 
 	struct Material {
 		std::string name; // マテリアル名
@@ -192,7 +195,7 @@ public:
 	~Mesh();
 
 	void Init(ID3D12Device* device);
-	void Update(ID3D12Device* device, Input* input);
+	void Update( Input* input);
 	void Draw(ID3D12GraphicsCommandList* commandList);
 	
 	/// <summary>
@@ -202,6 +205,7 @@ public:
 
 	void LoadModel(const char* fileName);
 	void LoadModel();
-	void LoadMaterial(ID3D12Device* device,const std::string& directoryPath, const std::string& filename);
-	bool LoadTexture(ID3D12Device* device,const std::string& directoryPath, const std::string& filename);
+	void LoadMaterial(const std::string& directoryPath, const std::string& filename);
+	bool LoadTexture(const std::string& directoryPath, const std::string& filename);
+	void LoadFromObjInternal(const std::string& modelname);
 };
