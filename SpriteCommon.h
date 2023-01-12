@@ -33,8 +33,6 @@ public:
 
 	ID3D12PipelineState* GetPipelineState() { return pipelineState; }
 
-	//ID3D12Resource* GetConstBuffMaterial() { return constBuffMaterial; }
-
 	ID3D12DescriptorHeap* GetSrvHeap() { return srvHeap; }
 
 	D3D12_CPU_DESCRIPTOR_HANDLE GetSrvHandle() { return srvHandle; }

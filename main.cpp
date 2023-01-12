@@ -3,6 +3,8 @@
 #include"Error.h"
 #include"Mesh.h"
 #include"input.h"
+#include"Object3d.h"
+#include"Sprite.h"
 
 
 const float PI = 3.14f;
@@ -51,58 +53,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Input* input_ = nullptr;
 	input_ = new Input;
 	input_->Initialize(winApp_);
+
+	// 3Dオブジェクト静的初期化
+	Object3d::StaticInitialize(dxCommon_->GetDevice(), WinApp::window_width, WinApp::window_height);
+
 	
-	//頂点データ
-	Vertex vertices[] = {
-		//前
-		//x      y     z       u     v
-		{{-5.0f, -5.0f, -5.0f}, {}, {0.0f, 1.0f}}, //左下
-		{{-5.0f, 5.0f, -5.0f}, {}, {0.0f, 0.0f}}, //左上
-		{{5.0f, -5.0f, -5.0f}, {}, {1.0f, 1.0f}}, //右下
-		{{5.0f, 5.0f, -5.0f}, {}, {1.0f, 0.0f}}, //右上
-
-		//後ろ
-		//x      y     z       u     v
-		{{-5.0f, -5.0f, 5.0f},{}, {0.0f, 1.0f}}, //左下
-		{{-5.0f, 5.0f, 5.0f},{}, {0.0f, 0.0f}}, //左上
-		{{5.0f, -5.0f, 5.0f},{}, {1.0f, 1.0f}}, //右下
-		{{5.0f, 5.0f, 5.0f}, {}, {1.0f, 0.0f}}, //右上
-
-		//左
-		//x      y     z       u     v
-		{{-5.0f, -5.0f, -5.0f}, {}, {0.0f, 1.0f}}, //左下
-		{{-5.0f, -5.0f, 5.0f},{}, {0.0f, 0.0f}}, //左上
-		{{-5.0f, 5.0f, -5.0f},{}, {1.0f, 1.0f}}, //右下
-		{{-5.0f, 5.0f, 5.0f}, {}, {1.0f, 0.0f}}, //右上
-
-		//右
-		{{5.0f, -5.0f, -5.0f},{}, {0.0f, 1.0f}}, //左下
-		{{5.0f, -5.0f, 5.0f}, {}, {0.0f, 0.0f}}, //左上
-		{{5.0f, 5.0f, -5.0f}, {}, {1.0f, 1.0f}}, //右下
-		{{5.0f, 5.0f, 5.0f}, {}, {1.0f, 0.0f}}, //右上
-
-		//下
-		{{-5.0f, -5.0f, -5.0f},{}, {0.0f, 1.0f}}, //左下
-		{{5.0f, -5.0f, -5.0f},{}, {0.0f, 0.0f}}, //左上
-		{{-5.0f, -5.0f, 5.0f},{}, {1.0f, 1.0f}}, //右下
-		{{5.0f, -5.0f, 5.0f},{}, {1.0f, 0.0f}}, //右上
-
-		//上
-		{{-5.0f, 5.0f, -5.0f},{}, {0.0f, 1.0f}}, //左下
-		{{5.0f, 5.0f, -5.0f},{}, {0.0f, 0.0f}}, //左上
-		{{-5.0f, 5.0f, 5.0f},{}, {1.0f, 1.0f}}, //右下
-		{{5.0f, 5.0f, 5.0f},{}, {1.0f, 0.0f}}, //右上
-
-
-	};
-
-	Mesh* mesh_ = nullptr;
-	mesh_ = new Mesh();
+	Mesh* model_ = Mesh::LoadFromOBJ("cube");
 	
-	mesh_->StaticInit(dxCommon_->GetDevice());
+	Object3d* object3d = Object3d::Create();
+	object3d->SetModel(model_);
+
+	object3d->Update();
 	
-	mesh_->LoadFromOBJ("bume");
-	mesh_->Init();
+	
+	//mesh_->Init();
 	
 	
 	
@@ -114,14 +78,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		//更新
 		input_->Update();
-
+		object3d->Update();
 		
-		mesh_->Update(input_);
 		
 		//描画
 		dxCommon_->PreDraw();
 
-		mesh_->Draw(dxCommon_->GetCommandList());
+		Object3d::PreDraw(dxCommon_->GetCommandList());
+
+		object3d->Draw();
+
+		Object3d::PostDraw();
 
 		dxCommon_->PostDraw();
 
@@ -131,6 +98,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	//元データ解放
 	//delete[] imageData;
+	//3Dオブジェクトの解放
+	delete object3d;
+	//3Dモデル開放
+	delete model_;
+	//入力開放
+	delete input_;
 
 	return 0;
 }
