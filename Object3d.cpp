@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include"MathFunc.h"
 using namespace std;
 
 
@@ -28,9 +29,10 @@ ComPtr<ID3D12Resource> Object3d::vertBuff;
 ComPtr<ID3D12Resource> Object3d::indexBuff;
 XMMATRIX Object3d::matView{};
 XMMATRIX Object3d::matProjection{};
-XMFLOAT3 Object3d::eye = { 0, 0, -50.0f };
-XMFLOAT3 Object3d::target = { 0, 0, 0 };
+
+XMFLOAT3 Object3d::eye = { 0, 7.0f, -50.0f };
 XMFLOAT3 Object3d::up = { 0, 1, 0 };
+XMFLOAT3 Object3d::target = { 0, 0, -32.0f };
 D3D12_VERTEX_BUFFER_VIEW Object3d::vbView{};
 D3D12_INDEX_BUFFER_VIEW Object3d::ibView{};
 std::vector<Object3d::VertexPosNormalUv> Object3d::vertices;
@@ -90,7 +92,7 @@ Object3d* Object3d::Create()
 		return nullptr;
 	}
 	//スケールをセット
-	float scale_val = 20;
+	float scale_val = 1;
 	object3d->scale = { scale_val,scale_val ,scale_val };
 
 	return object3d;
@@ -353,11 +355,17 @@ void Object3d::Update()
 	matRot *= XMMatrixRotationY(XMConvertToRadians(rotation.y));
 	matTrans = XMMatrixTranslation(position.x, position.y, position.z);
 
+	Matrix4 matrix4Scale, matrix4Rot, matrix4Trans;
+
+	matrix4Scale = MathFunc::ConvertXMMATtoMat4(matScale);
+	matrix4Rot = MathFunc::ConvertXMMATtoMat4(matRot);
+	matrix4Trans = MathFunc::ConvertXMMATtoMat4(matTrans);
+
 	// ワールド行列の合成
-	matWorld = XMMatrixIdentity(); // 変形をリセット
-	matWorld *= matScale; // ワールド行列にスケーリングを反映
-	matWorld *= matRot; // ワールド行列に回転を反映
-	matWorld *= matTrans; // ワールド行列に平行移動を反映
+	matWorld.identity(); // 変形をリセット
+	matWorld *= matrix4Scale; // ワールド行列にスケーリングを反映
+	matWorld *= matrix4Rot; // ワールド行列に回転を反映
+	matWorld *= matrix4Trans; // ワールド行列に平行移動を反映
 
 	// 親オブジェクトがあれば
 	if (parent != nullptr) {
@@ -365,11 +373,14 @@ void Object3d::Update()
 		matWorld *= parent->matWorld;
 	}
 
+
+
 	// 定数バッファへデータ転送
 	ConstBufferDataB0* constMap = nullptr;
 	result = constBuffB0->Map(0, nullptr, (void**)&constMap);
 	/*constMap->color = color;*/
-	constMap->mat = matWorld * matView * matProjection;	// 行列の合成
+	XMMATRIX xMMat4 = MathFunc::ConvertMat4toXMMat(matWorld);
+	constMap->mat = xMMat4 * matView * matProjection;	// 行列の合成
 	constBuffB0->Unmap(0, nullptr);
 	//// 定数バッファへデータ転送
 	//ConstBufferDataB1* constMap1 = nullptr;

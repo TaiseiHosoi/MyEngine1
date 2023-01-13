@@ -1,5 +1,4 @@
 #include "MathFunc.h"
-
 #include <cmath>
 
 const float PI = 3.141592f;
@@ -162,6 +161,27 @@ Vector3 MathFunc::MatVector(const Vector3 vector3, const Matrix4 matrix4) {
 
 }
 
+Vector3 MathFunc:: bVelocity(Vector3& velocity, Object3d& worldTransform) {
+
+	Vector3 result = { 0, 0, 0 };
+
+
+	result.x = velocity.x * worldTransform.matWorld.m[0][0] +
+		velocity.y * worldTransform.matWorld.m[1][0] +
+		velocity.z * worldTransform.matWorld.m[2][0];
+
+	result.y = velocity.x * worldTransform.matWorld.m[0][1] +
+		velocity.y * worldTransform.matWorld.m[1][1] +
+		velocity.z * worldTransform.matWorld.m[2][1];
+
+	result.z = velocity.x * worldTransform.matWorld.m[0][2] +
+		velocity.y * worldTransform.matWorld.m[1][2] +
+		velocity.z * worldTransform.matWorld.m[2][2];
+
+
+	return result;
+}
+
 Vector3 MathFunc::GetWorldtransform(const Matrix4 matrix4) {
 	//ÉèÅ[ÉãÉhç¿ïWÇì¸ÇÍÇÈïœêî
 	Vector3 worldPos;
@@ -186,6 +206,8 @@ Vector3 MathFunc::AddVector(const Vector3 v1, const Vector3 v2) {
 	return addVec;
 
 }
+
+
 
 Vector3 MathFunc::wDivision(const Vector3& vector3, const Matrix4& matrix4) {
 
@@ -212,4 +234,29 @@ float MathFunc::FieldOfViewY(float focalLengs, float sensor) {
 
 	return 2 * atan(sensor / (2 * focalLengs));
 
+}
+
+Matrix4 MathFunc::ConvertXMMATtoMat4(XMMATRIX XMMatrix) {
+	Matrix4 result;
+	for (int i = 0; i < 4; i++) {
+
+		result.m[i][0] = XMVectorGetX(XMMatrix.r[i]);
+		result.m[i][1] = XMVectorGetY(XMMatrix.r[i]);
+		result.m[i][2] = XMVectorGetZ(XMMatrix.r[i]);
+		result.m[i][3] = XMVectorGetW(XMMatrix.r[i]);
+	}
+
+
+	return result;
+}
+
+XMMATRIX MathFunc::ConvertMat4toXMMat(Matrix4 m) {
+	XMMATRIX result;
+	result = XMMatrixSet(
+		m.m[0][0], m.m[0][1], m.m[0][2], m.m[0][3],
+		m.m[1][0], m.m[1][1], m.m[1][2], m.m[1][3],
+		m.m[2][0], m.m[2][1], m.m[2][2], m.m[2][3],
+		m.m[3][0], m.m[3][1], m.m[3][2], m.m[3][3]);
+
+	return result;
 }

@@ -34,8 +34,8 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 	audio = new Audio();
 	audio->Initialize();
 
-	model = Mesh::LoadFromOBJ("cube");
 
+	model = Mesh::LoadFromOBJ("cube");
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
 

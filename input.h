@@ -4,7 +4,7 @@
 #include <dinput.h>
 #include "WinApp.h"
 
-#define DIRECTINPUT_VERSION	0x0800
+//#define DIRECTINPUT_VERSION	0x0800
 
 class Input
 {
