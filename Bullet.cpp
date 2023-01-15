@@ -1,17 +1,18 @@
-#include "Enemy.h"
+#include "Bullet.h"
 #include <cmath>
 #include "math.h"
 #define PI 3.141592653589
 
-void Bullet::Initialize(Mesh* model, uint32_t textureHandle, Vector3 vector3, float kBulSpeed)
+void Bullet::Initialize(Mesh* model, Vector3 vector3, float kBulSpeed)
 {
 	// NULLポインタチェック
 	assert(model);
 	model_ = model;
-	textureHandle_ = textureHandle;
+	worldTransform_.SetModel(model);
+	//textureHandle_ = textureHandle;
 
 	//シングルインスタンスを取得する
-	//input_ = Input::GetInstance();
+	input_ = Input::GetInstance();
 
 	//初期座標をセット
 	worldTransform_.Initialize();
@@ -76,6 +77,7 @@ void Bullet::Update()
 void Bullet::Draw()
 {
 	//model_->Draw(worldTransform_, viewProjection, textureHandle_);
+	worldTransform_.Draw();
 }
 
 float Bullet::easeIn(float x)

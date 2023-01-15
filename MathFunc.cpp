@@ -125,14 +125,12 @@ Matrix4 MathFunc::Rotation(Vector3 rotation, int X_1_Y_2_Z_3_XYZ_6) {
 Matrix4 MathFunc::Move(Vector3 Move) {
 	Matrix4 matMove = {
 		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f,   1.0f,   0.0f,   0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
 		0.0f, 0.0f, 1.0f, 0.0f,
 		Move.x, Move.y, Move.z, 1.0f
 	};
-	Matrix4 move = Initialize();
-	move *= matMove;
-
-	return move;
+	
+	return matMove;
 }
 
 //void AffinTrans::affin(WorldTransform& affin) {

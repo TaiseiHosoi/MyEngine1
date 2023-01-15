@@ -2,18 +2,19 @@
 #include <cassert>
 
 
-void Field::Initialize(Mesh* model, uint32_t textureHandle, Lane lane)
+void Field::Initialize(Mesh* model, Lane lane)
 {
 
 	assert(model);
 
 	model_ = model;
+	worldTransform_.SetModel(model);
 
 	//シングルトンインスタンスを取得
-	//input_ = Input::GetInstance();
+	input_ = Input::GetInstance();
 
 	//テクスチャ読み込み
-	textureHandle_ = textureHandle;
+	//textureHandle_ = textureHandle;
 
 	worldTransform_.Initialize();
 
@@ -44,7 +45,7 @@ void Field::Initialize(Mesh* model, uint32_t textureHandle, Lane lane)
 
 void Field::Draw()
 {
-	//model_->Draw(worldTransform_, viewProjection, textureHandle_);
+	worldTransform_.Draw();
 }
 
 void Field::Update()
@@ -128,25 +129,9 @@ void Field::Update()
 		}
 	}
 	
-		
 	
-
-	
-
-	//Laneに応じてXを変更
-	/*if (lane_ == Left)
-	{
-		worldTransform_.translation_ = { -laneWidth,0.0f,zLen_ };
-	}
-	else if (lane_ == Center)
-	{
-		worldTransform_.translation_ = { 0.0f,0.0f,zLen_ };
-	}
-	else if (lane_ == Right)
-	{
-		worldTransform_.translation_ = { laneWidth,0.0f,zLen_ };
-	}*/
 	worldTransform_.Update();
+	
 }
 
 void Field::LaneChange()

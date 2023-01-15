@@ -13,13 +13,16 @@ class GameScene;
 class Bullet
 {
 public:
-	void Initialize(Mesh* model, uint32_t textureHandle, Vector3 vector3, float kBulSpeed);
+	void Initialize(Mesh* model, Vector3 vector3, float kBulSpeed);
 	void Update();
 	void Draw();
 
 	bool IsDead() const { return isDead_; }	//死亡時
 	int GetId() { return bulletId_; }
 	void SetID(int ID) { bulletId_ = ID; }
+	void SetFieldLane(int lane) { lane_ = lane; }
+	int GetFieldLane() { return lane_; };
+
 
 	//弾のイージング
 	float easeIn(float x);
@@ -57,7 +60,7 @@ private:
 	float kBulletSpeedAcc = 0.003;
 
 	//現在のレーン
-	Lane lane_;
+	int lane_;
 
 };
 

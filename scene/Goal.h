@@ -8,7 +8,7 @@ public:
 	/// <summary>
 	/// ‰Šú‰»,XV,•`‰æ
 	/// </summary>
-	void Initialize(Mesh* model, uint32_t textureHandle);
+	void Initialize(Mesh* model);
 	void Update();
 	void Draw();
 
@@ -19,7 +19,7 @@ public:
 	
 	int bulletHit_[3] = {};
 private:
-	Object3d worldTransform_[4];
+	Object3d worldTransform_;
 	Mesh* model_ = nullptr;
 
 	float modelVelocityAngle_ = 0; //digrees

@@ -133,6 +133,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)scene;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -145,7 +146,7 @@
     <ClCompile Include="..\surround_beta\Audio.cpp" />
     <ClCompile Include="..\surround_beta\Sprite.cpp" />
     <ClCompile Include="..\surround_beta\SpriteCommon.cpp" />
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="MathFunc.cpp" />
     <ClCompile Include="DirectXCommon.cpp" />
@@ -179,16 +180,20 @@
     <FxCompile Include="ObjPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="ObjVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\surround_beta\Audio.h" />
-    <ClInclude Include="..\surround_beta\GameScene.h" />
-    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="MathFunc.h" />
     <ClInclude Include="DirectXCommon.h" />
     <ClInclude Include="Error.h" />

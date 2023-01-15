@@ -2,15 +2,16 @@
 #include "stdlib.h"
 #include "Matrix4.h"
 
-void Effect::Initialize(Mesh* model, uint32_t textureHandle, Vector3 vec3)
+void Effect::Initialize(Mesh* model, Vector3 vec3)
 {
 	// NULLポインタチェック
 	assert(model);
 	model_ = model;
-	textureHandle_ = textureHandle;
+	worldTransform_->SetModel(model);
+	//textureHandle_ = textureHandle;
 
 	//シングルインスタンスを取得する
-	//input_ = Input::GetInstance();
+	input_ = Input::GetInstance();
 
 	float kMoveSpeed = 0.2f;	//スピード調整
 	float kRotSpeed = 0.2f;
@@ -67,5 +68,6 @@ void Effect::Draw()
 {
 	for (int i = 0; i < EFFECT_NUM; i++) {
 		//model_->Draw(worldTransform_[i], viewProjection, textureHandle_);
+		worldTransform_->Draw();
 	}
 }

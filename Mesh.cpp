@@ -4,6 +4,7 @@
 #include <math.h>
 #include"WinApp.h"
 #include"MathFunc.h"
+#include<fstream>
 
 //Ã“Iƒƒ“ƒo•Ï”‚ÌÀ‘Ì
 ID3D12Device* Mesh::device = nullptr;

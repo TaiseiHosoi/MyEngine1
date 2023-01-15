@@ -11,12 +11,12 @@ const int EFFECT_NUM = 40;
 class Effect
 {
 public:
-	void Initialize(Mesh* model, uint32_t textureHandle, Vector3 vec);
+	void Initialize(Mesh* model, Vector3 vec);
 	void Update();
 	void Draw();
 
 	bool IsDead() const { return isDead_; }	//Ž€–SŽž
-
+	
 
 
 

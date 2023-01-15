@@ -18,7 +18,7 @@
 class Field
 {
 public:
-	void Initialize(Mesh* model, uint32_t textureHandle, Lane lane);	//レーンのX座標を決めて初期化
+	void Initialize(Mesh* model, Lane lane);	//レーンのX座標を決めて初期化
 	void Draw();
 	void Update();
 	//ゲッター

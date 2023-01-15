@@ -30,9 +30,9 @@ ComPtr<ID3D12Resource> Object3d::indexBuff;
 XMMATRIX Object3d::matView{};
 XMMATRIX Object3d::matProjection{};
 
-XMFLOAT3 Object3d::eye = { 0, 7.0f, -50.0f };
+XMFLOAT3 Object3d::eye = { 0, 7.0f, -35.0f };
 XMFLOAT3 Object3d::up = { 0, 1, 0 };
-XMFLOAT3 Object3d::target = { 0, 0, -32.0f };
+XMFLOAT3 Object3d::target = { 0, 0, -22.0f };
 D3D12_VERTEX_BUFFER_VIEW Object3d::vbView{};
 D3D12_INDEX_BUFFER_VIEW Object3d::ibView{};
 std::vector<Object3d::VertexPosNormalUv> Object3d::vertices;
@@ -345,34 +345,32 @@ bool Object3d::Initialize()
 void Object3d::Update()
 {
 	HRESULT result;
-	XMMATRIX matScale, matRot, matTrans;
+	Matrix4 matScale, matRot, matTrans;
 
-	// スケール、回転、平行移動行列の計算
-	matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
-	matRot = XMMatrixIdentity();
-	matRot *= XMMatrixRotationZ(XMConvertToRadians(rotation.z));
-	matRot *= XMMatrixRotationX(XMConvertToRadians(rotation.x));
-	matRot *= XMMatrixRotationY(XMConvertToRadians(rotation.y));
-	matTrans = XMMatrixTranslation(position.x, position.y, position.z);
+	
 
-	Matrix4 matrix4Scale, matrix4Rot, matrix4Trans;
+	matScale.identity();
+	matRot.identity();
+	matTrans.identity();
 
-	matrix4Scale = MathFunc::ConvertXMMATtoMat4(matScale);
-	matrix4Rot = MathFunc::ConvertXMMATtoMat4(matRot);
-	matrix4Trans = MathFunc::ConvertXMMATtoMat4(matTrans);
-
+	matScale = MathFunc::Scale(scale);
+	matRot = MathFunc::Rotation(rotation,6);
+	matTrans = MathFunc::Move(position);
+	
 	// ワールド行列の合成
 	matWorld.identity(); // 変形をリセット
-	matWorld *= matrix4Scale; // ワールド行列にスケーリングを反映
-	matWorld *= matrix4Rot; // ワールド行列に回転を反映
-	matWorld *= matrix4Trans; // ワールド行列に平行移動を反映
+	matWorld *= matScale;// ワールド行列にスケーリングを反映
+	matWorld *= matRot; // ワールド行列に回転を反映
+	matWorld *= matTrans; // ワールド行列に平行移動を反映
 
 	// 親オブジェクトがあれば
 	if (parent != nullptr) {
 		// 親オブジェクトのワールド行列を掛ける
 		matWorld *= parent->matWorld;
 	}
-
+	
+	
+	
 
 
 	// 定数バッファへデータ転送
