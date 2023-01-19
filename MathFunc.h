@@ -2,6 +2,7 @@
 #include "Matrix4.h"
 #include "Vector3.h"
 #include "Vector4.h"
+#include "Object3d.h"
 //#include <WorldTransform.h>
 
 
@@ -26,9 +27,15 @@ namespace MathFunc {
 
 	Vector3 AddVector(const Vector3 v1, const Vector3 v2);
 
+	Vector3 bVelocity(Vector3& velocity, Object3d& worldTransform);
+
+
 	//ç¿ïWïœä∑
 	Vector3 wDivision(const Vector3& v, const Matrix4& m);
 
 	float FieldOfViewY(float focalLengs, float sensor);
+
+	Matrix4 ConvertXMMATtoMat4(XMMATRIX XMMatrix);
+	XMMATRIX ConvertMat4toXMMat(Matrix4 m);
 };
 

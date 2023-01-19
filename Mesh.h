@@ -22,58 +22,32 @@
 
 #include <string.h>
 
-template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+using namespace std;
 
-//頂点データ構造体
-struct Vertex
-{
-	XMFLOAT3 pos; //xyz座標
-	XMFLOAT3 normal;//法線ベクトル
-	XMFLOAT2 uv;  //uv座標
-};
-
-//定数バッファ用データ構造体（マテリアル）
-struct ConstBufferDataMaterial {
-	XMFLOAT4 color;	//色(RGBA)
-};
-
-//定数バッファ用データ構造体
-struct ConstBufferDataTransform {
-	XMMATRIX mat;
-};
-
-//定数バッファ用データ構造体
-struct ConstBufferDataB0{
-	XMMATRIX mat;
-};
-
-struct ConstBufferDataB1 {
-	XMFLOAT3 ambient;
-	float pad1;
-	XMFLOAT3 diffuse;
-	float pad2;
-	XMFLOAT3 specular;
-	float alpha;
-};
+using namespace DirectX;
 
 
 
-struct Object3d {
-	ComPtr<ID3D12Resource> constBuffB0;
-	ComPtr<ID3D12Resource> constBuffB1;
-
-	ConstBufferDataTransform* constMapTransform = nullptr;
-
-	XMFLOAT3 scale = { 1,1,1 };
-	XMFLOAT3 rotation = { 0,0,0 };
-	XMFLOAT3 position = { 0,0,0 };
-
-	XMMATRIX matWorld{};
-
-	Object3d* parent = nullptr;
 
 
-};
+
+
+//struct Object3d {
+//	ComPtr<ID3D12Resource> constBuffB0;
+//	ComPtr<ID3D12Resource> constBuffB1;
+//
+//	ConstBufferDataTransform* constMapTransform = nullptr;
+//
+//	XMFLOAT3 scale = { 1,1,1 };
+//	XMFLOAT3 rotation = { 0,0,0 };
+//	XMFLOAT3 position = { 0,0,0 };
+//
+//	XMMATRIX matWorld{};
+//
+//	Object3d* parent = nullptr;
+//
+//
+//};
 
 
 
@@ -82,97 +56,33 @@ struct Object3d {
 
 class Mesh
 {
-private:
-	
-	// リザルト
-	HRESULT result;
-	// 頂点バッファビューの作成
-	D3D12_VERTEX_BUFFER_VIEW vbView{};
-	// グラフィックスパイプライン設定
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
-	// インデックスバッファビューの作成
-	D3D12_INDEX_BUFFER_VIEW ibView{};
-	// ルートシグネチャ
-	ID3D12RootSignature* rootSignature = nullptr;
-	// パイプランステートの生成
-	ID3D12PipelineState* pipelineState = nullptr;
-	// 定数バッファ
-	ID3D12Resource* constBuffMaterial = nullptr;
-	// 定数バッファのマッピング
-	ConstBufferDataMaterial* constMapMaterial = nullptr;
-	//　テクスチャバッファ
-	ID3D12Resource* texBuff = nullptr;
-	// シェーダリソースビューのハンドル(CPU)
-	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
-	// シェーダリソースビューのハンドル(CPU)
-	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
-	// 定数バッファ(マテリアル)
-	ComPtr<ID3D12Resource> constBuffB1;
-	// デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> descHeap;
-	// デスクリプタサイズ
-	UINT descriptorHandleIncrementSize;
-
-	//3Dオブジェクトの数
-	//static const size_t kObjectCount = 50;
-	// 3Dオブジェクトの配列
-	Object3d object3d;
-
-	//GPU上のバッファに対応した仮想メモリ
-	Vertex* vertMap = nullptr;
-	// 設定を元にSRV用デスクリプタヒープを生成
-	ID3D12DescriptorHeap* srvHeap = nullptr;
-	// 
-	UINT incrementSize;
-
-	// ワールド変換行列
-	XMMATRIX matWorld;
-	XMMATRIX matWorld1;
-
-	//座標
-	XMFLOAT3 scale = { 1.0f,1.0f,1.0f };
-	XMFLOAT3 position = { 0.0f,0.0f,0.0f };
-	XMFLOAT3 rotation = { 0.0f,0.0f,0.0f };
-
-
-
-	// 射影変換行列の計算
-	XMMATRIX matProjection;
-
-	// ビュー変換行列
-	XMMATRIX matView;
-	XMFLOAT3 eye;	// 視点座標
-	XMFLOAT3 target;	// 注視点座標
-	XMFLOAT3 up;		// 上方向ベクトル
-
-	//カメラ用変数
-	float focalLengs = 200;
-	float sensor = 24;
-	float angle = 0.0f;
-
-	Vector3 R = { 0.0f,0 ,0 };
-	Vector3 G = { 0.5f,0 ,0 };
-	Vector3 B = { 1.0f,0 ,0 };
-
-	//モデルのファイル形式
-	char fileType[5] = { 0 };
-
-	// 頂点データ配列
-	std::vector<Vertex> vertices;
-	// 頂点インデックス配列
-	std::vector<unsigned short> indices;
-
 public:
-	//デバイス
-	static ID3D12Device* device;
+	// 定数バッファ用データ構造体B1
+	struct ConstBufferDataB1
+	{
+		XMFLOAT3 ambient;	//アンビエント係数
+		float pad1;			//パディング
+		XMFLOAT3 diffuse;	//ディフューズ係数
+		float pad2;			//パディング
+		XMFLOAT3 specular;	//スペキュラー係数
+		float alpha;		//アルファ
+	};
+	// 頂点データ構造体
+	struct VertexPosNormalUv
+	{
+		XMFLOAT3 pos; // xyz座標
+		XMFLOAT3 normal; // 法線ベクトル
+		XMFLOAT2 uv;  // uv座標
+	};
 
+	//マテリアル
 	struct Material {
-		std::string name; // マテリアル名
-		XMFLOAT3 ambient; // アンビエント影響度
-		XMFLOAT3 diffuse;
-		XMFLOAT3 specular;
-		float alpha;
-		std::string textureFilename;
+		std::string name;	//マテリアル名
+		XMFLOAT3 ambient;	//アンビエント影響度
+		XMFLOAT3 diffuse;	//ディフューズ影響度
+		XMFLOAT3 specular;	//スペキュラー影響度
+		float alpha;		//アルファ
+		std::string textureFilename;	//テクスチャファイル名
 		//コンストラクタ
 		Material() {
 			ambient = { 0.3f,0.3f,0.3f };
@@ -181,31 +91,72 @@ public:
 			alpha = 1.0f;
 		}
 	};
+
+private:
 	
-	static Material material;
-
+	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	
 
+	//デバイス
+	static ID3D12Device* device;
+	// 頂点バッファ
+	ComPtr<ID3D12Resource> vertBuff;
+	// 頂点バッファビュー
+	D3D12_VERTEX_BUFFER_VIEW vbView;
+	// インデックスバッファ
+	ComPtr<ID3D12Resource> indexBuff;
+	// インデックスバッファビュー
+	D3D12_INDEX_BUFFER_VIEW ibView;
+	// 頂点データ配列
+	std::vector<VertexPosNormalUv> vertices;
+	// 頂点インデックス配列
+	std::vector<unsigned short>indices;
+	//マテリアル
+	Material material;
+	// シェーダリソースビューのハンドル(CPU)
+	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
+	// シェーダリソースビューのハンドル(CPU)
+	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
+	// デスクリプタサイズ
+	UINT descriptorHandleIncrementSize;
+	// デスクリプタヒープ
+	ComPtr<ID3D12DescriptorHeap> descHeap;
+	// テクスチャバッファ
+	ComPtr<ID3D12Resource> texBuff;
+	// 定数バッファ(マテリアル)
+	ComPtr<ID3D12Resource> constBuffB1;
 
+
+
+	
+public:
+	//アクセッサ
+	static void SetDevice(ID3D12Device* device);
 
 public:
 
-	Mesh(Vertex vertices[]);
 	Mesh();
 	~Mesh();
 
-	void Init(ID3D12Device* device);
+	void StaticInit(ID3D12Device* DXDevice);
+	//void Init();
 	void Update( Input* input);
-	void Draw(ID3D12GraphicsCommandList* commandList);
-	
-	/// <summary>
-	/// モデル作成
-	/// </summary>
-	static void CreateModel();
+	// 描画
+	void Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial);
 
-	void LoadModel(const char* fileName);
+
+	void LoadModel(const char* fileName);	//LoadFromObjに移行
 	void LoadModel();
+
+	//バッファの生成
+	void CreateBuffer();
+	//でスクリプタヒープの初期化
+	void InitializeDescriptorHeap();
+	//マテリアル読み込み
 	void LoadMaterial(const std::string& directoryPath, const std::string& filename);
+	//テクスチャ読み込み
 	bool LoadTexture(const std::string& directoryPath, const std::string& filename);
+	//モデル読み込み関連
 	void LoadFromObjInternal(const std::string& modelname);
+	static Mesh* LoadFromOBJ(const std::string& modelname);
 };

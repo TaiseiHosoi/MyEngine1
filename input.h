@@ -4,7 +4,7 @@
 #include <dinput.h>
 #include "WinApp.h"
 
-#define DIRECTINPUT_VERSION	0x0800
+//#define DIRECTINPUT_VERSION	0x0800
 
 class Input
 {
@@ -31,6 +31,8 @@ public:
 	/// <param name="keyNumber">キー番号（DIK_0 等）</param>
 	/// <returns>トリガーか</returns>
 	bool TriggerKey(BYTE keyNumber);
+
+	static Input* GetInstance();
 
 public:
 

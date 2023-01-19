@@ -51,6 +51,10 @@ public:
 
 	ID3D12Resource* GetTextureBuffer(uint32_t index)const { return texBuff[index].Get(); }
 
+	void SpritePreDraw();
+
+
+	void SpritePostDraw();
 	//ID3D12Resource* GetConstBuffTransform() { return constBuffTransform; }
 
 	//ConstBufferDataTransform* GetConstMapTransform() { return constMapTransform; }
@@ -117,7 +121,7 @@ private:
 	//デフォルトテクスチャ格納ディレクトリ
 	static std::string kDefaultTextureDirectoryPath;
 
-	UINT incrementSize ;
+	UINT incrementSize;
 
 
 };

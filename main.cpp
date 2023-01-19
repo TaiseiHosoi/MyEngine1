@@ -3,6 +3,10 @@
 #include"Error.h"
 #include"Mesh.h"
 #include"input.h"
+#include"Object3d.h"
+#include"Sprite.h"
+#include"Audio.h"
+#include"GameScene.h"
 
 
 const float PI = 3.14f;
@@ -51,57 +55,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Input* input_ = nullptr;
 	input_ = new Input;
 	input_->Initialize(winApp_);
+
+	// 3Dオブジェクト静的初期化
+	Object3d::StaticInitialize(dxCommon_->GetDevice(), WinApp::window_width, WinApp::window_height);
 	
-	//頂点データ
-	Vertex vertices[] = {
-		//前
-		//x      y     z       u     v
-		{{-5.0f, -5.0f, -5.0f}, {}, {0.0f, 1.0f}}, //左下
-		{{-5.0f, 5.0f, -5.0f}, {}, {0.0f, 0.0f}}, //左上
-		{{5.0f, -5.0f, -5.0f}, {}, {1.0f, 1.0f}}, //右下
-		{{5.0f, 5.0f, -5.0f}, {}, {1.0f, 0.0f}}, //右上
-
-		//後ろ
-		//x      y     z       u     v
-		{{-5.0f, -5.0f, 5.0f},{}, {0.0f, 1.0f}}, //左下
-		{{-5.0f, 5.0f, 5.0f},{}, {0.0f, 0.0f}}, //左上
-		{{5.0f, -5.0f, 5.0f},{}, {1.0f, 1.0f}}, //右下
-		{{5.0f, 5.0f, 5.0f}, {}, {1.0f, 0.0f}}, //右上
-
-		//左
-		//x      y     z       u     v
-		{{-5.0f, -5.0f, -5.0f}, {}, {0.0f, 1.0f}}, //左下
-		{{-5.0f, -5.0f, 5.0f},{}, {0.0f, 0.0f}}, //左上
-		{{-5.0f, 5.0f, -5.0f},{}, {1.0f, 1.0f}}, //右下
-		{{-5.0f, 5.0f, 5.0f}, {}, {1.0f, 0.0f}}, //右上
-
-		//右
-		{{5.0f, -5.0f, -5.0f},{}, {0.0f, 1.0f}}, //左下
-		{{5.0f, -5.0f, 5.0f}, {}, {0.0f, 0.0f}}, //左上
-		{{5.0f, 5.0f, -5.0f}, {}, {1.0f, 1.0f}}, //右下
-		{{5.0f, 5.0f, 5.0f}, {}, {1.0f, 0.0f}}, //右上
-
-		//下
-		{{-5.0f, -5.0f, -5.0f},{}, {0.0f, 1.0f}}, //左下
-		{{5.0f, -5.0f, -5.0f},{}, {0.0f, 0.0f}}, //左上
-		{{-5.0f, -5.0f, 5.0f},{}, {1.0f, 1.0f}}, //右下
-		{{5.0f, -5.0f, 5.0f},{}, {1.0f, 0.0f}}, //右上
-
-		//上
-		{{-5.0f, 5.0f, -5.0f},{}, {0.0f, 1.0f}}, //左下
-		{{5.0f, 5.0f, -5.0f},{}, {0.0f, 0.0f}}, //左上
-		{{-5.0f, 5.0f, 5.0f},{}, {1.0f, 1.0f}}, //右下
-		{{5.0f, 5.0f, 5.0f},{}, {1.0f, 0.0f}}, //右上
-
-
-	};
-
-	Mesh* mesh_ = nullptr;
-	mesh_ = new Mesh();
 	
-	mesh_->Init(dxCommon_->GetDevice());
-	mesh_->LoadFromObjInternal("bume");
-	
+	GameScene* gameScene_ = nullptr;
+	gameScene_ = new GameScene();
+	gameScene_->Initialize(dxCommon_);
 	
 	while (true) {
 		if (winApp_->ProcessMessage()) {
@@ -110,14 +71,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		//更新
 		input_->Update();
+		gameScene_->Update();
+	
 
-		
-		mesh_->Update(input_);
-		
 		//描画
 		dxCommon_->PreDraw();
 
-		mesh_->Draw(dxCommon_->GetCommandList());
+
+		gameScene_->Draw();
+		
 
 		dxCommon_->PostDraw();
 
@@ -127,6 +89,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	//元データ解放
 	//delete[] imageData;
+	//入力開放
+	delete input_;
 
 	return 0;
 }
