@@ -367,7 +367,7 @@ void DirectXCommon::UpdateFixFPS()
 	//1/60秒立ってない場合
 	if (elapsed < kMinTime) {
 		while (std::chrono::steady_clock::now() - reference_ < kMinTime) {
-			//1マイクロ秒スリーぷ
+			//1マイクロ秒スリープ
 			std::this_thread::sleep_for(std::chrono::microseconds(1));
 
 		}

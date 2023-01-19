@@ -34,41 +34,22 @@ void Bullet::Initialize(Mesh* model, Vector3 vector3, float kBulSpeed)
 		lane_ = Right;
 	}
 
+	//デスフラグ
+	bool isDead_ = false;
+
+
+
+
 }
 
 void Bullet::Update()
 {
 
-	//キー入力に応じてLaneを変更
-	if (input_->PushKey(DIK_LEFT) && input_->TriggerKey(DIK_SPACE))
-	{
-		if (lane_ == Left)lane_ = Center;
-		else if (lane_ == Center)lane_ = Left;
-	}
-	if (input_->PushKey(DIK_RIGHT) && input_->TriggerKey(DIK_SPACE))
-	{
-		if (lane_ == Right)lane_ = Center;
-		else if (lane_ == Center)lane_ = Right;
-	}
-
-	//Laneに応じてXを変更
-	if (lane_ == Left)
-	{
-		worldTransform_.position.x = -xDifference;
-	}
-	else if (lane_ == Center)
-	{
-		worldTransform_.position.x = 0;
-	}
-	else if (lane_ == Right)
-	{
-		worldTransform_.position.x = xDifference;
-	}
-	worldTransform_.Update();
+	
 
 	//ノーツの速度の処理
 	kBulletSpeedZ += kBulletSpeedAcc;
-	Vector3 kBulletSpeed = { 0.0f,0.0f,-easeIn(kBulletSpeedZ) };
+	Vector3 kBulletSpeed = { 0.0f,0.0f,-easeIn(kBulletSpeedZ)*2 };
 	worldTransform_.position += kBulletSpeed;
 	worldTransform_.Update();
 

@@ -9,7 +9,7 @@ public:
 	/// 初期化,更新,描画
 	/// </summary>
 	void Initialize(Mesh* model);
-	void Update();
+	void Update(Vector3 pos);
 	void Draw();
 
 	Vector3 GetWorldPosition();	//ワールド座標取得
@@ -27,6 +27,10 @@ private:
 	uint32_t textureHandle_ = 0;
 
 	int materDownTime_ = 0;//メーターダウンのディレイカウント
+
+	int hp;
+
+	bool isDead_ = false;
 	
 };
 

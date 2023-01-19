@@ -20,7 +20,7 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 	spriteCommon_ = new SpriteCommon;
 	spriteCommon_->Initialize(dxCommon_);
 	spriteCommon_->LoadTexture(1, "gamen.png");
-	spriteCommon_->LoadTexture(2, "reimu.png");
+	spriteCommon_->LoadTexture(2, "title.png");
 
 
 	sprite1 = new Sprite();
@@ -30,64 +30,151 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 
 
 	sprite1->SetSize({ 1280,720 });
-	sprite2->SetSize({ 200,200 });
+	sprite2->SetSize({ 1280,720 });
 	sprite1->SetPozition({ 0,0});
-	sprite2->SetPozition({ 100,200 });
+	sprite2->SetPozition({ 0,0 });
 	audio = new Audio();
 	audio->Initialize();
 
 
 	model = Mesh::LoadFromOBJ("lowpoliHitokunIdle");
 	object3d = Object3d::Create();
-	object3d->SetModel(model);
+	
+	object3d->position.z = 90.0f;
+
 
 	//game
-	bulletModel_ = Mesh::LoadFromOBJ("bume");
 
+	//モデル
+	bulletModel_ = Mesh::LoadFromOBJ("bume");
 	model_ = Mesh::LoadFromOBJ("cube");
 	ico_ = Mesh::LoadFromOBJ("ico");
-
+	object3d->SetModel(ico_);
 	//レーン
 	field_[0].Initialize(ico_, Left);
 	field_[1].Initialize(ico_, Center);
 	field_[2].Initialize(ico_, Right);
 
-
+	//自機
+	goal_.Initialize(model);
 
 	BulletReset();
 }
 
 void GameScene::Update()
 {
-
-	object3d->Update();
-	for (int i = 0; i < 3; i++) {
-		field_[i].Update();
+	if (input_->TriggerKey(DIK_SPACE)) {
+		if (scene == 0) {
+			scene = 1;
+			for (std::unique_ptr<Bullet>& bullet_ : bullets_) {
+				bullet_->OnCollision();
+			}
+			BulletReset();
+			gameLevel_ = 0;
+			gameTimer_ = 0;
+			field_[1].Initialize(ico_, Center);
+		}
+		else {
+			scene = 0;
+		}
 	}
 
 
+	switch (scene) {
+	case 0: //タイトル
 
+		
+			break;
+	case 1://シーン
+		gameTimer_++;
+		if (gameTimer_ > 200) {
+			if (gameLevel_ < levelMax_) {
+				gameTimer_ = 0;
+				gameLevel_++;
+			}
+			else {
+				gameTimer_ = 0;
+			}
+
+		}
+
+
+		for (int i = 0; i < 3; i++) {
+			field_[i].Update();
+		}
+
+		//デリート
+		//デスフラグの立った弾削除
+		bullets_.remove_if([](std::unique_ptr<Bullet>& bullet_) { return bullet_->IsDead(); });
+
+		//なんか敵
+		Vector3 object3dPos = object3d->GetPosition();
+		if (input_->PushKey(DIK_W)) {
+			object3dPos.z += 0.1f;
+		}
+		object3d->SetPosition(object3dPos);
+		object3d->Update();
+
+
+
+		for (std::unique_ptr<Bullet>& bullet_ : bullets_) {
+
+			bullet_->Update();
+
+
+		}
+
+		//弾発生
+		UpdateBulletPopCommands();
+
+		//自機
+		goal_.Update(field_[1].GetTransration());
+
+		CheckAllCollisions();
+		break;	//シーン用
+	}
+	
 
 }
 
 void GameScene::Draw()
 {
-	spriteCommon_->SpritePreDraw();
 
-	sprite1->Draw();
-	sprite2->Draw();
+	switch (scene) {
+	case 0: //タイトル
+		spriteCommon_->SpritePreDraw();
+		sprite2->Draw();
+		spriteCommon_->SpritePostDraw();
 
-	spriteCommon_->SpritePostDraw();
+		Object3d::PreDraw(dxCommon_->GetCommandList());
+		Object3d::PostDraw();
+		break;
+	case 1://シーン
+		spriteCommon_->SpritePreDraw();
 
-	Object3d::PreDraw(dxCommon_->GetCommandList());
+		sprite1->Draw();
+		//sprite2->Draw();
 
-	for (int i = 0; i < 3; i++) {
-		field_[i].Draw();
+		spriteCommon_->SpritePostDraw();
+
+		Object3d::PreDraw(dxCommon_->GetCommandList());
+
+		/*for (int i = 0; i < 3; i++) {
+			field_[i].Draw();
+		}*/
+
+		object3d->Draw();
+
+		for (std::unique_ptr<Bullet>& bullet_ : bullets_) {
+			bullet_->Draw();
+		}
+
+		goal_.Draw();
+
+
+		Object3d::PostDraw();
+		break;	//シーン用
 	}
-
-	object3d->Draw();
-
-	Object3d::PostDraw();
 
 }
 
@@ -102,13 +189,15 @@ void GameScene::GenerBullet(Vector3 BulletPos, int ID)
 	//生成
 	std::unique_ptr<Bullet> newBullet = std::make_unique<Bullet>();
 	//敵キャラの初期化
-	float kBulSpeed = 0.4f;
+	float kBulSpeed = 0.8f;
 	if (gameLevel_ > 0) {
 		kBulSpeed += gameLevel_ * 0.1f + 1.0f;
 	}
 
 
 	newBullet->Initialize(model_, BulletPos, kBulSpeed);
+
+	newBullet->worldTransform_.SetModel(bulletModel_);
 
 	newBullet->SetID(ID);
 
@@ -135,6 +224,8 @@ void GameScene::LoadBulletPopData()
 
 void GameScene::UpdateBulletPopCommands()
 {
+
+	
 	//待機処理
 	if (isStand_) {
 		standTime_--;
@@ -172,7 +263,7 @@ void GameScene::UpdateBulletPopCommands()
 			std::getline(line_stream, word, ',');
 			int ID = static_cast<int>(std::atof(word.c_str()));
 
-			float depth = 40.0f;	//奥行
+			float depth = 120.0f;	//奥行
 			float xDifference = 10.0f;	//左右差
 			if (lane == 1) {
 				GenerBullet(Vector3(-xDifference, 0, depth), ID);
@@ -233,7 +324,7 @@ void GameScene::CheckAllCollisions() {
 
 
 		//自弾の座標
-		posB = goal_->GetWorldPosition();
+		posB = goal_.GetWorldPosition();
 
 		float x = posB.x - posA.x;
 		float y = posB.y - posA.y;

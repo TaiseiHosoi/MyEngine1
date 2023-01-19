@@ -12,12 +12,12 @@ void Goal::Initialize(Mesh* model)
 	model_ = model;
 
 	worldTransform_.SetModel(model_);
-	
+
 	worldTransform_.Initialize();
 
+	worldTransform_.position = { 0,2,5 };
 	worldTransform_.scale = { 1,1,1 };
-
-	worldTransform_.rotation = { 1,1,1 };
+	worldTransform_.rotation = { 0,0,0 };
 
 	worldTransform_.Update();
 
@@ -25,31 +25,22 @@ void Goal::Initialize(Mesh* model)
 		bulletHit_[i] = 0;
 	}
 
+	hp = 10;
+
 }
 
-void Goal::Update()
+void Goal::Update(Vector3 pos)
 {
-	modelVelocityAngle_++;
-	if (modelVelocityAngle_ > 360) {
-		modelVelocityAngle_ = 0;
-	}
+	worldTransform_.position = {pos.x,pos.y,-25.0f};
 
-	
-		
-		Vector3 kVec = { 0,sinf(modelVelocityAngle_*PI /180.0f)+2.4f,0};
-		kVec =  MathFunc::bVelocity(kVec, worldTransform_);
-		worldTransform_.position = { kVec.x,kVec.y,-38 };
-		worldTransform_.Update();
-
-	
+	worldTransform_.Update();
 
 }
 
 void Goal::Draw()
 {
-	
+
 	worldTransform_.Draw();
-	
 
 }
 
@@ -68,12 +59,15 @@ Vector3 Goal::GetWorldPosition()
 
 void Goal::OnCollision()
 {
-
+	hp--;
+	if (hp <= 0) {
+		isDead_ = true;
+	}
 }
 
 void Goal::MaterDown(bool isMaterDown)
 {
-	if (isMaterDown == true ) {
+	if (isMaterDown == true) {
 		materDownTime_++;
 
 		if (materDownTime_ >= 7) {

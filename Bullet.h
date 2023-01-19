@@ -33,9 +33,11 @@ public:
 	//衝突を検出したら呼び出されるコールバック関数
 	void OnCollision();
 
-private:
 	//ワールド変換データ
 	Object3d worldTransform_;
+
+private:
+	
 
 	//モデル
 	Mesh* model_ = nullptr;
@@ -51,13 +53,13 @@ private:
 	//デスフラグ
 	bool isDead_ = false;
 
-	float depth = 40.0f;	//奥行
+	float depth = 90.0f;	//奥行
 	float xDifference = 10.0f;	//左右差
 
 	//ノーツの速度
-	float kBulletSpeedZ = 0.4;
+	float kBulletSpeedZ = 0.4f;
 	//ノーツの加速度
-	float kBulletSpeedAcc = 0.003;
+	float kBulletSpeedAcc = 0.005;
 
 	//現在のレーン
 	int lane_;

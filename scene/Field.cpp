@@ -51,19 +51,20 @@ void Field::Draw()
 void Field::Update()
 {
 
-	if (input_->PushKey(DIK_LEFT)) {
+	/*if (input_->PushKey(DIK_LEFT)) {
 		changeMode_ = 1;
 	}
 	else if (input_->PushKey(DIK_RIGHT)) {
 		changeMode_ = 2;
-	}
+	}*/
+
 	//キー入力に応じてLaneを変更
-	if (changeMode_ == 1 && input_->TriggerKey(DIK_SPACE)
-		&& isChangeLeft_ == false&& isChangeRight_ == false)
-	{
-		/*if (lane_ == Left)lane_ = Center;
-		else if (lane_ == Center)lane_ = Left;*/
-		isChangeLeft_ = true;
+	//if (changeMode_ == 1 && input_->TriggerKey(DIK_SPACE)
+	//	&& isChangeLeft_ == false&& isChangeRight_ == false)
+	//{
+	//	/*if (lane_ == Left)lane_ = Center;
+	//	else if (lane_ == Center)lane_ = Left;*/
+	//	isChangeLeft_ = true;
 
 	}else if (changeMode_ ==2 && input_->TriggerKey(DIK_SPACE)
 		&& isChangeLeft_ == false && isChangeRight_ == false)
@@ -71,6 +72,57 @@ void Field::Update()
 		/*if (lane_ == Right)lane_ = Center;
 		else if (lane_ == Center)lane_ = Right;*/
 		isChangeRight_ = true;
+	}
+
+	if (time_ >= maxTime_) {	//タイムリセット
+		time_ = 0;
+		if (isChangeLeft_ == true) {
+			isChangeLeft_ = false;
+			if (lane_ == Left) {
+				lane_ = Center;
+			}
+			else if (lane_ == Center) {
+				lane_ = Left;
+			}
+		}
+		if (isChangeRight_ == true) {
+			isChangeRight_ = false;
+			if (lane_ == Right) {
+				lane_ = Center;
+			}
+			else if (lane_ == Center) {
+				lane_ = Right;
+			}
+		}
+
+		if (lane_ == Left)
+		{
+			worldTransform_.position = { -laneWidth,0.0f,zLen_ };
+		}
+		else if (lane_ == Center)
+		{
+			worldTransform_.position = { 0.0f,0.0f,zLen_ };
+		}
+		else if (lane_ == Right)
+		{
+			worldTransform_.position = { laneWidth,0.0f,zLen_ };
+		}
+	}
+
+	if (isChangeLeft_ == false && isChangeRight_ == false) {
+
+		if (lane_ == Left && input_->TriggerKey(DIK_RIGHT)) {
+			isChangeLeft_ = true;
+		}
+		else if (lane_ == Right && input_->TriggerKey(DIK_LEFT)) {
+			isChangeRight_ = true;
+		}
+		else if (lane_ == Center && input_->TriggerKey(DIK_RIGHT)) {
+			isChangeRight_ = true;
+		}
+		else if (lane_ == Center && input_->TriggerKey(DIK_LEFT)) {
+			isChangeLeft_ = true;
+		}
 	}
 
 	if (time_ >= maxTime_) {	//タイムリセット

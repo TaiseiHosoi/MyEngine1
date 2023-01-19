@@ -91,7 +91,7 @@ private:
 	Field field_[3];
 
 	//ƒS[ƒ‹—p
-	Goal* goal_;
+	Goal goal_;
 
 	//csv
 	std::stringstream bulletPopCommands_;
