@@ -187,8 +187,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\surround_beta\Audio.h" />
-    <ClInclude Include="..\surround_beta\GameScene.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="MathFunc.h" />
     <ClInclude Include="DirectXCommon.h" />
     <ClInclude Include="Error.h" />
