@@ -143,9 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\surround_beta\Audio.cpp" />
-    <ClCompile Include="..\surround_beta\Sprite.cpp" />
-    <ClCompile Include="..\surround_beta\SpriteCommon.cpp" />
+    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="MathFunc.cpp" />
@@ -160,6 +158,8 @@
     <ClCompile Include="scene\Effect.cpp" />
     <ClCompile Include="scene\Field.cpp" />
     <ClCompile Include="scene\Goal.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteCommon.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Vector4.cpp" />
@@ -192,7 +192,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\surround_beta\Audio.h" />
+    <ClInclude Include="Audio.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="MathFunc.h" />

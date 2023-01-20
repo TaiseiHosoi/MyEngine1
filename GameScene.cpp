@@ -26,7 +26,7 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 	sprite1 = new Sprite();
 	sprite1->Initialize(spriteCommon_, 1);
 	sprite2 = new Sprite();
-	sprite2->Initialize(spriteCommon_, 2);
+	sprite2->Initialize(spriteCommon_, 1);
 
 
 	sprite1->SetSize({ 1280,720 });

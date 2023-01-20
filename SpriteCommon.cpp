@@ -289,30 +289,30 @@ void SpriteCommon::LoadTexture(uint32_t index, const std::string& fileName)
 	textureResourceDesc.DepthOrArraySize = (UINT16)metadata.arraySize;
 	textureResourceDesc.MipLevels = (UINT16)metadata.mipLevels;
 	textureResourceDesc.SampleDesc.Count = 1;
-	for (std::size_t i = 0; i < texBuff.size(); ++i) {
-		result = dxcommon_->GetDevice()->CreateCommittedResource(
-			&textureHeapProp,
-			D3D12_HEAP_FLAG_NONE,
-			&textureResourceDesc,
-			D3D12_RESOURCE_STATE_GENERIC_READ,
-			nullptr,
-			IID_PPV_ARGS(texBuff[index].GetAddressOf()));
 
-		// 全ミップマップについて
-		for (size_t i = 0; i < metadata.mipLevels; i++) {
-			// ミップマップレベルを指定してイメージを取得
-			const Image* img = scratchImg.GetImage(i, 0, 0);
-			// テクスチャバッファにデータ転送
-			result = texBuff[index]->WriteToSubresource(
-				(UINT)i,
-				nullptr,              // 全領域へコピー
-				img->pixels,          // 元データアドレス
-				(UINT)img->rowPitch,  // 1ラインサイズ
-				(UINT)img->slicePitch // 1枚サイズ
-			);
-			assert(SUCCEEDED(result));
-		}
+	result = dxcommon_->GetDevice()->CreateCommittedResource(
+		&textureHeapProp,
+		D3D12_HEAP_FLAG_NONE,
+		&textureResourceDesc,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(texBuff[index].GetAddressOf()));
+
+	// 全ミップマップについて
+	for (size_t i = 0; i < metadata.mipLevels; i++) {
+		// ミップマップレベルを指定してイメージを取得
+		const Image* img = scratchImg.GetImage(i, 0, 0);
+		// テクスチャバッファにデータ転送
+		result = texBuff[index]->WriteToSubresource(
+			(UINT)i,
+			nullptr,              // 全領域へコピー
+			img->pixels,          // 元データアドレス
+			(UINT)img->rowPitch,  // 1ラインサイズ
+			(UINT)img->slicePitch // 1枚サイズ
+		);
+		assert(SUCCEEDED(result));
 	}
+
 	// シェーダリソースビュー設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 	/*D3D12_RESOURCE_DESC resDesc;*/
@@ -331,7 +331,7 @@ void SpriteCommon::LoadTexture(uint32_t index, const std::string& fileName)
 
 void SpriteCommon::SetTextureCommands(uint32_t index)
 {
-	
+
 	// SRVヒープの先頭ハンドルを取得（SRVを指しているはず）
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
 	// SRVヒープの先頭にあるSRVをルートパラメータ1番に設定

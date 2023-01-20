@@ -43,7 +43,7 @@ public:
 
 	D3D12_RESOURCE_DESC& GetResourceDesc() { return resDesc; }
 
-	void LoadTexture(uint32_t index,const std::string& fileName);
+	void LoadTexture(uint32_t index, const std::string& fileName);
 
 	void SetTextureCommands(uint32_t index);
 
@@ -113,9 +113,9 @@ private:
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
 	// デスクリプタヒープの設定
 	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
-	
+
 	UINT sizeVB;
-	
+
 	D3D12_RESOURCE_DESC resDesc{};
 
 	//デフォルトテクスチャ格納ディレクトリ

@@ -10,10 +10,10 @@ void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t texturerIndex)
 	D3D12_HEAP_PROPERTIES heapProp{}; // ヒープ設定
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUへの転送用
 
-	
+
 
 	// 頂点バッファの生成
-	
+
 	result = spritecomon->GetDxCommon()->GetDevice()->CreateCommittedResource(
 		&heapProp, // ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
@@ -138,7 +138,7 @@ void Sprite::Draw()
 	if (SUCCEEDED(result)) {
 		constMapTransform->mat = matWorld * matProjection;	// 行列の合成	
 	}
-	result= constBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial);
+	result = constBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial);
 	if (SUCCEEDED(result)) {
 		constMapMaterial->color = color;
 	}
@@ -265,4 +265,3 @@ void Sprite::AdjustTextureSize()
 	textureSize.x = static_cast<float>(resDesc.Width);
 	textureSize.y = static_cast<float>(resDesc.Height);
 }
-
