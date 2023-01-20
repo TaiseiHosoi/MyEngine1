@@ -62,7 +62,7 @@ public:
 
 	int gameLevel_ = 0;
 	int levelMax_ = 8;
-	int scene = 0;
+	int scene = 1;
 
 private:
 	DirectXCommon* dxCommon_ = nullptr;
