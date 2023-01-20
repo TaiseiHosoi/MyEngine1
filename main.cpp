@@ -52,18 +52,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//DirectX初期化処理　ここから
 	dxCommon_->Initialize(winApp_);
 
-	Input* input_ = nullptr;
-	input_ = new Input;
+	Input* input_ = Input::GetInstance();
 	input_->Initialize(winApp_);
 
 	// 3Dオブジェクト静的初期化
 	Object3d::StaticInitialize(dxCommon_->GetDevice(), WinApp::window_width, WinApp::window_height);
-	
-	
+
+
 	GameScene* gameScene_ = nullptr;
 	gameScene_ = new GameScene();
 	gameScene_->Initialize(dxCommon_);
-	
+
 	while (true) {
 		if (winApp_->ProcessMessage()) {
 			break;
@@ -72,14 +71,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//更新
 		input_->Update();
 		gameScene_->Update();
-	
+
 
 		//描画
 		dxCommon_->PreDraw();
 
 
 		gameScene_->Draw();
-		
+
 
 		dxCommon_->PostDraw();
 

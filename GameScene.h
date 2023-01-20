@@ -66,13 +66,14 @@ public:
 
 private:
 	DirectXCommon* dxCommon_ = nullptr;
-	
+
 
 	Audio* audio = nullptr;
 	SpriteCommon* spriteCommon_ = nullptr;
 	Object3d* object3d = nullptr;
 	Mesh* model = nullptr;
-	
+	Input* input_ = Input::GetInstance();
+
 
 private://リソース
 	Sprite* sprite1 = nullptr;
@@ -81,7 +82,7 @@ private://リソース
 
 	Mesh* bulletModel_ = nullptr;
 private:
-	
+
 
 	//3Dモデル
 	Mesh* model_ = nullptr;
@@ -102,9 +103,9 @@ private:
 	//レーンデバッグ用のテクスチャ
 	//uint32_t laneTexture_[3];
 
-	
 
-	
+
+
 
 	//待機中フラグ
 	bool isStand_ = false;

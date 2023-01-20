@@ -66,13 +66,13 @@ void Field::Update()
 	//	else if (lane_ == Center)lane_ = Left;*/
 	//	isChangeLeft_ = true;
 
-	}else if (changeMode_ ==2 && input_->TriggerKey(DIK_SPACE)
-		&& isChangeLeft_ == false && isChangeRight_ == false)
-	{
-		/*if (lane_ == Right)lane_ = Center;
-		else if (lane_ == Center)lane_ = Right;*/
-		isChangeRight_ = true;
-	}
+	//}else if (changeMode_ ==2 && input_->TriggerKey(DIK_SPACE)
+	//	&& isChangeLeft_ == false && isChangeRight_ == false)
+	//{
+	//	/*if (lane_ == Right)lane_ = Center;
+	//	else if (lane_ == Center)lane_ = Right;*/
+	//	isChangeRight_ = true;
+	//}
 
 	if (time_ >= maxTime_) {	//タイムリセット
 		time_ = 0;

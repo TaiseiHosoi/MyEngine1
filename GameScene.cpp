@@ -31,7 +31,7 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 
 	sprite1->SetSize({ 1280,720 });
 	sprite2->SetSize({ 1280,720 });
-	sprite1->SetPozition({ 0,0});
+	sprite1->SetPozition({ 0,0 });
 	sprite2->SetPozition({ 0,0 });
 	audio = new Audio();
 	audio->Initialize();
@@ -39,7 +39,7 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 
 	model = Mesh::LoadFromOBJ("lowpoliHitokunIdle");
 	object3d = Object3d::Create();
-	
+
 	object3d->position.z = 90.0f;
 
 
@@ -83,8 +83,8 @@ void GameScene::Update()
 	switch (scene) {
 	case 0: //タイトル
 
-		
-			break;
+
+		break;
 	case 1://シーン
 		gameTimer_++;
 		if (gameTimer_ > 200) {
@@ -133,7 +133,7 @@ void GameScene::Update()
 		CheckAllCollisions();
 		break;	//シーン用
 	}
-	
+
 
 }
 
@@ -225,7 +225,7 @@ void GameScene::LoadBulletPopData()
 void GameScene::UpdateBulletPopCommands()
 {
 
-	
+
 	//待機処理
 	if (isStand_) {
 		standTime_--;
