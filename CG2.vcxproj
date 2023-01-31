@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)scene</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)audio;$(ProjectDir)sprite;$(ProjectDir)obj;$(ProjectDir)math;$(ProjectDir)input;$(ProjectDir)engine;$(ProjectDir)scene;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -133,7 +133,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)scene;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)audio;$(ProjectDir)sprite;$(ProjectDir)obj;$(ProjectDir)math;$(ProjectDir)input;$(ProjectDir)engine;$(ProjectDir)scene;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -143,48 +143,48 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Audio.cpp" />
-    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="audio\Audio.cpp" />
     <ClCompile Include="GameScene.cpp" />
-    <ClCompile Include="MathFunc.cpp" />
-    <ClCompile Include="DirectXCommon.cpp" />
-    <ClCompile Include="input.cpp" />
+    <ClCompile Include="math\MathFunc.cpp" />
+    <ClCompile Include="engine\DirectXCommon.cpp" />
+    <ClCompile Include="input\input.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Matrix4.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Object3d.cpp" />
-    <ClCompile Include="Quaternion.cpp" />
+    <ClCompile Include="math\Matrix4.cpp" />
+    <ClCompile Include="obj\Mesh.cpp" />
+    <ClCompile Include="obj\Object3d.cpp" />
+    <ClCompile Include="math\Quaternion.cpp" />
+    <ClCompile Include="scene\Bullet.cpp" />
     <ClCompile Include="scene\Ease.cpp" />
     <ClCompile Include="scene\Effect.cpp" />
     <ClCompile Include="scene\Field.cpp" />
     <ClCompile Include="scene\Goal.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="SpriteCommon.cpp" />
-    <ClCompile Include="Vector2.cpp" />
-    <ClCompile Include="Vector3.cpp" />
-    <ClCompile Include="Vector4.cpp" />
-    <ClCompile Include="WinApp.cpp" />
+    <ClCompile Include="sprite\Sprite.cpp" />
+    <ClCompile Include="sprite\SpriteCommon.cpp" />
+    <ClCompile Include="math\Vector2.cpp" />
+    <ClCompile Include="math\Vector3.cpp" />
+    <ClCompile Include="math\Vector4.cpp" />
+    <ClCompile Include="engine\WinApp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="BasicPS.hlsl">
+    <FxCompile Include="Resources\shaders\BasicPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="BasicVS.hlsl">
+    <FxCompile Include="Resources\shaders\BasicVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="ObjPS.hlsl">
+    <FxCompile Include="Resources\shaders\ObjPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="ObjVS.hlsl">
+    <FxCompile Include="Resources\shaders\ObjVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
@@ -192,32 +192,31 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Audio.h" />
-    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="audio\Audio.h" />
     <ClInclude Include="GameScene.h" />
-    <ClInclude Include="MathFunc.h" />
-    <ClInclude Include="DirectXCommon.h" />
+    <ClInclude Include="math\MathFunc.h" />
+    <ClInclude Include="engine\DirectXCommon.h" />
     <ClInclude Include="Error.h" />
-    <ClInclude Include="input.h" />
-    <ClInclude Include="Matrix4.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Object3d.h" />
-    <ClInclude Include="Quaternion.h" />
+    <ClInclude Include="input\input.h" />
+    <ClInclude Include="math\Matrix4.h" />
+    <ClInclude Include="obj\Mesh.h" />
+    <ClInclude Include="obj\Object3d.h" />
+    <ClInclude Include="math\Quaternion.h" />
+    <ClInclude Include="scene\Bullet.h" />
     <ClInclude Include="scene\Ease.h" />
     <ClInclude Include="scene\Effect.h" />
     <ClInclude Include="scene\Field.h" />
     <ClInclude Include="scene\Goal.h" />
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="SpriteCommon.h" />
-    <ClInclude Include="Transration.h" />
-    <ClInclude Include="Vector2.h" />
-    <ClInclude Include="Vector3.h" />
-    <ClInclude Include="Vector4.h" />
-    <ClInclude Include="WinApp.h" />
+    <ClInclude Include="sprite\Sprite.h" />
+    <ClInclude Include="sprite\SpriteCommon.h" />
+    <ClInclude Include="math\Vector2.h" />
+    <ClInclude Include="math\Vector3.h" />
+    <ClInclude Include="math\Vector4.h" />
+    <ClInclude Include="engine\WinApp.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Basic.hlsli" />
-    <None Include="Obj.hlsli" />
+    <None Include="Resources\shaders\Basic.hlsli" />
+    <None Include="Resources\shaders\Obj.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

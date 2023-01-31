@@ -89,7 +89,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//元データ解放
 	//delete[] imageData;
 	//入力開放
-	delete input_;
 	delete gameScene_;
 	delete dxCommon_;
 	delete winApp_;
