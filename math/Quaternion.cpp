@@ -148,15 +148,94 @@ Matrix4 Quaternion::MakeRotateMatrix(const Quaternion& q)
 	);
 }
 
+Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t)
+{
+	float dot = Dot(q0, q1);
+	Quaternion q0_ = q0;
+
+
+
+	if (dot < 0) {
+		Quaternion invQ0 = { -q0.x,-q0.y,-q0.z,-q0.w };
+		q0_ = invQ0;
+		dot = -dot;
+	}
+
+	if (dot >= 1.0f - 0.005f) {
+		return { (1.0f - t) * q0.x + (1.0f - t) * q1.x,
+			  (1.0f - t) * q0.y + (1.0f - t) * q1.y,
+			  (1.0f - t) * q0.z + (1.0f - t) * q1.z,
+			  (1.0f - t) * q0.w + (1.0f - t) * q1.w };
+
+	}
+
+
+	float theta = std::acos(dot);
+
+	float scale1 = (sinf((1 - t) * theta) / sinf(theta));
+	float scale2 = sinf(t * theta) / sinf(theta);
+
+	Quaternion result =
+	{ scale1 * q0.x + scale2 * q1.x,
+	  scale1 * q0.y + scale2 * q1.y,
+	  scale1 * q0.z + scale2 * q1.z,
+	  scale1 * q0.w + scale2 * q1.w };
+
+
+	return result;
+}
+
+float Quaternion::Dot(const Quaternion& q0, const Quaternion& q1)
+{
+	float result = q0.x * q1.x + q0.y * q1.y + q0.z * q1.z + q0.z * q1.z;
+	return result;
+}
+
+Quaternion Quaternion::DirectionToDirection(const Vector3& u, const Vector3& v)
+{
+	// uとvを正規化して内積を求める。u,vを単位ベクトル前提とするなら正規化は不要
+	float dot = u.x * v.x + u.y * v.y + u.z * v.z;
+
+	// 外積をとる
+	Vector3 cross = u.cross(v);
+
+	// 軸は単位ベクトルである必要があるので正規化
+	Vector3 axis = cross.nomalize();
+
+	// 単位ベクトルでない席を取っているのでacosで角度を求める
+	float theta = std::acos(dot);
+
+	// axisとthetaで任意軸回転を作って返す
+	Quaternion result;
+
+	result = MakeAxisAngle(axis, theta);
+
+	return result;
+}
+
 Quaternion Quaternion::operator/(const float& s) const
 {
 	return Quaternion(x / s, y / s, z / s, w / s);
+}
+
+Quaternion Quaternion::operator*(const float& s) const
+{
+	return Quaternion(x * s, y * s, z * s, w * s);
 }
 
 Quaternion& Quaternion::operator/=(const float& s)
 {
 	Quaternion result = *this;
 	result = result / s;
+	*this = result;
+
+	return *this;
+}
+
+Quaternion& Quaternion::operator*=(const float& s)
+{
+	Quaternion result = *this;
+	result = result * s;
 	*this = result;
 
 	return *this;

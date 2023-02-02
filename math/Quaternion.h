@@ -50,7 +50,19 @@ public:
 	// Quaternion‚©‚ç‰ñ“]s—ñ‚ğ‹‚ß‚é
 	Matrix4 MakeRotateMatrix(const Quaternion& quaternion);
 
+	// ‹…–ÊüŒ`•âŠÔ
+	Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
+
+	// “àÏ
+	float Dot(const Quaternion& q0, const Quaternion& q1);
+
+	// u‚©‚çv‚Ö‚Ì‰ñ“]‚ğ¶¬
+	Quaternion DirectionToDirection(const Vector3& u, const Vector3& v);
+
+
 public:
 	Quaternion operator/(const float& s) const;
+	Quaternion operator*(const float& s) const;
 	Quaternion& operator/=(const float& s);
+	Quaternion& operator*=(const float& s);
 };
