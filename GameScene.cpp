@@ -90,7 +90,7 @@ void GameScene::Update()
 
 	ImGui::Begin("collider");
 	ImGui::SetWindowSize({ 500,100 });
-	ImGui::InputInt("collide==1",);
+	//ImGui::InputInt("collide==1",);
 	ImGui::End();
 }
 
