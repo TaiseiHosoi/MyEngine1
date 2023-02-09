@@ -114,6 +114,12 @@
     <ClCompile Include="audio\Audio.cpp">
       <Filter>ソース ファイル\i/o</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionPrimitive.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\BasicVS.hlsl" />
@@ -188,6 +194,12 @@
     </ClInclude>
     <ClInclude Include="audio\Audio.h">
       <Filter>ソース ファイル\i/o\i/o</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionPrimitive.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,7 @@
 #include "WinApp.h"
+#include"imgui_impl_win32.h"
 
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wPalam, LPARAM lParam);
 
 void WinApp::Initialize() {
 #pragma region WindousAPI初期化処理
@@ -69,6 +71,10 @@ void WinApp::Finalize() {
 }
 
 LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+
+	//ImGui用ウィンドウプロシージャ呼び出し
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam)) { return true; }
+
 	//メッセージに応じてゲーム固有の処理を行う
 	switch (msg) {
 		//ウィンドウが破棄された

@@ -10,7 +10,9 @@
 #include "sstream"
 #include "memory"
 #include "list"
+#include"CollisionPrimitive.h"
 #include "Bullet.h"
+
 
 
 class GameScene {
@@ -103,6 +105,11 @@ private:
 	//レーンデバッグ用のテクスチャ
 	//uint32_t laneTexture_[3];
 
+	//テスト3-2
+	//当たり判定　球
+	Sphere sphere;
+	//当たり判定　平面
+	Plane plane;
 
 
 

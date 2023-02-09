@@ -1,6 +1,8 @@
 #include "GameScene.h"
-
 #include <Bullet.h>
+#include"CollisionPrimitive.h"
+#include<sstream>
+#include<iomanip>
 
 
 GameScene::GameScene()
@@ -59,6 +61,15 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 	goal_.Initialize(model);
 
 	BulletReset();
+
+	//当たり判定
+	//球の初期値を設定
+	sphere.center = { 0,2,0 };
+	sphere.radius = 1.0f;//半径
+
+	//平面の初期値を設定
+	plane.normal = { 0,1,0 };//法線ベクトル
+	plane.distance = 0.0f;//原点000からの距離
 }
 
 void GameScene::Update()
@@ -134,6 +145,15 @@ void GameScene::Update()
 		break;	//シーン用
 	}
 
+#pragma region 球と平面の当たり判定
+	{//球移動
+		Vector3 moveY = { 0,0.01f,0 };
+		if (input_->PushKey(DIK_UP)) {
+
+		}
+
+	}
+#pragma endregion
 
 }
 

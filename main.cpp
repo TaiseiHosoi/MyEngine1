@@ -7,6 +7,8 @@
 #include"Sprite.h"
 #include"Audio.h"
 #include"GameScene.h"
+#include"ImGuiManager.h"
+
 
 
 const float PI = 3.14f;
@@ -63,6 +65,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	gameScene_ = new GameScene();
 	gameScene_->Initialize(dxCommon_);
 
+	ImGuiManager* imGuiManager_ = nullptr;
+	imGuiManager_ = new ImGuiManager;
+	imGuiManager_->Initialize(winApp_,dxCommon_);
+
 	while (true) {
 		if (winApp_->ProcessMessage()) {
 			break;
@@ -72,6 +78,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		input_->Update();
 		gameScene_->Update();
 
+		imGuiManager_->Begin();
+		//でもウィンドウの表示
+		ImGui::ShowDemoWindow();
+
+		imGuiManager_->End();
 
 		//描画
 		dxCommon_->PreDraw();
@@ -79,12 +90,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		gameScene_->Draw();
 
+		imGuiManager_->Draw();
 
 		dxCommon_->PostDraw();
 
 	}
 
 	winApp_->Finalize();
+	imGuiManager_->Finalize();
 
 	//元データ解放
 	//delete[] imageData;

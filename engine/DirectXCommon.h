@@ -30,6 +30,8 @@ public:
 
 	ID3D12Device* GetDevice() const { return device_.Get(); }
 	ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
+	//バックバッハの数をw取得
+	size_t GetBackBufferCount() const { return backBuffers.size(); }
 private:
 	void InitializeFixFPS();	//初期化
 	void UpdateFixFPS();	//FPS固定更新
