@@ -76,11 +76,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		//更新
 		input_->Update();
+		imGuiManager_->Begin();
 		gameScene_->Update();
 
-		imGuiManager_->Begin();
-		//でもウィンドウの表示
-		ImGui::ShowDemoWindow();
 
 		imGuiManager_->End();
 

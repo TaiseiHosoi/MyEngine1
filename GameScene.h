@@ -111,6 +111,7 @@ private:
 	//“–‚½‚è”»’è@•½–Ê
 	Plane plane;
 
+	int collideCount;
 
 
 

@@ -3,6 +3,7 @@
 #include"CollisionPrimitive.h"
 #include<sstream>
 #include<iomanip>
+#include"imgui.h"
 
 
 GameScene::GameScene()
@@ -70,80 +71,12 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 	//平面の初期値を設定
 	plane.normal = { 0,1,0 };//法線ベクトル
 	plane.distance = 0.0f;//原点000からの距離
+
+	collideCount = 0;
 }
 
 void GameScene::Update()
 {
-	if (input_->TriggerKey(DIK_SPACE)) {
-		if (scene == 0) {
-			scene = 1;
-			for (std::unique_ptr<Bullet>& bullet_ : bullets_) {
-				bullet_->OnCollision();
-			}
-			BulletReset();
-			gameLevel_ = 0;
-			gameTimer_ = 0;
-			field_[1].Initialize(ico_, Center);
-		}
-		else {
-			scene = 0;
-		}
-	}
-
-
-	switch (scene) {
-	case 0: //タイトル
-
-
-		break;
-	case 1://シーン
-		gameTimer_++;
-		if (gameTimer_ > 200) {
-			if (gameLevel_ < levelMax_) {
-				gameTimer_ = 0;
-				gameLevel_++;
-			}
-			else {
-				gameTimer_ = 0;
-			}
-
-		}
-
-
-		for (int i = 0; i < 3; i++) {
-			field_[i].Update();
-		}
-
-		//デリート
-		//デスフラグの立った弾削除
-		bullets_.remove_if([](std::unique_ptr<Bullet>& bullet_) { return bullet_->IsDead(); });
-
-		//なんか敵
-		Vector3 object3dPos = object3d->GetPosition();
-		if (input_->PushKey(DIK_W)) {
-			object3dPos.z += 0.1f;
-		}
-		object3d->SetPosition(object3dPos);
-		object3d->Update();
-
-
-
-		for (std::unique_ptr<Bullet>& bullet_ : bullets_) {
-
-			bullet_->Update();
-
-
-		}
-
-		//弾発生
-		UpdateBulletPopCommands();
-
-		//自機
-		goal_.Update(field_[1].GetTransration());
-
-		CheckAllCollisions();
-		break;	//シーン用
-	}
 
 #pragma region 球と平面の当たり判定
 	{//球移動
@@ -155,21 +88,16 @@ void GameScene::Update()
 	}
 #pragma endregion
 
+	ImGui::Begin("collider");
+	ImGui::SetWindowSize({ 500,100 });
+	ImGui::InputInt("collide==1",);
+	ImGui::End();
 }
 
 void GameScene::Draw()
 {
 
-	switch (scene) {
-	case 0: //タイトル
-		spriteCommon_->SpritePreDraw();
-		sprite2->Draw();
-		spriteCommon_->SpritePostDraw();
-
-		Object3d::PreDraw(dxCommon_->GetCommandList());
-		Object3d::PostDraw();
-		break;
-	case 1://シーン
+	
 		spriteCommon_->SpritePreDraw();
 
 		sprite1->Draw();
@@ -179,22 +107,11 @@ void GameScene::Draw()
 
 		Object3d::PreDraw(dxCommon_->GetCommandList());
 
-		/*for (int i = 0; i < 3; i++) {
-			field_[i].Draw();
-		}*/
-
-		object3d->Draw();
-
-		for (std::unique_ptr<Bullet>& bullet_ : bullets_) {
-			bullet_->Draw();
-		}
-
-		goal_.Draw();
+		
 
 
 		Object3d::PostDraw();
-		break;	//シーン用
-	}
+	
 
 }
 
