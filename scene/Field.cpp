@@ -16,7 +16,7 @@ void Field::Initialize(Mesh* model, Lane lane)
 	//テクスチャ読み込み
 	//textureHandle_ = textureHandle;
 
-	worldTransform_.Initialize();
+	worldTransform_.Initialize(true);
 
 	worldTransform_.scale = { 0.3f,0.2f,length };
 

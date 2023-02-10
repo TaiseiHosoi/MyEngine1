@@ -18,7 +18,7 @@ void Effect::Initialize(Mesh* model, Vector3 vec3)
 
 	//初期値をセット
 	for (int i = 0; i < EFFECT_NUM; i++) {
-		worldTransform_[i].Initialize();
+		worldTransform_[i].Initialize(true);
 		worldTransform_[i].position = vec3;
 		worldTransform_[i].scale = { 0.7,0.7,0.3 };
 		worldTransform_[i].rotation = { 0,0,0 };

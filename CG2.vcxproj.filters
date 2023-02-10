@@ -122,12 +122,18 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Resources\shaders\BasicVS.hlsl" />
-    <FxCompile Include="Resources\shaders\BasicPS.hlsl" />
     <FxCompile Include="Resources\shaders\ObjPS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ObjVS.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\BasicPS.hlsl" />
+    <FxCompile Include="Resources\shaders\BasicVS.hlsl" />
+    <FxCompile Include="Resources\shaders\RimLightPS.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\RimLightVS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
   </ItemGroup>
@@ -203,8 +209,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\shaders\Basic.hlsli" />
     <None Include="Resources\shaders\Obj.hlsli">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="Resources\shaders\Basic.hlsli" />
+    <None Include="Resources\shaders\RimLight.hlsli">
       <Filter>リソース ファイル</Filter>
     </None>
   </ItemGroup>

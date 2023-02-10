@@ -40,23 +40,17 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 	audio->Initialize();
 
 
-	model = Mesh::LoadFromOBJ("lowpoliHitokunIdle");
-	object3d = Object3d::Create();
-
-	object3d->position.z = 90.0f;
-
-
+	model = Mesh::LoadFormOBJ("lowpoliHitokunIdle",true);
+	
 	//game
 
 	//モデル
-	bulletModel_ = Mesh::LoadFromOBJ("bume");
-	model_ = Mesh::LoadFromOBJ("cube");
-	ico_ = Mesh::LoadFromOBJ("ico");
-	object3d->SetModel(ico_);
-	//レーン
-	field_[0].Initialize(ico_, Left);
-	field_[1].Initialize(ico_, Center);
-	field_[2].Initialize(ico_, Right);
+	bulletModel_ = Mesh::LoadFormOBJ("bume",true);
+	model_ = Mesh::LoadFormOBJ("cube",true);
+	ico_ = Mesh::LoadFormOBJ("ico",true);
+
+	
+	
 
 	//自機
 	goal_.Initialize(model);
@@ -73,19 +67,31 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 	plane.distance = 0.0f;//原点000からの距離
 
 	collideCount = 0;
+
+	//object3d
+	object3d = Object3d::Create();
+	//object3d->SetRimEmission();
+	object3d->position.z = 0.0f;
+	object3d->SetRimEmission(0.7f);
+	object3d->SetModel(ico_);
+	object3d->Update();
+
 }
 
 void GameScene::Update()
 {
 
+	object3d->rotation += {0.05, 0.05, 0.0};
+	object3d->Update();
+
 #pragma region 球と平面の当たり判定
-	{//球移動
-		Vector3 moveY = { 0,0.01f,0 };
-		if (input_->PushKey(DIK_UP)) {
+	//{//球移動
+	//	Vector3 moveY = { 0,0.01f,0 };
+	//	if (input_->PushKey(DIK_UP)) {
 
-		}
+	//	}
 
-	}
+	//}
 #pragma endregion
 
 	ImGui::Begin("collider");
@@ -100,14 +106,14 @@ void GameScene::Draw()
 	
 		spriteCommon_->SpritePreDraw();
 
-		sprite1->Draw();
+		//sprite1->Draw();
 		//sprite2->Draw();
 
 		spriteCommon_->SpritePostDraw();
 
 		Object3d::PreDraw(dxCommon_->GetCommandList());
 
-		
+		object3d->Draw();
 
 
 		Object3d::PostDraw();

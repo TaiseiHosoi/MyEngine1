@@ -13,7 +13,7 @@ void Goal::Initialize(Mesh* model)
 
 	worldTransform_.SetModel(model_);
 
-	worldTransform_.Initialize();
+	worldTransform_.Initialize(true);
 
 	worldTransform_.position = { 0,2,5 };
 	worldTransform_.scale = { 1,1,1 };
