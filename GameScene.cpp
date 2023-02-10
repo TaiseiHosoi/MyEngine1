@@ -112,7 +112,7 @@ void GameScene::Update()
 		object3d->position.x += kVel;
 	}
 	else if (input_->PushKey(DIK_A)) {
-		object3d->position.y -= kVel;
+		object3d->position.x -= kVel;
 	}
 
 	sphere.center = object3d->position;
