@@ -4,7 +4,7 @@
 #include<sstream>
 #include<iomanip>
 #include"imgui.h"
-
+#include"CollisionPrimitive.h"
 
 GameScene::GameScene()
 {
@@ -40,17 +40,17 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 	audio->Initialize();
 
 
-	model = Mesh::LoadFormOBJ("lowpoliHitokunIdle",true);
-	
+	model = Mesh::LoadFormOBJ("lowpoliHitokunIdle", true);
+
 	//game
 
 	//モデル
-	bulletModel_ = Mesh::LoadFormOBJ("bume",true);
-	model_ = Mesh::LoadFormOBJ("cube",true);
-	ico_ = Mesh::LoadFormOBJ("ico",true);
+	bulletModel_ = Mesh::LoadFormOBJ("bume", true);
+	model_ = Mesh::LoadFormOBJ("cube2", true);
+	ico_ = Mesh::LoadFormOBJ("ico", true);
 
-	
-	
+
+
 
 	//自機
 	goal_.Initialize(model);
@@ -59,39 +59,77 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 
 	//当たり判定
 	//球の初期値を設定
-	sphere.center = { 0,2,0 };
-	sphere.radius = 1.0f;//半径
+	sphere.center = { 0,0,0 };
+	sphere.radius = 3.0f;//半径
 
 	//平面の初期値を設定
 	plane.normal = { 0,1,0 };//法線ベクトル
 	plane.distance = 0.0f;//原点000からの距離
 
+
 	collideCount = 0;
 
-	//object3d
+	//object3d	球
 	object3d = Object3d::Create();
-	//object3d->SetRimEmission();
-	object3d->position.z = 0.0f;
 	object3d->SetRimEmission(0.7f);
 	object3d->SetModel(ico_);
+	object3d->position = {0,0,0};
+	object3d->scale = { sphere.radius ,sphere.radius ,sphere.radius };
 	object3d->Update();
+
+	//cube 平面
+	cube = Object3d::Create();
+	cube->SetRimEmission(0.7f);
+	cube->SetModel(model_);
+	cube->position = {0,0,0};
+	float cubeRad = 40.0f;
+	cube->scale = { cubeRad,0.1,cubeRad };
+	cube->Update();
+
+	//カメラセッと
+	Object3d::SetEye({0,5,-30});
 
 }
 
 void GameScene::Update()
 {
 
-	object3d->rotation += {0.05, 0.05, 0.0};
-	object3d->Update();
+
 
 #pragma region 球と平面の当たり判定
-	//{//球移動
-	//	Vector3 moveY = { 0,0.01f,0 };
-	//	if (input_->PushKey(DIK_UP)) {
 
-	//	}
+	//球移動
+	float kVel = 0.12f;
 
-	//}
+	if (input_->PushKey(DIK_W)) {
+		object3d->position.y += kVel;
+	}
+	else if (input_->PushKey(DIK_S)) {
+		object3d->position.y -= kVel;
+	}
+
+	if (input_->PushKey(DIK_D)) {
+		object3d->position.x += kVel;
+	}
+	else if (input_->PushKey(DIK_A)) {
+		object3d->position.y -= kVel;
+	}
+
+	sphere.center = object3d->position;
+
+	
+
+	bool hit = CollisionPrimitive::CheckSphere2Plane(sphere, plane);
+
+	if (hit == true) {
+		object3d->SetRimColor({ 1.0f,0.1f,0.1f,1.0f });
+	}
+	else {
+		object3d->SetRimColor({ 1.0f,1.0f,1.0f,1.0f });
+	}
+
+	object3d->Update();
+
 #pragma endregion
 
 	ImGui::Begin("collider");
@@ -103,21 +141,21 @@ void GameScene::Update()
 void GameScene::Draw()
 {
 
-	
-		spriteCommon_->SpritePreDraw();
 
-		//sprite1->Draw();
-		//sprite2->Draw();
+	spriteCommon_->SpritePreDraw();
 
-		spriteCommon_->SpritePostDraw();
+	sprite1->Draw();
+	//sprite2->Draw();
 
-		Object3d::PreDraw(dxCommon_->GetCommandList());
+	spriteCommon_->SpritePostDraw();
 
-		object3d->Draw();
+	Object3d::PreDraw(dxCommon_->GetCommandList());
 
+	object3d->Draw();
+	cube->Draw();
 
-		Object3d::PostDraw();
-	
+	Object3d::PostDraw();
+
 
 }
 

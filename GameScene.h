@@ -73,6 +73,7 @@ private:
 	Audio* audio = nullptr;
 	SpriteCommon* spriteCommon_ = nullptr;
 	Object3d* object3d = nullptr;
+	Object3d* cube = nullptr;
 	Mesh* model = nullptr;
 	Input* input_ = Input::GetInstance();
 
