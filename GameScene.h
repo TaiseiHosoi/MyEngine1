@@ -12,6 +12,7 @@
 #include "list"
 #include"CollisionPrimitive.h"
 #include "Bullet.h"
+#include"GameCamera.h"
 
 
 
@@ -69,12 +70,13 @@ public:
 private:
 	DirectXCommon* dxCommon_ = nullptr;
 
-
+	GameCamera* gameCamera_ = nullptr;
 	Audio* audio = nullptr;
 	SpriteCommon* spriteCommon_ = nullptr;
 	Object3d* object3d = nullptr;
 	Mesh* model = nullptr;
 	Input* input_ = Input::GetInstance();
+	
 
 
 private://ÉäÉ\Å[ÉX

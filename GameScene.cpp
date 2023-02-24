@@ -53,7 +53,7 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 	
 
 	//自機
-	goal_.Initialize(model);
+	//goal_.Initialize(model);
 
 	BulletReset();
 
@@ -68,6 +68,11 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 
 	collideCount = 0;
 
+	//かめら初期化
+	gameCamera_ = new GameCamera(WinApp::window_width, WinApp::window_height, input_);
+	assert(gameCamera_);
+	Object3d::SetCamera(gameCamera_);
+
 	//object3d
 	object3d = Object3d::Create();
 	//object3d->SetRimEmission();
@@ -76,11 +81,15 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 	object3d->SetModel(ico_);
 	object3d->Update();
 
+	
 }
 
 void GameScene::Update()
 {
+	//カメラのアップデート
+	gameCamera_->Update();
 
+	//ゲームオブジェクト(球)
 	object3d->rotation += {0.05, 0.05, 0.0};
 	object3d->Update();
 

@@ -1,8 +1,11 @@
 #pragma once
+#include <DirectXMath.h>
 #include "Matrix4.h"
 #include "Vector3.h"
 #include "Vector4.h"
-#include "Object3d.h"
+
+
+//#include "Object3d.h"
 //#include <WorldTransform.h>
 
 
@@ -27,7 +30,7 @@ namespace MathFunc {
 
 	Vector3 AddVector(const Vector3 v1, const Vector3 v2);
 
-	Vector3 bVelocity(Vector3& velocity, Object3d& worldTransform);
+	Vector3 bVelocity(Vector3& velocity, Matrix4& mat);
 
 
 	//ç¿ïWïœä∑
@@ -35,7 +38,7 @@ namespace MathFunc {
 
 	float FieldOfViewY(float focalLengs, float sensor);
 
-	Matrix4 ConvertXMMATtoMat4(XMMATRIX XMMatrix);
-	XMMATRIX ConvertMat4toXMMat(Matrix4 m);
+	Matrix4 ConvertXMMATtoMat4(DirectX::XMMATRIX XMMatrix);
+	DirectX::XMMATRIX ConvertMat4toXMMat(Matrix4 m);
 };
 

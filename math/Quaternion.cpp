@@ -170,7 +170,7 @@ Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t
 	}
 
 
-	float theta = std::acos(dot);
+	float theta = acos(dot);
 
 	float scale1 = (sinf((1 - t) * theta) / sinf(theta));
 	float scale2 = sinf(t * theta) / sinf(theta);
@@ -203,7 +203,7 @@ Quaternion Quaternion::DirectionToDirection(const Vector3& u, const Vector3& v)
 	Vector3 axis = cross.nomalize();
 
 	// 単位ベクトルでない席を取っているのでacosで角度を求める
-	float theta = std::acos(dot);
+	float theta = acos(dot);
 
 	// axisとthetaで任意軸回転を作って返す
 	Quaternion result;

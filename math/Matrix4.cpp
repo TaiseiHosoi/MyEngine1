@@ -172,7 +172,7 @@ Vector3 Matrix4::transform(const Vector3& v, const Matrix4& m)
 	return result;
 }
 
-// 代入演算子　*=　オーバーロード関数（行列と行列の積）
+ //代入演算子　*=　オーバーロード関数（行列と行列の積）
 Matrix4& Matrix4::operator*=(const Matrix4& m1)
 {
 	Matrix4 result;
@@ -195,7 +195,6 @@ Matrix4& Matrix4::operator*=(const Matrix4& m1)
 
 	return *this;
 }
-
 
 
 // ２項演算子　*　のオーバーロード関数（行列と行列の積）

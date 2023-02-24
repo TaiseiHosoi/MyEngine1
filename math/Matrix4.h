@@ -17,6 +17,11 @@ public:
 		float m20, float m21, float m22, float m23,
 		float m30, float m31, float m32, float m33);
 
+	static Matrix4 MakeIdentity()
+	{
+		Matrix4 mat;
+		return mat;
+	}
 	// 単位行列を求める
 	Matrix4 identity();
 
@@ -46,5 +51,4 @@ private:
 };
 
 // 2項演算子オーバーロード
-
 Vector3 operator*(const Vector3& v, const Matrix4& m);

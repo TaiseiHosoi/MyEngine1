@@ -146,7 +146,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="audio\Audio.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionPrimitive.cpp" />
+    <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="ImGuiManager.cpp" />
     <ClCompile Include="math\MathFunc.cpp" />
@@ -157,6 +159,7 @@
     <ClCompile Include="obj\Mesh.cpp" />
     <ClCompile Include="obj\Object3d.cpp" />
     <ClCompile Include="math\Quaternion.cpp" />
+    <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="scene\Bullet.cpp" />
     <ClCompile Include="scene\Ease.cpp" />
     <ClCompile Include="scene\Effect.cpp" />
@@ -209,7 +212,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="audio\Audio.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionPrimitive.h" />
+    <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="ImGuiManager.h" />
     <ClInclude Include="math\MathFunc.h" />
@@ -220,6 +225,7 @@
     <ClInclude Include="obj\Mesh.h" />
     <ClInclude Include="obj\Object3d.h" />
     <ClInclude Include="math\Quaternion.h" />
+    <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="scene\Bullet.h" />
     <ClInclude Include="scene\Ease.h" />
     <ClInclude Include="scene\Effect.h" />
