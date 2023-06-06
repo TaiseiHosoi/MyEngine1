@@ -8,6 +8,7 @@
 #include"Audio.h"
 #include"GameScene.h"
 #include"ImGuiManager.h"
+#include"fbxsdk.h"
 
 
 
@@ -41,11 +42,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	//ポインタ宣言
 	WinApp* winApp_ = nullptr;
-	winApp_ = new WinApp;
+	winApp_ = WinApp::GetInstance();
 
 
 	DirectXCommon* dxCommon_ = nullptr;
 	dxCommon_ = new DirectXCommon;
+
+	Audio* audio_ = nullptr;
+	audio_ = Audio::GetInstance();
+
 
 	//winApp初期化
 	winApp_->Initialize();
@@ -54,11 +59,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//DirectX初期化処理　ここから
 	dxCommon_->Initialize(winApp_);
 
+	audio_->Initialize();
+
 	Input* input_ = Input::GetInstance();
 	input_->Initialize(winApp_);
 
+	// FBX関連静的初期化
+	FbxLoader::GetInstance()->Initialize(dxCommon_->GetDevice());
+
 	// 3Dオブジェクト静的初期化
 	Object3d::StaticInitialize(dxCommon_->GetDevice(), WinApp::window_width, WinApp::window_height);
+
+	//パーティクル静的初期化
+	ParticleManager::StaticInitialize(dxCommon_->GetDevice(),dxCommon_->GetCommandList());
 
 
 	GameScene* gameScene_ = nullptr;
@@ -68,6 +81,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	ImGuiManager* imGuiManager_ = nullptr;
 	imGuiManager_ = new ImGuiManager;
 	imGuiManager_->Initialize(winApp_,dxCommon_);
+
+	
+
 
 	while (true) {
 		if (winApp_->ProcessMessage()) {
@@ -79,14 +95,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		imGuiManager_->Begin();
 		gameScene_->Update();
 
-
-		imGuiManager_->End();
-
+		if (input_->TriggerKey(DIK_ESCAPE))
+		{
+			break;
+		}
+		
 		//描画
 		dxCommon_->PreDraw();
 
 
 		gameScene_->Draw();
+
+		imGuiManager_->End();
+
 
 		imGuiManager_->Draw();
 
@@ -96,13 +117,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	winApp_->Finalize();
 	imGuiManager_->Finalize();
+	audio_->Finalize();
 
+	//ID3D12DebugDevice* debugInterface;
+
+	//if (SUCCEEDED(dxCommon_->GetDevice()->QueryInterface(&debugInterface))) {
+	//	debugInterface->ReportLiveDeviceObjects(D3D12_RLDO_DETAIL | D3D12_RLDO_IGNORE_INTERNAL);
+	//	debugInterface->Release();
+	//}
 	//元データ解放
 	//delete[] imageData;
 	//入力開放
+
 	delete gameScene_;
+	delete imGuiManager_;
 	delete dxCommon_;
 	delete winApp_;
+	
 
 	return 0;
 }
