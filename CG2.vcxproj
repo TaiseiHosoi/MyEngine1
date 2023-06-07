@@ -120,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)imgui;$(ProjectDir)engine\math;$(ProjectDir)engine\sprite;$(ProjectDir)engine\input;$(ProjectDir)engine\imguiManager;$(ProjectDir)engine\fbx;$(ProjectDir)engine\hitstopManager;$(ProjectDir)engine\Collider;$(ProjectDir)engine\camera;$(ProjectDir)engine\audio;$(ProjectDir)engine\3dObject;$(ProjectDir)engine\common;$(ProjectDir)engine\particleManager;$(ProjectDir)engine;$(ProjectDir)scene\sceneObject;$(ProjectDir)scene\sceneManager;$(ProjectDir)scene\gameCamera;$(ProjectDir)scene;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)imgui;$(ProjectDir)engine\math;$(ProjectDir)engine\sprite;$(ProjectDir)engine\input;$(ProjectDir)engine\imguiManager;$(ProjectDir)engine\fbx;$(ProjectDir)engine\hitstopManager;$(ProjectDir)engine\Collider;$(ProjectDir)engine\camera;$(ProjectDir)engine\audio;$(ProjectDir)engine\3dObject;$(ProjectDir)engine\common;$(ProjectDir)engine\particleManager;$(ProjectDir)engine\SummarizeEngine;$(ProjectDir)engine;$(ProjectDir)scene\sceneObject;$(ProjectDir)scene\sceneManager;$(ProjectDir)scene\gameCamera;$(ProjectDir)scene;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -138,7 +138,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)imgui;$(ProjectDir)engine\math;$(ProjectDir)engine\sprite;$(ProjectDir)engine\input;$(ProjectDir)engine\imguiManager;$(ProjectDir)engine\fbx;$(ProjectDir)engine\hitstopManager;$(ProjectDir)engine\Collider;$(ProjectDir)engine\camera;$(ProjectDir)engine\audio;$(ProjectDir)engine\3dObject;$(ProjectDir)engine\common;$(ProjectDir)engine\particleManager;$(ProjectDir)engine;$(ProjectDir)scene\sceneObject;$(ProjectDir)scene\sceneManager;$(ProjectDir)scene\gameCamera;$(ProjectDir)scene;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)imgui;$(ProjectDir)engine\math;$(ProjectDir)engine\sprite;$(ProjectDir)engine\input;$(ProjectDir)engine\imguiManager;$(ProjectDir)engine\fbx;$(ProjectDir)engine\hitstopManager;$(ProjectDir)engine\Collider;$(ProjectDir)engine\camera;$(ProjectDir)engine\audio;$(ProjectDir)engine\3dObject;$(ProjectDir)engine\common;$(ProjectDir)engine\particleManager;$(ProjectDir)engine\SummarizeEngine;$(ProjectDir)engine;$(ProjectDir)scene\sceneObject;$(ProjectDir)scene\sceneManager;$(ProjectDir)scene\gameCamera;$(ProjectDir)scene;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -179,6 +179,7 @@
     <ClCompile Include="engine\particleManager\ParticleManager.cpp" />
     <ClCompile Include="engine\sprite\Sprite.cpp" />
     <ClCompile Include="engine\sprite\SpriteCommon.cpp" />
+    <ClCompile Include="engine\SummarizeEngine\SummarizeEngine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="scene\gameCamera\GameCamera.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
@@ -307,6 +308,7 @@
     <ClInclude Include="engine\particleManager\ParticleManager.h" />
     <ClInclude Include="engine\sprite\Sprite.h" />
     <ClInclude Include="engine\sprite\SpriteCommon.h" />
+    <ClInclude Include="engine\SummarizeEngine\SummarizeEngine.h" />
     <ClInclude Include="scene\gameCamera\GameCamera.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="scene\sceneManager\EndScene.h" />

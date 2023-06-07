@@ -103,6 +103,12 @@
     <Filter Include="ヘッダー ファイル\i/o\FBX">
       <UniqueIdentifier>{449bcc78-8c55-44ef-b50b-d7fbebd47415}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\SummarizeEngine">
+      <UniqueIdentifier>{7f6e30bc-da1f-443c-99fa-ad54592c1edc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\SummarizeEngine">
+      <UniqueIdentifier>{d58c5765-f6df-4ecf-9a86-e17c7f623500}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -260,6 +266,9 @@
     </ClCompile>
     <ClCompile Include="scene\sceneObject\Ground.cpp">
       <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\SummarizeEngine\SummarizeEngine.cpp">
+      <Filter>ソース ファイル\SummarizeEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -467,6 +476,9 @@
     </ClInclude>
     <ClInclude Include="scene\sceneObject\Ground.h">
       <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\SummarizeEngine\SummarizeEngine.h">
+      <Filter>ヘッダー ファイル\SummarizeEngine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
