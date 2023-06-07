@@ -1,15 +1,8 @@
-﻿#include"WinApp.h"
-#include"DirectXCommon.h"
+﻿#include"SummarizeEngine/SummarizeEngine.h"
 #include"Error.h"
-#include"Mesh.h"
-#include"input.h"
-#include"Object3d.h"
-#include"Sprite.h"
-#include"Audio.h"
-#include"GameScene.h"
 
 
-const float PI = 3.14f;
+
 
 //using namespace Microsoft::WRL;
 template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
@@ -28,69 +21,30 @@ template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 //}
 
 
-
 //Windowsアプリでのエントリーポイント（main関数）
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 //コンソールへの文字出力
-{
+{	
+	
 
+	std::unique_ptr <SummarizeEngine> engine_;
+	engine_ = std::make_unique<SummarizeEngine>();
 
-	//OutputDebugStringA("Hello,DrectX!!/n");
-
-	//ポインタ宣言
-	WinApp* winApp_ = nullptr;
-	winApp_ = new WinApp;
-
-
-	DirectXCommon* dxCommon_ = nullptr;
-	dxCommon_ = new DirectXCommon;
-
-	//winApp初期化
-	winApp_->Initialize();
+	engine_->Initialize();
 
 	MSG msg = {};
-	//DirectX初期化処理　ここから
-	dxCommon_->Initialize(winApp_);
-
-	Input* input_ = nullptr;
-	input_ = new Input;
-	input_->Initialize(winApp_);
-
-	// 3Dオブジェクト静的初期化
-	Object3d::StaticInitialize(dxCommon_->GetDevice(), WinApp::window_width, WinApp::window_height);
-	
-	
-	GameScene* gameScene_ = nullptr;
-	gameScene_ = new GameScene();
-	gameScene_->Initialize(dxCommon_);
-	
-	while (true) {
-		if (winApp_->ProcessMessage()) {
-			break;
-		}
-
-		//更新
-		input_->Update();
-		gameScene_->Update();
 	
 
-		//描画
-		dxCommon_->PreDraw();
 
-
-		gameScene_->Draw();
+	while (engine_->isRunningGame) {
+		engine_->Update();
 		
-
-		dxCommon_->PostDraw();
+		//描画
+		engine_->Draw();
 
 	}
 
-	winApp_->Finalize();
-
-	//元データ解放
-	//delete[] imageData;
-	//入力開放
-	delete input_;
+	engine_->Finalize();
 
 	return 0;
 }
