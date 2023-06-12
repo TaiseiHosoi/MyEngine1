@@ -75,14 +75,7 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 	//BGM‚ð—¬‚·
 	PlaySounds();
 
-	isClickL = false;
-	if (input->PushMouseButton(0)) {
-		isClickL = true;
-	}
-	isClickR = false;
-	if (input->PushMouseButton(1)) {
-		isClickR = true;
-	}
+	
 
 	if (isPause_ == false) {
 		_controller->field_->Update();
@@ -102,11 +95,7 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 		Pause(input, camera);
 	}
 
-	if (_controller->field_->PlayerOnGround(_controller->fbxPlayer_->GetObject3d()->wtf.matWorld_.GetWorldPos(),1)) {
-		/*ImGui::Begin("Info");
-		ImGui::Text("Player : ground OUT");
-		ImGui::End();*/
-	}
+	
 
 	playerHp_->SetSize({300 * _controller->fbxPlayer_->GetHp() / 100.0f, 32});
 	enemyHp_->SetSize({1280.0f * _controller->boss_->GetHp() / 100.0f , 32});
