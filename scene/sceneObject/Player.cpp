@@ -31,7 +31,7 @@ void Player::Initialize(Mesh* model)
 	gameObject_ = Object3d::Create();
 	gameObject_->SetModel(model);
 
-	gameObject_->SetPosition({0 , 5 , 0});
+	gameObject_->SetPosition({0 , 10 , 0});
 	gameObject_->Update();
 
 	collider_ = new SphereCollider;

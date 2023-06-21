@@ -53,12 +53,14 @@ private:
 	bool isTargetenemy_ = false;
 
 	//カメラ距離関係
+	const Vector3 PRYMARY_CAMERA_POS = { 0.f,10.f,0.f };
 	const float  MAX_CAMERA_DISTANCE = 50.0f;
 	const float  MIN_CAMERA_DISTANCE = 7.0f;
 	float cameraDistance_ = 20.0f;
 	const float MAX_CHANGE_TIMER = 30;
 	int cameraModeChangeCountTimer = 30;
 	float cameraHeight_ = 6;
+	
 	//ShakePrim用変数
 	static float magnitude;	//シェイクの強さ
 	static float duration;//シェイクを起こす時間
@@ -70,7 +72,7 @@ private:
 
 	//マウスカメラ用
 	Vector3 rotation_ = {0 , 0 , 0};
-	Vector3 dir_ = {0 , 0 , 1};
+	Vector3 dir_ = {0 , 0 , 1.f};
 	Vector2 mouseMove;
 	float mouseSensitivity_ = 0.05;	//マウス感度
 	bool isPause_;

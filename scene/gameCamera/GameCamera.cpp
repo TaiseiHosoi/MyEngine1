@@ -36,14 +36,16 @@ void GameCamera::Initialize()
 
 void GameCamera::Update()
 {
-	if (GetActiveWindow() == WinApp::GetInstance()->GetHwnd())
-	{
-		ShowCursor(false);
+	//if (GetActiveWindow() == WinApp::GetInstance()->GetHwnd())
+	//{
+	//	ShowCursor(false);
 
-		ViewPointMovement();
+	//	//ViewPointMovement();
 
-		CulDirection();
-	}
+	//	CulDirection();
+	//}
+
+	
 
 	FollowPlayer();
 
@@ -201,6 +203,7 @@ void GameCamera::CulDirection()
 		dir_ = targetPos_->translation_ - followerPos_->translation_;
 		dir_.nomalize();
 
+		
 
 		Vector2 vec1 = {dir_.x , dir_.z};
 		Vector2 vec2 = {0 , 1};
@@ -211,7 +214,7 @@ void GameCamera::CulDirection()
 
 		rotation_.y = acosf(dot);
 
-		rotation_.y += MathFunc::Dig2Rad(90);
+		//rotation_.y += MathFunc::Dig2Rad(90);
 
 		if (0 < dir_.x)
 		{
@@ -230,28 +233,20 @@ void GameCamera::CulDirection()
 
 void GameCamera::FollowPlayer()
 {
-	if (isFollowPlayer_ == true)
-	{
-		Vector3 basePos = {followerPos_->translation_.x , cameraHeight_ , followerPos_->translation_.z};
+	
+
+	
+		Vector3 basePos = {followerPos_->translation_.x , followerPos_->translation_.y , followerPos_->translation_.z};
 
 		Vector3 tempEye = basePos - dir_ * MAX_CAMERA_DISTANCE;
-		if (tempEye.y < 0.1)
-		{
-			tempEye.y = 0.1;
-		}
+		
 
 		SetEye(tempEye);
-		SetTarget(basePos + dir_);
+		
+		SetTarget({ tempEye.x,tempEye.y,tempEye.z + 1.f });
 
-	}
-	else
-	{
-
-		SetEye(eyePos_->matWorld_.GetWorldPos());
-
-		SetTarget(targetPos_->matWorld_.GetWorldPos());
-
-	}
+	
+	
 }
 
 void GameCamera::ChangeFollowFlag(bool flag)

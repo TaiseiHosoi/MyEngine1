@@ -26,7 +26,7 @@ private:   //どの行動でも必要
 private:    //固有で必要なもの
     Vector3 velocity_;
     //移動速度
-    const float kMoveSpeed_ = 0.2f;
+    const float kMoveSpeed_ = 0.1f;
     //旋回速度
     const float kTurnSpeed_ = MathFunc::Dig2Rad(10);
     bool isRun_ = false;

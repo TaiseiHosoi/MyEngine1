@@ -38,6 +38,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	gameObject_->SetModel(fbxModel);
 	gameObject_->SetIsBonesWorldMatCalc(true);	//ボーンワールド行列計算あり
 	gameObject_->SetScale({ 4,4,4 });
+	gameObject_->SetPosition({ 0,10.f,0 });
 	gameObject_->Update();
 
 
