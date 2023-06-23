@@ -1,6 +1,6 @@
 #pragma once
-// �V�[����I�����₷���悤�ɃV�[���̈ꊇ�C���N���[�h
-// �v��Ȃ��Ȃ�����Ă�k
+// シーンを選択しやすいようにシーンの一括インクルード
+// 要らないなら消しておk
 
 #include "TitleScene.h"
 #include "GamePart1.h"

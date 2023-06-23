@@ -93,12 +93,12 @@ public:
 
 	float backSpeed;
 
-	int isTackle = false;
+	bool isTackle = false;
 
 	int tackleCount = 0;
 
 	bool isDown = false;
-	int downtimer = 180.0f;
+	int downtimer = 180;
 
 
 	Vector3 playerPos;
@@ -125,7 +125,7 @@ public:
 	int bulletNum = 0;
 
 
-	int isFire = false;
+	bool isFire = false;
 
 	int bulletCount = 0;
 

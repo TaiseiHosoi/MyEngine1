@@ -9,8 +9,8 @@ TitleScene::~TitleScene() {
 
 void TitleScene::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
-	//音の初期化と読み込み
-		//音の初期化と読み込み
+	//髻ｳ縺ｮ蛻晄悄蛹悶→隱ｭ縺ｿ霎ｼ縺ｿ
+		//髻ｳ縺ｮ蛻晄悄蛹悶→隱ｭ縺ｿ霎ｼ縺ｿ
 	audio_ = std::make_unique<Audio>();
 	audio_->Initialize();
 	//audio_->LoadWave("newspaper.wav");
@@ -67,9 +67,9 @@ void TitleScene::Update(Input* input, GameCamera* camera) {
 	if (isChangeScene == true) {
 		camera->SetFollowerPos(_controller->fbxPlayer_.get()->GetObject3d()->GetWorldTransformPtr());
 		camera->SetTargetPos(_controller->boss_.get()->GetObject3d()->GetWorldTransformPtr());
-		// UPDATE の一番下に
+		// UPDATE 縺ｮ荳逡ｪ荳九↓
 		_controller->ChangeScene(new GamePart1(_controller));
-	}// ここから下にコード書くとメモリ君がエラー吐く
+	}// 縺薙％縺九ｉ荳九↓繧ｳ繝ｼ繝画嶌縺上→繝｡繝｢繝ｪ蜷帙′繧ｨ繝ｩ繝ｼ蜷舌￥
 }
 
 void TitleScene::Draw(DirectXCommon* dxCommon) {
@@ -93,7 +93,7 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 	camera->SetEyePos(&titleCamerapos[1]);
 	camera->SetTargetPos(&titleCamerapos[0]);
 
-	titleCamerapos[0].rotation_.y += 0.001;
+	titleCamerapos[0].rotation_.y += 0.001f;
 
 	titleCamerapos[0].UpdateMatWorld();
 	titleCamerapos[1].UpdateMatWorld();
@@ -103,7 +103,7 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 		startCount = nowCount;
 	}
 
-	nowCount++; // 1フレーム当たりに増えるcount
+	nowCount++; // 1繝輔Ξ繝ｼ繝蠖薙◆繧翫↓蠅励∴繧議ount
 
 	elapsedCount = nowCount - startCount;
 	float elapsedTime = static_cast<float> (elapsedCount) / 1'000'000.0f;
@@ -128,7 +128,7 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 
 		const float change = 4.5f;
 		float ease = change;
-		ease = Ease::InOutQuad(change, 0, 50, elapsedCount);
+		ease = static_cast<float>(Ease::InOutQuad(change, 0, 50, static_cast<int>(elapsedCount)));
 
 		target.translation_ += tarAns * ease;
 		eye.translation_ += eyeAns * ease;

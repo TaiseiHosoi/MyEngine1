@@ -18,11 +18,11 @@ public:
 private:
 
     Input* input_ = Input::GetInstance();
-private:   //‚Ç‚Ìs“®‚Å‚à•K—v
+private:   //ã©ã®è¡Œå‹•ã§ã‚‚å¿…è¦
     int animNum;
     int animFlameCT;
     FBXObject3d* gameObject_;
 
-private:    //ŒÅ—L‚Å•K—v‚È‚à‚Ì
+private:    //å›ºæœ‰ã§å¿…è¦ãªã‚‚ã®
   
 };

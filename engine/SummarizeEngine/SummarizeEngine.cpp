@@ -5,23 +5,23 @@ void SummarizeEngine::Initialize() {
 	dxCommon_ = new DirectXCommon;
 	audio_ = Audio::GetInstance();
 
-	//winApp‰Šú‰»
+	//winAppåˆæœŸåŒ–
 	winApp_->Initialize();
 
-	// DirectX‰Šú‰»ˆ—@‚±‚±‚©‚ç
+	// DirectXåˆæœŸåŒ–å‡¦ç†ã€€ã“ã“ã‹ã‚‰
 	dxCommon_->Initialize(winApp_);
 
 	audio_->Initialize();
 
 	input_->Initialize(winApp_);
 
-	// FBXŠÖ˜AÃ“I‰Šú‰»
+	// FBXé–¢é€£é™çš„åˆæœŸåŒ–
 	FbxLoader::GetInstance()->Initialize(dxCommon_->GetDevice());
 
-	// 3DƒIƒuƒWƒFƒNƒgÃ“I‰Šú‰»
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆé™çš„åˆæœŸåŒ–
 	Object3d::StaticInitialize(dxCommon_->GetDevice(), WinApp::window_width, WinApp::window_height);
 
-	//ƒp[ƒeƒBƒNƒ‹Ã“I‰Šú‰»
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é™çš„åˆæœŸåŒ–
 	ParticleManager::StaticInitialize(dxCommon_->GetDevice(), dxCommon_->GetCommandList());
 
 	gameScene_ = new GameScene();
@@ -38,7 +38,7 @@ void SummarizeEngine::Update() {
 		isRunningGame = false;
 	}
 
-	//XV
+	//æ›´æ–°
 	input_->Update();
 	imGuiManager_->Begin();
 	gameScene_->Update();
@@ -47,7 +47,7 @@ void SummarizeEngine::Update() {
 };
 
 void SummarizeEngine::Draw() {
-	//•`‰æ
+	//æç”»
 	dxCommon_->PreDraw();
 
 
@@ -72,9 +72,9 @@ void SummarizeEngine::Finalize() {
 	//	debugInterface->ReportLiveDeviceObjects(D3D12_RLDO_DETAIL | D3D12_RLDO_IGNORE_INTERNAL);
 	//	debugInterface->Release();
 	//}
-	//Œ³ƒf[ƒ^‰ğ•ú
+	//å…ƒãƒ‡ãƒ¼ã‚¿è§£æ”¾
 	//delete[] imageData;
-	//“ü—ÍŠJ•ú
+	//å…¥åŠ›é–‹æ”¾
 
 	delete gameScene_;
 	delete imGuiManager_;

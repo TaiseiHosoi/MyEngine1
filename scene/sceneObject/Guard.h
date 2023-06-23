@@ -18,18 +18,18 @@ public:
 private:
 
     Input* input_ = Input::GetInstance();
-private:   //‚Ç‚Ìs“®‚Å‚à•K—v
-    int animNum;    //‰½”ÔƒAƒjƒ[ƒVƒ‡ƒ“‚©
-    int animFlameCT;    //ƒtƒŒ[ƒ€”ƒJƒEƒ“ƒg(ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX—p)
+private:   //ã©ã®è¡Œå‹•ã§ã‚‚å¿…è¦
+    int animNum;    //ä½•ç•ªã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‹
+    int animFlameCT;    //ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã‚«ã‚¦ãƒ³ãƒˆ(ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ç”¨)
     FBXObject3d* gameObject_;
 
-private:    //ŒÅ—L‚Å•K—v‚È‚à‚Ì
-   bool isGuard = false;    //ƒK[ƒh
-   bool isCounter = false;  //ƒJƒEƒ“ƒ^[‹N“®
-   bool isGuardExcute = false;  //ƒK[ƒh¬Œ÷
-   int guardMovePhase = 0;  //ƒtƒF[ƒYŠÇ—
-   int counterFrameCount = 0;   //ƒtƒFƒCƒYŠÇ——pƒJƒEƒ“ƒg
-   Vector3 guardKnockVel = {};  //ƒmƒbƒNƒoƒbƒN‚Ìvel
-   std::vector<SphereCollider*>* sphere_;   //“–‚½‚è”»’èƒ|ƒCƒ“ƒ^
+private:    //å›ºæœ‰ã§å¿…è¦ãªã‚‚ã®
+   bool isGuard = false;    //ã‚¬ãƒ¼ãƒ‰
+   bool isCounter = false;  //ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼èµ·å‹•
+   bool isGuardExcute = false;  //ã‚¬ãƒ¼ãƒ‰æˆåŠŸæ™‚
+   int guardMovePhase = 0;  //ãƒ•ã‚§ãƒ¼ã‚ºç®¡ç†
+   int counterFrameCount = 0;   //ãƒ•ã‚§ã‚¤ã‚ºç®¡ç†ç”¨ã‚«ã‚¦ãƒ³ãƒˆ
+   Vector3 guardKnockVel = {};  //ãƒãƒƒã‚¯ãƒãƒƒã‚¯æ™‚ã®vel
+   std::vector<SphereCollider*>* sphere_;   //å½“ãŸã‚Šåˆ¤å®šãƒã‚¤ãƒ³ã‚¿
 
 };

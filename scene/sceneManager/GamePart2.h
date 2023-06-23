@@ -2,7 +2,7 @@
 #include "IScene.h"
 #include "SceneManager.h"
 
-// ƒ{ƒX í“¬1
+// ãƒœã‚¹ æˆ¦é—˜1
 class GamePart2 :
     public IScene
 {

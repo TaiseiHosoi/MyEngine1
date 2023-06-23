@@ -12,7 +12,7 @@
 #include <DirectXTex.h>
 #include "MathFunc.h"
 
-#define DIRECTINPUT_VERSION		0x0800		//DirectInput‚Ìƒo[ƒWƒ‡ƒ“w’è
+#define DIRECTINPUT_VERSION		0x0800		//DirectInputã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³æŒ‡å®š
 
 #pragma comment(lib,"d3dcompiler.lib")
 #pragma comment(lib,"d3d12.lib")
@@ -20,7 +20,7 @@
 
 using namespace DirectX;
 
-// ‰~ü—¦
+// å††å‘¨ç‡
 const float PI = 3.141592f;
 
 

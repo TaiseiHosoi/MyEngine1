@@ -3,38 +3,38 @@
 
 class WinApp
 {
-public:// Ã“Iƒƒ“ƒoŠÖ”
+public:// é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 public:
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	void Initialize();
 
-	// XV
+	// æ›´æ–°
 	bool ProcessMessage();
 
-	//ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚ğ“o˜^‰ğœ
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã‚’ç™»éŒ²è§£é™¤
 	void Finalize();
 
 	// getter
 	HWND GetHwnd()const { return hwnd; }
 	HINSTANCE GetHInstance() const { return w.hInstance; }
 
-	// ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìæ“¾
+	// ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å–å¾—
 	static WinApp* GetInstance();
 
 private:
-	// ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
 	HWND hwnd = nullptr;
-	//ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹
 	WNDCLASSEX w{};
 
 	
 public:
 
-	//ƒEƒBƒ“ƒhƒEƒTƒCƒY
-	static const int window_width = 1280;	//‰¡•
-	static const int window_height = 720;	//c•
-	//ƒVƒ“ƒOƒ‹ƒgƒ“
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚º
+	static const int window_width = 1280;	//æ¨ªå¹…
+	static const int window_height = 720;	//ç¸¦å¹…
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³
 	static WinApp* WinApp_;
 };
 

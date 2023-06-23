@@ -18,20 +18,20 @@ public:
 private:
 
     Input* input_ = Input::GetInstance();
-private:   //‚Ç‚Ìs“®‚Å‚à•K—v
-    int animNum;    //‰½”ÔƒAƒjƒ[ƒVƒ‡ƒ“‚©
-    int animFlameCT;    //ƒtƒŒ[ƒ€”ƒJƒEƒ“ƒg(ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX—p)
+private:   //ã©ã®è¡Œå‹•ã§ã‚‚å¿…è¦
+    int animNum;    //ä½•ç•ªã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‹
+    int animFlameCT;    //ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã‚«ã‚¦ãƒ³ãƒˆ(ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ç”¨)
     FBXObject3d* gameObject_;
 
-private:    //ŒÅ—L‚Å•K—v‚È‚à‚Ì
-    //ƒtƒF[ƒY‚Ìƒ^[ƒjƒ“ƒOƒ|ƒCƒ“ƒg
-    const int max2animNum = 30;	//ƒTƒ}[ƒ\ƒ‹ƒg‚ÌÅ‘åƒtƒŒ[ƒ€
-    const int max3animNum = max2animNum + 25;	//‰ñ“]‚µ‚Ä—Í‚ğ‚½‚ß‚éÅ‘åƒtƒŒ[ƒ€
+private:    //å›ºæœ‰ã§å¿…è¦ãªã‚‚ã®
+    //ãƒ•ã‚§ãƒ¼ã‚ºã®ã‚¿ãƒ¼ãƒ‹ãƒ³ã‚°ãƒã‚¤ãƒ³ãƒˆ
+    const int max2animNum = 30;	//ã‚µãƒãƒ¼ã‚½ãƒ«ãƒˆã®æœ€å¤§ãƒ•ãƒ¬ãƒ¼ãƒ 
+    const int max3animNum = max2animNum + 25;	//å›è»¢ã—ã¦åŠ›ã‚’ãŸã‚ã‚‹æœ€å¤§ãƒ•ãƒ¬ãƒ¼ãƒ 
     const int max4animNum = max3animNum + 20;
     const int max5animNum = max4animNum + 45;
     const int max6animNum = max5animNum + 35;
     
-    int counterFrameCount = 0;  //ƒtƒF[ƒYŠÇ——pƒJƒEƒ“ƒ^
-    int phase = 0;  //ƒtƒF[ƒY
-    float kAccumulateRotVel = 0;    //‰ñ“]‚Ì‘¬“x‚ğ‰Á‘¬“x“I‚É’~Ï‚³‚¹‚é‚½‚ß‚Ì•Ï”
+    int counterFrameCount = 0;  //ãƒ•ã‚§ãƒ¼ã‚ºç®¡ç†ç”¨ã‚«ã‚¦ãƒ³ã‚¿
+    int phase = 0;  //ãƒ•ã‚§ãƒ¼ã‚º
+    float kAccumulateRotVel = 0;    //å›è»¢ã®é€Ÿåº¦ã‚’åŠ é€Ÿåº¦çš„ã«è“„ç©ã•ã›ã‚‹ãŸã‚ã®å¤‰æ•°
 };

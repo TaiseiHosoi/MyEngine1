@@ -14,7 +14,7 @@
 class DirectXCommon
 {
 public:
-	// ‰Šú‰» 
+	// åˆæœŸåŒ– 
 	void Initialize(WinApp* winApp);
 	void InitializeDevice();
 	void InitializeCommand();
@@ -23,19 +23,19 @@ public:
 	void InitializeDepthBuffer();
 	void InitializeFence();
 
-	// •`‰æ‘Oˆ—
+	// æç”»å‰å‡¦ç†
 	void PreDraw();
-	// •`‰æŒãˆ—
+	// æç”»å¾Œå‡¦ç†
 	void PostDraw();
 
 	ID3D12Device* GetDevice() const { return device_.Get(); }
 	ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
-	//ƒoƒbƒNƒoƒbƒn‚Ì”‚ğwæ“¾
+	//ãƒãƒƒã‚¯ãƒãƒƒãƒã®æ•°ã‚’wå–å¾—
 	size_t GetBackBufferCount() const { return backBuffers.size(); }
 private:
-	void InitializeFixFPS();	//‰Šú‰»
-	void UpdateFixFPS();	//FPSŒÅ’èXV
-	//‹L˜^ŠÔ
+	void InitializeFixFPS();	//åˆæœŸåŒ–
+	void UpdateFixFPS();	//FPSå›ºå®šæ›´æ–°
+	//è¨˜éŒ²æ™‚é–“
 	std::chrono::steady_clock::time_point reference_;
 
 private:

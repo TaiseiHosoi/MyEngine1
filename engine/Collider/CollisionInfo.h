@@ -4,7 +4,7 @@
 class Object3d;
 class BaseCollider;
 
-//Õ“Ëî•ñ
+//è¡çªæƒ…å ±
 struct CollisionInfo
 {
 public:
@@ -15,11 +15,11 @@ public:
 		this->inter = inter;
 	}
 
-	//Õ“Ë‘Šè‚ÌƒIƒuƒWƒFƒNƒg
+	//è¡çªç›¸æ‰‹ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	Object3d* object = nullptr;
-	//Õ“Ë‘Šè‚ÌƒRƒ‰ƒCƒ_[
+	//è¡çªç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 	BaseCollider* collider = nullptr;
-	//Õ“Ë“X
+	//è¡çªåº—
 	Vector3 inter;
 
 };

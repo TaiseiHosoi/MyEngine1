@@ -170,7 +170,7 @@ Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t
 	}
 
 
-	float theta = acos(dot);
+	float theta = acosf(dot);
 
 	float scale1 = (sinf((1 - t) * theta) / sinf(theta));
 	float scale2 = sinf(t * theta) / sinf(theta);
@@ -193,19 +193,19 @@ float Quaternion::Dot(const Quaternion& q0, const Quaternion& q1)
 
 Quaternion Quaternion::DirectionToDirection(const Vector3& u, const Vector3& v)
 {
-	// u‚Æv‚ğ³‹K‰»‚µ‚Ä“àÏ‚ğ‹‚ß‚éBu,v‚ğ’PˆÊƒxƒNƒgƒ‹‘O’ñ‚Æ‚·‚é‚È‚ç³‹K‰»‚Í•s—v
+	// uã¨vã‚’æ­£è¦åŒ–ã—ã¦å†…ç©ã‚’æ±‚ã‚ã‚‹ã€‚u,vã‚’å˜ä½ãƒ™ã‚¯ãƒˆãƒ«å‰æã¨ã™ã‚‹ãªã‚‰æ­£è¦åŒ–ã¯ä¸è¦
 	float dot = u.x * v.x + u.y * v.y + u.z * v.z;
 
-	// ŠOÏ‚ğ‚Æ‚é
+	// å¤–ç©ã‚’ã¨ã‚‹
 	Vector3 cross = u.cross(v);
 
-	// ²‚Í’PˆÊƒxƒNƒgƒ‹‚Å‚ ‚é•K—v‚ª‚ ‚é‚Ì‚Å³‹K‰»
+	// è»¸ã¯å˜ä½ãƒ™ã‚¯ãƒˆãƒ«ã§ã‚ã‚‹å¿…è¦ãŒã‚ã‚‹ã®ã§æ­£è¦åŒ–
 	Vector3 axis = cross.nomalize();
 
-	// ’PˆÊƒxƒNƒgƒ‹‚Å‚È‚¢È‚ğæ‚Á‚Ä‚¢‚é‚Ì‚Åacos‚ÅŠp“x‚ğ‹‚ß‚é
-	float theta = acos(dot);
+	// å˜ä½ãƒ™ã‚¯ãƒˆãƒ«ã§ãªã„å¸­ã‚’å–ã£ã¦ã„ã‚‹ã®ã§acosã§è§’åº¦ã‚’æ±‚ã‚ã‚‹
+	float theta = acosf(dot);
 
-	// axis‚Ætheta‚Å”CˆÓ²‰ñ“]‚ğì‚Á‚Ä•Ô‚·
+	// axisã¨thetaã§ä»»æ„è»¸å›è»¢ã‚’ä½œã£ã¦è¿”ã™
 	Quaternion result;
 
 	result = MakeAxisAngle(axis, theta);

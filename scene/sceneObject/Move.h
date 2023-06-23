@@ -18,16 +18,16 @@ public:
 private:
 
     Input* input_ = Input::GetInstance();
-private:   //‚Ç‚Ìs“®‚Å‚à•K—v
+private:   //ã©ã®è¡Œå‹•ã§ã‚‚å¿…è¦
     int animNum;
     int animFlameCT;
     FBXObject3d* gameObject_;
 
-private:    //ŒÅ—L‚Å•K—v‚È‚à‚Ì
+private:    //å›ºæœ‰ã§å¿…è¦ãªã‚‚ã®
     Vector3 velocity_;
-    //ˆÚ“®‘¬“x
+    //ç§»å‹•é€Ÿåº¦
     const float kMoveSpeed_ = 0.1f;
-    //ù‰ñ‘¬“x
+    //æ—‹å›é€Ÿåº¦
     const float kTurnSpeed_ = MathFunc::Dig2Rad(10);
     bool isRun_ = false;
     Vector3 faceAngle_ = {};

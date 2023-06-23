@@ -11,11 +11,11 @@
 
 namespace MathFunc {
 
-	//‰~ü—¦
+	//å††å‘¨ç‡
 	const float PI = 3.141592654f;
-	// “x”–@->ƒ‰ƒWƒAƒ“•ÏŠ·
+	// åº¦æ•°æ³•->ãƒ©ã‚¸ã‚¢ãƒ³å¤‰æ›
 	float Dig2Rad(float value);
-	// ƒ‰ƒWƒAƒ“->“x”–@•ÏŠ· 
+	// ãƒ©ã‚¸ã‚¢ãƒ³->åº¦æ•°æ³•å¤‰æ› 
 	float Rad2Dig(float value);
 
 	Matrix4 Initialize();
@@ -33,7 +33,7 @@ namespace MathFunc {
 	Vector3 bVelocity(Vector3& velocity, Matrix4& mat);
 
 
-	//À•W•ÏŠ·
+	//åº§æ¨™å¤‰æ›
 	Vector3 wDivision(const Vector3& v, const Matrix4& m);
 
 	float FieldOfViewY(float focalLengs, float sensor);

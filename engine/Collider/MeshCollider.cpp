@@ -2,13 +2,13 @@
 #include "Collision.h"
 #include "imgui.h"
 
-//OŠpŒ`‚Ì”z—ñ‚ğ\’z‚·‚é
+//ä¸‰è§’å½¢ã®é…åˆ—ã‚’æ§‹ç¯‰ã™ã‚‹
 void MeshCollider::ConstructTriangles(Mesh* model)
 {
-	//OŠpŒ`ƒŠƒXƒg‚ğƒNƒŠƒA
+	//ä¸‰è§’å½¢ãƒªã‚¹ãƒˆã‚’ã‚¯ãƒªã‚¢
 	triangles.clear();
 
-	//ƒCƒ“ƒfƒbƒNƒX”z—ñ‚ğæ“¾
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—ã‚’å–å¾—
 	const std::vector<unsigned short>& indices = model->GetInidices();
 	const std::vector<Mesh::VertexPosNormalUv>& vertices = model->GetVertices();
 
@@ -41,13 +41,13 @@ void MeshCollider::ConstructTriangles(Mesh* model)
 
 }
 
-//XVˆ—
+//æ›´æ–°å‡¦ç†
 void MeshCollider::Update()
 {
 	objectMatWorld = GetObject3d()->GetMatWorld();
 }
 
-//‹…‚Æ‚Ì“–‚½‚è”»’è
+//çƒã¨ã®å½“ãŸã‚Šåˆ¤å®š
 bool MeshCollider::CheckCollisionSphere(const Sphere& sphere , Vector3* inter)
 {
 	Sphere localSphere;

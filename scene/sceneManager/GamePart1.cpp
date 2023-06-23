@@ -11,7 +11,7 @@ GamePart1::~GamePart1() {
 
 void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
-	//‰¹‚Ì‰Šú‰»‚Æ“Ç‚İ‚İ
+	//éŸ³ã®åˆæœŸåŒ–ã¨èª­ã¿è¾¼ã¿
 	audio_ = std::make_unique<Audio>();
 	audio_->Initialize();
 	audio_->LoadWave("newspaper.wav");
@@ -72,7 +72,7 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
 void GamePart1::Update(Input* input, GameCamera* camera) {
 
-	//BGM‚ğ—¬‚·
+	//BGMã‚’æµã™
 	PlaySounds();
 
 	
@@ -108,7 +108,7 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 	else if (backToTitle_ == true) {
 		_controller->ChangeScene(new TitleScene(_controller));
 	}
-	// ‚±‚±‚©‚ç‰º‚ÉƒR[ƒh‘‚­‚Æƒƒ‚ƒŠŒN‚ªƒGƒ‰[“f‚­
+	// ã“ã“ã‹ã‚‰ä¸‹ã«ã‚³ãƒ¼ãƒ‰æ›¸ãã¨ãƒ¡ãƒ¢ãƒªå›ãŒã‚¨ãƒ©ãƒ¼åã
 }
 
 void GamePart1::Draw(DirectXCommon* dxCommon) {
@@ -143,12 +143,12 @@ void GamePart1::Draw(DirectXCommon* dxCommon) {
 void GamePart1::Pause(Input* input, GameCamera* camera)
 {
 
-	//ESC‚Åƒ|[ƒY‰ğœ
+	//ESCã§ãƒãƒ¼ã‚ºè§£é™¤
 	if (input->TriggerKey(DIK_ESCAPE)) {
 		isPause_ = false;
 	}
 
-	//–îˆóƒL[ã‰º‚Å‘I‘ğˆ‚Ì•ÏX
+	//çŸ¢å°ã‚­ãƒ¼ä¸Šä¸‹ã§é¸æŠè‚¢ã®å¤‰æ›´
 	if (input->TriggerKey(DIK_DOWN)) {
 		if (pauseMenuOptions_ < END_OF_OPTION - 1)
 			pauseMenuOptions_++;
@@ -158,7 +158,7 @@ void GamePart1::Pause(Input* input, GameCamera* camera)
 			pauseMenuOptions_--;
 	}
 
-	//ƒGƒ‰[‰ñ”ğ—p
+	//ã‚¨ãƒ©ãƒ¼å›é¿ç”¨
 	if (pauseMenuOptions_ < 0) {
 		pauseMenuOptions_ = 0;
 	}
@@ -166,17 +166,17 @@ void GamePart1::Pause(Input* input, GameCamera* camera)
 		pauseMenuOptions_ = END_OF_OPTION - 1;
 	}
 
-	//ƒGƒ“ƒ^[ƒL[‚ğ‰Ÿ‚µ‚½‚Æ‚«
+	//ã‚¨ãƒ³ã‚¿ãƒ¼ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸã¨ã
 	if (input->TriggerKey(DIK_RETURN)) {
 
 		switch (pauseMenuOptions_)
 		{
-			//ÄŠJ‚·‚é
+			//å†é–‹ã™ã‚‹
 		case GamePart1::RESUME:
 		isPause_ = false;
 		break;
 
-		//ƒ^ƒCƒgƒ‹‚É–ß‚é
+		//ã‚¿ã‚¤ãƒˆãƒ«ã«æˆ»ã‚‹
 		case GamePart1::BACK_TO_TITLE:
 		backToTitle_ = true;
 		isPause_ = false;
@@ -199,6 +199,6 @@ void GamePart1::PlaySounds()
 	if (isSounds == false)
 	{
 		isSounds = true;
-		audio_->PlayWave("newspaper.wav"); //ƒ‹[ƒvÄ¶‚Í‚µ‚È‚¢
+		audio_->PlayWave("newspaper.wav"); //ãƒ«ãƒ¼ãƒ—å†ç”Ÿã¯ã—ãªã„
 	}
 }

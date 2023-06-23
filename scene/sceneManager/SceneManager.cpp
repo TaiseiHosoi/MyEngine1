@@ -3,7 +3,7 @@
 #include <cassert>
 #include "DirectXCommon.h"
 
-// ƒV[ƒ“‚ÌƒCƒ“ƒNƒ‹[ƒh
+// ã‚·ãƒ¼ãƒ³ã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 #include "SceneIntegrate.h"
 
 
@@ -19,7 +19,7 @@ SceneManager::~SceneManager() {
 }
 void SceneManager::ObjectInitialize() {
 
-	//ƒXƒvƒ‰ƒCƒg‰Šú‰»
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆåˆæœŸåŒ–
 	spriteCommon_ = std::make_unique<SpriteCommon>();
 	spriteCommon_->Initialize(_dxCommon);
 	// TITLE
@@ -42,7 +42,7 @@ void SceneManager::ObjectInitialize() {
 	audio->Initialize();
 
 
-	// fbx ƒeƒXƒg
+	// fbx ãƒ†ã‚¹ãƒˆ
 	{
 		hitokunFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("lowpoliInukun",true));
 		//Player
@@ -59,10 +59,10 @@ void SceneManager::ObjectInitialize() {
 		_camera->SetTargetPos(boss_.get()->GetObject3d()->GetWorldTransformPtr());
 	}
 
-	//ƒp[ƒeƒBƒNƒ‹‚ÌƒZƒbƒg
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®ã‚»ãƒƒãƒˆ
 	particleManager_ = std::make_unique<ParticleManager>();
 	particleManager_.get()->Initialize();
-	//ƒp[ƒeƒBƒNƒ‹—p‘fŞ
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”¨ç´ æ
 	particleManager_->LoadTexture("effect.png");
 	particleManager_->Update();
 	

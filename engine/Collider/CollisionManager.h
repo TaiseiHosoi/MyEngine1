@@ -11,15 +11,15 @@ class CollisionManager
 public:
 	static CollisionManager* GetInstance();
 
-	//ƒƒ“ƒoŠÖ”
+	//ãƒ¡ãƒ³ãƒé–¢æ•°
 public:
-	//ƒRƒ‰ƒCƒ_[‚Ì’Ç‰Á
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®è¿½åŠ 
 	inline void AddCollider(BaseCollider* collider)
 	{
 		colliders.push_front(collider);
 	}
 
-	//ƒRƒ‰ƒCƒ_[‚Ìíœ
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å‰Šé™¤
 	inline void RemoveCollider(BaseCollider* collider)
 	{
 		colliders.remove(collider);
@@ -35,7 +35,7 @@ private:
 	~CollisionManager() = default;
 	CollisionManager& operator= (const CollisionManager&) = delete;
 
-	//ƒRƒ‰ƒCƒ_[‚ÌƒŠƒXƒg
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ãƒªã‚¹ãƒˆ
 	std::forward_list<BaseCollider*> colliders;
 
 };

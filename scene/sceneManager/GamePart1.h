@@ -1,7 +1,7 @@
 #pragma once
 #include "IScene.h"
 
-// ’Ç‚¢‚©‚¯ƒp[ƒg
+// è¿½ã„ã‹ã‘ãƒ‘ãƒ¼ãƒˆ
 class GamePart1 :
     public IScene
 {
@@ -39,12 +39,12 @@ private:
 
 	bool isClickL, isClickR;
 
-	//ƒ|[ƒYƒƒjƒ…[—p•Ï”
+	//ãƒãƒ¼ã‚ºãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”¨å¤‰æ•°
 	int isPause_;
 	int pauseMenuOptions_;
 	bool backToTitle_;
 
-	//‰¹—p•Ï”
+	//éŸ³ç”¨å¤‰æ•°
 	bool isSounds = false;
 	std::unique_ptr<Audio> audio_;
 

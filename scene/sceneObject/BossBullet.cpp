@@ -24,7 +24,7 @@ void BossBullet::Initialize(Mesh* model , const Vector3& position)
 
 #pragma endregion
 	//精度の決定
-	homingAccuary_ = accuaryDist(engine);
+	homingAccuary_ = static_cast<int>(accuaryDist(engine));
 
 	//回転行列を用意
 	Matrix4 matRot = matRot.identity();
@@ -256,7 +256,7 @@ void BossBullet::Homing2()
 
 	/*kBulletSpeed = Ease::OutQuad(change, 0, 75, kHomingTimer_);*/
 
-	kBulletSpeed = 2.0f*Ease::InQuad(change, 0,60, kHomingTimer_);
+	kBulletSpeed = 2.0f*static_cast<float>(Ease::InQuad(change, 0,60, kHomingTimer_));
 	//タイマーが0以下の時
 	if (kHomingTimer_ < 50) {
 

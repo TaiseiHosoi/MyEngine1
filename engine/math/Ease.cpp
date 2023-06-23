@@ -1,19 +1,19 @@
 #include "Ease.h"
 
-double Ease::InQuad(double change, double base, double duration, double time) {	//ƒC[ƒWƒ“ƒOƒCƒ“
+double Ease::InQuad(double change, double base, double duration, double time) {	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã‚¤ãƒ³
 	time /= duration;
-	return change * time * time + base;	//change‚ÍˆÚ“®—ÊBbase‚ÍÅ‰‚ÌˆÊ’uBduration‚ÍˆÚ“®ŠÔ‚ÅAtime‚ªŒ»İ‚ÌŒo‰ßŠÔ
+	return change * time * time + base;	//changeã¯ç§»å‹•é‡ã€‚baseã¯æœ€åˆã®ä½ç½®ã€‚durationã¯ç§»å‹•æ™‚é–“ã§ã€timeãŒç¾åœ¨ã®çµŒéæ™‚é–“
 }
 
 double Ease::OutQuad(double change, double base, double duration, double time)
-{	//ƒC[ƒWƒ“ƒOƒAƒEƒg
+{	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã‚¢ã‚¦ãƒˆ
 	time /= duration;
 	double ans = change * (1 - (1 - time) * (1 - time) + base);
 	return ans;
 }
 
 double Ease::InOutQuad(double change, double base, double duration, double time)
-{	//ƒC[ƒWƒ“ƒOƒCƒ“ƒAƒEƒg
+{	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã‚¤ãƒ³ã‚¢ã‚¦ãƒˆ
 	time /= duration / 2;
 	if (time < 1) return change / 2 * time * time + base;
 	return -change / 2 * ((--time) * (time - 2) - 1) + base;

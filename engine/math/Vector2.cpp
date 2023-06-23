@@ -1,4 +1,4 @@
-﻿#include "Vector2.h"
+#include "Vector2.h"
 #include<cmath>  //sprt
 
 Vector2::Vector2() :x(0), y(0)
@@ -75,7 +75,11 @@ const Vector2 operator-(const Vector2& v1, const Vector2& v2)
 const Vector2 operator*(const Vector2& v, float s)
 {
 	Vector2 temp(v);
-	return temp * s;
+
+	temp.x *= s;
+	temp.y *= s;
+
+	return temp;
 }
 
 const Vector2 operator*(float s, const Vector2& v)
@@ -86,5 +90,9 @@ const Vector2 operator*(float s, const Vector2& v)
 const Vector2 operator/(const Vector2& v, float s)
 {
 	Vector2 temp(v);
-	return temp / s;
+
+	temp.x /= s;
+	temp.y /= s;
+
+	return temp;
 }

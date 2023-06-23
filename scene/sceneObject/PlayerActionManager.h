@@ -18,7 +18,7 @@
 class Input;
 class PlayerAction;
 
-typedef enum ACTION_NUM {
+enum ACTION_NUM {
 	move,	//0
 	stop,	//1
 	atk1,	//2
@@ -31,42 +31,42 @@ class PlayerActionManager
 private:
 	std::shared_ptr<PlayerAction> _action;
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	PlayerActionManager();
 
-	//ƒfƒXƒgƒ‰ƒNƒ^
+	//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	~PlayerActionManager();
 
 	
 
 public:
-	// Šes“®‚ÌInitialize‚ğŒÄ‚Ño‚·
+	// å„è¡Œå‹•ã®Initializeã‚’å‘¼ã³å‡ºã™
 	void PActionInitialize(FBXObject3d* gameObject);
-	// Šes“®‚ÌUpdate‚ğŒÄ‚Ño‚·
+	// å„è¡Œå‹•ã®Updateã‚’å‘¼ã³å‡ºã™
 	void ActionUpdate(Input* input);
-	// Šes“®‚ÌDraw‚ğŒÄ‚Ño‚·
+	// å„è¡Œå‹•ã®Drawã‚’å‘¼ã³å‡ºã™
 	void ActionDraw();
-	// ƒV[ƒ“‚ğ•ÏX‚·‚é
+	// ã‚·ãƒ¼ãƒ³ã‚’å¤‰æ›´ã™ã‚‹
 	void ChangeAction(PlayerAction* pAction);
-	// ƒRƒ‰ƒCƒ_[‚Ì‰Šú‰»
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®åˆæœŸåŒ–
 	void ColliderInitialize(std::vector<SphereCollider*>* sphere, const int sphereColNum);
 
-	//í‚És‚¤ˆ—
+	//å¸¸ã«è¡Œã†å‡¦ç†
 	void DamagePlayer();
 	
 	
 
 	
 public:
-	//‰~ƒRƒ‰ƒCƒ_[ptræ“¾
+	//å††ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ptrå–å¾—
 	std::vector<SphereCollider*>* GetSphere() { return sphere_; };
 	int GetSphereColNum() { return SPHERE_COLISSION_NUM; }
 
-	//Œ»İ‚ÌƒAƒN‚µ‚å‚ñæ“¾
+	//ç¾åœ¨ã®ã‚¢ã‚¯ã—ã‚‡ã‚“å–å¾—
 	int GetNowActNum() { return nowActNum; };
 	void SetNowActNum(const int num) { nowActNum = num; };
 
-private: // ƒƒ“ƒo•Ï”
+private: // ãƒ¡ãƒ³ãƒå¤‰æ•°
 	FBXObject3d* gameObject_;
 	
 	std::vector<SphereCollider*>* sphere_;

@@ -18,15 +18,15 @@ public:
 private:
     Input* input_ = Input::GetInstance();
 
-private:   //‚Ç‚Ìs“®‚Å‚à•K—v
-    int animNum;    //‰½”ÔƒAƒjƒ[ƒVƒ‡ƒ“‚©
-    int animFlameCT;    //ƒtƒŒ[ƒ€”ƒJƒEƒ“ƒg(ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX—p)
+private:   //ã©ã®è¡Œå‹•ã§ã‚‚å¿…è¦
+    int animNum;    //ä½•ç•ªã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‹
+    int animFlameCT;    //ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã‚«ã‚¦ãƒ³ãƒˆ(ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ç”¨)
     FBXObject3d* gameObject_;
 
-private:    //ŒÅ—L‚Å•K—v‚È‚à‚Ì
-    bool isAtk = false; //UŒ‚s“®©‘Ì‚Ìƒtƒ‰ƒO
-    bool isNextAtk = false; //Ÿ‚ÌUŒ‚ƒRƒ“ƒ{‚É‘JˆÚ‚·‚é‚©
-    bool isCombo1 = false;  //’Ü‚Ğ‚Á‚©‚«UŒ‚
-    bool isCombo2 = false;  //‰ñ“]“Ëi
-    int atkMovePhase = 0;   //‚»‚Ìs“®‚Ì’†‚Ås“®‚Ì‡”Ô‚ğŠÇ—‚·‚é(—á:1.ƒuƒŒƒX‚ğ‚½‚ß‚é¨2.ƒuƒŒƒX‚ğ•ú‚Â)
+private:    //å›ºæœ‰ã§å¿…è¦ãªã‚‚ã®
+    bool isAtk = false; //æ”»æ’ƒè¡Œå‹•è‡ªä½“ã®ãƒ•ãƒ©ã‚°
+    bool isNextAtk = false; //æ¬¡ã®æ”»æ’ƒã‚³ãƒ³ãƒœã«é·ç§»ã™ã‚‹ã‹
+    bool isCombo1 = false;  //çˆªã²ã£ã‹ãæ”»æ’ƒ
+    bool isCombo2 = false;  //å›è»¢çªé€²
+    int atkMovePhase = 0;   //ãã®è¡Œå‹•ã®ä¸­ã§è¡Œå‹•ã®é †ç•ªã‚’ç®¡ç†ã™ã‚‹(ä¾‹:1.ãƒ–ãƒ¬ã‚¹ã‚’ãŸã‚ã‚‹â†’2.ãƒ–ãƒ¬ã‚¹ã‚’æ”¾ã¤)
 };

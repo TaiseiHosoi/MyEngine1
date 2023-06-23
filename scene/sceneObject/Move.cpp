@@ -48,8 +48,8 @@ void Move::Update(Input* input)
 		gameObject_->AnimFlameInter(animFlameCT, maxFlame);
 	}*/
 
-	//-----s“®ˆ—-----//
-	//‘¬“x‚ð0‚É‚·‚é
+	//-----è¡Œå‹•å‡¦ç†-----//
+	//é€Ÿåº¦ã‚’0ã«ã™ã‚‹
 	velocity_ = { 0 , 0 , 0 };
 
 	Vector3 cameraAngle_ = { 0.0f,
@@ -60,7 +60,7 @@ void Move::Update(Input* input)
 	Vector3 nowPos = gameObject_->GetPosition();
 	
 
-	//ƒL[“ü—Í‚ª‚ ‚Á‚½‚ç
+	//ã‚­ãƒ¼å…¥åŠ›ãŒã‚ã£ãŸã‚‰
 	if (input_->PushKey(DIK_W) ||
 		input_->PushKey(DIK_A) ||
 		input_->PushKey(DIK_S) ||
@@ -68,12 +68,12 @@ void Move::Update(Input* input)
 	{
 		
 
-		//ZŽ²•ûŒü‚É‚Ì‘¬“x‚ð“ü‚ê‚é
+		//Zè»¸æ–¹å‘ã«ã®é€Ÿåº¦ã‚’å…¥ã‚Œã‚‹
 		velocity_ = { 0 , 0 , kMoveSpeed_ };
 
 		float kDiagonalSpeed = kMoveSpeed_ * 0.707f;
 
-		//W,D‚ð‰Ÿ‚µ‚Ä‚¢‚½‚ç
+		//W,Dã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
 		if (input_->PushKey(DIK_W) && input_->PushKey(DIK_D))
 		{
 			nowPos.x += kDiagonalSpeed;
@@ -81,7 +81,7 @@ void Move::Update(Input* input)
 
 		}
 
-		//W,A‚ð‰Ÿ‚µ‚Ä‚¢‚½‚ç
+		//W,Aã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
 		else if (input_->PushKey(DIK_W) && input_->PushKey(DIK_A))
 		{
 
@@ -90,7 +90,7 @@ void Move::Update(Input* input)
 
 		}
 
-		//S,D‚ð‰Ÿ‚µ‚Ä‚¢‚½‚ç
+		//S,Dã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
 		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_D))
 		{
 
@@ -99,7 +99,7 @@ void Move::Update(Input* input)
 
 		}
 
-		//S,A‚ð‰Ÿ‚µ‚Ä‚¢‚½‚ç
+		//S,Aã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
 		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_A))
 		{
 			nowPos.x -= kDiagonalSpeed;
@@ -107,28 +107,28 @@ void Move::Update(Input* input)
 
 		}
 
-		//W‚ð‰Ÿ‚µ‚Ä‚¢‚½‚ç
+		//Wã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
 		else if (input_->PushKey(DIK_W))
 		{
 			nowPos.y += kMoveSpeed_;
 			
 		}
 
-		//S‚ð‰Ÿ‚µ‚Ä‚¢‚½‚ç
+		//Sã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
 		else if (input_->PushKey(DIK_S))
 		{
 			nowPos.y -= kMoveSpeed_;
 			
 		}
 
-		//D‚ð‰Ÿ‚µ‚Ä‚¢‚½‚ç
+		//Dã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
 		else if (input_->PushKey(DIK_D))
 		{
 			nowPos.x += kMoveSpeed_;
 			
 		}
 
-		//A‚ð‰Ÿ‚µ‚Ä‚¢‚½‚ç
+		//Aã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
 		else if (input_->PushKey(DIK_A))
 		{
 			nowPos.x -= kMoveSpeed_;

@@ -42,7 +42,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	gameObject_->Update();
 
 
-	SPHERE_COLISSION_NUM = gameObject_->GetBonesMatPtr()->size();
+	SPHERE_COLISSION_NUM = static_cast<int>(gameObject_->GetBonesMatPtr()->size());
 	sphere.resize(SPHERE_COLISSION_NUM);
 	spherePos.resize(SPHERE_COLISSION_NUM);
 	gameObject_.get()->isBonesWorldMatCalc = true;
@@ -90,7 +90,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	particle_->Update();
 
 	// 現在時刻を取得してシード値とする
-	std::srand(std::time(nullptr));
+	std::srand(static_cast<int>(std::time(nullptr)));
 
 	//初期化
 	FbxPlayer::isAtkCollide = false;
@@ -196,7 +196,7 @@ void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 
 void FbxPlayer::minusHp(int damage)
 {
-	hp - damage;
+	hp -= damage;
 }
 
 FBXObject3d* FbxPlayer::GetObject3d()

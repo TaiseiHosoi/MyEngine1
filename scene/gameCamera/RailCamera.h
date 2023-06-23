@@ -8,12 +8,12 @@ class RailCamera
 public:
 	void Initialize();
 	void Update(WorldTransform worldTransform);
-	//ゲッター
+	//繧ｲ繝�繧ｿ繝ｼ
 	ViewProjection GetViewProjection() { return viewProjection_; }
 private:
 	WorldTransform worldTransform_;
 	ViewProjection viewProjection_;
-	//自機とカメラの距離
+	//閾ｪ讖溘→繧ｫ繝｡繝ｩ縺ｮ霍晞屬
 	float length = 20.0f;
 };
 

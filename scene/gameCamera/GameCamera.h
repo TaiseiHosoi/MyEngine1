@@ -7,7 +7,7 @@ class GameCamera :
 	public Camera
 {
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GameCamera(int window_width , int window_height , Input* input);
 	void Initialize();
 	void Update();
@@ -21,20 +21,20 @@ public:
 	void ViewPointMovement();
 
 
-	//ƒVƒFƒCƒN—p
-	float randomFloat(float min , float max);	//ƒ‰ƒ“ƒ_ƒ€‚ğˆø‚«o‚·
+	//ã‚·ã‚§ã‚¤ã‚¯ç”¨
+	float randomFloat(float min , float max);	//ãƒ©ãƒ³ãƒ€ãƒ ã‚’å¼•ãå‡ºã™
 	void ShakePrim();
 	static void SetShakePrimST(float dura , float mag , bool isShakePrim);
 
 	void SetShakeVec(Vector3 shakeVec);
 
-	//ƒJƒƒ‰‚ÌŒü‚«‚ğŒvZ‚·‚éŠÖ”
+	//ã‚«ãƒ¡ãƒ©ã®å‘ãã‚’è¨ˆç®—ã™ã‚‹é–¢æ•°
 	void CulDirection();
 
-	//ƒvƒŒƒCƒ„[‚ğ’Ç]‚·‚é
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’è¿½å¾“ã™ã‚‹
 	void FollowPlayer();
 
-	// ƒV[ƒ“Ø‚è‘Ö‚¦—p
+	// ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆç”¨
 	void ChangeFollowFlag(bool flag);
 
 	void SetIsPause(bool isPause)
@@ -52,7 +52,7 @@ private:
 	bool isFollowPlayer_ = true;
 	bool isTargetenemy_ = false;
 
-	//ƒJƒƒ‰‹——£ŠÖŒW
+	//ã‚«ãƒ¡ãƒ©è·é›¢é–¢ä¿‚
 	const Vector3 PRYMARY_CAMERA_POS = { 0.f,10.f,0.f };
 	const float  MAX_CAMERA_DISTANCE = 50.0f;
 	const float  MIN_CAMERA_DISTANCE = 7.0f;
@@ -61,20 +61,20 @@ private:
 	int cameraModeChangeCountTimer = 30;
 	float cameraHeight_ = 6;
 	
-	//ShakePrim—p•Ï”
-	static float magnitude;	//ƒVƒFƒCƒN‚Ì‹­‚³
-	static float duration;//ƒVƒFƒCƒN‚ğ‹N‚±‚·ŠÔ
+	//ShakePrimç”¨å¤‰æ•°
+	static float magnitude;	//ã‚·ã‚§ã‚¤ã‚¯ã®å¼·ã•
+	static float duration;//ã‚·ã‚§ã‚¤ã‚¯ã‚’èµ·ã“ã™æ™‚é–“
 	static bool isShake;
 	float elapsedTime = 0.0f;
-	const float deltaTime = 0.016f;	//1.0f‚ğ1•b(60FPS)‚Æl‚¦‚½Û‚Ì1F
+	const float deltaTime = 0.016f;	//1.0fã‚’1ç§’(60FPS)ã¨è€ƒãˆãŸéš›ã®1F
 	Vector3 loolAtPos = {};
 	Vector3 shakeVec_ = {0 , 0 , 0};
 
-	//ƒ}ƒEƒXƒJƒƒ‰—p
+	//ãƒã‚¦ã‚¹ã‚«ãƒ¡ãƒ©ç”¨
 	Vector3 rotation_ = {0 , 0 , 0};
 	Vector3 dir_ = {0 , 0 , 1.f};
 	Vector2 mouseMove;
-	float mouseSensitivity_ = 0.05;	//ƒ}ƒEƒXŠ´“x
+	float mouseSensitivity_ = 0.05f;	//ãƒã‚¦ã‚¹æ„Ÿåº¦
 	bool isPause_;
 };
 

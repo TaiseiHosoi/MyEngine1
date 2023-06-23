@@ -22,19 +22,19 @@ void Guard::Initialize(FBXObject3d* gameObject)
 	animFlameCT = 0;;
 	gameObject_->PlayAnimation(animNum);
 
-	//‚ª[‚Ç‚ªƒIƒ“‚É‚È‚Á‚½Û‚Ì‰Šú‰»
-	//ƒtƒ‰ƒOŠÇ—
+	//ãŒãƒ¼ã©ãŒã‚ªãƒ³ã«ãªã£ãŸéš›ã®åˆæœŸåŒ–
+	//ãƒ•ãƒ©ã‚°ç®¡ç†
 	isGuardExcute = false;
 	isGuard = true;
 	isCounter = false;
-	//ƒJƒEƒ“ƒg‰Šú‰»
+	//ã‚«ã‚¦ãƒ³ãƒˆåˆæœŸåŒ–
 	guardMovePhase = 0;
 	animFlameCT = 0;
 	animNum = 6;
 	gameObject_->PlayAnimation(animNum);
 	gameObject_->AnimIsRotateChange(true);
 
-	//“–‚½‚è”»’èƒ|ƒCƒ“ƒ^
+	//å½“ãŸã‚Šåˆ¤å®šãƒã‚¤ãƒ³ã‚¿
 	sphere_ = _pActManager->GetSphere();
 
 
@@ -62,9 +62,9 @@ void Guard::Update(Input* input)
 
 	if (isGuard == true) {
 
-		counterFrameCount++;	//ƒtƒ‰ƒO‚È‚ÇƒvƒƒOƒ‰ƒ€—p‚ÌƒJƒEƒ“ƒ^[
+		counterFrameCount++;	//ãƒ•ãƒ©ã‚°ãªã©ãƒ—ãƒ­ã‚°ãƒ©ãƒ ç”¨ã®ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼
 		if (animFlameCT < 10) {
-			animFlameCT++;	//ƒAƒjƒ[ƒVƒ‡ƒ“ê—pƒJƒEƒ“ƒ^[
+			animFlameCT++;	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å°‚ç”¨ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼
 		}
 		
 
@@ -106,7 +106,7 @@ void Guard::Update(Input* input)
 			animFlameCT++;
 		}
 
-		//ƒmƒbƒNƒoƒbƒNˆ—
+		//ãƒãƒƒã‚¯ãƒãƒƒã‚¯å‡¦ç†
 		if (animFlameCT < 20) {
 			
 			guardKnockVel = {cosf(gameObject_->wtf.rotation_.y), 0, sinf(gameObject_->wtf.rotation_.y)};
@@ -114,7 +114,7 @@ void Guard::Update(Input* input)
 			gameObject_->wtf.translation_ += guardKnockVel * (0.2f / static_cast<float>((maxCount - animFlameCT)));
 		}
 
-		//ÄƒK[ƒh
+		//å†ã‚¬ãƒ¼ãƒ‰
 		for (int i = 0; i < _pActManager->GetSphereColNum(); i++) {
 			if (sphere_->at(i)->GetIsHit() == true) {
 				if (sphere_->at(i)->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIES

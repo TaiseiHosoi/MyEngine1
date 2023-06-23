@@ -5,36 +5,36 @@
 using namespace DirectX;
 
 
-// ’¸“_ƒf[ƒ^\‘¢‘Ì
+// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 struct Vertex2
 {
-	XMFLOAT3 pos; // xyzÀ•W
-	XMFLOAT2 uv;  // uvÀ•W
+	XMFLOAT3 pos; // xyzåº§æ¨™
+	XMFLOAT2 uv;  // uvåº§æ¨™
 };
-//ƒXƒvƒ‰ƒCƒg
+//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 class Sprite {
 private:
-	// Microsoft::WRL::‚ğÈ—ª
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 public:
-	// ’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ìiƒ}ƒeƒŠƒAƒ‹j
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“ï¼ˆãƒãƒ†ãƒªã‚¢ãƒ«ï¼‰
 	struct ConstBufferDataMaterial {
-		XMFLOAT4 color; // F (RGBA)
+		XMFLOAT4 color; // è‰² (RGBA)
 	};
-	//’è”ƒoƒbƒtƒ@—p\‘¢‘Ìi‚RD•ÏŠ·s—ñj
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨æ§‹é€ ä½“ï¼ˆï¼“Då¤‰æ›è¡Œåˆ—ï¼‰
 	struct ConstBufferDataTransform {
-		XMMATRIX mat;	//3D•ÏŠ·s—ñ
+		XMMATRIX mat;	//3Då¤‰æ›è¡Œåˆ—
 	};
 
-	//’¸“_”Ô†
+	//é ‚ç‚¹ç•ªå·
 	enum VertexNumber {
-		LB,//¶‰º
-		LT,//¶ã
-		RB,//‰E‰º
-		RT,//‰Eã
+		LB,//å·¦ä¸‹
+		LT,//å·¦ä¸Š
+		RB,//å³ä¸‹
+		RT,//å³ä¸Š
 	};
 public:
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Initialize(SpriteCommon* spritecommon_, uint32_t texturerIndex = UINT32_MAX);
 
 	void Draw();
@@ -77,40 +77,40 @@ public:
 
 	XMFLOAT2 GetAnchorPonit() { return anchorpoint; }
 
-	/// ã‰º”½“]‚Ìİ’è
+	/// ä¸Šä¸‹åè»¢ã®è¨­å®š
 	void SetIsFlipY(bool isFlipY);
 
-	/// ¶‰E”½“]‚Ìİ’è
+	/// å·¦å³åè»¢ã®è¨­å®š
 	void SetIsFlipX(bool isFlipX);
 
-	//ƒeƒNƒXƒ`ƒƒƒTƒCƒY‚ğƒCƒ[ƒW‚É‡‚í‚¹‚é
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚ºã‚’ã‚¤ãƒ¡ãƒ¼ã‚¸ã«åˆã‚ã›ã‚‹
 	void AdjustTextureSize();
 
 private:
 	SpriteCommon* spritecomon;
 	HRESULT result;
-	// ’¸“_ƒf[ƒ^
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 	Vertex2 vertices[4] = {
 		// x      y     z       u     v
-		{{-0.4f, -0.7f, 0.0f}, {0.0f, 1.0f}}, // ¶‰º
-		{{-0.4f, +0.7f, 0.0f}, {0.0f, 0.0f}}, // ¶ã
-		{{+0.4f, -0.7f, 0.0f}, {1.0f, 1.0f}}, // ‰E‰º
-		{{+0.4f, +0.7f, 0.0f}, {1.0f, 0.0f}}, // ‰Eã
+		{{-0.4f, -0.7f, 0.0f}, {0.0f, 1.0f}}, // å·¦ä¸‹
+		{{-0.4f, +0.7f, 0.0f}, {0.0f, 0.0f}}, // å·¦ä¸Š
+		{{+0.4f, -0.7f, 0.0f}, {1.0f, 1.0f}}, // å³ä¸‹
+		{{+0.4f, +0.7f, 0.0f}, {1.0f, 0.0f}}, // å³ä¸Š
 	};
 	//XMFLOAT3 vertices[] = {
-	//{ -0.5f, -0.5f, 0.0f }, // ¶‰º
-	//{ -0.5f, +0.5f, 0.0f }, // ¶ã
-	//{ +0.5f, -0.5f, 0.0f }, // ‰E‰º
+	//{ -0.5f, -0.5f, 0.0f }, // å·¦ä¸‹
+	//{ -0.5f, +0.5f, 0.0f }, // å·¦ä¸Š
+	//{ +0.5f, -0.5f, 0.0f }, // å³ä¸‹
 	//};
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
 
-	XMMATRIX matScale;//ƒXƒP[ƒŠƒ“ƒOs—ñ
+	XMMATRIX matScale;//ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°è¡Œåˆ—
 	XMMATRIX matWorld;
-	XMMATRIX matRot;//‰ñ“]s—ñ
-	XMMATRIX  matTrans;//•½sˆÚ“®s—ñ
+	XMMATRIX matRot;//å›è»¢è¡Œåˆ—
+	XMMATRIX  matTrans;//å¹³è¡Œç§»å‹•è¡Œåˆ—
 
-	//À•W
+	//åº§æ¨™
 
 	XMFLOAT3 scale{ 0.5f, 0.5f, 1.0f };
 
@@ -134,24 +134,24 @@ private:
 
 	Vertex2* vertMap = nullptr;
 
-	//ƒeƒNƒXƒ`ƒƒ”Ô†
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç•ªå·
 	uint32_t textureIndex_ = 0;
 
-	//ƒeƒNƒXƒ`ƒƒ¶ãÀ•W
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£å·¦ä¸Šåº§æ¨™
 	XMFLOAT2 textureLeftTop = { 0.0f,0.0f };
-	//ƒeƒNƒXƒ`ƒƒØ‚èo‚µƒTƒCƒY
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£åˆ‡ã‚Šå‡ºã—ã‚µã‚¤ã‚º
 	XMFLOAT2 textureSize = { 100.0f,100.0f };
 
 	XMMATRIX matProjection;
 
-	// ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg
+	// ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ
 	XMFLOAT2 anchorpoint = { 0, 0 };
 
-	// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	ComPtr<ID3D12Resource> vertBuff;
 
-	// ¶‰E”½“]
+	// å·¦å³åè»¢
 	bool isFlipX = false;
-	// ã‰º”½“]
+	// ä¸Šä¸‹åè»¢
 	bool isFlipY = false;
 };

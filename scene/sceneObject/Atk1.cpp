@@ -30,14 +30,14 @@ void Atk1::Initialize(FBXObject3d* gameObject)
 void Atk1::Update(Input* input)
 {
 
-	//ƒJƒEƒ“ƒgƒvƒ‰ƒX
+	//ã‚«ã‚¦ãƒ³ãƒˆãƒ—ãƒ©ã‚¹
 	animFlameCT++;
 	
-	//ƒAƒjƒ[ƒVƒ‡ƒ“ˆ—
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å‡¦ç†
 	if (animFlameCT > 30)
 	{	
 		
-		//30ƒtƒŒ–Ú‚ÅƒAƒjƒ[ƒVƒ‡ƒ“I‚í‚è
+		//30ãƒ•ãƒ¬ç›®ã§ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çµ‚ã‚ã‚Š
 		if (isNextAtk == false) {
 			gameObject_->AnimFlameInter(animFlameCT, 80);
 			animNum = 5;
@@ -65,16 +65,16 @@ void Atk1::Update(Input* input)
 			isNextAtk = true;
 		}
 
-		//UŒ‚’†‚ÌˆÚ“®ˆ—
+		//æ”»æ’ƒä¸­ã®ç§»å‹•å‡¦ç†
 		int atkVelCt = animFlameCT - 15;
 		int ct = abs(atkVelCt);
-		float atkVel = Ease::InOutQuad(4.0, 0.0, 15, ct);
+		float atkVel = static_cast<float>(Ease::InOutQuad(4.0, 0.0, 15, ct));
 		Vector3 vel = { 0,0,0.3f };
 		vel = MathFunc::bVelocity(vel, gameObject_->wtf.matWorld_);
 		gameObject_->wtf.translation_ += vel * (4.0f - atkVel);
 
 		
-		//‰½ƒtƒŒ[ƒ€–Ú‚ÉUŒ‚”»’è‚ªo‚é‚©
+		//ä½•ãƒ•ãƒ¬ãƒ¼ãƒ ç›®ã«æ”»æ’ƒåˆ¤å®šãŒå‡ºã‚‹ã‹
 		if (animFlameCT > 5 && animFlameCT < 29) {
 			FbxPlayer::SetIsAtkCollide(true);
 		}
@@ -85,18 +85,18 @@ void Atk1::Update(Input* input)
 	}
 	else if (isCombo1 == true  && isCombo2 == false) {
 
-		//Ÿ‚ÌƒRƒ“ƒ{‚É‚Â‚È‚°‚é‚©‚Ç‚¤‚©
+		//æ¬¡ã®ã‚³ãƒ³ãƒœã«ã¤ãªã’ã‚‹ã‹ã©ã†ã‹
 		if (input_->TriggerMouseButton(0) && animFlameCT > 8) {
 			isNextAtk = true;
 		}
 
-		//ƒAƒjƒ[ƒVƒ‡ƒ“‚Æ‰Šú‰»ˆ—
+		//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¨åˆæœŸåŒ–å‡¦ç†
 		gameObject_->AnimFlameInter(animFlameCT, 40);
-		if (animFlameCT < 40) {	//40ƒtƒŒ[ƒ€‚Ü‚ÅƒAƒjƒ[ƒVƒ‡ƒ“
+		if (animFlameCT < 40) {	//40ãƒ•ãƒ¬ãƒ¼ãƒ ã¾ã§ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 			
 		}
 		else {
-			if (isNextAtk == false) {	//Ÿ‚Ìs“®‚É‘JˆÚ‚µ‚È‚¢
+			if (isNextAtk == false) {	//æ¬¡ã®è¡Œå‹•ã«é·ç§»ã—ãªã„æ™‚
 				gameObject_->AnimFlameInter(animFlameCT, 80);
 				animNum = 5;
 				gameObject_->PlayAnimation(animNum);
@@ -104,7 +104,7 @@ void Atk1::Update(Input* input)
 				isCombo1 = false;
 				animFlameCT = 0;
 			}
-			else {	//Ÿ‚ÌUŒ‚‚É‘JˆÚ
+			else {	//æ¬¡ã®æ”»æ’ƒã«é·ç§»
 				
 				animFlameCT = 0;
 				atkMovePhase = 0;
@@ -115,10 +115,10 @@ void Atk1::Update(Input* input)
 
 		}
 
-		//UŒ‚’†‚ÌˆÚ“®ˆ—
+		//æ”»æ’ƒä¸­ã®ç§»å‹•å‡¦ç†
 		int atkVelCt = animFlameCT - 20;
 		int ct = abs(atkVelCt);
-		float atkVel = Ease::InOutQuad(4.0, 0.0, 20, ct);
+		float atkVel = static_cast<float>(Ease::InOutQuad(4.0, 0.0, 20, ct));
 		float atkXVel;
 		if (animFlameCT < 20) {
 			atkXVel = 0.07f;
@@ -132,7 +132,7 @@ void Atk1::Update(Input* input)
 		gameObject_->wtf.translation_ += vel * (4.0f - atkVel);
 
 
-		//‰½ƒtƒŒ[ƒ€–Ú‚ÉUŒ‚”»’è‚ªo‚é‚©
+		//ä½•ãƒ•ãƒ¬ãƒ¼ãƒ ç›®ã«æ”»æ’ƒåˆ¤å®šãŒå‡ºã‚‹ã‹
 		if (animFlameCT > 5 && animFlameCT < 15 || animFlameCT > 25 && animFlameCT < 35) {
 			FbxPlayer::SetIsAtkCollide(true);
 		}
@@ -145,27 +145,27 @@ void Atk1::Update(Input* input)
 
 	//	if (atkMovePhase == 0) {
 	//		int maxCurrent = 30;
-	//		if (animFlameCT == 0) {	//‰ƒtƒŒ[ƒ€(‰Šú‰»)
+	//		if (animFlameCT == 0) {	//åˆãƒ•ãƒ¬ãƒ¼ãƒ (åˆæœŸåŒ–)
 	//			animNum = 2;
 	//			gameObject_->PlayAnimation(animNum);
 
 	//		}
 
-	//		//­‚µ‘Å‚¿ã‚ª‚é“®ì
+	//		//å°‘ã—æ‰“ã¡ä¸ŠãŒã‚‹å‹•ä½œ
 	//		gameObject_->SetPosition({ gameObject_->GetWorldTransform().translation_.x,
 	//			static_cast<float>(Ease::OutQuad(5, 0, maxCurrent,animFlameCT)),
 	//			gameObject_->GetWorldTransform().translation_.z }
 	//		);
 
-	//		//ƒAƒjƒ[ƒVƒ‡ƒ“
+	//		//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 	//		gameObject_->AnimFlameInter(animFlameCT, maxCurrent + 3);
 	//		
 	//		if (animFlameCT >= maxCurrent) {
-	//			atkMovePhase = 1;	//ƒJƒŒƒ“ƒgÅ‘å’l‚É‚È‚Á‚½‚çƒtƒF[ƒY‚ği‚ß‚é
+	//			atkMovePhase = 1;	//ã‚«ãƒ¬ãƒ³ãƒˆæœ€å¤§å€¤ã«ãªã£ãŸã‚‰ãƒ•ã‚§ãƒ¼ã‚ºã‚’é€²ã‚ã‚‹
 	//			animFlameCT = 0;
 	//		}
 
-	//		////‰½ƒtƒŒ[ƒ€–Ú‚ÉUŒ‚”»’è‚ªo‚é‚©
+	//		////ä½•ãƒ•ãƒ¬ãƒ¼ãƒ ç›®ã«æ”»æ’ƒåˆ¤å®šãŒå‡ºã‚‹ã‹
 	//		//if (animFlameCT > 10 && animFlameCT < 30) {
 	//		//	FbxPlayer::isAtkCollide = true;
 	//		//}
@@ -177,22 +177,22 @@ void Atk1::Update(Input* input)
 	//	else if (atkMovePhase == 1) {
 	//		int maxCurrent = 60;
 
-	//		if (animFlameCT == 0) {	//‰ƒtƒŒ[ƒ€(‰Šú‰»)
+	//		if (animFlameCT == 0) {	//åˆãƒ•ãƒ¬ãƒ¼ãƒ (åˆæœŸåŒ–)
 	//			animNum = 3;
 	//			gameObject_->PlayAnimation(animNum);
 
 	//		}
 
-	//		//ƒAƒjƒ[ƒVƒ‡ƒ“ŠÇ—
+	//		//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç®¡ç†
 	//		gameObject_->AnimFlameInter(10, 20);
 	//		
 
-	//		//‰ñ“]
+	//		//å›è»¢
 	//		float rotSpeed = 0.8f;
 	//		gameObject_->wtf.rotation_.x += rotSpeed;
 
 
-	//		////‰½ƒtƒŒ[ƒ€–Ú‚ÉUŒ‚”»’è‚ªo‚é‚©
+	//		////ä½•ãƒ•ãƒ¬ãƒ¼ãƒ ç›®ã«æ”»æ’ƒåˆ¤å®šãŒå‡ºã‚‹ã‹
 	//		//if (animFlameCT > 10 && animFlameCT < 60) {
 	//		//	FbxPlayer::isAtkCollide = true;
 	//		//}
@@ -200,10 +200,10 @@ void Atk1::Update(Input* input)
 	//		//	FbxPlayer::isAtkCollide = false;
 	//		//}
 
-	//		//ƒtƒF[ƒYŠÇ—
+	//		//ãƒ•ã‚§ãƒ¼ã‚ºç®¡ç†
 	//		if (animFlameCT >= maxCurrent) {
 	//			isAtk = false;
-	//			isCombo2 = false;	//ƒJƒŒƒ“ƒgÅ‘å’l‚É‚È‚Á‚½‚çƒtƒF[ƒY‚ği‚ß‚é
+	//			isCombo2 = false;	//ã‚«ãƒ¬ãƒ³ãƒˆæœ€å¤§å€¤ã«ãªã£ãŸã‚‰ãƒ•ã‚§ãƒ¼ã‚ºã‚’é€²ã‚ã‚‹
 	//			animFlameCT = 0;
 	//			gameObject_->AnimFlameInter(animFlameCT, 80);
 	//			animNum = 5;

@@ -11,11 +11,11 @@ public:
 		offset(offset) ,
 		radius(radius)
 	{
-		//‹…Œ`ó‚ğƒZƒbƒg
+		//çƒå½¢çŠ¶ã‚’ã‚»ãƒƒãƒˆ
 		shapeType = COLLISIONSHAPE_SPHERE;
 	}
 
-	//XV
+	//æ›´æ–°
 	void Update() override;
 
 	inline void SetRadius(float radius)
@@ -39,13 +39,13 @@ public:
 	}
 
 private:
-	//ƒIƒuƒWƒFƒNƒg’†S‚©‚ç‚ÌƒIƒtƒZƒbƒg
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä¸­å¿ƒã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
 	Vector3 offset;
 
-	//ƒ‚ƒfƒ‹‚ª‚È‚¢ê‡‚ÌŠî€‚Æ‚È‚éƒxƒNƒgƒ‹
+	//ãƒ¢ãƒ‡ãƒ«ãŒãªã„å ´åˆã®åŸºæº–ã¨ãªã‚‹ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3* basisPos = nullptr;
 
-	//”¼Œa
+	//åŠå¾„
 	float radius;
 
 };

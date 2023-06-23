@@ -5,14 +5,14 @@
 
 void RailCamera::Initialize()
 {
-	//ˆø”‚©‚çÀ•W‚Æ‰ñ“]Šp‚ğó‚¯æ‚é
+	//å¼•æ•°ã‹ã‚‰åº§æ¨™ã¨å›è»¢è§’ã‚’å—ã‘å–ã‚‹
 	/*worldTransform_.translation_ = worldTransform.translation_;
 	worldTransform_.rotation_ = worldTransform.rotation_;*/
 	/*worldTransform_.translation_.x = worldTransform.translation_.x;
 	worldTransform_.translation_.y = worldTransform.translation_.y;
 	worldTransform_.translation_.z = worldTransform.translation_.z;
 	worldTransform_.rotation_ = worldTransform.rotation_;*/
-	//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“‚Ì‰Šú‰»
+	//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã®åˆæœŸåŒ–
 	
 	viewProjection_.eye = { 0,7,-50 };
 	viewProjection_.target = { 0,0,-32 };
@@ -22,25 +22,25 @@ void RailCamera::Initialize()
 
 void RailCamera::Update(WorldTransform worldTransform)
 {
-	//////ˆø”‚©‚çÀ•W‚Æ‰ñ“]Šp‚ğó‚¯æ‚é
+	//////å¼•æ•°ã‹ã‚‰åº§æ¨™ã¨å›è»¢è§’ã‚’å—ã‘å–ã‚‹
 	////worldTransform_.scale_ = {1,1,1};
-	//////ƒ[ƒ‹ƒhƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚ÌXV
+	//////ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã®æ›´æ–°
 	////worldTransformUpdate(&worldTransform_);
 
-	////ƒIƒuƒWƒFƒNƒg‚É’Ç]‚·‚éÀ•W‚Ìˆ—
-	////ƒ[ƒ‹ƒhÀ•W‚ğ‹“_À•W‚É‘ã“ü
+	////ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«è¿½å¾“ã™ã‚‹åº§æ¨™ã®å‡¦ç†
+	////ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã‚’è¦–ç‚¹åº§æ¨™ã«ä»£å…¥
 	///*viewProjection_.eye = worldTransform_.translation_;*/
-	////ƒ[ƒ‹ƒh‘O•ûƒxƒNƒgƒ‹
+	////ãƒ¯ãƒ¼ãƒ«ãƒ‰å‰æ–¹ãƒ™ã‚¯ãƒˆãƒ«
 	//Vector3 forward(0, 0, 1);
-	////ƒŒ[ƒ‹ƒJƒƒ‰‚Ì”½“]‚ğ‰e‹¿
+	////ãƒ¬ãƒ¼ãƒ«ã‚«ãƒ¡ãƒ©ã®åè»¢ã‚’å½±éŸ¿
 	///*forward = vector3Normalize(worldTransform_.translation_);*/
-	////‹“_‚©‚ç‘O•û‚É“K“–‚È‹——£i‚ñ‚¾ˆÊ’u‚ª’‹“_
+	////è¦–ç‚¹ã‹ã‚‰å‰æ–¹ã«é©å½“ãªè·é›¢é€²ã‚“ã ä½ç½®ãŒæ³¨è¦–ç‚¹
 	//viewProjection_.target = { viewProjection_.eye.x + forward.x ,viewProjection_.eye.y + forward.y ,viewProjection_.eye.z + forward.z };
-	////ƒ[ƒ‹ƒhã•ûƒxƒNƒgƒ‹
+	////ãƒ¯ãƒ¼ãƒ«ãƒ‰ä¸Šæ–¹ãƒ™ã‚¯ãƒˆãƒ«
 	//Vector3 up(0, 1, 0);
-	////ƒŒ[ƒ‹ƒJƒƒ‰‚Ì‰ñ“]‚ğ”½‰f
+	////ãƒ¬ãƒ¼ãƒ«ã‚«ãƒ¡ãƒ©ã®å›è»¢ã‚’åæ˜ 
 	///*up = vector3Normalize(worldTransform_.rotation_);*/
-	////ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“‚ğXV
+	////ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã‚’æ›´æ–°
 	//viewProjection_.Initialize();
 
 	/*float x = worldTransform.translation_.x - (sin(worldTransform.rotation_.y) * length);
