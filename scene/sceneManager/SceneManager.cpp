@@ -48,7 +48,7 @@ void SceneManager::ObjectInitialize() {
 		//Player
 		fbxPlayer_ = std::make_unique<FbxPlayer>();
 		fbxPlayer_.get()->Initialize(hitokunFbxM_.get());
-		fbxPlayer_->GetObject3d()->wtf.translation_.z = -50;
+		fbxPlayer_->GetObject3d()->wtf.translation_.z = 0;
 		_camera->SetFollowerPos(fbxPlayer_.get()->GetObject3d()->GetWorldTransformPtr());
 
 		//boss
@@ -108,7 +108,7 @@ void SceneManager::ResetParameters() {
 	boss_->Reset();
 	boss_->GetObject3d()->wtf.translation_ = { -50,0,0 };
 	boss_->Update();
-	fbxPlayer_->GetObject3d()->wtf.translation_ = { 50,0,0 };
+	fbxPlayer_->GetObject3d()->wtf.translation_ = { 0,10,0 };
 	fbxPlayer_->GetPlayerActionManager()->SetNowActNum(ACTION_NUM::move);
 	fbxPlayer_->GetObject3d()->Update();
 }

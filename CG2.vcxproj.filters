@@ -210,9 +210,6 @@
     <ClCompile Include="scene\GameScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
-    <ClCompile Include=".cpp">
-      <Filter>ソース ファイル\scene\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="engine\common\DirectXCommon.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>

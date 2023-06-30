@@ -116,6 +116,8 @@ public: // メンバ関数
 	/// </summary>
 	/// <returns>座標</returns>
 	const Vector3& GetPosition() const { return wtf.translation_; }
+	const Vector3& GetRotate() const { return wtf.rotation_; }
+	const Vector3& GetScale() const { return wtf.scale_; }
 
 	/// <summary>
 	/// モデルをセット

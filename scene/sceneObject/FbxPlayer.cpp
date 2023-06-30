@@ -38,8 +38,14 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	gameObject_->SetModel(fbxModel);
 	gameObject_->SetIsBonesWorldMatCalc(true);	//ボーンワールド行列計算あり
 	gameObject_->SetScale({ 4,4,4 });
-	gameObject_->SetPosition({ 0,10.f,0 });
+	gameObject_->SetPosition({ 0,15.f,0 });
 	gameObject_->Update();
+
+	hoverCarModel_ = Mesh::LoadFormOBJ("hoverCar", false);
+	hoverCarObject_ = Object3d::Create();
+	hoverCarObject_->SetModel(hoverCarModel_.get());
+	hoverCarObject_->SetPosition(gameObject_->GetPosition());
+	hoverCarObject_->SetRotate(gameObject_->GetRotate());
 
 
 	SPHERE_COLISSION_NUM = static_cast<int>(gameObject_->GetBonesMatPtr()->size());
@@ -142,11 +148,15 @@ void FbxPlayer::Update()
 			}else{}
 			
 		}
+
+		hoverCarObject_->SetPosition(gameObject_->GetPosition());
+		hoverCarObject_->SetRotate(gameObject_->GetRotate());
 		
 		PColliderUpdate();
 
 		particle_->Update();
 		gameObject_->Update();
+		hoverCarObject_->Update();
 		count++;
 		/*ImGui::Begin("hp");
 		ImGui::InputInt("count", &count);
@@ -185,9 +195,9 @@ void FbxPlayer::Update()
 void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 
-	gameObject_->Draw(cmdList);
+	//gameObject_->Draw(cmdList);
 
-
+	hoverCarObject_->Draw(cmdList);
 
 	particle_->Draw(cmdList);
 	

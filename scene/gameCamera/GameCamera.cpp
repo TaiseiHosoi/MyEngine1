@@ -236,9 +236,10 @@ void GameCamera::FollowPlayer()
 	
 
 	
-		Vector3 basePos = {followerPos_->translation_.x , followerPos_->translation_.y , followerPos_->translation_.z};
+		Vector3 basePos = {0 , 10.f , followerPos_->translation_.z};
 
-		Vector3 tempEye = basePos - dir_ * MAX_CAMERA_DISTANCE;
+		Vector3 tempEye = basePos;
+		tempEye.z -= dir_.z * MAX_CAMERA_DISTANCE;
 		
 
 		SetEye(tempEye);

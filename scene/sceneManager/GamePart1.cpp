@@ -86,10 +86,10 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 			isPause_ = true;
 			pauseMenuOptions_ = 0;
 		}
-		/*ImGui::Begin("Pause");
+		ImGui::Begin("Pause");
 		ImGui::SetWindowPos({200 , 200});
 		ImGui::InputInt("isPause" , &isPause_);
-		ImGui::End();*/
+		ImGui::End();
 	}
 	else {
 		Pause(input, camera);
