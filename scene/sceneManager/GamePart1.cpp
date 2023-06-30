@@ -73,13 +73,13 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 void GamePart1::Update(Input* input, GameCamera* camera) {
 
 	//BGMを流す
-	PlaySounds();
+	//PlaySounds();
 
 	
 
 	if (isPause_ == false) {
 		_controller->field_->Update();
-		_controller->boss_->Update();
+		//_controller->boss_->Update();
 		_controller->fbxPlayer_->Update();
 
 		if (input->TriggerKey(DIK_ESCAPE)) {
@@ -114,7 +114,7 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 void GamePart1::Draw(DirectXCommon* dxCommon) {
 
 	_controller->field_->Draw(dxCommon);
-	_controller->boss_->Draw();
+	//_controller->boss_->Draw();
 	_controller->fbxPlayer_->Draw(dxCommon->GetCommandList());
 
 	_controller->spriteCommon_->SpritePreDraw();
@@ -131,10 +131,10 @@ void GamePart1::Draw(DirectXCommon* dxCommon) {
 		guard_->Draw();
 	}
 	move_->Draw();
-	enemyHpRed_->Draw();
-	enemyHp_->Draw();
-	playerHpRed_->Draw();
-	playerHp_->Draw();
+	//enemyHpRed_->Draw();
+	//enemyHp_->Draw();
+	//playerHpRed_->Draw();
+	//playerHp_->Draw();
 
 	_controller->spriteCommon_->SpritePostDraw();
 

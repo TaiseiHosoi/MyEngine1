@@ -23,13 +23,13 @@ void Field::Initialize()
 	gameObject_->Update();
 
 	skydomeModel_ = std::make_unique<Mesh>();
-	skydomeModel_ = Mesh::LoadFormOBJ("skydome", false);
+	//skydomeModel_ = Mesh::LoadFormOBJ("skydome", false);
 
-	skydomeObj_ = std::make_unique<Object3d>();
-	skydomeObj_.get()->Initialize(false);
-	skydomeObj_.get()->SetModel(skydomeModel_.get());
-	skydomeObj_->worldTransform.scale_ = { 4000,2000,4000 };
-	skydomeObj_->Update();
+	//skydomeObj_ = std::make_unique<Object3d>();
+	//skydomeObj_.get()->Initialize(false);
+	//skydomeObj_.get()->SetModel(skydomeModel_.get());
+	//skydomeObj_->worldTransform.scale_ = { 4000,2000,4000 };
+	//skydomeObj_->Update();
 
 
 }
@@ -37,7 +37,7 @@ void Field::Initialize()
 void Field::Update()
 {
 	gameObject_->Update();
-	skydomeObj_->Update();
+	//skydomeObj_->Update();
 }
 
 void Field::Draw(DirectXCommon* dxcomon_)
@@ -45,7 +45,7 @@ void Field::Draw(DirectXCommon* dxcomon_)
 	//Object3d::PreDraw(dxcomon_->GetCommandList());
 	
 	gameObject_->Draw(dxcomon_->GetCommandList());
-	skydomeObj_->Draw(dxcomon_->GetCommandList());
+	//skydomeObj_->Draw(dxcomon_->GetCommandList());
 	
 	//Object3d::PostDraw();
 }
