@@ -267,6 +267,9 @@
     <ClCompile Include="engine\SummarizeEngine\SummarizeEngine.cpp">
       <Filter>ソース ファイル\SummarizeEngine</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerReticle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\ObjPS.hlsl">
@@ -476,6 +479,9 @@
     </ClInclude>
     <ClInclude Include="engine\SummarizeEngine\SummarizeEngine.h">
       <Filter>ヘッダー ファイル\SummarizeEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerReticle.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
