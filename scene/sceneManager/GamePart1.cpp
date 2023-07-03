@@ -118,18 +118,18 @@ void GamePart1::Draw(DirectXCommon* dxCommon) {
 	_controller->fbxPlayer_->Draw(dxCommon->GetCommandList());
 
 	_controller->spriteCommon_->SpritePreDraw();
-	if (isClickL == true) {
-		attack2_->Draw();
-	}
-	else {
-		attack_->Draw();
-	}
-	if (isClickR == true) {
-		guard2_->Draw();
-	}
-	else {
-		guard_->Draw();
-	}
+	//if (isClickL == true) {
+	//	attack2_->Draw();
+	//}
+	//else {
+	//	attack_->Draw();
+	//}
+	//if (isClickR == true) {
+	//	guard2_->Draw();
+	//}
+	//else {
+	//	guard_->Draw();
+	//}
 	move_->Draw();
 	//enemyHpRed_->Draw();
 	//enemyHp_->Draw();

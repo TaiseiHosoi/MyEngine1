@@ -69,7 +69,7 @@ void Move::Update(Input* input)
 		
 
 		//Z軸方向にの速度を入れる
-		velocity_ = { 0 , 0 , kMoveSpeed_ };
+		velocity_ = { 0 , 0 , 0.1f };
 
 		float kDiagonalSpeed = kMoveSpeed_ * 0.707f;
 

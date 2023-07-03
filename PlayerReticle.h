@@ -6,7 +6,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize(WorldTransform pairWTF);
 
 	/// <summary>
 	/// 更新処理
@@ -18,7 +18,7 @@ public:
 	/// </summary>
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
-private:
+public:
 	/// <summary>
 	/// オブジェクト
 	/// </summary>
@@ -32,6 +32,9 @@ private:
 	std::unique_ptr<Mesh> farReticleM_;
 
 
+	
+	float offsetNier = 10.f;
+	float offsetFar = 30.f;
 
 
 };

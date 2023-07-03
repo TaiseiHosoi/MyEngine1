@@ -106,6 +106,8 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	pActManager_ = std::make_unique<PlayerActionManager>();
 	pActManager_->ColliderInitialize(&sphere, SPHERE_COLISSION_NUM);
 	pActManager_->PActionInitialize(gameObject_.get());
+
+	reticle_.Initialize(gameObject_->GetWorldTransform());
 	
 
 }
@@ -188,6 +190,10 @@ void FbxPlayer::Update()
 
 	} //ヒットストップ
 
+	reticle_.nierReticleO_->worldTransform.parent_ = &gameObject_->wtf;
+	reticle_.farReticleO_->worldTransform.parent_ = &gameObject_->wtf;
+	reticle_.Update();
+
 }
 
 
@@ -201,6 +207,7 @@ void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 
 	particle_->Draw(cmdList);
 	
+	reticle_.Draw(cmdList);
 
 }
 
