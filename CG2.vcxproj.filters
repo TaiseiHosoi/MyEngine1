@@ -216,18 +216,6 @@
     <ClCompile Include="engine\common\WinApp.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
-    <ClCompile Include="scene\sceneObject\Boss.cpp">
-      <Filter>ソース ファイル\scene\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\BossBullet.cpp">
-      <Filter>ソース ファイル\scene\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\BossBurstBullet.cpp">
-      <Filter>ソース ファイル\scene\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\BossLaser.cpp">
-      <Filter>ソース ファイル\scene\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="scene\sceneObject\Atk1.cpp">
       <Filter>ソース ファイル\scene\Player</Filter>
     </ClCompile>
@@ -431,18 +419,6 @@
     </ClInclude>
     <ClInclude Include="engine\common\WinApp.h">
       <Filter>ヘッダー ファイル\base</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\Boss.h">
-      <Filter>ヘッダー ファイル\scene\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\BossBullet.h">
-      <Filter>ヘッダー ファイル\scene\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\BossBurstBullet.h">
-      <Filter>ヘッダー ファイル\scene\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\BossLaser.h">
-      <Filter>ヘッダー ファイル\scene\enemy</Filter>
     </ClInclude>
     <ClInclude Include="scene\sceneObject\Atk1.h">
       <Filter>ヘッダー ファイル\scene\Player</Filter>

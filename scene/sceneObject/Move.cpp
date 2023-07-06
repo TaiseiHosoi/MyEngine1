@@ -218,13 +218,6 @@ void Move::Update(Input* input)
 			nowPos.z += kMoveSpeed_;
 		}*/
 
-
-		
-
-		
-
-
-		
 	}
 	else
 	{

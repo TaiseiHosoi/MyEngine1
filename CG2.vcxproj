@@ -197,10 +197,6 @@
     <ClCompile Include="scene\sceneManager\SceneManager.cpp" />
     <ClCompile Include="scene\sceneManager\TitleScene.cpp" />
     <ClCompile Include="scene\sceneObject\Atk1.cpp" />
-    <ClCompile Include="scene\sceneObject\Boss.cpp" />
-    <ClCompile Include="scene\sceneObject\BossBullet.cpp" />
-    <ClCompile Include="scene\sceneObject\BossBurstBullet.cpp" />
-    <ClCompile Include="scene\sceneObject\BossLaser.cpp" />
     <ClCompile Include="scene\sceneObject\CounterAtk.cpp" />
     <ClCompile Include="scene\sceneObject\FbxPlayer.cpp" />
     <ClCompile Include="scene\sceneObject\Ground.cpp" />
@@ -327,10 +323,6 @@
     <ClInclude Include="scene\sceneManager\SceneManager.h" />
     <ClInclude Include="scene\sceneManager\TitleScene.h" />
     <ClInclude Include="scene\sceneObject\Atk1.h" />
-    <ClInclude Include="scene\sceneObject\Boss.h" />
-    <ClInclude Include="scene\sceneObject\BossBullet.h" />
-    <ClInclude Include="scene\sceneObject\BossBurstBullet.h" />
-    <ClInclude Include="scene\sceneObject\BossLaser.h" />
     <ClInclude Include="scene\sceneObject\CounterAtk.h" />
     <ClInclude Include="scene\sceneObject\FbxPlayer.h" />
     <ClInclude Include="scene\sceneObject\Ground.h" />
