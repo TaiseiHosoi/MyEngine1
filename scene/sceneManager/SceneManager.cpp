@@ -106,7 +106,7 @@ void SceneManager::ResetParameters() {
 	boss_->SetHp(100);
 	fbxPlayer_->SetHp(100);
 	boss_->Reset();
-	boss_->GetObject3d()->wtf.translation_ = { -50,0,0 };
+	boss_->GetObject3d()->wtf.translation_ = { 0,0,0 };
 	boss_->Update();
 	fbxPlayer_->GetObject3d()->wtf.translation_ = { 0,10,0 };
 	fbxPlayer_->GetPlayerActionManager()->SetNowActNum(ACTION_NUM::move);

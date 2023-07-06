@@ -108,12 +108,12 @@ void Boss::Update()
 
 		bossFbxO_->PlayAnimation(0);
 		Attack();
-		break;
+		break;             
 	}
 
 	bossFbxO_->Update();
 
-	hpObject_->SetScale({ static_cast<float>(hp) * 0.2f,1.3f,0.02f });
+   	hpObject_->SetScale({ static_cast<float>(hp) * 0.2f,1.3f,0.02f });
 	hpObject_->SetPosition({ bossFbxO_->GetWorldTransform().translation_.x,
 		 bossFbxO_->GetWorldTransform().translation_.y + 25.0f,
 		 bossFbxO_->GetWorldTransform().translation_.z });

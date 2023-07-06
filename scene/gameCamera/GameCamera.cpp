@@ -45,9 +45,15 @@ void GameCamera::Update()
 	//	CulDirection();
 	//}
 
-	
+	Vector3 e = GetEye();
 
+	
 	FollowPlayer();
+	ImGui::Begin("eye");
+	ImGui::InputFloat3("nowpos", &e.x);
+
+	ImGui::End();
+
 
 	Camera::Update();
 }

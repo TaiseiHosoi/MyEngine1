@@ -108,7 +108,8 @@ private:
 	//移動ベクトル
 	Vector3 velocity_;
 	//自機の向き
-	Vector3 faceAngle_ = {0 , 0 , 0};
+	Vector3 faceAngle_ = { 0 , 0 , 0 };
+	
 	//カメラの向き
 	Vector3 cameraAngle_ = {0 , 0 , 0};
 	//ブレーキアニメーション用フラグ
@@ -136,11 +137,9 @@ private:
 	//ヒットポイント
 	int hitDeley = 0;	//何フレーム連続で当たるか
 	static int hp;
-
 	bool isHitStop = false;
-
 	bool isDead_ = false;
+	//アニメーション
 	int oldPActNum_ = 0;	//アクション前フレーム保存変数
-	
 	int count = 0;
 };

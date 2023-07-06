@@ -80,11 +80,13 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(ProjectDir)lib\libignore\fbx_sdk\include;$(SolutionDir)DirectXTex;$(ProjectDir)lib\libignore\fbx_sdk\include;$(IncludePath);$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)lib\libignore\fbx_sdk\lib;$(LibraryPath);$(ProjectDir)lib\libignore\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
+    <TargetName>SLASHER</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(ProjectDir)lib\libignore\fbx_sdk\include;$(SolutionDir)DirectXTex;$(IncludePath);$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)lib\libignore\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
+    <TargetName>SLASHER</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
