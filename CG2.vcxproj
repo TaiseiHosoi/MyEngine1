@@ -157,6 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="engine\3dObject\Mesh.cpp" />
     <ClCompile Include="engine\3dObject\Object3d.cpp" />
     <ClCompile Include="engine\3dObject\WorldTransform.cpp" />
@@ -197,7 +198,9 @@
     <ClCompile Include="scene\sceneManager\SceneManager.cpp" />
     <ClCompile Include="scene\sceneManager\TitleScene.cpp" />
     <ClCompile Include="scene\sceneObject\Atk1.cpp" />
+    <ClCompile Include="scene\sceneObject\BasicEnemy.cpp" />
     <ClCompile Include="scene\sceneObject\CounterAtk.cpp" />
+    <ClCompile Include="scene\sceneObject\EnemyManager.cpp" />
     <ClCompile Include="scene\sceneObject\FbxPlayer.cpp" />
     <ClCompile Include="scene\sceneObject\Ground.cpp" />
     <ClCompile Include="scene\sceneObject\Guard.cpp" />
@@ -276,6 +279,8 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="engine\3dObject\Mesh.h" />
     <ClInclude Include="engine\3dObject\Object3d.h" />
     <ClInclude Include="engine\3dObject\WorldTransform.h" />
@@ -323,6 +328,7 @@
     <ClInclude Include="scene\sceneManager\SceneManager.h" />
     <ClInclude Include="scene\sceneManager\TitleScene.h" />
     <ClInclude Include="scene\sceneObject\Atk1.h" />
+    <ClInclude Include="scene\sceneObject\BasicEnemy.h" />
     <ClInclude Include="scene\sceneObject\CounterAtk.h" />
     <ClInclude Include="scene\sceneObject\FbxPlayer.h" />
     <ClInclude Include="scene\sceneObject\Ground.h" />

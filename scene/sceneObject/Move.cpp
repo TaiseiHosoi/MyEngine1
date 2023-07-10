@@ -216,7 +216,7 @@ void Move::Update(Input* input)
 		
 		/*if (input_->PushKey(DIK_UP)) {
 			nowPos.z += kMoveSpeed_;
-		}*/
+		}*/		
 
 	}
 	else

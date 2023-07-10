@@ -3,7 +3,7 @@
 #include "GameCamera.h"
 #include <random>
 #include "HitStopManager.h"
-#include "Boss.h"	//苦肉の策
+//#include "Boss.h"	//苦肉の策
 //PlayerAction
 #include"Move.h"
 #include"Atk1.h"
@@ -265,7 +265,7 @@ void FbxPlayer::PColliderUpdate()
 			if (sphere[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIES) {
 
 				audio_->PlayWave("kuri.wav");
-				Boss::minusHp(1);
+				//Boss::minusHp(1);
 				hitDeley = 4;
 				particle_->RandParticle(sphere[i]->GetCollisionInfo().inter);
 				HitStopManager::GetInstance()->SetHitStop(&isHitStop, 2);
