@@ -1,4 +1,4 @@
-#include "BasicEnemy.h"
+﻿#include "BasicEnemy.h"
 
 void BasicEnemy::Initialize(Mesh* Model)
 {

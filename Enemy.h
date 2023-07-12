@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include"Mesh.h"
 #include"Object3d.h"
 
@@ -8,6 +8,6 @@ public:
     virtual void Initialize(Mesh* Model) = 0;
     virtual void Update() = 0;
     virtual void Draw(ID3D12GraphicsCommandList* cmdList) = 0;
-    // ‚»‚Ì‘¼‚Ì“G‚Ì‹¤’Ê‹@”\
+    // ãã®ä»–ã®æ•µã®å…±é€šæ©Ÿèƒ½
 };
 

@@ -52,11 +52,11 @@ void SceneManager::ObjectInitialize() {
 		_camera->SetFollowerPos(fbxPlayer_.get()->GetObject3d()->GetWorldTransformPtr());
 
 		//boss
-		boss_ = std::make_unique<Boss>();
+		/*boss_ = std::make_unique<Boss>();
 		boss_.get()->Initialize(_dxCommon);
 		boss_.get()->SetPlayer(fbxPlayer_.get());
 		boss_->GetObject3d()->wtf.translation_.z = 50;
-		_camera->SetTargetPos(boss_.get()->GetObject3d()->GetWorldTransformPtr());
+		_camera->SetTargetPos(boss_.get()->GetObject3d()->GetWorldTransformPtr());*/
 	}
 
 	//パーティクルのセット
@@ -103,11 +103,11 @@ void SceneManager::ChangeScene(IScene* scene) {
 
 
 void SceneManager::ResetParameters() {
-	boss_->SetHp(100);
+	//boss_->SetHp(100);
 	fbxPlayer_->SetHp(100);
-	boss_->Reset();
+	/*boss_->Reset();
 	boss_->GetObject3d()->wtf.translation_ = { 0,0,0 };
-	boss_->Update();
+	boss_->Update();*/
 	fbxPlayer_->GetObject3d()->wtf.translation_ = { 0,10,0 };
 	fbxPlayer_->GetPlayerActionManager()->SetNowActNum(ACTION_NUM::move);
 	fbxPlayer_->GetObject3d()->Update();

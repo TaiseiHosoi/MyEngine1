@@ -98,16 +98,16 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 	
 
 	playerHp_->SetSize({300 * _controller->fbxPlayer_->GetHp() / 100.0f, 32});
-	enemyHp_->SetSize({1280.0f * _controller->boss_->GetHp() / 100.0f , 32});
+	//enemyHp_->SetSize({1280.0f * _controller->boss_->GetHp() / 100.0f , 32});
 
-	if (_controller->boss_->GetHp() <= 0) {
+	/*if (_controller->boss_->GetHp() <= 0) {
 		_controller->ChangeScene(new EndScene(_controller));
 	}else if (_controller->fbxPlayer_->GetHp() <= 0) {
 		_controller->ChangeScene(new GamePart2(_controller));
 	}
 	else if (backToTitle_ == true) {
 		_controller->ChangeScene(new TitleScene(_controller));
-	}
+	}*/
 	// ここから下にコード書くとメモリ君がエラー吐く
 }
 

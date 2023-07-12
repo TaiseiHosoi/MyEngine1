@@ -13,7 +13,6 @@
 #include "ParticleManager.h"
 
 #include "FbxPlayer.h"
-#include "Boss.h"
 #include "Ground.h"
 
 
@@ -67,7 +66,7 @@ public:
 	//std::unique_ptr<FBXObject3d> bossFbxO_;
 
 	std::unique_ptr<FbxPlayer> fbxPlayer_;
-	std::unique_ptr<Boss> boss_;
+	
 
 	std::unique_ptr<Field> field_;
 

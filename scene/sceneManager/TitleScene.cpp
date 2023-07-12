@@ -51,7 +51,7 @@ void TitleScene::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	camera->SetTargetPos(&titleCamerapos[0]);
 	camera->ChangeFollowFlag(false);
 
-	_controller->boss_->SetHp(100);
+	/*_controller->boss_->SetHp(100);*/
 }
 
 void TitleScene::Update(Input* input, GameCamera* camera) {
@@ -66,7 +66,7 @@ void TitleScene::Update(Input* input, GameCamera* camera) {
 
 	if (isChangeScene == true) {
 		camera->SetFollowerPos(_controller->fbxPlayer_.get()->GetObject3d()->GetWorldTransformPtr());
-		camera->SetTargetPos(_controller->boss_.get()->GetObject3d()->GetWorldTransformPtr());
+		//camera->SetTargetPos(_controller->boss_.get()->GetObject3d()->GetWorldTransformPtr());
 		// UPDATE の一番下に
 		_controller->ChangeScene(new GamePart1(_controller));
 	}// ここから下にコード書くとメモリ君がエラー吐く

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Enemy.h"
 class BasicEnemy :
     public Enemy
@@ -8,6 +8,6 @@ class BasicEnemy :
     void Update() override;
 
     void Draw(ID3D12GraphicsCommandList* cmdList) override;
-    // Šî–{“I‚È“G‚É“Á—L‚Ì’Ç‰Á‹@”\
+    // åŸºæœ¬çš„ãªæ•µã«ç‰¹æœ‰ã®è¿½åŠ æ©Ÿèƒ½
 };
 

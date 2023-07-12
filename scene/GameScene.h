@@ -21,7 +21,7 @@
 
 
 #include "FbxPlayer.h"
-#include"Boss.h"
+
 #include"Ground.h"
 
 

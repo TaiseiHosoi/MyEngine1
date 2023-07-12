@@ -67,7 +67,7 @@ void SummarizeEngine::Finalize() {
 	audio_->Finalize();
 
 	//ID3D12DebugDevice* debugInterface;
-
+	//
 	//if (SUCCEEDED(dxCommon_->GetDevice()->QueryInterface(&debugInterface))) {
 	//	debugInterface->ReportLiveDeviceObjects(D3D12_RLDO_DETAIL | D3D12_RLDO_IGNORE_INTERNAL);
 	//	debugInterface->Release();

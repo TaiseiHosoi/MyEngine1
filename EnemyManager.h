@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include<vector>
 #include"Enemy.h"
 #include"BasicEnemy.h"
@@ -13,10 +13,10 @@ public:
 
     void UpdateAllEnemies();
 
-    void DrawAllEnemies();
+    void DrawAllEnemies(ID3D12GraphicsCommandList* cmdList);
 
     void DestroyAllEnemies();
 
-    // ‚»‚Ì‘¼‚Ì“G‚ÌŠÇ—‹@”\
+    // ãã®ä»–ã®æ•µã®ç®¡ç†æ©Ÿèƒ½
 };
 
