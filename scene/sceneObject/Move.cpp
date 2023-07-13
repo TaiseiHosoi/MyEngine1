@@ -243,10 +243,10 @@ void Move::Update(Input* input)
 	gameObject_->wtf.rotation_ = faceAngle_;
 
 	
-	if (input_->TriggerMouseButton(0) && _pActManager->GetNowActNum() != ACTION_NUM::atk1) {
-		//pActManager_->ChangeAction(new Atk1(pActManager_.get()));
-		_pActManager->SetNowActNum(ACTION_NUM::atk1);
-	}
+	//if (input_->TriggerMouseButton(0) && _pActManager->GetNowActNum() != ACTION_NUM::atk1) {
+	//	//pActManager_->ChangeAction(new Atk1(pActManager_.get()));
+	//	_pActManager->SetNowActNum(ACTION_NUM::atk1);
+	//}
 
 	//gameObject_->wtf.UpdateMatWorld();
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "IScene.h"
+#include "EnemyManager.h"
 
 // 追いかけパート
 class GamePart1 :
@@ -47,6 +48,9 @@ private:
 	//音用変数
 	bool isSounds = false;
 	std::unique_ptr<Audio> audio_;
+
+	//敵マネージャ
+	EnemyManager enemyManager_;
 
 public:
 

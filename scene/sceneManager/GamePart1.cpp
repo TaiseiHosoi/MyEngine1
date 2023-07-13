@@ -1,6 +1,7 @@
 #include "SceneIntegrate.h"
 
 
+
 GamePart1::GamePart1(SceneManager* controller) {
 	_controller = controller;
 }
@@ -68,6 +69,9 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	isPause_ = false;
 	pauseMenuOptions_ = 0;
 	backToTitle_ = 0;
+
+	//敵マネージャ初期化
+	enemyManager_.StaticInit();
 }
 
 void GamePart1::Update(Input* input, GameCamera* camera) {
@@ -81,6 +85,7 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 		_controller->field_->Update();
 		//_controller->boss_->Update();
 		_controller->fbxPlayer_->Update();
+		enemyManager_.UpdateAllEnemies();
 
 		if (input->TriggerKey(DIK_ESCAPE)) {
 			isPause_ = true;
@@ -116,6 +121,8 @@ void GamePart1::Draw(DirectXCommon* dxCommon) {
 	_controller->field_->Draw(dxCommon);
 	//_controller->boss_->Draw();
 	_controller->fbxPlayer_->Draw(dxCommon->GetCommandList());
+
+	enemyManager_.DrawAllEnemies(dxCommon->GetCommandList());
 
 	_controller->spriteCommon_->SpritePreDraw();
 	//if (isClickL == true) {
