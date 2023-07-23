@@ -9,8 +9,11 @@
 
 SceneManager::SceneManager(DirectXCommon* dxCommon, GameCamera* camera) {
 	_dxCommon = dxCommon;
+	
 	_scene.reset(new GamePart1(&*this));
 	_camera = camera;
+	
+
 	
 
 }
@@ -59,13 +62,14 @@ void SceneManager::ObjectInitialize() {
 		_camera->SetTargetPos(boss_.get()->GetObject3d()->GetWorldTransformPtr());*/
 	}
 
+	
+
 	//パーティクルのセット
 	particleManager_ = std::make_unique<ParticleManager>();
 	particleManager_.get()->Initialize();
 	//パーティクル用素材
 	particleManager_->LoadTexture("effect.png");
 	particleManager_->Update();
-	
 
 	//field
 	field_ = std::make_unique<Field>();

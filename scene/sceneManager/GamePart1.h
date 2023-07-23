@@ -1,6 +1,6 @@
 #pragma once
 #include "IScene.h"
-#include "EnemyManager.h"
+#include "JsonManager.h"
 
 // 追いかけパート
 class GamePart1 :
@@ -49,8 +49,7 @@ private:
 	bool isSounds = false;
 	std::unique_ptr<Audio> audio_;
 
-	//敵マネージャ
-	EnemyManager enemyManager_;
+	
 
 public:
 

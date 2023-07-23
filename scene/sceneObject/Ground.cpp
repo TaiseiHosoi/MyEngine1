@@ -80,8 +80,8 @@ void Field::Draw(DirectXCommon* dxcomon_)
 {
 	//Object3d::PreDraw(dxcomon_->GetCommandList());
 	
-	//groundObj1_->Draw(dxcomon_->GetCommandList());
-	//groundObj2_->Draw(dxcomon_->GetCommandList());
+	groundObj1_->Draw(dxcomon_->GetCommandList());
+	groundObj2_->Draw(dxcomon_->GetCommandList());
 
 	skydomeObj_->Draw(dxcomon_->GetCommandList());
 	

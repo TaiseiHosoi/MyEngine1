@@ -1,19 +1,25 @@
-﻿#include "EnemyManager.h"
+﻿#include "JsonManager.h"
 #include"MathFunc.h"
 
 
-void EnemyManager::StaticInit()
+void JsonManager::StaticInit()
 {
 
 	//モデルインクルード
 	// モデル読み込み
 	modelMoai = Mesh::LoadFormOBJ("moai", true);
+	modelCube = Mesh::LoadFormOBJ("cube", true);
+	modelRoad1 = Mesh::LoadFormOBJ("road1", true);
+	modelCam = Mesh::LoadFormOBJ("cube", true);
 	
 	//モデルインサート
 	models.insert(std::make_pair("moai", modelMoai.get()));
+	models.insert(std::make_pair("Cube", modelCube.get()));
+	models.insert(std::make_pair("road1", modelRoad1.get()));
+	models.insert(std::make_pair("cam", modelCam.get()));
 	
 
-	levelData = JsonLoader::LoadFile("testScene");
+	levelData = JsonLoader::LoadFile("testScene3");
 
 	// レベルデータからオブジェクトを生成、配置
 	for (auto& objectData : levelData->objects) {
@@ -45,17 +51,21 @@ void EnemyManager::StaticInit()
 		DirectX::XMStoreFloat3(&scale, objectData.scaling);
 		newObject.SetScale(Vector3(scale.x,scale.y,scale.z));
 
+		if (objectData.fileName == "cam") {
+			camObjs.push_back(newObject);
+			continue;
+		}
 		// 配列に登録
 		objects.push_back(newObject);
 	}
 }
 
-void EnemyManager::AddEnemy(Enemy* enemy)
+void JsonManager::AddEnemy(Enemy* enemy)
 {
     enemies.push_back(enemy);
 }
 
-void EnemyManager::UpdateAllEnemies()
+void JsonManager::UpdateAllEnemies()
 {
     /*for (Enemy* enemy : enemies) {
         enemy->Update();
@@ -66,7 +76,7 @@ void EnemyManager::UpdateAllEnemies()
 	}
 }
 
-void EnemyManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
+void JsonManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
 {
     /*for (Enemy* enemy : enemies) {
         enemy->Draw(cmdList);
@@ -77,7 +87,7 @@ void EnemyManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
 	}
 }
 
-void EnemyManager::DestroyAllEnemies()
+void JsonManager::DestroyAllEnemies()
 {
     /*for (Enemy* enemy : enemies) {
         delete enemy;

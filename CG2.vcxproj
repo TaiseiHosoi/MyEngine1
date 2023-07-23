@@ -201,7 +201,7 @@
     <ClCompile Include="scene\sceneObject\Atk1.cpp" />
     <ClCompile Include="scene\sceneObject\BasicEnemy.cpp" />
     <ClCompile Include="scene\sceneObject\CounterAtk.cpp" />
-    <ClCompile Include="scene\sceneObject\EnemyManager.cpp" />
+    <ClCompile Include="scene\sceneObject\JsonManager.cpp" />
     <ClCompile Include="scene\sceneObject\FbxPlayer.cpp" />
     <ClCompile Include="scene\sceneObject\Ground.cpp" />
     <ClCompile Include="scene\sceneObject\Guard.cpp" />
@@ -281,7 +281,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="JsonManager.h" />
     <ClInclude Include="engine\3dObject\Mesh.h" />
     <ClInclude Include="engine\3dObject\Object3d.h" />
     <ClInclude Include="engine\3dObject\WorldTransform.h" />

@@ -264,9 +264,6 @@
     <ClCompile Include="PlayerReticle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="scene\sceneObject\EnemyManager.cpp">
-      <Filter>ソース ファイル\scene\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="scene\sceneObject\BasicEnemy.cpp">
       <Filter>ソース ファイル\scene\enemy</Filter>
     </ClCompile>
@@ -274,6 +271,9 @@
       <Filter>ソース ファイル\scene\enemy</Filter>
     </ClCompile>
     <ClCompile Include="engine\LevelEditor\json.cpp">
+      <Filter>ソース ファイル\LevelEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\JsonManager.cpp">
       <Filter>ソース ファイル\LevelEditor</Filter>
     </ClCompile>
   </ItemGroup>
@@ -477,9 +477,6 @@
     <ClInclude Include="PlayerReticle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyManager.h">
-      <Filter>ヘッダー ファイル\scene\enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>ヘッダー ファイル\scene\enemy</Filter>
     </ClInclude>
@@ -487,6 +484,9 @@
       <Filter>ヘッダー ファイル\scene\enemy</Filter>
     </ClInclude>
     <ClInclude Include="engine\LevelEditor\json.h">
+      <Filter>ヘッダー ファイル\LevelEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonManager.h">
       <Filter>ヘッダー ファイル\LevelEditor</Filter>
     </ClInclude>
   </ItemGroup>
