@@ -85,8 +85,18 @@ void GameCamera::Update()
 			timeRate -= 1.0f;
 			startCount = nowCount;
 		}
+		else if (startIndex >= points.size() - 3 && startIndex <= points.size()) {
+			startIndex += 1;
+			timeRate -= 1.0f;
+			startCount = nowCount;
+			
+		}
 		else {
-			timeRate = 1.0f;
+			startIndex = 1;
+			timeRate = elapsedTime / maxTime;
+			elapsedCount = 0;
+			nowCount = 0;
+			startCount = nowCount;
 		}
 	}
 	Vector3 target = basePos_ - oldPos_;
@@ -303,13 +313,14 @@ void GameCamera::FollowPlayer()
 		//Vector3 basePos = {0 , 10.f , followerPos_->translation_.z};
 
 		Vector3 tempEye = { basePos_.x,basePos_.y,basePos_.z };
-		tempEye.z -= dir_.z * MAX_CAMERA_DISTANCE;
-		railTargetPos_.z -= dir_.z * MAX_CAMERA_DISTANCE;
+		//tempEye.z -= dir_.z * MAX_CAMERA_DISTANCE;
+		//railTargetPos_.z -= dir_.z * MAX_CAMERA_DISTANCE;
 
 		SetEye(tempEye);
 		SetTarget(railTargetPos_);
 
-		
+		//SetEye(Vector3(0,500,-1));
+		//SetTarget(Vector3(0,0,0));
 		
 		//SetTarget({ tempEye.x,tempEye.y,tempEye.z + 1.f });
 

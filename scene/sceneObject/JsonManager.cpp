@@ -19,7 +19,7 @@ void JsonManager::StaticInit()
 	models.insert(std::make_pair("cam", modelCam.get()));
 	
 
-	levelData = JsonLoader::LoadFile("testScene3");
+	levelData = JsonLoader::LoadFile("testScene");
 
 	// レベルデータからオブジェクトを生成、配置
 	for (auto& objectData : levelData->objects) {
@@ -74,6 +74,9 @@ void JsonManager::UpdateAllEnemies()
 	for (int i = 0; i < objects.size();i++) {
 		objects[i].Update();
 	}
+	for (int i = 0; i < camObjs.size(); i++) {
+		camObjs[i].Update();
+	}
 }
 
 void JsonManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
@@ -84,6 +87,10 @@ void JsonManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
 
 	for (int i = 0; i < objects.size(); i++) {
 		objects[i].Draw(cmdList);
+	}
+
+	for (int i = 0; i < camObjs.size(); i++) {
+		camObjs[i].Draw(cmdList);
 	}
 }
 
