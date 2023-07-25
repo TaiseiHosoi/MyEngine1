@@ -78,6 +78,8 @@ void GameCamera::Update()
 
 	timeRate = elapsedTime / maxTime;
 
+
+
 	if (timeRate >= 1.0f) {
 		if (startIndex < points.size() - 3) {
 
@@ -98,6 +100,7 @@ void GameCamera::Update()
 			nowCount = 0;
 			startCount = nowCount;
 		}
+		
 	}
 	Vector3 target = basePos_ - oldPos_;
 	target.nomalize();

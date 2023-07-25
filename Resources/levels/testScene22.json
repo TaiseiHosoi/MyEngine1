@@ -11,9 +11,9 @@
                     5.903861999511719
                 ],
                 "rotation": [
-                    37.26104736328125,
-                    3.1637091636657715,
-                    106.93632507324219
+                    37.261043548583984,
+                    3.1637072563171387,
+                    106.93630981445312
                 ],
                 "scaling": [
                     1.0,
@@ -32,9 +32,9 @@
                     4.958309173583984
                 ],
                 "rotation": [
-                    63.559295654296875,
-                    2.2983238068263745e-07,
-                    46.69194412231445
+                    63.559303283691406,
+                    -2.664711473698844e-06,
+                    46.69194793701172
                 ],
                 "scaling": [
                     1.0,
@@ -88,578 +88,6 @@
         },
         {
             "type": "MESH",
-            "name": "cam.002",
-            "transform": {
-                "translation": [
-                    17.558364868164062,
-                    -8.328041076660156,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.003",
-            "transform": {
-                "translation": [
-                    28.01072120666504,
-                    -19.904340744018555,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.004",
-            "transform": {
-                "translation": [
-                    36.76318359375,
-                    -42.169769287109375,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.005",
-            "transform": {
-                "translation": [
-                    65.04348754882812,
-                    -171.59457397460938,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.006",
-            "transform": {
-                "translation": [
-                    79.04594421386719,
-                    -204.20208740234375,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.007",
-            "transform": {
-                "translation": [
-                    106.31632232666016,
-                    -234.25421142578125,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.008",
-            "transform": {
-                "translation": [
-                    137.30499267578125,
-                    -247.9326171875,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.009",
-            "transform": {
-                "translation": [
-                    170.65016174316406,
-                    -249.20111083984375,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.010",
-            "transform": {
-                "translation": [
-                    201.74583435058594,
-                    -247.63998413085938,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.011",
-            "transform": {
-                "translation": [
-                    228.7845458984375,
-                    -246.88595581054688,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.012",
-            "transform": {
-                "translation": [
-                    257.6486511230469,
-                    -245.61331176757812,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.013",
-            "transform": {
-                "translation": [
-                    287.5341491699219,
-                    -237.76187133789062,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.014",
-            "transform": {
-                "translation": [
-                    311.84088134765625,
-                    -221.18841552734375,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.015",
-            "transform": {
-                "translation": [
-                    324.9879150390625,
-                    -181.07119750976562,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.016",
-            "transform": {
-                "translation": [
-                    326.6430969238281,
-                    -137.07415771484375,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.017",
-            "transform": {
-                "translation": [
-                    319.3713073730469,
-                    -90.54954528808594,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.018",
-            "transform": {
-                "translation": [
-                    310.59954833984375,
-                    -43.9083251953125,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.019",
-            "transform": {
-                "translation": [
-                    298.0931396484375,
-                    0.4495086669921875,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.020",
-            "transform": {
-                "translation": [
-                    270.23541259765625,
-                    52.37220764160156,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.021",
-            "transform": {
-                "translation": [
-                    228.93344116210938,
-                    77.34125518798828,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.022",
-            "transform": {
-                "translation": [
-                    179.07589721679688,
-                    82.08422088623047,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.023",
-            "transform": {
-                "translation": [
-                    128.88143920898438,
-                    81.29266357421875,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.024",
-            "transform": {
-                "translation": [
-                    74.61209106445312,
-                    96.20204162597656,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.025",
-            "transform": {
-                "translation": [
-                    33.288909912109375,
-                    124.15870666503906,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.026",
-            "transform": {
-                "translation": [
-                    5.245819091796875,
-                    151.24562072753906,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
-            "name": "cam.027",
-            "transform": {
-                "translation": [
-                    -26.718887329101562,
-                    176.78488159179688,
-                    5.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "cam"
-        },
-        {
-            "type": "MESH",
             "name": "Road1",
             "transform": {
                 "translation": [
@@ -692,6 +120,534 @@
                     2.0
                 ]
             }
+        },
+        {
+            "type": "MESH",
+            "name": "cam.002",
+            "transform": {
+                "translation": [
+                    29.235891342163086,
+                    -32.59635543823242,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.003",
+            "transform": {
+                "translation": [
+                    46.210975646972656,
+                    -95.15045166015625,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.004",
+            "transform": {
+                "translation": [
+                    63.27133560180664,
+                    -164.32962036132812,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.005",
+            "transform": {
+                "translation": [
+                    100.28868103027344,
+                    -228.34732055664062,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.006",
+            "transform": {
+                "translation": [
+                    176.2399444580078,
+                    -248.30532836914062,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.007",
+            "transform": {
+                "translation": [
+                    278.8023376464844,
+                    -242.0922393798828,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.008",
+            "transform": {
+                "translation": [
+                    314.247802734375,
+                    -215.21896362304688,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.009",
+            "transform": {
+                "translation": [
+                    324.43817138671875,
+                    -168.40159606933594,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.010",
+            "transform": {
+                "translation": [
+                    317.55352783203125,
+                    -93.87886047363281,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.011",
+            "transform": {
+                "translation": [
+                    300.0973205566406,
+                    -12.152069091796875,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.012",
+            "transform": {
+                "translation": [
+                    262.4229736328125,
+                    55.15582275390625,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.013",
+            "transform": {
+                "translation": [
+                    187.1876678466797,
+                    80.71723937988281,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.014",
+            "transform": {
+                "translation": [
+                    110.05171966552734,
+                    83.35274505615234,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.015",
+            "transform": {
+                "translation": [
+                    26.622108459472656,
+                    133.95907592773438,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.016",
+            "transform": {
+                "translation": [
+                    -44.214935302734375,
+                    190.1258544921875,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.017",
+            "transform": {
+                "translation": [
+                    -111.32196807861328,
+                    216.95811462402344,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.018",
+            "transform": {
+                "translation": [
+                    -196.43592834472656,
+                    209.9241485595703,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.019",
+            "transform": {
+                "translation": [
+                    -277.8292236328125,
+                    178.3076171875,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.020",
+            "transform": {
+                "translation": [
+                    -314.404052734375,
+                    120.66313934326172,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.021",
+            "transform": {
+                "translation": [
+                    -304.4159240722656,
+                    56.49007797241211,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.022",
+            "transform": {
+                "translation": [
+                    -255.9662628173828,
+                    12.850408554077148,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.023",
+            "transform": {
+                "translation": [
+                    -185.13626098632812,
+                    5.236355781555176,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.024",
+            "transform": {
+                "translation": [
+                    -111.77156829833984,
+                    5.622885227203369,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
+        },
+        {
+            "type": "MESH",
+            "name": "cam.025",
+            "transform": {
+                "translation": [
+                    -53.95481872558594,
+                    7.414976596832275,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cam"
         },
         {
             "type": "EMPTY",

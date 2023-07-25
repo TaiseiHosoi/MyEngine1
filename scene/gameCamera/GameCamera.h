@@ -97,7 +97,7 @@ private:
 	std::vector<Object3d>* jsonObjsPtr = nullptr;
 	
 
-	float maxTime = 2.0f;				//全体時間[s]
+	float maxTime = 1.2f;				//全体時間[s]
 	float timeRate;						//何％時間が進んだか
 	size_t startIndex = 1;
 	size_t targetStartIndex = 1;
