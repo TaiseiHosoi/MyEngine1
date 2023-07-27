@@ -59,11 +59,12 @@ void Move::Update(Input* input)
 
 	Vector3 cameraNorm = gameObject_->GetCamera().GetTarget() - gameObject_->GetCamera().GetEye();
 	cameraNorm.nomalize();
-	float pAngle = atan2f(cameraNorm.z, cameraNorm.x);
+	float pAngle = atan2f(cameraNorm.x, cameraNorm.z);
 	Vector3 nowPos = gameObject_->GetPosition();
 
-	gameObject_->wtf.translation_ = gameObject_->GetCamera().GetEye(); + cameraNorm * 4.0f;
-	gameObject_->wtf.rotation_.y = pAngle;
+	nowPos = gameObject_->GetCamera().GetEye() + cameraNorm * 20.0f;
+	nowPos.y = 0.3f;
+	//gameObject_->wtf.rotation_.y = pAngle;
 
 	//キー入力があったら
 	if (input_->PushKey(DIK_W) ||
@@ -244,8 +245,8 @@ void Move::Update(Input* input)
 			faceAngle_.z -= 0.015f;
 		}
 	}
-
-	gameObject_->wtf.rotation_ = faceAngle_;
+	
+	gameObject_->wtf.rotation_ = { faceAngle_.x, faceAngle_.y + pAngle ,faceAngle_.z};
 
 	
 	//if (input_->TriggerMouseButton(0) && _pActManager->GetNowActNum() != ACTION_NUM::atk1) {

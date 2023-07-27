@@ -37,7 +37,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	gameObject_ = FBXObject3d::Create();
 	gameObject_->SetModel(fbxModel);
 	gameObject_->SetIsBonesWorldMatCalc(true);	//ボーンワールド行列計算あり
-	gameObject_->SetScale({ 4,4,4 });
+	gameObject_->SetScale({ 1,1,1 });
 	gameObject_->SetPosition({ 0,15.f,0 });
 	gameObject_->Update();
 
@@ -46,6 +46,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	hoverCarObject_->SetModel(hoverCarModel_.get());
 	hoverCarObject_->SetPosition(gameObject_->GetPosition());
 	hoverCarObject_->SetRotate(gameObject_->GetRotate());
+	hoverCarObject_->SetScale({0.25f,0.25f,0.25f});
 
 
 	SPHERE_COLISSION_NUM = static_cast<int>(gameObject_->GetBonesMatPtr()->size());

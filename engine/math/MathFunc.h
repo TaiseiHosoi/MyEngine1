@@ -36,6 +36,7 @@ namespace MathFunc {
 	//座標変換
 	Vector3 wDivision(const Vector3& v, const Matrix4& m);
 
+		
 	float FieldOfViewY(float focalLengs, float sensor);
 
 	Matrix4 ConvertXMMATtoMat4(DirectX::XMMATRIX XMMatrix);
