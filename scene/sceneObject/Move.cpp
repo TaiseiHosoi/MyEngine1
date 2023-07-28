@@ -90,7 +90,7 @@ void Move::Update(Input* input)
 			}
 			if (faceAngle_.y <= faceMaxAngle_) {
 				faceAngle_.y += faceRotSpeed_;
-				faceAngle_.z -= faceRotSpeed_;
+				
 			}
 			
 
@@ -108,7 +108,7 @@ void Move::Update(Input* input)
 			}
 			if (faceAngle_.y >= -faceMaxAngle_) {
 				faceAngle_.y -= faceRotSpeed_;
-				faceAngle_.z += faceRotSpeed_;
+				
 			}
 			
 
@@ -127,7 +127,7 @@ void Move::Update(Input* input)
 			}
 			if (faceAngle_.y <= faceMaxAngle_) {
 				faceAngle_.y += faceRotSpeed_;
-				faceAngle_.z -= faceRotSpeed_;
+				
 			}
 			
 
@@ -144,7 +144,7 @@ void Move::Update(Input* input)
 			}
 			if (faceAngle_.y >= -faceMaxAngle_) {
 				faceAngle_.y -= faceRotSpeed_;
-				faceAngle_.z += faceRotSpeed_;
+				
 			}
 			
 
@@ -179,7 +179,7 @@ void Move::Update(Input* input)
 
 			if (faceAngle_.y <= faceMaxAngle_) {
 				faceAngle_.y += faceRotSpeed_;
-				faceAngle_.z -= faceRotSpeed_;
+				
 			}
 			
 			
@@ -191,7 +191,7 @@ void Move::Update(Input* input)
 			nowPos.x -= kMoveSpeed_;
 			if (faceAngle_.y >= -faceMaxAngle_) {
 				faceAngle_.y -= faceRotSpeed_;
-				faceAngle_.z += faceRotSpeed_;
+				
 			}
 			
 		}
@@ -200,11 +200,11 @@ void Move::Update(Input* input)
 		if (input_->PushKey(DIK_A) != 1 && input_->PushKey(DIK_D) != 1) {
 			if (faceAngle_.y > 0.02f) {
 				faceAngle_.y -= 0.015f;
-				faceAngle_.z += 0.015f;
+				
 			}
 			else if (faceAngle_.y < -0.02f) {
 				faceAngle_.y += 0.015f;
-				faceAngle_.z -= 0.015f;
+				
 			}
 			
 		}
@@ -238,11 +238,11 @@ void Move::Update(Input* input)
 
 		if (faceAngle_.y > 0.02f) {
 			faceAngle_.y -= 0.015f;
-			faceAngle_.z += 0.015f;
+			
 		}
 		else if (faceAngle_.y < -0.02f) {
 			faceAngle_.y += 0.015f;
-			faceAngle_.z -= 0.015f;
+			
 		}
 	}
 	

@@ -46,7 +46,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	hoverCarObject_->SetModel(hoverCarModel_.get());
 	hoverCarObject_->SetPosition(gameObject_->GetPosition());
 	hoverCarObject_->SetRotate(gameObject_->GetRotate());
-	hoverCarObject_->SetScale({0.25f,0.25f,0.25f});
+	hoverCarObject_->SetScale({1.f,1.f,1.f});
 
 
 	SPHERE_COLISSION_NUM = static_cast<int>(gameObject_->GetBonesMatPtr()->size());

@@ -32,12 +32,13 @@ void Field::Initialize()
 	groundObj2_->Update();
 
 	skydomeModel_ = std::make_unique<Mesh>();
-	skydomeModel_ = Mesh::LoadFormOBJ("skydome", false);
+	skydomeModel_ = Mesh::LoadFormOBJ("skybox", false);
 
 	skydomeObj_ = std::make_unique<Object3d>();
 	skydomeObj_.get()->Initialize(false);
 	skydomeObj_.get()->SetModel(skydomeModel_.get());
-	skydomeObj_->worldTransform.scale_ = { 4000,2000,4000 };
+	skydomeObj_->worldTransform.translation_ = {1,-5000,1};
+	skydomeObj_->worldTransform.scale_ = { 100,100,100 };
 	skydomeObj_->Update();
 
 
