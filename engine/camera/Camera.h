@@ -187,6 +187,6 @@ protected: // メンバ変数
 	float aspectRatio = 1.0f;
 
 	float focalLengs = 50;
-	float sensor = 35;
+	float sensor = 50;
 };
 

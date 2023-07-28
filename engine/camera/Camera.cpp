@@ -152,7 +152,7 @@ void Camera::UpdateProjectionMatrix()
 {
 	// 透視投影による射影行列の生成
 	MakePerspectiveL(
-		FieldOfViewY() ,
+		1.0f ,
 		aspectRatio ,
 		0.1f , 100000.0f ,
 		matProjection

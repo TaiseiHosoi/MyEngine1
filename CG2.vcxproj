@@ -170,7 +170,10 @@
     <ClCompile Include="engine\Collider\SphereCollider.cpp" />
     <ClCompile Include="engine\common\DirectXCommon.cpp" />
     <ClCompile Include="engine\common\WinApp.cpp" />
-    <ClCompile Include="engine\fbx\FBXLoader.cpp" />
+    <ClCompile Include="engine\fbx\FBXLoader.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MaxSpeed</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
+    </ClCompile>
     <ClCompile Include="engine\fbx\FBXModel.cpp" />
     <ClCompile Include="engine\fbx\FBXObject3d.cpp" />
     <ClCompile Include="engine\hitstopManager\HitStopManager.cpp" />
