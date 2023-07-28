@@ -109,6 +109,12 @@
     <Filter Include="ヘッダー ファイル\SummarizeEngine">
       <UniqueIdentifier>{d58c5765-f6df-4ecf-9a86-e17c7f623500}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\LevelEditor">
+      <UniqueIdentifier>{63cb2a57-250a-472e-860e-d92f409e1c04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\LevelEditor">
+      <UniqueIdentifier>{223dbc44-dc06-46cd-aee1-2259495a8ccf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -216,18 +222,6 @@
     <ClCompile Include="engine\common\WinApp.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
-    <ClCompile Include="scene\sceneObject\Boss.cpp">
-      <Filter>ソース ファイル\scene\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\BossBullet.cpp">
-      <Filter>ソース ファイル\scene\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\BossBurstBullet.cpp">
-      <Filter>ソース ファイル\scene\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\BossLaser.cpp">
-      <Filter>ソース ファイル\scene\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="scene\sceneObject\Atk1.cpp">
       <Filter>ソース ファイル\scene\Player</Filter>
     </ClCompile>
@@ -269,6 +263,18 @@
     </ClCompile>
     <ClCompile Include="PlayerReticle.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\BasicEnemy.cpp">
+      <Filter>ソース ファイル\scene\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>ソース ファイル\scene\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\LevelEditor\json.cpp">
+      <Filter>ソース ファイル\LevelEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\JsonManager.cpp">
+      <Filter>ソース ファイル\LevelEditor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -432,18 +438,6 @@
     <ClInclude Include="engine\common\WinApp.h">
       <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
-    <ClInclude Include="scene\sceneObject\Boss.h">
-      <Filter>ヘッダー ファイル\scene\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\BossBullet.h">
-      <Filter>ヘッダー ファイル\scene\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\BossBurstBullet.h">
-      <Filter>ヘッダー ファイル\scene\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\BossLaser.h">
-      <Filter>ヘッダー ファイル\scene\enemy</Filter>
-    </ClInclude>
     <ClInclude Include="scene\sceneObject\Atk1.h">
       <Filter>ヘッダー ファイル\scene\Player</Filter>
     </ClInclude>
@@ -482,6 +476,18 @@
     </ClInclude>
     <ClInclude Include="PlayerReticle.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>ヘッダー ファイル\scene\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\BasicEnemy.h">
+      <Filter>ヘッダー ファイル\scene\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\LevelEditor\json.h">
+      <Filter>ヘッダー ファイル\LevelEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonManager.h">
+      <Filter>ヘッダー ファイル\LevelEditor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -25,13 +25,16 @@ public:
 
 	//メンバ変数
 private:
-	std::unique_ptr<Object3d> gameObject_;	//地面
+
 	std::unique_ptr<Mesh> fieldM;
+	const float groundSpeed_ = 0.2f;
+	std::unique_ptr<Object3d> groundObj1_;	//地面1
+	std::unique_ptr<Object3d> groundObj2_;	//地面2
+	
 
 	std::unique_ptr<Object3d> skydomeObj_;
 	std::unique_ptr<Mesh> skydomeModel_;
-	const int fenceLen_ = 4;
-	Object3d* fence_[4] = {};	//フェンス
+
 	Mesh* fenceM = nullptr;
 
 	static const int fieldR_ = 415;

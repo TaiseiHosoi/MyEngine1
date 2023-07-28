@@ -11,9 +11,9 @@
 #include "Mesh.h"
 #include "Object3d.h"
 #include "ParticleManager.h"
+#include"JsonManager.h"
 
 #include "FbxPlayer.h"
-#include "Boss.h"
 #include "Ground.h"
 
 
@@ -48,6 +48,8 @@ public:
 	// シーンを変更する
 	void ChangeScene(IScene*);
 	void ResetParameters();
+
+	void SetJsonManager(JsonManager* jsonmanager) { jsonManager_ = jsonmanager; };
 	//ID3D12GraphicsCommandList* GetCommandList() { return _dxCommon->GetCommandList(); };
 public:
 	
@@ -56,6 +58,7 @@ public:
 
 	std::unique_ptr<ParticleManager> particleManager_;
 	
+	JsonManager* jsonManager_ = nullptr;
 	//std::unique_ptr <Object3d> object3d;
 	//std::unique_ptr <Mesh> model;
 
@@ -67,7 +70,7 @@ public:
 	//std::unique_ptr<FBXObject3d> bossFbxO_;
 
 	std::unique_ptr<FbxPlayer> fbxPlayer_;
-	std::unique_ptr<Boss> boss_;
+	
 
 	std::unique_ptr<Field> field_;
 

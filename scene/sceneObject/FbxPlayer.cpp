@@ -3,7 +3,7 @@
 #include "GameCamera.h"
 #include <random>
 #include "HitStopManager.h"
-#include "Boss.h"	//苦肉の策
+//#include "Boss.h"	//苦肉の策
 //PlayerAction
 #include"Move.h"
 #include"Atk1.h"
@@ -37,7 +37,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	gameObject_ = FBXObject3d::Create();
 	gameObject_->SetModel(fbxModel);
 	gameObject_->SetIsBonesWorldMatCalc(true);	//ボーンワールド行列計算あり
-	gameObject_->SetScale({ 4,4,4 });
+	gameObject_->SetScale({ 1,1,1 });
 	gameObject_->SetPosition({ 0,15.f,0 });
 	gameObject_->Update();
 
@@ -46,6 +46,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	hoverCarObject_->SetModel(hoverCarModel_.get());
 	hoverCarObject_->SetPosition(gameObject_->GetPosition());
 	hoverCarObject_->SetRotate(gameObject_->GetRotate());
+	hoverCarObject_->SetScale({0.25f,0.25f,0.25f});
 
 
 	SPHERE_COLISSION_NUM = static_cast<int>(gameObject_->GetBonesMatPtr()->size());
@@ -160,11 +161,11 @@ void FbxPlayer::Update()
 		gameObject_->Update();
 		hoverCarObject_->Update();
 		count++;
-		/*ImGui::Begin("hp");
-		ImGui::InputInt("count", &count);
-		ImGui::InputInt("BossHP", &Boss::hp);
-		ImGui::InputInt("PlayerHP", &FbxPlayer::hp);
-		ImGui::End();*/
+		ImGui::Begin("pRotY");
+		ImGui::InputFloat3("rocalPos", &gameObject_->wtf.translation_.x);
+		ImGui::InputFloat("rocalRoty", &gameObject_->wtf.rotation_.y);
+		ImGui::InputFloat("matRoty", &gameObject_->wtf.matWorld_.m[0][2]);
+		ImGui::End();
 
 #pragma region hp
 		hpObject_->SetScale({ static_cast<float>(hp) * 0.04f,0.1f,0.02f });
@@ -265,7 +266,7 @@ void FbxPlayer::PColliderUpdate()
 			if (sphere[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIES) {
 
 				audio_->PlayWave("kuri.wav");
-				Boss::minusHp(1);
+				//Boss::minusHp(1);
 				hitDeley = 4;
 				particle_->RandParticle(sphere[i]->GetCollisionInfo().inter);
 				HitStopManager::GetInstance()->SetHitStop(&isHitStop, 2);

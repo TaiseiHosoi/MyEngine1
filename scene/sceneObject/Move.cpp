@@ -57,8 +57,14 @@ void Move::Update(Input* input)
 			gameObject_->GetCamera().GetTarget().z - gameObject_->GetCamera().GetEye().z)
 	,0.0f};
 
+	Vector3 cameraNorm = gameObject_->GetCamera().GetTarget() - gameObject_->GetCamera().GetEye();
+	cameraNorm.nomalize();
+	float pAngle = atan2f(cameraNorm.x, cameraNorm.z);
 	Vector3 nowPos = gameObject_->GetPosition();
-	
+
+	nowPos = gameObject_->GetCamera().GetEye() + cameraNorm * 20.0f;
+	nowPos.y = 0.3f;
+	//gameObject_->wtf.rotation_.y = pAngle;
 
 	//キー入力があったら
 	if (input_->PushKey(DIK_W) ||
@@ -79,6 +85,16 @@ void Move::Update(Input* input)
 			nowPos.x += kDiagonalSpeed;
 			nowPos.y += kDiagonalSpeed;
 
+			if (faceAngle_.x >= -faceMaxAngle_) {
+				faceAngle_.x -= faceRotSpeed_;
+			}
+			if (faceAngle_.y <= faceMaxAngle_) {
+				faceAngle_.y += faceRotSpeed_;
+				faceAngle_.z -= faceRotSpeed_;
+			}
+			
+
+
 		}
 
 		//W,Aを押していたら
@@ -87,6 +103,14 @@ void Move::Update(Input* input)
 
 			nowPos.x -= kDiagonalSpeed;
 			nowPos.y += kDiagonalSpeed;
+			if (faceAngle_.x >= -faceMaxAngle_) {
+				faceAngle_.x -= faceRotSpeed_;
+			}
+			if (faceAngle_.y >= -faceMaxAngle_) {
+				faceAngle_.y -= faceRotSpeed_;
+				faceAngle_.z += faceRotSpeed_;
+			}
+			
 
 		}
 
@@ -97,6 +121,16 @@ void Move::Update(Input* input)
 			nowPos.x += kDiagonalSpeed;
 			nowPos.y -= kDiagonalSpeed;
 
+
+			if (faceAngle_.x <= faceMaxAngle_) {
+				faceAngle_.x += faceRotSpeed_;
+			}
+			if (faceAngle_.y <= faceMaxAngle_) {
+				faceAngle_.y += faceRotSpeed_;
+				faceAngle_.z -= faceRotSpeed_;
+			}
+			
+
 		}
 
 		//S,Aを押していたら
@@ -105,12 +139,25 @@ void Move::Update(Input* input)
 			nowPos.x -= kDiagonalSpeed;
 			nowPos.y -= kDiagonalSpeed;
 
+			if (faceAngle_.x <= faceMaxAngle_) {
+				faceAngle_.x += faceRotSpeed_;
+			}
+			if (faceAngle_.y >= -faceMaxAngle_) {
+				faceAngle_.y -= faceRotSpeed_;
+				faceAngle_.z += faceRotSpeed_;
+			}
+			
+
 		}
 
 		//Wを押していたら
 		else if (input_->PushKey(DIK_W))
 		{
 			nowPos.y += kMoveSpeed_;
+
+			if (faceAngle_.x >= -faceMaxAngle_) {
+				faceAngle_.x -= faceRotSpeed_;
+			}
 			
 		}
 
@@ -118,6 +165,10 @@ void Move::Update(Input* input)
 		else if (input_->PushKey(DIK_S))
 		{
 			nowPos.y -= kMoveSpeed_;
+
+			if (faceAngle_.x <= faceMaxAngle_) {
+				faceAngle_.x += faceRotSpeed_;
+			}
 			
 		}
 
@@ -125,6 +176,12 @@ void Move::Update(Input* input)
 		else if (input_->PushKey(DIK_D))
 		{
 			nowPos.x += kMoveSpeed_;
+
+			if (faceAngle_.y <= faceMaxAngle_) {
+				faceAngle_.y += faceRotSpeed_;
+				faceAngle_.z -= faceRotSpeed_;
+			}
+			
 			
 		}
 
@@ -132,33 +189,70 @@ void Move::Update(Input* input)
 		else if (input_->PushKey(DIK_A))
 		{
 			nowPos.x -= kMoveSpeed_;
+			if (faceAngle_.y >= -faceMaxAngle_) {
+				faceAngle_.y -= faceRotSpeed_;
+				faceAngle_.z += faceRotSpeed_;
+			}
+			
 		}
 
+		//押されていないときの処理
+		if (input_->PushKey(DIK_A) != 1 && input_->PushKey(DIK_D) != 1) {
+			if (faceAngle_.y > 0.02f) {
+				faceAngle_.y -= 0.015f;
+				faceAngle_.z += 0.015f;
+			}
+			else if (faceAngle_.y < -0.02f) {
+				faceAngle_.y += 0.015f;
+				faceAngle_.z -= 0.015f;
+			}
+			
+		}
+
+		if (input_->PushKey(DIK_W) != 1 && input_->PushKey(DIK_S) != 1) {
+			if (faceAngle_.x > 0.02f) {
+				faceAngle_.x -= 0.015f;
+			}
+			else if (faceAngle_.x < -0.02f) {
+				faceAngle_.x += 0.015f;
+			}
+
+		}
 		
-		if (input_->PushKey(DIK_UP)) {
+		
+		/*if (input_->PushKey(DIK_UP)) {
 			nowPos.z += kMoveSpeed_;
-		}
-		
+		}*/		
 
-		gameObject_->wtf.rotation_ = faceAngle_;
-
-
-		
 	}
 	else
 	{
-		/*if (isRun_ == true) {
-			isRun_ = false;
-			animNum = 5;
-			gameObject_->PlayAnimation(animNum);
-		}*/
+
+		//押されていないときの処理
+		if (faceAngle_.x > 0.02f) {
+			faceAngle_.x -= 0.015f;
+		}
+		else if (faceAngle_.x < -0.02f) {
+			faceAngle_.x += 0.015f;
+		}
+
+		if (faceAngle_.y > 0.02f) {
+			faceAngle_.y -= 0.015f;
+			faceAngle_.z += 0.015f;
+		}
+		else if (faceAngle_.y < -0.02f) {
+			faceAngle_.y += 0.015f;
+			faceAngle_.z -= 0.015f;
+		}
 	}
+	
+	gameObject_->wtf.rotation_ = { faceAngle_.x, faceAngle_.y + pAngle ,faceAngle_.z};
 
 	
-	if (input_->TriggerMouseButton(0) && _pActManager->GetNowActNum() != ACTION_NUM::atk1) {
-		//pActManager_->ChangeAction(new Atk1(pActManager_.get()));
-		_pActManager->SetNowActNum(ACTION_NUM::atk1);
-	}
+	//if (input_->TriggerMouseButton(0) && _pActManager->GetNowActNum() != ACTION_NUM::atk1) {
+	//	//pActManager_->ChangeAction(new Atk1(pActManager_.get()));
+	//	_pActManager->SetNowActNum(ACTION_NUM::atk1);
+	//}
 
 	//gameObject_->wtf.UpdateMatWorld();
 

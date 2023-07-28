@@ -87,7 +87,7 @@ public:
 	void AdjustTextureSize();
 
 private:
-	SpriteCommon* spritecomon;
+	SpriteCommon* spritecommon;
 	HRESULT result;
 	// 頂点データ
 	Vertex2 vertices[4] = {

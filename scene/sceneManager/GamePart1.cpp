@@ -1,8 +1,10 @@
 #include "SceneIntegrate.h"
 
 
+
 GamePart1::GamePart1(SceneManager* controller) {
 	_controller = controller;
+	
 }
 
 GamePart1::~GamePart1() {
@@ -68,6 +70,9 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	isPause_ = false;
 	pauseMenuOptions_ = 0;
 	backToTitle_ = 0;
+
+	
+	
 }
 
 void GamePart1::Update(Input* input, GameCamera* camera) {
@@ -81,6 +86,7 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 		_controller->field_->Update();
 		//_controller->boss_->Update();
 		_controller->fbxPlayer_->Update();
+		_controller->jsonManager_->UpdateAllEnemies();
 
 		if (input->TriggerKey(DIK_ESCAPE)) {
 			isPause_ = true;
@@ -98,16 +104,16 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 	
 
 	playerHp_->SetSize({300 * _controller->fbxPlayer_->GetHp() / 100.0f, 32});
-	enemyHp_->SetSize({1280.0f * _controller->boss_->GetHp() / 100.0f , 32});
+	//enemyHp_->SetSize({1280.0f * _controller->boss_->GetHp() / 100.0f , 32});
 
-	if (_controller->boss_->GetHp() <= 0) {
+	/*if (_controller->boss_->GetHp() <= 0) {
 		_controller->ChangeScene(new EndScene(_controller));
 	}else if (_controller->fbxPlayer_->GetHp() <= 0) {
 		_controller->ChangeScene(new GamePart2(_controller));
 	}
 	else if (backToTitle_ == true) {
 		_controller->ChangeScene(new TitleScene(_controller));
-	}
+	}*/
 	// ここから下にコード書くとメモリ君がエラー吐く
 }
 
@@ -116,6 +122,8 @@ void GamePart1::Draw(DirectXCommon* dxCommon) {
 	_controller->field_->Draw(dxCommon);
 	//_controller->boss_->Draw();
 	_controller->fbxPlayer_->Draw(dxCommon->GetCommandList());
+
+	_controller->jsonManager_->DrawAllEnemies(dxCommon->GetCommandList());
 
 	_controller->spriteCommon_->SpritePreDraw();
 	//if (isClickL == true) {

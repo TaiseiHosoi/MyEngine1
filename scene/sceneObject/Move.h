@@ -31,5 +31,9 @@ private:    //固有で必要なもの
     const float kTurnSpeed_ = MathFunc::Dig2Rad(10);
     bool isRun_ = false;
     Vector3 faceAngle_ = {};
+    //自機回転の最大
+    const float faceMaxAngle_ = 0.2f;
+    float faceRotSpeed_ = 0.02f;
+    
 };
 

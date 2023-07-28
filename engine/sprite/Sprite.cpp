@@ -1,9 +1,9 @@
 #include"Sprite.h"
 
-void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t texturerIndex)
+void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t textureIndex)
 {
 
-	spritecomon = spritecommon_;
+	spritecommon = spritecommon_;
 
 
 	// 頂点バッファの設定
@@ -14,10 +14,10 @@ void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t texturerIndex)
 
 	// 頂点バッファの生成
 
-	result = spritecomon->GetDxCommon()->GetDevice()->CreateCommittedResource(
+	result = spritecommon->GetDxCommon()->GetDevice()->CreateCommittedResource(
 		&heapProp, // ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
-		&spritecomon->GetResourceDesc(), // リソース設定
+		&spritecommon->GetResourceDesc(), // リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&vertBuff));
@@ -36,7 +36,7 @@ void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t texturerIndex)
 	// GPU仮想アドレス
 	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
 	// 頂点バッファのサイズ
-	vbView.SizeInBytes = spritecomon->GetSizeVB();
+	vbView.SizeInBytes = spritecommon->GetSizeVB();
 	// 頂点1つ分のデータサイズ
 	vbView.StrideInBytes = sizeof(vertices[0]);
 
@@ -57,7 +57,7 @@ void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t texturerIndex)
 		cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 		// 定数バッファの生成
-		result = spritecomon->GetDxCommon()->GetDevice()->CreateCommittedResource(
+		result = spritecommon->GetDxCommon()->GetDevice()->CreateCommittedResource(
 			&cbHeapProp, // ヒープ設定
 			D3D12_HEAP_FLAG_NONE,
 			&cbResourceDesc, // リソース設定
@@ -94,7 +94,7 @@ void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t texturerIndex)
 		0.0f, 1.0f);
 
 	// 定数バッファの生成
-	result = spritecomon->GetDxCommon()->GetDevice()->CreateCommittedResource(
+	result = spritecommon->GetDxCommon()->GetDevice()->CreateCommittedResource(
 		&cbHeapProp, // ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&cbResourceDesc, // リソース設定
@@ -112,8 +112,8 @@ void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t texturerIndex)
 	constMapMaterial->color = XMFLOAT4(1, 0, 0, 0.5f);              // RGBAで半透明の赤
 
 	//テクスチャサイズをイメージに合わせる
-	if (texturerIndex != UINT32_MAX) {
-		textureIndex_ = texturerIndex;
+	if (textureIndex != UINT32_MAX) {
+		textureIndex_ = textureIndex;
 		AdjustTextureSize();
 		//テクスチャサイズをスプライトのサイズに適応
 		size_ = textureSize;
@@ -143,25 +143,25 @@ void Sprite::Draw()
 		constMapMaterial->color = color;
 	}
 
-	spritecomon->SetTextureCommands(textureIndex_);
+	spritecommon->SetTextureCommands(textureIndex_);
 
 	//頂点バッファビューの設定コマンド
-	spritecomon->GetDxCommon()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
+	spritecommon->GetDxCommon()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
 	// 定数バッファビュー(CBV)の設定コマンド
-	spritecomon->GetDxCommon()->GetCommandList()->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
+	spritecommon->GetDxCommon()->GetCommandList()->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
 
 
 
 	// 定数バッファビュー(CBV)の設定コマンド
-	spritecomon->GetDxCommon()->GetCommandList()->SetGraphicsRootConstantBufferView(2, constBuffTransform->GetGPUVirtualAddress());
+	spritecommon->GetDxCommon()->GetCommandList()->SetGraphicsRootConstantBufferView(2, constBuffTransform->GetGPUVirtualAddress());
 
 	// 描画コマンド
-	spritecomon->GetDxCommon()->GetCommandList()->DrawInstanced(_countof(vertices), 1, 0, 0); // 全ての頂点を使って描画
+	spritecommon->GetDxCommon()->GetCommandList()->DrawInstanced(_countof(vertices), 1, 0, 0); // 全ての頂点を使って描画
 }
 
 void Sprite::Update()
 {
-	ComPtr<ID3D12Resource> textureBuffer = spritecomon->GetTextureBuffer(textureIndex_);
+	ComPtr<ID3D12Resource> textureBuffer = spritecommon->GetTextureBuffer(textureIndex_);
 
 	float left = (0.0f - anchorpoint.x) * size_.x;
 	float right = (1.0f - anchorpoint.x) * size_.x;
@@ -201,17 +201,7 @@ void Sprite::Update()
 		vertices[RT].uv = { tex_right,tex_top };
 
 	}
-	////頂点データ
-	//vertices[LB].pos = { 0.0f,size_.y,0.0f };
-	//vertices[LT].pos = { 0.0f,0.0f,0.0f };
-	//vertices[RB].pos = { size_.x,size_.y,0.0f };
-	//vertices[RT].pos = { size_.x,0.0f,0.0f };
-
-
-	/*std::copy(std::begin(vertices), std::end(vertices), vertMap);*/
-
-	/*matScale = XMMatrixScaling(scale.x, scale.y, scale.z);*/
-
+	
 
 
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
@@ -256,7 +246,7 @@ void Sprite::SetIsFlipX(bool isFlipX)
 
 void Sprite::AdjustTextureSize()
 {
-	ComPtr<ID3D12Resource> textureBuffer = spritecomon->GetTextureBuffer(textureIndex_);
+	ComPtr<ID3D12Resource> textureBuffer = spritecommon->GetTextureBuffer(textureIndex_);
 	assert(textureBuffer);
 
 	//テクスチャ情報取得

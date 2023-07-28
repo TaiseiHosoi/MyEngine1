@@ -1,5 +1,6 @@
 #pragma once
 #include "IScene.h"
+#include "JsonManager.h"
 
 // 追いかけパート
 class GamePart1 :
@@ -47,6 +48,8 @@ private:
 	//音用変数
 	bool isSounds = false;
 	std::unique_ptr<Audio> audio_;
+
+	
 
 public:
 

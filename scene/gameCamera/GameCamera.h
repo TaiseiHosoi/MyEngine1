@@ -2,6 +2,7 @@
 #include"Camera.h"
 #include"Input.h"
 #include "Object3d.h"
+#include<vector>
 
 class GameCamera :
 	public Camera
@@ -42,6 +43,8 @@ public:
 		isPause_ = isPause;
 	}
 
+	void SetJsonObj(std::vector<Object3d>* objs) { jsonObjsPtr = objs; };
+
 	// 1-> target ,0-> eye
 	WorldTransform swap_[2];
 private:
@@ -76,5 +79,34 @@ private:
 	Vector2 mouseMove;
 	float mouseSensitivity_ = 0.05f;	//マウス感度
 	bool isPause_;
+
+	//レールカメラ用
+	Vector3 basePos_ = {};
+	Vector3 railTargetPos_ = {};
+	
+	//制御店の集合(vectorコンテナ),補完する区間の添字、時間経過率
+	Vector3 splinePosition(const std::vector<Vector3>& points, size_t startIndex, float t);
+	//補間で使うデータ
+	//start → end を5秒で完了させる
+	Vector3 p0 = { -100.0f, 0, -50.0f };			//スタート地点
+	Vector3 p1 = { -50.0f, 50.0f, -50.0f };	//制御点その1
+	Vector3 p2 = { 50.0f, -30.0f, -50.0f };	//制御点その2
+	Vector3 p3 = { 100.0f, 0.0f, -50.0f };		//ゴール地点
+
+	std::vector<Vector3>points{};
+	std::vector<Object3d>* jsonObjsPtr = nullptr;
+	
+
+	float maxTime = 1.2f;				//全体時間[s]
+	float timeRate;						//何％時間が進んだか
+	size_t startIndex = 1;
+	size_t targetStartIndex = 1;
+	uint32_t startCount = 0;
+	uint32_t targetStartCount = 0;
+	uint32_t nowCount = 0;
+	uint32_t elapsedCount = 0;
+
+	Vector3 oldPos_ = {};
+
 };
 
