@@ -11,7 +11,7 @@ GamePart1::~GamePart1() {
 
 void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
-	//‰¹‚Ì‰Šú‰»‚Æ“Ç‚İ‚İ
+	//éŸ³ã®åˆæœŸåŒ–ã¨èª­ã¿è¾¼ã¿
 	audio_ = std::make_unique<Audio>();
 	audio_->Initialize();
 	audio_->LoadWave("newspaper.wav");
@@ -72,41 +72,30 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
 void GamePart1::Update(Input* input, GameCamera* camera) {
 
-	//BGM‚ğ—¬‚·
-	PlaySounds();
+	//BGMã‚’æµã™
+	//PlaySounds();
 
-	isClickL = false;
-	if (input->PushMouseButton(0)) {
-		isClickL = true;
-	}
-	isClickR = false;
-	if (input->PushMouseButton(1)) {
-		isClickR = true;
-	}
+	
 
 	if (isPause_ == false) {
 		_controller->field_->Update();
-		_controller->boss_->Update();
+		//_controller->boss_->Update();
 		_controller->fbxPlayer_->Update();
 
 		if (input->TriggerKey(DIK_ESCAPE)) {
 			isPause_ = true;
 			pauseMenuOptions_ = 0;
 		}
-		/*ImGui::Begin("Pause");
+		ImGui::Begin("Pause");
 		ImGui::SetWindowPos({200 , 200});
 		ImGui::InputInt("isPause" , &isPause_);
-		ImGui::End();*/
+		ImGui::End();
 	}
 	else {
 		Pause(input, camera);
 	}
 
-	if (_controller->field_->PlayerOnGround(_controller->fbxPlayer_->GetObject3d()->wtf.matWorld_.GetWorldPos(),1)) {
-		/*ImGui::Begin("Info");
-		ImGui::Text("Player : ground OUT");
-		ImGui::End();*/
-	}
+	
 
 	playerHp_->SetSize({300 * _controller->fbxPlayer_->GetHp() / 100.0f, 32});
 	enemyHp_->SetSize({1280.0f * _controller->boss_->GetHp() / 100.0f , 32});
@@ -119,33 +108,33 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 	else if (backToTitle_ == true) {
 		_controller->ChangeScene(new TitleScene(_controller));
 	}
-	// ‚±‚±‚©‚ç‰º‚ÉƒR[ƒh‘‚­‚Æƒƒ‚ƒŠŒN‚ªƒGƒ‰[“f‚­
+	// ã“ã“ã‹ã‚‰ä¸‹ã«ã‚³ãƒ¼ãƒ‰æ›¸ãã¨ãƒ¡ãƒ¢ãƒªå›ãŒã‚¨ãƒ©ãƒ¼åã
 }
 
 void GamePart1::Draw(DirectXCommon* dxCommon) {
 
 	_controller->field_->Draw(dxCommon);
-	_controller->boss_->Draw();
+	//_controller->boss_->Draw();
 	_controller->fbxPlayer_->Draw(dxCommon->GetCommandList());
 
 	_controller->spriteCommon_->SpritePreDraw();
-	if (isClickL == true) {
-		attack2_->Draw();
-	}
-	else {
-		attack_->Draw();
-	}
-	if (isClickR == true) {
-		guard2_->Draw();
-	}
-	else {
-		guard_->Draw();
-	}
+	//if (isClickL == true) {
+	//	attack2_->Draw();
+	//}
+	//else {
+	//	attack_->Draw();
+	//}
+	//if (isClickR == true) {
+	//	guard2_->Draw();
+	//}
+	//else {
+	//	guard_->Draw();
+	//}
 	move_->Draw();
-	enemyHpRed_->Draw();
-	enemyHp_->Draw();
-	playerHpRed_->Draw();
-	playerHp_->Draw();
+	//enemyHpRed_->Draw();
+	//enemyHp_->Draw();
+	//playerHpRed_->Draw();
+	//playerHp_->Draw();
 
 	_controller->spriteCommon_->SpritePostDraw();
 
@@ -154,12 +143,12 @@ void GamePart1::Draw(DirectXCommon* dxCommon) {
 void GamePart1::Pause(Input* input, GameCamera* camera)
 {
 
-	//ESC‚Åƒ|[ƒY‰ğœ
+	//ESCã§ãƒãƒ¼ã‚ºè§£é™¤
 	if (input->TriggerKey(DIK_ESCAPE)) {
 		isPause_ = false;
 	}
 
-	//–îˆóƒL[ã‰º‚Å‘I‘ğˆ‚Ì•ÏX
+	//çŸ¢å°ã‚­ãƒ¼ä¸Šä¸‹ã§é¸æŠè‚¢ã®å¤‰æ›´
 	if (input->TriggerKey(DIK_DOWN)) {
 		if (pauseMenuOptions_ < END_OF_OPTION - 1)
 			pauseMenuOptions_++;
@@ -169,7 +158,7 @@ void GamePart1::Pause(Input* input, GameCamera* camera)
 			pauseMenuOptions_--;
 	}
 
-	//ƒGƒ‰[‰ñ”ğ—p
+	//ã‚¨ãƒ©ãƒ¼å›é¿ç”¨
 	if (pauseMenuOptions_ < 0) {
 		pauseMenuOptions_ = 0;
 	}
@@ -177,17 +166,17 @@ void GamePart1::Pause(Input* input, GameCamera* camera)
 		pauseMenuOptions_ = END_OF_OPTION - 1;
 	}
 
-	//ƒGƒ“ƒ^[ƒL[‚ğ‰Ÿ‚µ‚½‚Æ‚«
+	//ã‚¨ãƒ³ã‚¿ãƒ¼ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸã¨ã
 	if (input->TriggerKey(DIK_RETURN)) {
 
 		switch (pauseMenuOptions_)
 		{
-			//ÄŠJ‚·‚é
+			//å†é–‹ã™ã‚‹
 		case GamePart1::RESUME:
 		isPause_ = false;
 		break;
 
-		//ƒ^ƒCƒgƒ‹‚É–ß‚é
+		//ã‚¿ã‚¤ãƒˆãƒ«ã«æˆ»ã‚‹
 		case GamePart1::BACK_TO_TITLE:
 		backToTitle_ = true;
 		isPause_ = false;
@@ -210,6 +199,6 @@ void GamePart1::PlaySounds()
 	if (isSounds == false)
 	{
 		isSounds = true;
-		audio_->PlayWave("newspaper.wav"); //ƒ‹[ƒvÄ¶‚Í‚µ‚È‚¢
+		audio_->PlayWave("newspaper.wav"); //ãƒ«ãƒ¼ãƒ—å†ç”Ÿã¯ã—ãªã„
 	}
 }

@@ -7,22 +7,22 @@ class WorldTransform {
 public:
 	WorldTransform(Vector3 scale, Vector3 rotation, Vector3 translation);
 	WorldTransform() {};
-	//ƒƒ“ƒoŠÖ”
+	//ãƒ¡ãƒ³ãƒé–¢æ•°
 	void initialize();
 
-	//ƒ[ƒ‹ƒh•ÏŠ·s—ñ‚ÌXV
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—ã®æ›´æ–°
 	void UpdateMatWorld();
 
-	//ƒƒ“ƒo•Ï”
-	//ƒXƒP[ƒ‹
+	//ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ã‚¹ã‚±ãƒ¼ãƒ«
 	Vector3 scale_ = {1,1,1};
-	//XYZ²‰ñ“]
+	//XYZè»¸å›è»¢
 	Vector3 rotation_ = { 0,0,0 };
-	//ƒ[ƒJƒ‹À•W
+	//ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™
 	Vector3 translation_ = { 0,0,0 };
-	//ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 	Matrix4 matWorld_;
-	//eƒIƒuƒWƒFƒNƒg‚Ìƒ[ƒ‹ƒh•ÏŠ·‚Ìƒ|ƒCƒ“ƒ^
+	//è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›ã®ãƒã‚¤ãƒ³ã‚¿
 	WorldTransform* parent_ = nullptr;
 
 };

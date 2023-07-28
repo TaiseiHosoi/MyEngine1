@@ -35,11 +35,11 @@ void CounterAtk::Update(Input* input)
 	{
 		gameObject_->AnimIsRotateChange(false);
 	}
-	counterFrameCount++;	//ƒJƒEƒ“ƒ^[s“®‚ªŠJŽn‚µ‚Ä‚©‚ç‚ÌƒtƒŒ[ƒ€ƒJƒEƒ“ƒg
+	counterFrameCount++;	//ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼è¡Œå‹•ãŒé–‹å§‹ã—ã¦ã‹ã‚‰ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ãƒˆ
 
 	
 
-	//‰½ƒtƒŒ[ƒ€–Ú‚ÉUŒ‚”»’è‚ªo‚é‚©
+	//ä½•ãƒ•ãƒ¬ãƒ¼ãƒ ç›®ã«æ”»æ’ƒåˆ¤å®šãŒå‡ºã‚‹ã‹
 	if (counterFrameCount > 10 && counterFrameCount < 30 ||
 		counterFrameCount > 45 && counterFrameCount < 120) {
 		FbxPlayer::SetIsAtkCollide(true);
@@ -53,11 +53,11 @@ void CounterAtk::Update(Input* input)
 			gameObject_->GetCamera().GetTarget().z - gameObject_->GetCamera().GetEye().z) ,
 	0};
 
-	//ƒƒCƒ“ˆ—
+	//ãƒ¡ã‚¤ãƒ³å‡¦ç†
 	if (counterFrameCount == 1)
-	{	//‰ƒtƒŒ[ƒ€
-		phase = 1;	//s“®ƒtƒFƒCƒY
-		animNum = 2;	//ƒAƒjƒ[ƒVƒ‡ƒ“”Ô†
+	{	//åˆãƒ•ãƒ¬ãƒ¼ãƒ 
+		phase = 1;	//è¡Œå‹•ãƒ•ã‚§ã‚¤ã‚º
+		animNum = 2;	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç•ªå·
 		gameObject_->PlayAnimation(animNum);
 
 	}
@@ -93,7 +93,7 @@ void CounterAtk::Update(Input* input)
 	}
 	else if (counterFrameCount == max6animNum)
 	{
-		//I—¹Žžˆ—
+		//çµ‚äº†æ™‚å‡¦ç†
 		phase = 0;
 		counterFrameCount = 0;
 		//isCounter = false;
@@ -102,7 +102,7 @@ void CounterAtk::Update(Input* input)
 		kAccumulateRotVel = 0.0f;
 
 		if (gameObject_->GetIsAnimRot() == false)
-		{	//‚à‚µŒJ‚è•Ô‚µƒAƒjƒ[ƒVƒ‡ƒ“‚ª–³Œø‚¾‚Á‚½ê‡
+		{	//ã‚‚ã—ç¹°ã‚Šè¿”ã—ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒç„¡åŠ¹ã ã£ãŸå ´åˆ
 			gameObject_->AnimIsRotateChange(true);
 		}
 
@@ -122,7 +122,7 @@ void CounterAtk::Update(Input* input)
 		{
 			animFlameCT += 1;
 		}
-		gameObject_->wtf.translation_.y = Ease::InQuad(7.0, 0.0, max2animNum, counterFrameCount);
+		gameObject_->wtf.translation_.y = static_cast<float>(Ease::InQuad(7.0, 0.0, max2animNum, counterFrameCount));
 		gameObject_->AnimFlameInter(animFlameCT, 30);
 
 	}
@@ -147,7 +147,7 @@ void CounterAtk::Update(Input* input)
 	else if (phase == 4)
 	{
 		Vector3 kATKSpeedVel = { 0 , 0 , 4.0f };
-		//“Ëis—ñŒvŽZ
+		//çªé€²è¡Œåˆ—è¨ˆç®—
 		Matrix4 tackleMat = MathFunc::Rotation(Vector3(0.0f, cameraAngle_.y, 0.0f), 2);
 		Vector3 kTackleVel = MathFunc::bVelocity(kATKSpeedVel, tackleMat);
 		gameObject_->wtf.rotation_.x += kAccumulateRotVel;
@@ -162,7 +162,7 @@ void CounterAtk::Update(Input* input)
 			animFlameCT += 1;
 		}
 
-		gameObject_->wtf.translation_.y = Ease::InQuad(10.0, 5.0, max6animNum - max5animNum, max6animNum - counterFrameCount);
+		gameObject_->wtf.translation_.y = static_cast<float>(Ease::InQuad(10.0, 5.0, max6animNum - max5animNum, max6animNum - counterFrameCount));
 		gameObject_->wtf.translation_.x -= cameraAngle_.x * 0.1f;
 		gameObject_->wtf.translation_.z -= cameraAngle_.z * 0.1f;
 

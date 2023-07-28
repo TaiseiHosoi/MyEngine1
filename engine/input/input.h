@@ -10,31 +10,31 @@ class Input
 {
 public:
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize(WinApp* winApp);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// ƒL[‚Ì‰Ÿ‰º‚ğƒ`ƒFƒbƒN
+	/// ã‚­ãƒ¼ã®æŠ¼ä¸‹ã‚’ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name="keyNumber">ƒL[”Ô†iDIK_0 “™j</param>
-	/// <returns>‰Ÿ‚³‚ê‚Ä‚¢‚é‚©</returns>
+	/// <param name="keyNumber">ã‚­ãƒ¼ç•ªå·ï¼ˆDIK_0 ç­‰ï¼‰</param>
+	/// <returns>æŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹</returns>
 	bool PushKey(BYTE keyNumber);
 	/// <summary>
-	/// ƒL[‚ÌƒgƒŠƒK[‚ğƒ`ƒFƒbƒN
+	/// ã‚­ãƒ¼ã®ãƒˆãƒªã‚¬ãƒ¼ã‚’ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name="keyNumber">ƒL[”Ô†iDIK_0 “™j</param>
-	/// <returns>ƒgƒŠƒK[‚©</returns>
+	/// <param name="keyNumber">ã‚­ãƒ¼ç•ªå·ï¼ˆDIK_0 ç­‰ï¼‰</param>
+	/// <returns>ãƒˆãƒªã‚¬ãƒ¼ã‹</returns>
 	bool TriggerKey(BYTE keyNumber);
 	bool ReleaseKey(BYTE keyNumber);
 
 	/// <summary>
-	/// ƒ}ƒEƒX‘€ì
+	/// ãƒã‚¦ã‚¹æ“ä½œ
 	/// </summary>
 	/// <param name="mouseButtons"></param>
 	/// <returns></returns>
@@ -51,11 +51,11 @@ public:
 private:
 	// windowsAPI
 	WinApp* winApp_ = nullptr;
-	// ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬
+	// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 	ComPtr <IDirectInputDevice8> keyboard = nullptr;
-	// DirectInput‚Ì‰Šú‰»
+	// DirectInputã®åˆæœŸåŒ–
 	ComPtr<IDirectInput8> directInput = nullptr;
-	// ƒ}ƒEƒX“ü—Í‰Šú‰»
+	// ãƒã‚¦ã‚¹å…¥åŠ›åˆæœŸåŒ–
 	ComPtr<IDirectInputDevice8> mouse = nullptr;
 
 	DIMOUSESTATE mouseButton;

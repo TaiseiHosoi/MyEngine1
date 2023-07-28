@@ -16,7 +16,7 @@ void HitStopManager::Update()
 
 void HitStopManager::SetHitStop(bool* hitStopFlag , int timer)
 {
-	srand(time(nullptr));
+	srand(static_cast<int>(time(nullptr)));
 
 	hitStopFlag_ = hitStopFlag;
 	*hitStopFlag_ = true;
@@ -38,9 +38,9 @@ GameCamera* HitStopManager::GetGameCamera()
 
 void HitStopManager::CulShakeAngle()
 {
-	shakeAngle_.x = rand() % 21 - 10;
-	shakeAngle_.y = rand() % 21 - 10;
-	shakeAngle_.z = rand() % 21 - 10;
+	shakeAngle_.x = static_cast<float>(rand() % 21 - 10);
+	shakeAngle_.y = static_cast<float>(rand() % 21 - 10);
+	shakeAngle_.z = static_cast<float>(rand() % 21 - 10);
 
 	shakeAngle_.nomalize();
 }

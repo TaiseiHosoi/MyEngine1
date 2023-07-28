@@ -52,7 +52,7 @@ void Boss::Initialize(DirectXCommon* dxcomon)
 	bulletO_->SetModel(bulletM_.get());
 
 	//当たり判定用
-	SPHERE_COLISSION_NUM = bossFbxO_->GetBonesMatPtr()->size();
+	SPHERE_COLISSION_NUM = static_cast<int>(bossFbxO_->GetBonesMatPtr()->size());
 	sphere.resize(SPHERE_COLISSION_NUM);
 	spherePos.resize(SPHERE_COLISSION_NUM);
 	bossFbxO_.get()->isBonesWorldMatCalc = true;	// ボーンの行列を取得するか
@@ -97,7 +97,7 @@ void Boss::Initialize(DirectXCommon* dxcomon)
 
 void Boss::Update()
 {
-	srand(time(nullptr));
+	srand(static_cast<int>(time(nullptr)));
 
 	BulletUpdate();
 	switch (mode)
@@ -441,7 +441,7 @@ void Boss::Tackle()
 		if (downtimer < 0)
 		{
 			tackleCount = 0;
-			downtimer = 180.0f;
+			downtimer = 180;
 			isTackle = false;
 			isDown = false;
 			isAttack = false;
@@ -462,7 +462,7 @@ void Boss::Tackle()
 
 void Boss::Reset()
 {
-	attackValue == AttackValue::nasi;
+	attackValue = AttackValue::nasi;
 
 	moveTimer = 60.0f;
 	stopTimer = 60.0f;

@@ -98,7 +98,7 @@ void BossLaser::Laser()
 	distance.z * kBulletSpeed
 		};
 		 
-		 kBulletSpeed = Ease::InQuad(change, 0, 60, laserTimer);
+		 kBulletSpeed = static_cast<float>(Ease::InQuad(change, 0, 60, laserTimer));
 	}
 	if (isLaser == false)
 	{

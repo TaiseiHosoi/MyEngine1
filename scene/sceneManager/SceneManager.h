@@ -22,7 +22,7 @@ class IScene;
 class DirectXCommon;
 class GameCamera;
 
-// ƒV[ƒ“ŠÇ—ƒNƒ‰ƒX
+// ã‚·ãƒ¼ãƒ³ç®¡ç†ã‚¯ãƒ©ã‚¹
 class SceneManager
 {
 private:
@@ -36,16 +36,16 @@ public:
 	SceneManager(DirectXCommon* dxCommon,GameCamera* camera);
 	~SceneManager();	
 
-	//ƒIƒuƒWƒFƒNƒg‚ÌInitialize‚ğŒÄ‚Ño‚·
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®Initializeã‚’å‘¼ã³å‡ºã™
 	void ObjectInitialize();
-	// ŠeƒV[ƒ“‚ÌInitialize‚ğŒÄ‚Ño‚·
+	// å„ã‚·ãƒ¼ãƒ³ã®Initializeã‚’å‘¼ã³å‡ºã™
 	void SceneInitialize();
-	// ŠeƒV[ƒ“‚ÌUpdate‚ğŒÄ‚Ño‚·
+	// å„ã‚·ãƒ¼ãƒ³ã®Updateã‚’å‘¼ã³å‡ºã™
 	void SceneUpdate(Input* input);
-	// ŠeƒV[ƒ“‚ÌDraw‚ğŒÄ‚Ño‚·
+	// å„ã‚·ãƒ¼ãƒ³ã®Drawã‚’å‘¼ã³å‡ºã™
 	void SceneDraw();
 
-	// ƒV[ƒ“‚ğ•ÏX‚·‚é
+	// ã‚·ãƒ¼ãƒ³ã‚’å¤‰æ›´ã™ã‚‹
 	void ChangeScene(IScene*);
 	void ResetParameters();
 	//ID3D12GraphicsCommandList* GetCommandList() { return _dxCommon->GetCommandList(); };
@@ -59,10 +59,10 @@ public:
 	//std::unique_ptr <Object3d> object3d;
 	//std::unique_ptr <Mesh> model;
 
-	//FBXƒ‚ƒfƒ‹
+	//FBXãƒ¢ãƒ‡ãƒ«
 	std::unique_ptr<FBXModel> hitokunFbxM_;
 	std::unique_ptr<FBXObject3d>hitokunFbxO_;
-	//FBXƒ‚ƒfƒ‹
+	//FBXãƒ¢ãƒ‡ãƒ«
 	//std::unique_ptr<FBXModel> bossFbxM_;
 	//std::unique_ptr<FBXObject3d> bossFbxO_;
 
@@ -74,5 +74,5 @@ public:
 
 };
 
-//	QÆŒ³
-//	https://qiita.com/tsuchinokoman/items/390a22a20abe2a6daa6d <-‚â‚è•û‚í‚©‚ç‚ñ
+//	å‚ç…§å…ƒ
+//	https://qiita.com/tsuchinokoman/items/390a22a20abe2a6daa6d <-ã‚„ã‚Šæ–¹ã‚ã‹ã‚‰ã‚“

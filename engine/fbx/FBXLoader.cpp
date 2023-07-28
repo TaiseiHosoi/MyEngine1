@@ -1,4 +1,4 @@
-﻿#include "FBXLoader.h"
+#include "FBXLoader.h"
 #include <algorithm>
 #include<stdlib.h>
 
@@ -164,16 +164,16 @@ std::vector<float> FbxLoader::CreateVertexInfo(const std::vector<float>& vertexI
 
 	
 	// 位置座標
-	newVertexInfo.push_back(vertexInfo[0]);
-	newVertexInfo.push_back(vertexInfo[1]);
-	newVertexInfo.push_back(vertexInfo[2]);
+	newVertexInfo.push_back(static_cast<float>(vertexInfo[0]));
+	newVertexInfo.push_back(static_cast<float>(vertexInfo[1]));
+	newVertexInfo.push_back(static_cast<float>(vertexInfo[2]));
 	// 法線座標
-	newVertexInfo.push_back(normalVec4[0]);
-	newVertexInfo.push_back(normalVec4[1]);
-	newVertexInfo.push_back(normalVec4[2]);
+	newVertexInfo.push_back(static_cast<float>(normalVec4[0]));
+	newVertexInfo.push_back(static_cast<float>(normalVec4[1]));
+	newVertexInfo.push_back(static_cast<float>(normalVec4[2]));
 	// UV座標
-	newVertexInfo.push_back(uvVec2[0]);
-	newVertexInfo.push_back(uvVec2[1]);
+	newVertexInfo.push_back(static_cast<float>(uvVec2[0]));
+	newVertexInfo.push_back(static_cast<float>(uvVec2[1]));
 	return newVertexInfo;
 }
 
@@ -186,7 +186,7 @@ int FbxLoader::CreateNewVertexIndex(const std::vector<float>& vertexInfo, const 
 	std::vector<float> newVertexInfo = CreateVertexInfo(vertexInfo, normalVec4, uvVec2);
 	vertexInfoList.push_back(newVertexInfo);
 	// 作成したインデックス情報を設定
-	int newIndex = vertexInfoList.size() - 1;
+	int newIndex = static_cast<int>(vertexInfoList.size()) - 1;
 	std::array<int, 2> oldNewIndexPair{ oldIndex , newIndex };
 	oldNewIndexPairList.push_back(oldNewIndexPair);
 	return newIndex;
@@ -301,11 +301,13 @@ void FbxLoader::ParseMeshVertices(FBXModel* fbxmodel, FbxMesh* fbxMesh)
 	for (int i = 0; i < fbxMesh->GetControlPointsCount(); i++)
 	{
 		// 頂点座標を読み込んで設定
-		auto point = fbxMesh->GetControlPointAt(i);
+		FbxVector4 point = fbxMesh->GetControlPointAt(i);
+
 		std::vector<float> vertex;
-		vertex.push_back(point[0]);
-		vertex.push_back(point[1]);
-		vertex.push_back(point[2]);
+		vertex.push_back(static_cast<float>(point[0]));
+		vertex.push_back(static_cast<float>(point[1]));
+		vertex.push_back(static_cast<float>(point[2]));
+
 		vertexInfoList.push_back(vertex);
 	}
 
@@ -344,7 +346,7 @@ void FbxLoader::ParseMeshVertices(FBXModel* fbxmodel, FbxMesh* fbxMesh)
 
 			if (smoothing == true) {
 				normalVec4 += faceNorm;
-				float len = normalVec4.Length();
+				float len = static_cast<float>(normalVec4.Length());
 
 				if (len != 0.0f) {
 					normalVec4 /= len;
@@ -406,7 +408,7 @@ void FbxLoader::ParseMeshVertices(FBXModel* fbxmodel, FbxMesh* fbxMesh)
 
 
 			int controlPointIndex = fbxMesh->GetPolygonVertex(polIndex, polVertexIndex);
-			meshVerticeControlpoints[controlPointIndex].push_back(indices.size());
+			meshVerticeControlpoints[controlPointIndex].push_back(static_cast<int>(indices.size()));
 			// インデックス座標を設定
 			indices.push_back(forCalc);
 			forCalc++;
@@ -581,16 +583,16 @@ void FbxLoader::SetBoneDataToVertices(FbxMesh* pMesh, FBXModel* pModel, std::vec
 			FbxCluster* cluster = skin->GetCluster(j);
 			int jointIndex = FindJointIndexByName(cluster->GetLink()->GetName(), pModel);
 
-			for (UINT k = 0; k < cluster->GetControlPointIndicesCount(); ++k)
+			for (int k = 0; k < cluster->GetControlPointIndicesCount(); ++k)
 			{
-				UINT controlPointIndex = cluster->GetControlPointIndices()[k];
-				float weight = cluster->GetControlPointWeights()[k];
+				int controlPointIndex = cluster->GetControlPointIndices()[k];
+				float weight = static_cast<float>(cluster->GetControlPointWeights()[k]);
 
-				for (UINT l = 0; l < pMesh->GetPolygonCount(); ++l)
+				for (int l = 0; l < pMesh->GetPolygonCount(); ++l)
 				{
-					for (UINT m = 0; m < 3; ++m)
+					for (int m = 0; m < 3; ++m)
 					{
-						UINT vertexIndexInArray = l * 3 + m;
+						int vertexIndexInArray = l * 3 + m;
 
 						if (pMesh->GetPolygonVertex(l, m) == controlPointIndex)
 						{

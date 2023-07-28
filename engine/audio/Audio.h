@@ -9,71 +9,71 @@
 class Audio
 {
 private:
-	// Microsoft::WRL::‚ğÈ—ª
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 public:
-	//ƒ`ƒƒƒ“ƒNƒwƒbƒ_
+	//ãƒãƒ£ãƒ³ã‚¯ãƒ˜ãƒƒãƒ€
 	struct ChunkHeader
 	{
-		char id[4];		//ƒ`ƒƒƒ“ƒN‚²‚Æ‚Ìid
-		int32_t size;	//ƒ`ƒƒƒ“ƒNƒTƒCƒY
+		char id[4];		//ãƒãƒ£ãƒ³ã‚¯ã”ã¨ã®id
+		int32_t size;	//ãƒãƒ£ãƒ³ã‚¯ã‚µã‚¤ã‚º
 	};
 
-	//RIFFƒwƒbƒ_ƒ`ƒƒƒ“ƒN
+	//RIFFãƒ˜ãƒƒãƒ€ãƒãƒ£ãƒ³ã‚¯
 	struct RiffHeader
 	{
 		ChunkHeader chunk;	//"RIFF"
 		char type[4];		//"WAVE"
 	};
-	//FMTƒ`ƒƒƒ“ƒN
+	//FMTãƒãƒ£ãƒ³ã‚¯
 	struct FormatChunk
 	{
 		ChunkHeader chunk;	//"fmt"
-		WAVEFORMATEX fmt;	//”gŒ`ƒtƒH[ƒ}ƒbƒg
+		WAVEFORMATEX fmt;	//æ³¢å½¢ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 	};
-	//‰¹ºƒf[ƒ^
+	//éŸ³å£°ãƒ‡ãƒ¼ã‚¿
 	struct SoundData
 	{
-		//”gŒ`ƒtƒH[ƒ}ƒbƒg
+		//æ³¢å½¢ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		WAVEFORMATEX wfex;
-		//ƒoƒbƒtƒ@‚Ìæ“ªƒAƒhƒŒƒX
+		//ãƒãƒƒãƒ•ã‚¡ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
 		BYTE* pBuffer;
-		//ƒoƒbƒtƒ@‚ÌƒTƒCƒY
+		//ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
 		unsigned int bufferSize;
 	};
 public:
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Initialize(const std::string directoryPath = "Resources/SoundDatas/");
 
-	//I—¹ˆ—
+	//çµ‚äº†å‡¦ç†
 	void Finalize();
 
 	/// <summary>
-	/// WAV‰¹º“Ç‚İ‚İ
+	/// WAVéŸ³å£°èª­ã¿è¾¼ã¿
 	/// </summary>
-	/// <param name="filename">WAVƒtƒ@ƒCƒ‹–¼</param>
+	/// <param name="filename">WAVãƒ•ã‚¡ã‚¤ãƒ«å</param>
 	void LoadWave(const std::string filename);
 
 
 	/// <summary>
-	///	ƒTƒEƒ“ƒhƒf[ƒ^‚ÌŠJ•ú
+	///	ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ã®é–‹æ”¾
 	/// </summary>
 	void Unload(SoundData* soundData);
 
 	/// <summary>
-	/// ƒTƒEƒ“ƒhƒf[ƒ^–¼
+	/// ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿å
 	/// </summary>
-	/// <param name="filename">WAVƒtƒ@ƒCƒ‹–¼</param>
+	/// <param name="filename">WAVãƒ•ã‚¡ã‚¤ãƒ«å</param>
 	void PlayWave(const std::string filename);
 
 	static Audio* GetInstance();
 
 private:
-	//xAudio‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
+	//xAudioã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 	ComPtr<IXAudio2>xAudio2_;
-	//ƒTƒEƒ“ƒhƒf[ƒ^‚Ì”z—ñ
+	//ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ã®é…åˆ—
 	std::map<std::string, SoundData> soundDatas_;
 
-	//ƒTƒEƒ“ƒhŠi”[ƒfƒBƒŒƒNƒgƒŠ
+	//ã‚µã‚¦ãƒ³ãƒ‰æ ¼ç´ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
 	std::string directoryPath_;
 };

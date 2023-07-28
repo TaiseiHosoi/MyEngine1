@@ -21,8 +21,8 @@
 #include "DirectXCommon.h"
 #include "Input.h"
 
-// シーン管理のための基底クラス
-// (純粋基底クラス)
+// 繧ｷ繝ｼ繝ｳ邂｡逅�縺ｮ縺溘ａ縺ｮ蝓ｺ蠎輔け繝ｩ繧ｹ
+// (邏皮ｲ句渕蠎輔け繝ｩ繧ｹ)
 
 class IScene
 {
@@ -35,13 +35,13 @@ public:
 	IScene();
 	virtual ~IScene();
 
-	/// シーンの更新を行う
+	/// 繧ｷ繝ｼ繝ｳ縺ｮ譖ｴ譁ｰ繧定｡後≧
 	virtual void Initialize(DirectXCommon* dxCommon, GameCamera* camera) = 0;
 
-	/// シーンの更新を行う
+	/// 繧ｷ繝ｼ繝ｳ縺ｮ譖ｴ譁ｰ繧定｡後≧
 	virtual void Update(Input* input,GameCamera* camera) = 0;
 
-	/// シーンの描画を行う
+	/// 繧ｷ繝ｼ繝ｳ縺ｮ謠冗判繧定｡後≧
 	virtual void Draw(DirectXCommon* dxCommon) = 0;
 
 };

@@ -22,7 +22,7 @@ private:
 	
 	Input* input_ = Input::GetInstance();
 
-private://リソース
+private://繝ｪ繧ｽ繝ｼ繧ｹ
 	std::unique_ptr <Sprite> title_;
 	std::unique_ptr <Sprite> title2_;
 	std::unique_ptr <Sprite> mouse_;
@@ -38,14 +38,14 @@ private:
 
 	bool isChangeScene = false;
 	bool isSwapCamera = false;
-	// 時間計測に必要なデータ
+	// 譎る俣險域ｸｬ縺ｫ蠢�隕√↑繝�繝ｼ繧ｿ
 	size_t startCount = 0;
 	size_t nowCount = 0;
 	size_t elapsedCount = 0;
 	float maxTime = 5.0f;
 	float timeRate;
 
-	//音用変数
+	//髻ｳ逕ｨ螟画焚
 	std::unique_ptr<Audio> audio_;
 
 };

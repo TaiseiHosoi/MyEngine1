@@ -7,7 +7,7 @@
 #include"Mesh.h"
 class Field
 {
-	//コンストラクタ
+	//繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
 public:
 	Field();
 	~Field();
@@ -23,15 +23,15 @@ public:
 	static bool EnemyOnGround(Vector3 wolPos, float Obj_R);
 
 
-	//メンバ変数
+	//繝｡繝ｳ繝仙､画焚
 private:
-	std::unique_ptr<Object3d> gameObject_;	//地面
+	std::unique_ptr<Object3d> gameObject_;	//蝨ｰ髱｢
 	std::unique_ptr<Mesh> fieldM;
 
 	std::unique_ptr<Object3d> skydomeObj_;
 	std::unique_ptr<Mesh> skydomeModel_;
 	const int fenceLen_ = 4;
-	Object3d* fence_[4] = {};	//フェンス
+	Object3d* fence_[4] = {};	//繝輔ぉ繝ｳ繧ｹ
 	Mesh* fenceM = nullptr;
 
 	static const int fieldR_ = 415;

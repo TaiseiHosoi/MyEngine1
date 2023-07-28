@@ -15,10 +15,10 @@ bool GameCamera::isShake = 0.0f;
 GameCamera::GameCamera(int window_width , int window_height , Input* input)
 	: Camera(window_width , window_height)
 {
-	//“ü—ÍƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	//å…¥åŠ›ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	input_ = Input::GetInstance();
 
-	//ƒJƒƒ‰‚Ì‰Šú‰»
+	//ã‚«ãƒ¡ãƒ©ã®åˆæœŸåŒ–
 	Vector3 eye = {0.0f , 0.0f , -5.0f};
 	Vector3 up = {0 , 1 , 0};
 	Vector3 target = {0 , 0 , 300.0f};
@@ -36,14 +36,16 @@ void GameCamera::Initialize()
 
 void GameCamera::Update()
 {
-	if (GetActiveWindow() == WinApp::GetInstance()->GetHwnd())
-	{
-		ShowCursor(false);
+	//if (GetActiveWindow() == WinApp::GetInstance()->GetHwnd())
+	//{
+	//	ShowCursor(false);
 
-		ViewPointMovement();
+	//	//ViewPointMovement();
 
-		CulDirection();
-	}
+	//	CulDirection();
+	//}
+
+	
 
 	FollowPlayer();
 
@@ -87,43 +89,43 @@ void GameCamera::RemoveEyePos()
 
 void GameCamera::ViewPointMovement()
 {
-	//ƒJƒƒ‰‚Ì‰ñ“]ƒxƒNƒgƒ‹
+	//ã‚«ãƒ¡ãƒ©ã®å›è»¢ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 rotat = {0 , 0 , 0};
-	//ƒJƒƒ‰‚ÌˆÚ“®‚Ì‘¬‚³
+	//ã‚«ãƒ¡ãƒ©ã®ç§»å‹•ã®é€Ÿã•
 	const float cameraSpeed = 0.0005f;
 
 	Vector2 windowWH = Vector2(WinApp::window_width / 2 , WinApp::window_height / 2);
 	POINT mousePosition;
-	//ƒ}ƒEƒXÀ•W(ƒXƒNƒŠ[ƒ“À•W)‚ğæ“¾‚·‚é
+	//ãƒã‚¦ã‚¹åº§æ¨™(ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™)ã‚’å–å¾—ã™ã‚‹
 	GetCursorPos(&mousePosition);
 
-	//ƒNƒ‰ƒCƒAƒ“ƒgƒGƒŠƒAÀ•W‚É•ÏŠ·‚·‚é
+	//ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã‚¨ãƒªã‚¢åº§æ¨™ã«å¤‰æ›ã™ã‚‹
 	HWND hwnd = WinApp::GetInstance()->GetHwnd();
 	ScreenToClient(hwnd , &mousePosition);
 
 	int xPos_absolute , yPos_absolute;
 
-	int xPos = windowWH.x;  //ˆÚ“®‚³‚¹‚½‚¢‚˜À•WiƒEƒBƒ“ƒhƒE“à‚Ì‘Š‘ÎÀ•Wj
-	int yPos = windowWH.y; //ˆÚ“®‚³‚¹‚½‚¢‚™À•WiƒEƒBƒ“ƒhƒE“à‚Ì‘Š‘ÎÀ•Wj
+	int xPos = static_cast<int>(windowWH.x);  //ç§»å‹•ã•ã›ãŸã„ï½˜åº§æ¨™ï¼ˆã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å†…ã®ç›¸å¯¾åº§æ¨™ï¼‰
+	int yPos = static_cast<int>(windowWH.y); //ç§»å‹•ã•ã›ãŸã„ï½™åº§æ¨™ï¼ˆã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å†…ã®ç›¸å¯¾åº§æ¨™ï¼‰
 
 	WINDOWINFO windowInfo;
-	//ƒEƒBƒ“ƒhƒE‚ÌˆÊ’u‚ğæ“¾
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½ç½®ã‚’å–å¾—
 	windowInfo.cbSize = sizeof(WINDOWINFO);
 	GetWindowInfo(hwnd , &windowInfo);
 
-	//ƒ}ƒEƒX‚ÌˆÚ“®æ‚Ìâ‘ÎÀ•Wiƒ‚ƒjƒ^[¶ã‚©‚ç‚ÌÀ•Wj
-	xPos_absolute = xPos + windowInfo.rcWindow.left + 8;//‚È‚ñ‚©‚¸‚ê‚Ä‚é‚©‚ç’¼‚·
-	yPos_absolute = yPos + windowInfo.rcWindow.top + 31; //ƒEƒBƒ“ƒhƒE‚Ìƒ^ƒCƒgƒ‹ƒo[‚Ì•ªi31pxj‚ğƒvƒ‰ƒX
+	//ãƒã‚¦ã‚¹ã®ç§»å‹•å…ˆã®çµ¶å¯¾åº§æ¨™ï¼ˆãƒ¢ãƒ‹ã‚¿ãƒ¼å·¦ä¸Šã‹ã‚‰ã®åº§æ¨™ï¼‰
+	xPos_absolute = xPos + windowInfo.rcWindow.left + 8;//ãªã‚“ã‹ãšã‚Œã¦ã‚‹ã‹ã‚‰ç›´ã™
+	yPos_absolute = yPos + windowInfo.rcWindow.top + 31; //ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼ã®åˆ†ï¼ˆ31pxï¼‰ã‚’ãƒ—ãƒ©ã‚¹
 
-	SetCursorPos(xPos_absolute , yPos_absolute);//ˆÚ“®‚³‚¹‚é
+	SetCursorPos(xPos_absolute , yPos_absolute);//ç§»å‹•ã•ã›ã‚‹
 
-	//ƒ}ƒEƒX‚ÌˆÚ“®—Ê‚ğæ“¾
+	//ãƒã‚¦ã‚¹ã®ç§»å‹•é‡ã‚’å–å¾—
 	mouseMove = Vector2(0 , 0);
-	mouseMove = (Vector2(mousePosition.y , mousePosition.x) - Vector2(windowWH.y , windowWH.x));//À•W²‚Å‰ñ“]‚µ‚Ä‚¢‚éŠÖŒW‚Å‚±‚¤‚È‚é(X‚ÆY‚ª“ü‚ê‘Ö‚¦)
+	mouseMove = (Vector2(static_cast<float>(mousePosition.y) , static_cast<float>(mousePosition.x)) - Vector2(windowWH.y , windowWH.x));//åº§æ¨™è»¸ã§å›è»¢ã—ã¦ã„ã‚‹é–¢ä¿‚ã§ã“ã†ãªã‚‹(Xã¨YãŒå…¥ã‚Œæ›¿ãˆ)
 
 	if (isPause_ == false) {
 
-		//ƒ}ƒEƒX‚ÌˆÚ“®—Ê‚ğƒJƒƒ‰‚Ì‰ñ“]‚ğ”½‰f
+		//ãƒã‚¦ã‚¹ã®ç§»å‹•é‡ã‚’ã‚«ãƒ¡ãƒ©ã®å›è»¢ã‚’åæ˜ 
 		rotation_.y -= MathFunc::Dig2Rad(mouseMove.y * mouseSensitivity_);
 		if (2 * MathFunc::PI <= rotation_.y)
 		{
@@ -194,13 +196,14 @@ void GameCamera::SetShakeVec(Vector3 shakeVec)
 
 void GameCamera::CulDirection()
 {
-	//LShift‚ğ‰Ÿ‚·‚Æ“G‚ğƒ^[ƒQƒbƒg‚·‚é
+	//LShiftã‚’æŠ¼ã™ã¨æ•µã‚’ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã™ã‚‹
 	if (input_->GetInstance()->TriggerKey(DIK_LSHIFT))
 	{
 
 		dir_ = targetPos_->translation_ - followerPos_->translation_;
 		dir_.nomalize();
 
+		
 
 		Vector2 vec1 = {dir_.x , dir_.z};
 		Vector2 vec2 = {0 , 1};
@@ -211,7 +214,7 @@ void GameCamera::CulDirection()
 
 		rotation_.y = acosf(dot);
 
-		rotation_.y += MathFunc::Dig2Rad(90);
+		//rotation_.y += MathFunc::Dig2Rad(90);
 
 		if (0 < dir_.x)
 		{
@@ -220,7 +223,7 @@ void GameCamera::CulDirection()
 		}
 	}
 
-	//ƒJƒƒ‰‚Ì‰ñ“]—Ê‚©‚çŒü‚«‚ğŒvZ
+	//ã‚«ãƒ¡ãƒ©ã®å›è»¢é‡ã‹ã‚‰å‘ãã‚’è¨ˆç®—
 	dir_ = {cos(rotation_.y) , sin(rotation_.x) , sin(rotation_.y)};
 	dir_.nomalize();
 
@@ -230,28 +233,21 @@ void GameCamera::CulDirection()
 
 void GameCamera::FollowPlayer()
 {
-	if (isFollowPlayer_ == true)
-	{
-		Vector3 basePos = {followerPos_->translation_.x , cameraHeight_ , followerPos_->translation_.z};
+	
 
-		Vector3 tempEye = basePos - dir_ * MAX_CAMERA_DISTANCE;
-		if (tempEye.y < 0.1)
-		{
-			tempEye.y = 0.1;
-		}
+	
+		Vector3 basePos = {0 , 10.f , followerPos_->translation_.z};
+
+		Vector3 tempEye = basePos;
+		tempEye.z -= dir_.z * MAX_CAMERA_DISTANCE;
+		
 
 		SetEye(tempEye);
-		SetTarget(basePos + dir_);
+		
+		SetTarget({ tempEye.x,tempEye.y,tempEye.z + 1.f });
 
-	}
-	else
-	{
-
-		SetEye(eyePos_->matWorld_.GetWorldPos());
-
-		SetTarget(targetPos_->matWorld_.GetWorldPos());
-
-	}
+	
+	
 }
 
 void GameCamera::ChangeFollowFlag(bool flag)

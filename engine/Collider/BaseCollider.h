@@ -5,7 +5,7 @@
 #include "CollisionInfo.h"
 
 
-//ƒRƒ‰ƒCƒ_[Šî’êƒNƒ‰ƒX
+//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼åŸºåº•ã‚¯ãƒ©ã‚¹
 class BaseCollider
 {
 public:
@@ -13,7 +13,7 @@ public:
 
 public:
 	BaseCollider() = default;
-	//‰¼‘zƒfƒXƒgƒ‰ƒNƒ^
+	//ä»®æƒ³ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	virtual ~BaseCollider() = default;
 
 	inline void SetObject3d(Object3d* object)
@@ -26,9 +26,9 @@ public:
 		return object3d;
 	}
 
-	//XV
+	//æ›´æ–°
 	virtual void Update() = 0;
-	//Œ`óƒ^ƒCƒvæ“¾
+	//å½¢çŠ¶ã‚¿ã‚¤ãƒ—å–å¾—
 	inline CollisionShapeType GetShapeType()
 	{
 		return shapeType;
@@ -80,8 +80,8 @@ protected:
 		{0 , 0 , 0}
 	};
 	
-	//Œ`óƒ^ƒCƒv
+	//å½¢çŠ¶ã‚¿ã‚¤ãƒ—
 	CollisionShapeType shapeType = SHAPE_UNKNOWN;
-	//“–‚½‚è”»’è‘®«
+	//å½“ãŸã‚Šåˆ¤å®šå±æ€§
 	unsigned short attribute = 0b1111111111111111;
 };

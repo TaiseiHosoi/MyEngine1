@@ -19,14 +19,13 @@ void Move::Initialize(FBXObject3d* gameObject)
 	animFlameCT = 0;
 	gameObject_->PlayAnimation(animNum);
 	_pActManager->SetNowActNum(0);
-	gameObject_->wtf.translation_.y = 0;
-	faceAngle_.y = gameObject_->wtf.rotation_.y;
+	faceAngle_ = gameObject_->wtf.rotation_;
 }
 
 void Move::Update(Input* input)
 {
 	//-----animation-----//
-	if (isRun_ == true) {
+	/*if (isRun_ == true) {
 		int maxFlame = 30;
 
 		animFlameCT++;
@@ -47,10 +46,10 @@ void Move::Update(Input* input)
 		}
 
 		gameObject_->AnimFlameInter(animFlameCT, maxFlame);
-	}
+	}*/
 
-	//-----s“®ˆ—-----//
-	//‘¬“x‚ð0‚É‚·‚é
+	//-----è¡Œå‹•å‡¦ç†-----//
+	//é€Ÿåº¦ã‚’0ã«ã™ã‚‹
 	velocity_ = { 0 , 0 , 0 };
 
 	Vector3 cameraAngle_ = { 0.0f,
@@ -58,293 +57,88 @@ void Move::Update(Input* input)
 			gameObject_->GetCamera().GetTarget().z - gameObject_->GetCamera().GetEye().z)
 	,0.0f};
 
-	//ƒL[“ü—Í‚ª‚ ‚Á‚½‚ç
+	Vector3 nowPos = gameObject_->GetPosition();
+	
+
+	//ã‚­ãƒ¼å…¥åŠ›ãŒã‚ã£ãŸã‚‰
 	if (input_->PushKey(DIK_W) ||
 		input_->PushKey(DIK_A) ||
 		input_->PushKey(DIK_S) ||
 		input_->PushKey(DIK_D))
 	{
-		if (isRun_ == false) {
-			isRun_ = true;
-			animNum = 0;
-			gameObject_->PlayAnimation(animNum);
-		}
+		
 
-		faceAngle_ -= cameraAngle_;
+		//Zè»¸æ–¹å‘ã«ã®é€Ÿåº¦ã‚’å…¥ã‚Œã‚‹
+		velocity_ = { 0 , 0 , 0.1f };
 
-		//ZŽ²•ûŒü‚É‚Ì‘¬“x‚ð“ü‚ê‚é
-		velocity_ = { 0 , 0 , kMoveSpeed_ };
+		float kDiagonalSpeed = kMoveSpeed_ * 0.707f;
 
-		//W,D‚ð‰Ÿ‚µ‚Ä‚¢‚½‚ç
+		//W,Dã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
 		if (input_->PushKey(DIK_W) && input_->PushKey(DIK_D))
 		{
-
-			//45“x•ûŒü‚ÉŒü‚­‚æ‚¤‚É‰ñ“]‚³‚¹‚é
-			if (faceAngle_.y != MathFunc::Dig2Rad(45))
-			{
-				if (faceAngle_.y >= MathFunc::Dig2Rad(45) &&
-					faceAngle_.y <= MathFunc::Dig2Rad(225))
-				{
-
-					faceAngle_.y -= kTurnSpeed_;
-
-					if (faceAngle_.y <= MathFunc::Dig2Rad(45) ||
-						faceAngle_.y >= MathFunc::Dig2Rad(225))
-					{
-						faceAngle_.y = MathFunc::Dig2Rad(45);
-					}
-				}
-				else
-				{
-
-					faceAngle_.y += kTurnSpeed_;
-
-					if (faceAngle_.y >= MathFunc::Dig2Rad(45) &&
-						faceAngle_.y <= MathFunc::Dig2Rad(225))
-					{
-						faceAngle_.y = MathFunc::Dig2Rad(45);
-					}
-				}
-			}
+			nowPos.x += kDiagonalSpeed;
+			nowPos.y += kDiagonalSpeed;
 
 		}
 
-		//W,A‚ð‰Ÿ‚µ‚Ä‚¢‚½‚ç
+		//W,Aã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
 		else if (input_->PushKey(DIK_W) && input_->PushKey(DIK_A))
 		{
 
-			//135“x•ûŒü‚ÉŒü‚­‚æ‚¤‚É‰ñ“]‚³‚¹‚é
-			if (faceAngle_.y != MathFunc::Dig2Rad(315))
-			{
-				if (faceAngle_.y >= MathFunc::Dig2Rad(125) &&
-					faceAngle_.y <= MathFunc::Dig2Rad(315))
-				{
-
-					faceAngle_.y += kTurnSpeed_;
-
-					if (faceAngle_.y <= MathFunc::Dig2Rad(125) ||
-						faceAngle_.y >= MathFunc::Dig2Rad(315))
-					{
-						faceAngle_.y = MathFunc::Dig2Rad(315);
-					}
-				}
-				else
-				{
-
-					faceAngle_.y -= kTurnSpeed_;
-
-					if (faceAngle_.y >= MathFunc::Dig2Rad(125) &&
-						faceAngle_.y <= MathFunc::Dig2Rad(315))
-					{
-						faceAngle_.y = MathFunc::Dig2Rad(315);
-					}
-				}
-			}
+			nowPos.x -= kDiagonalSpeed;
+			nowPos.y += kDiagonalSpeed;
 
 		}
 
-		//S,D‚ð‰Ÿ‚µ‚Ä‚¢‚½‚ç
+		//S,Dã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
 		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_D))
 		{
 
-			//315“x•ûŒü‚ÉŒü‚­‚æ‚¤‚É‰ñ“]‚³‚¹‚é
-			if (faceAngle_.y != MathFunc::Dig2Rad(135))
-			{
-				if (faceAngle_.y <= MathFunc::Dig2Rad(315) &&
-					faceAngle_.y >= MathFunc::Dig2Rad(135))
-				{
-
-					faceAngle_.y -= kTurnSpeed_;
-
-					if (MathFunc::Dig2Rad(135) >= faceAngle_.y)
-					{
-						faceAngle_.y = MathFunc::Dig2Rad(135);
-					}
-				}
-				else
-				{
-
-					faceAngle_.y += kTurnSpeed_;
-
-					if (MathFunc::Dig2Rad(135) <= faceAngle_.y)
-					{
-						faceAngle_.y = MathFunc::Dig2Rad(135);
-					}
-				}
-			}
+			nowPos.x += kDiagonalSpeed;
+			nowPos.y -= kDiagonalSpeed;
 
 		}
 
-		//S,A‚ð‰Ÿ‚µ‚Ä‚¢‚½‚ç
+		//S,Aã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
 		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_A))
 		{
-
-			//225“x•ûŒü‚ÉŒü‚­‚æ‚¤‚É‰ñ“]‚³‚¹‚é
-			if (faceAngle_.y != MathFunc::Dig2Rad(225))
-			{
-				if (faceAngle_.y >= MathFunc::Dig2Rad(45) &&
-					faceAngle_.y <= MathFunc::Dig2Rad(225))
-				{
-
-					faceAngle_.y += kTurnSpeed_;
-
-					if (MathFunc::Dig2Rad(225) <= faceAngle_.y)
-					{
-						faceAngle_.y = MathFunc::Dig2Rad(225);
-					}
-				}
-				else
-				{
-
-					faceAngle_.y -= kTurnSpeed_;
-
-					if (MathFunc::Dig2Rad(225) >= faceAngle_.y &&
-						faceAngle_.y >= MathFunc::Dig2Rad(45))
-					{
-						faceAngle_.y = MathFunc::Dig2Rad(225);
-					}
-
-				}
-			}
+			nowPos.x -= kDiagonalSpeed;
+			nowPos.y -= kDiagonalSpeed;
 
 		}
 
-		//W‚ð‰Ÿ‚µ‚Ä‚¢‚½‚ç
+		//Wã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
 		else if (input_->PushKey(DIK_W))
 		{
-
-			//0“x•ûŒü‚ÉŒü‚­‚æ‚¤‚É‰ñ“]‚³‚¹‚é
-			if (faceAngle_.y != MathFunc::Dig2Rad(0))
-			{
-				if (faceAngle_.y <= MathFunc::Dig2Rad(180))
-				{
-
-					faceAngle_.y -= kTurnSpeed_;
-
-					if (MathFunc::Dig2Rad(0) >= faceAngle_.y)
-					{
-						faceAngle_.y = MathFunc::Dig2Rad(0);
-					}
-				}
-				else
-				{
-
-					faceAngle_.y += kTurnSpeed_;
-
-					if (MathFunc::Dig2Rad(360) <= faceAngle_.y)
-					{
-						faceAngle_.y = MathFunc::Dig2Rad(0);
-					}
-				}
-			}
+			nowPos.y += kMoveSpeed_;
+			
 		}
 
-		//S‚ð‰Ÿ‚µ‚Ä‚¢‚½‚ç
+		//Sã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
 		else if (input_->PushKey(DIK_S))
 		{
-
-			//180“x•ûŒü‚ÉŒü‚­‚æ‚¤‚É‰ñ“]‚³‚¹‚é
-			if (faceAngle_.y != MathFunc::Dig2Rad(180))
-			{
-				if (faceAngle_.y <= MathFunc::Dig2Rad(180))
-				{
-
-					faceAngle_.y += kTurnSpeed_;
-
-					if (MathFunc::Dig2Rad(180) <= faceAngle_.y)
-					{
-						faceAngle_.y = MathFunc::Dig2Rad(180);
-					}
-				}
-				else
-				{
-
-					faceAngle_.y -= kTurnSpeed_;
-
-					if (MathFunc::Dig2Rad(180) >= faceAngle_.y)
-					{
-						faceAngle_.y = MathFunc::Dig2Rad(180);
-					}
-				}
-			}
+			nowPos.y -= kMoveSpeed_;
+			
 		}
 
-		//D‚ð‰Ÿ‚µ‚Ä‚¢‚½‚ç
+		//Dã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
 		else if (input_->PushKey(DIK_D))
 		{
-
-			//90“x•ûŒü‚ÉŒü‚­‚æ‚¤‚É‰ñ“]‚³‚¹‚é
-			if (faceAngle_.y != MathFunc::Dig2Rad(90))
-			{
-				if (faceAngle_.y != MathFunc::Dig2Rad(90))
-				{
-					if (faceAngle_.y >= MathFunc::Dig2Rad(90) &&
-						faceAngle_.y <= MathFunc::Dig2Rad(270))
-					{
-						faceAngle_.y -= kTurnSpeed_;
-
-						if (faceAngle_.y <= MathFunc::Dig2Rad(90) ||
-							MathFunc::Dig2Rad(270) <= faceAngle_.y)
-						{
-							faceAngle_.y = MathFunc::Dig2Rad(90);
-						}
-
-					}
-					else
-					{
-						faceAngle_.y += kTurnSpeed_;
-
-						if (faceAngle_.y >= MathFunc::Dig2Rad(90) &&
-							faceAngle_.y <= MathFunc::Dig2Rad(270))
-						{
-							faceAngle_.y = MathFunc::Dig2Rad(90);
-						}
-					}
-				}
-			}
+			nowPos.x += kMoveSpeed_;
+			
 		}
 
-		//A‚ð‰Ÿ‚µ‚Ä‚¢‚½‚ç
+		//Aã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
 		else if (input_->PushKey(DIK_A))
 		{
-			//270“x•ûŒü‚ÉŒü‚­‚æ‚¤‚É‰ñ“]‚³‚¹‚é
-			if (faceAngle_.y != MathFunc::Dig2Rad(270))
-			{
-				if (faceAngle_.y >= MathFunc::Dig2Rad(90) &&
-					faceAngle_.y <= MathFunc::Dig2Rad(270))
-				{
-					faceAngle_.y += kTurnSpeed_;
-
-					if (faceAngle_.y <= MathFunc::Dig2Rad(90) ||
-						MathFunc::Dig2Rad(270) <= faceAngle_.y)
-					{
-						faceAngle_.y = MathFunc::Dig2Rad(270);
-					}
-
-				}
-				else
-				{
-					faceAngle_.y -= kTurnSpeed_;
-
-					if (faceAngle_.y >= MathFunc::Dig2Rad(90) &&
-						MathFunc::Dig2Rad(270) >= faceAngle_.y)
-					{
-						faceAngle_.y = MathFunc::Dig2Rad(270);
-					}
-				}
-			}
+			nowPos.x -= kMoveSpeed_;
 		}
 
-		if (MathFunc::Dig2Rad(360) < faceAngle_.y)
-		{
-			faceAngle_.y += -MathFunc::Dig2Rad(360);
+		
+		if (input_->PushKey(DIK_UP)) {
+			nowPos.z += kMoveSpeed_;
 		}
-		if (faceAngle_.y < 0)
-		{
-			faceAngle_.y += MathFunc::Dig2Rad(360);
-		}
-
-		faceAngle_ += cameraAngle_;
+		
 
 		gameObject_->wtf.rotation_ = faceAngle_;
 
@@ -353,11 +147,11 @@ void Move::Update(Input* input)
 	}
 	else
 	{
-		if (isRun_ == true) {
+		/*if (isRun_ == true) {
 			isRun_ = false;
 			animNum = 5;
 			gameObject_->PlayAnimation(animNum);
-		}
+		}*/
 	}
 
 	
@@ -368,9 +162,9 @@ void Move::Update(Input* input)
 
 	//gameObject_->wtf.UpdateMatWorld();
 
-	velocity_ = MathFunc::MatVector(velocity_, gameObject_->wtf.matWorld_);
+	//velocity_ = MathFunc::MatVector(velocity_, gameObject_->wtf.matWorld_);
 
-	gameObject_->wtf.translation_ += velocity_;
+	gameObject_->SetPosition(nowPos);
 
 
 

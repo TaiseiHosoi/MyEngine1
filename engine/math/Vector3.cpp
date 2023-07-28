@@ -89,8 +89,8 @@ Vector3& Vector3::operator/=(float s) {
 	return *this;
 }
 
-//Vector2D@ƒNƒ‰ƒX‚É‘®‚³‚È‚¢ŠÖ”ŒQ
-//“ñ€‰‰Zq
+//Vector2Dã€€ã‚¯ãƒ©ã‚¹ã«å±ã•ãªã„é–¢æ•°ç¾¤
+//äºŒé …æ¼”ç®—å­
 const Vector3 operator+(const Vector3& v1, const Vector3& v2) {
 	Vector3 temp(v1);
 	temp.x += v2.x;

@@ -3,13 +3,13 @@
 #include <cassert>
 #include "DirectXCommon.h"
 
-// ƒV[ƒ“‚ÌƒCƒ“ƒNƒ‹[ƒh
+// ã‚·ãƒ¼ãƒ³ã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 #include "SceneIntegrate.h"
 
 
 SceneManager::SceneManager(DirectXCommon* dxCommon, GameCamera* camera) {
 	_dxCommon = dxCommon;
-	_scene.reset(new TitleScene(&*this));
+	_scene.reset(new GamePart1(&*this));
 	_camera = camera;
 	
 
@@ -19,7 +19,7 @@ SceneManager::~SceneManager() {
 }
 void SceneManager::ObjectInitialize() {
 
-	//ƒXƒvƒ‰ƒCƒg‰Šú‰»
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆåˆæœŸåŒ–
 	spriteCommon_ = std::make_unique<SpriteCommon>();
 	spriteCommon_->Initialize(_dxCommon);
 	// TITLE
@@ -42,13 +42,13 @@ void SceneManager::ObjectInitialize() {
 	audio->Initialize();
 
 
-	// fbx ƒeƒXƒg
+	// fbx ãƒ†ã‚¹ãƒˆ
 	{
 		hitokunFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("lowpoliInukun",true));
 		//Player
 		fbxPlayer_ = std::make_unique<FbxPlayer>();
 		fbxPlayer_.get()->Initialize(hitokunFbxM_.get());
-		fbxPlayer_->GetObject3d()->wtf.translation_.z = -50;
+		fbxPlayer_->GetObject3d()->wtf.translation_.z = 0;
 		_camera->SetFollowerPos(fbxPlayer_.get()->GetObject3d()->GetWorldTransformPtr());
 
 		//boss
@@ -59,10 +59,10 @@ void SceneManager::ObjectInitialize() {
 		_camera->SetTargetPos(boss_.get()->GetObject3d()->GetWorldTransformPtr());
 	}
 
-	//ƒp[ƒeƒBƒNƒ‹‚ÌƒZƒbƒg
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®ã‚»ãƒƒãƒˆ
 	particleManager_ = std::make_unique<ParticleManager>();
 	particleManager_.get()->Initialize();
-	//ƒp[ƒeƒBƒNƒ‹—p‘fŞ
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”¨ç´ æ
 	particleManager_->LoadTexture("effect.png");
 	particleManager_->Update();
 	
@@ -108,7 +108,7 @@ void SceneManager::ResetParameters() {
 	boss_->Reset();
 	boss_->GetObject3d()->wtf.translation_ = { -50,0,0 };
 	boss_->Update();
-	fbxPlayer_->GetObject3d()->wtf.translation_ = { 50,0,0 };
+	fbxPlayer_->GetObject3d()->wtf.translation_ = { 0,10,0 };
 	fbxPlayer_->GetPlayerActionManager()->SetNowActNum(ACTION_NUM::move);
 	fbxPlayer_->GetObject3d()->Update();
 }

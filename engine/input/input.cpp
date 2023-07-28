@@ -5,29 +5,29 @@
 #pragma comment(lib,"dxguid.lib")
 
 /// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 void Input::Initialize(WinApp* winApp) {
 	HRESULT result;
 	winApp_ = winApp;
 
-	// DirectInput‚Ì‰Šú‰»
+	// DirectInputã®åˆæœŸåŒ–
 	result = DirectInput8Create(
 		winApp_->GetHInstance(), DIRECTINPUT_VERSION, IID_IDirectInput8,
 		(void**)&directInput, nullptr);
 	assert(SUCCEEDED(result));
-	// ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬
+	// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
 	assert(SUCCEEDED(result));
-	//“ü—Íƒf[ƒ^Œ`®‚ÌƒZƒbƒg
-	result = keyboard->SetDataFormat(&c_dfDIKeyboard);	//•W€Œ`®
+	//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿å½¢å¼ã®ã‚»ãƒƒãƒˆ
+	result = keyboard->SetDataFormat(&c_dfDIKeyboard);	//æ¨™æº–å½¢å¼
 	assert(SUCCEEDED(result));
-	//@”r‘¼§ŒäƒŒƒxƒ‹‚ÌƒZƒbƒg
+	//ã€€æ’ä»–åˆ¶å¾¡ãƒ¬ãƒ™ãƒ«ã®ã‚»ãƒƒãƒˆ
 	result = keyboard->SetCooperativeLevel(
 		winApp_->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	assert(SUCCEEDED(result));
 
-	//ƒ}ƒEƒX‚Ì¶¬
+	//ãƒã‚¦ã‚¹ã®ç”Ÿæˆ
 	result = directInput->CreateDevice(GUID_SysMouse, &mouse, NULL);
 	assert(SUCCEEDED(result));
 
@@ -39,22 +39,22 @@ void Input::Initialize(WinApp* winApp) {
 }
 
 /// <summary>
-/// XV
+/// æ›´æ–°
 /// </summary>
 void Input::Update() {
 	HRESULT result;
 
-	// ‘O‰ñ‚ÌƒL[•Û‘¶
+	// å‰å›ã®ã‚­ãƒ¼ä¿å­˜
 	memcpy(keysPre, keys, sizeof(keys));
 
-	//ƒL[ƒ{[ƒhî•ñ‚Ìæ“¾ŠJn
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰æƒ…å ±ã®å–å¾—é–‹å§‹
 	result = keyboard->Acquire();
-	//‘SƒL[‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
+	//å…¨ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 	result = keyboard->GetDeviceState(sizeof(keys), keys);
 
 	mouse->Acquire();
 
-	//‘SƒL[‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
+	//å…¨ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 	for (int i = 0; i < sizeof(DIMOUSESTATE::rgbButtons); i++) {
 		oldMouseButton.rgbButtons[i] = mouseButton.rgbButtons[i];
 	}
@@ -63,11 +63,11 @@ void Input::Update() {
 }
 
 /// <summary>
-/// ƒL[‚Ì‰Ÿ‰º‚ğƒ`ƒFƒbƒN
+/// ã‚­ãƒ¼ã®æŠ¼ä¸‹ã‚’ãƒã‚§ãƒƒã‚¯
 /// </summary>
 bool Input::PushKey(BYTE keyNumber) {
 
-	// w’èƒL[‚ğ‰Ÿ‚µ‚Ä‚¢‚ê‚Îtrue‚ğ•Ô‚·
+	// æŒ‡å®šã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ã„ã‚Œã°trueã‚’è¿”ã™
 	if (keys[keyNumber]) {
 		return true;
 	}
@@ -76,10 +76,10 @@ bool Input::PushKey(BYTE keyNumber) {
 }
 
 /// <summary>
-/// ƒL[‚ÌƒgƒŠƒK[‚ğƒ`ƒFƒbƒN
+/// ã‚­ãƒ¼ã®ãƒˆãƒªã‚¬ãƒ¼ã‚’ãƒã‚§ãƒƒã‚¯
 /// </summary>
 bool Input::TriggerKey(BYTE keyNumber) {
-	// w’èƒL[‚ğ‰Ÿ‚µ‚Ä‚¢‚ê‚Îtrue‚ğ•Ô‚·
+	// æŒ‡å®šã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ã„ã‚Œã°trueã‚’è¿”ã™
 	if (keysPre[keyNumber] == 0 && keys[keyNumber]) {
 		return true;
 	}
@@ -88,7 +88,7 @@ bool Input::TriggerKey(BYTE keyNumber) {
 }
 bool Input::ReleaseKey(BYTE keyNumber)
 {
-	// w’èƒL[‚ğ‰Ÿ‚µ‚Ä‚¢‚ê‚Îtrue‚ğ•Ô‚·
+	// æŒ‡å®šã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ã„ã‚Œã°trueã‚’è¿”ã™
 	if (keysPre[keyNumber] && keys[keyNumber] == 0) {
 		return true;
 	}

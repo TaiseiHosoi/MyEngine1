@@ -10,7 +10,7 @@ Matrix4::Matrix4()
 		0.0f,0.0f,1.0f,0.0f,
 		0.0f,0.0f,0.0f,1.0f
 	};
-	// ‘ã“ü
+	// ä»£å…¥
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			m[i][j] = result[i][j];
@@ -29,7 +29,7 @@ Matrix4::Matrix4(float m00, float m01, float m02, float m03,
 		m[3][0] = m30, m[3][1] = m31, m[3][2] = m32, m[3][3] = m33;
 }
 
-//’PˆÊs—ñ‚ð‹‚ß‚é
+//å˜ä½è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 Matrix4 Matrix4::identity()
 {
 	const Matrix4 result
@@ -44,7 +44,7 @@ Matrix4 Matrix4::identity()
 	return *this;
 }
 
-//Šg‘åk¬s—ñ‚ð‹‚ß‚é
+//æ‹¡å¤§ç¸®å°è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 Matrix4 Matrix4::scale(const Vector3& s)
 {
 	float result[4][4]
@@ -55,7 +55,7 @@ Matrix4 Matrix4::scale(const Vector3& s)
 		0.0f,0.0f,0.0f,1.0f
 	};
 
-	// ‘ã“ü
+	// ä»£å…¥
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			m[i][j] = result[i][j];
@@ -65,7 +65,7 @@ Matrix4 Matrix4::scale(const Vector3& s)
 	return *this;
 }
 
-// x Ž²Žü‚è‚Ì‰ñ“]s—ñ‚ð‹‚ß‚é
+// x è»¸å‘¨ã‚Šã®å›žè»¢è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 Matrix4 Matrix4::rotateX(float angle)
 {
 	float sin = std::sin(angle);
@@ -79,7 +79,7 @@ Matrix4 Matrix4::rotateX(float angle)
 		0.0f,0.0f,0.0f,1.0f
 	};
 
-	// ‘ã“ü
+	// ä»£å…¥
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			m[i][j] = result[i][j];
@@ -89,7 +89,7 @@ Matrix4 Matrix4::rotateX(float angle)
 	return *this;
 }
 
-// y Ž²Žü‚è‚Ì‰ñ“]s—ñ‚ð‹‚ß‚é
+// y è»¸å‘¨ã‚Šã®å›žè»¢è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 Matrix4 Matrix4::rotateY(float angle)
 {
 	float sin = std::sin(angle);
@@ -103,7 +103,7 @@ Matrix4 Matrix4::rotateY(float angle)
 		0.0f,0.0f,0.0f,1.0f
 	};
 
-	// ‘ã“ü
+	// ä»£å…¥
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			m[i][j] = result[i][j];
@@ -113,7 +113,7 @@ Matrix4 Matrix4::rotateY(float angle)
 	return *this;
 }
 
-// z Ž²Žü‚è‚Ì‰ñ“]s—ñ‚ð‹‚ß‚é
+// z è»¸å‘¨ã‚Šã®å›žè»¢è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 Matrix4 Matrix4::rotateZ(float angle)
 {
 	float sin = std::sin(angle);
@@ -127,7 +127,7 @@ Matrix4 Matrix4::rotateZ(float angle)
 		0.0f,0.0f,0.0f,1.0f
 	};
 
-	// ‘ã“ü
+	// ä»£å…¥
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			m[i][j] = result[i][j];
@@ -137,7 +137,7 @@ Matrix4 Matrix4::rotateZ(float angle)
 	return *this;
 }
 
-// •½sˆÚ“®s—ñ‚ð‹‚ß‚é
+// å¹³è¡Œç§»å‹•è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 Matrix4 Matrix4::translate(const Vector3& t)
 {
 	float result[4][4]
@@ -148,7 +148,7 @@ Matrix4 Matrix4::translate(const Vector3& t)
 		t.x ,t.y ,t.z ,1.0f
 	};
 
-	// ‘ã“ü
+	// ä»£å…¥
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			m[i][j] = result[i][j];
@@ -158,7 +158,7 @@ Matrix4 Matrix4::translate(const Vector3& t)
 	return *this;
 }
 
-// À•W•ÏŠ·iƒxƒNƒgƒ‹‚Æs—ñ‚ÌŠ|‚¯ŽZj‚ðs‚¤transform ŠÖ”‚ðì¬‚·‚é@(“§Ž‹•ÏŠ·‚É‚à‘Î‰ž‚µ‚Ä‚¢‚é)
+// åº§æ¨™å¤‰æ›ï¼ˆãƒ™ã‚¯ãƒˆãƒ«ã¨è¡Œåˆ—ã®æŽ›ã‘ç®—ï¼‰ã‚’è¡Œã†transform é–¢æ•°ã‚’ä½œæˆã™ã‚‹ã€€(é€è¦–å¤‰æ›ã«ã‚‚å¯¾å¿œã—ã¦ã„ã‚‹)
 Vector3 Matrix4::transform(const Vector3& v, const Matrix4& m)
 {
 	float W = v.x * m.m[0][3] + v.y * m.m[1][3] + v.z * m.m[2][3] + m.m[3][3];
@@ -183,18 +183,8 @@ Vector3 Matrix4::GetWorldPos()
 	return pos;
 }
 
-Vector3* Matrix4::GetWorldPosPtr()
-{
-	Vector3 pos = {
-		m[3][0],
-		m[3][1],
-		m[3][2]
-	};
 
-	return &pos;
-}
-
-//‘ã“ü‰‰ŽZŽq@*=@ƒI[ƒo[ƒ[ƒhŠÖ”is—ñ‚Æs—ñ‚ÌÏj
+//ä»£å…¥æ¼”ç®—å­ã€€*=ã€€ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰é–¢æ•°ï¼ˆè¡Œåˆ—ã¨è¡Œåˆ—ã®ç©ï¼‰
 Matrix4& Matrix4::operator*=(const Matrix4& m1)
 {
 	Matrix4 result;
@@ -219,13 +209,13 @@ Matrix4& Matrix4::operator*=(const Matrix4& m1)
 }
 
 
-// ‚Q€‰‰ŽZŽq@*@‚ÌƒI[ƒo[ƒ[ƒhŠÖ”is—ñ‚Æs—ñ‚ÌÏj
+// ï¼’é …æ¼”ç®—å­ã€€*ã€€ã®ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰é–¢æ•°ï¼ˆè¡Œåˆ—ã¨è¡Œåˆ—ã®ç©ï¼‰
 Matrix4 Matrix4::operator*(const Matrix4& m1)
 {
 	return *this *= m1;
 }
 
-// ‚Q€‰‰ŽZŽq@*@‚ÌƒI[ƒo[ƒ[ƒhŠÖ”iƒxƒNƒgƒ‹‚Æs—ñ‚ÌÏj
+// ï¼’é …æ¼”ç®—å­ã€€*ã€€ã®ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰é–¢æ•°ï¼ˆãƒ™ã‚¯ãƒˆãƒ«ã¨è¡Œåˆ—ã®ç©ï¼‰
 Vector3 operator*(const Vector3& v, const Matrix4& m)
 {
 	float W = v.x * m.m[0][3] + v.y * m.m[1][3] + v.z * m.m[2][3] + m.m[3][3];

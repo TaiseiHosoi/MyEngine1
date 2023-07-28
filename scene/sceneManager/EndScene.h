@@ -19,7 +19,7 @@ public:
 private:
 	std::unique_ptr <Sprite> end_;
 
-	//‰¹—p•Ï”
+	//éŸ³ç”¨å¤‰æ•°
 	std::unique_ptr<Audio> audio_;
 
 public:

@@ -43,14 +43,14 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -122,6 +122,8 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)imgui;$(ProjectDir)engine\math;$(ProjectDir)engine\sprite;$(ProjectDir)engine\input;$(ProjectDir)engine\imguiManager;$(ProjectDir)engine\fbx;$(ProjectDir)engine\hitstopManager;$(ProjectDir)engine\Collider;$(ProjectDir)engine\camera;$(ProjectDir)engine\audio;$(ProjectDir)engine\3dObject;$(ProjectDir)engine\common;$(ProjectDir)engine\particleManager;$(ProjectDir)engine\SummarizeEngine;$(ProjectDir)engine;$(ProjectDir)scene\sceneObject;$(ProjectDir)scene\sceneManager;$(ProjectDir)scene\gameCamera;$(ProjectDir)scene;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -140,6 +142,8 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)imgui;$(ProjectDir)engine\math;$(ProjectDir)engine\sprite;$(ProjectDir)engine\input;$(ProjectDir)engine\imguiManager;$(ProjectDir)engine\fbx;$(ProjectDir)engine\hitstopManager;$(ProjectDir)engine\Collider;$(ProjectDir)engine\camera;$(ProjectDir)engine\audio;$(ProjectDir)engine\3dObject;$(ProjectDir)engine\common;$(ProjectDir)engine\particleManager;$(ProjectDir)engine\SummarizeEngine;$(ProjectDir)engine;$(ProjectDir)scene\sceneObject;$(ProjectDir)scene\sceneManager;$(ProjectDir)scene\gameCamera;$(ProjectDir)scene;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -181,6 +185,7 @@
     <ClCompile Include="engine\sprite\SpriteCommon.cpp" />
     <ClCompile Include="engine\SummarizeEngine\SummarizeEngine.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PlayerReticle.cpp" />
     <ClCompile Include="scene\gameCamera\GameCamera.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="scene\sceneManager\EndScene.cpp" />
@@ -309,6 +314,7 @@
     <ClInclude Include="engine\sprite\Sprite.h" />
     <ClInclude Include="engine\sprite\SpriteCommon.h" />
     <ClInclude Include="engine\SummarizeEngine\SummarizeEngine.h" />
+    <ClInclude Include="PlayerReticle.h" />
     <ClInclude Include="scene\gameCamera\GameCamera.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="scene\sceneManager\EndScene.h" />

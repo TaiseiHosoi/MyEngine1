@@ -7,69 +7,69 @@
 #include"MathFunc.h"
 
 /// <summary>
-/// ƒJƒƒ‰Šî–{‹@”\
+/// ã‚«ãƒ¡ãƒ©åŸºæœ¬æ©Ÿèƒ½
 /// </summary>
 class Camera
 {
 
-public: // ƒƒ“ƒoŠÖ”
+public: // ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
-	/// <param name="window_width">‰æ–Ê•</param>
-	/// <param name="window_height">‰æ–Ê‚‚³</param>
+	/// <param name="window_width">ç”»é¢å¹…</param>
+	/// <param name="window_height">ç”»é¢é«˜ã•</param>
 	Camera(int window_width, int window_height);
 
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	virtual ~Camera() = default;
 
 	/// <summary>
-	/// –ˆƒtƒŒ[ƒ€XV
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°
 	/// </summary>
 	virtual void Update();
 
 	/// <summary>
-	/// ƒrƒ…[s—ñ‚ğXV
+	/// ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã‚’æ›´æ–°
 	/// </summary>
 	void UpdateViewMatrix();
 
 	/// <summary>
-	/// Ë‰es—ñ‚ğXV
+	/// å°„å½±è¡Œåˆ—ã‚’æ›´æ–°
 	/// </summary>
 	void UpdateProjectionMatrix();
 
 	float GetAxisY();
 
 	/// <summary>
-	/// ƒrƒ…[s—ñ‚Ìæ“¾
+	/// ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã®å–å¾—
 	/// </summary>
-	/// <returns>ƒrƒ…[s—ñ</returns>
+	/// <returns>ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—</returns>
 	inline const Matrix4& GetViewMatrix() {
 		return matView;
 	}
 
 	/// <summary>
-	/// Ë‰es—ñ‚Ìæ“¾
+	/// å°„å½±è¡Œåˆ—ã®å–å¾—
 	/// </summary>
-	/// <returns>Ë‰es—ñ</returns>
+	/// <returns>å°„å½±è¡Œåˆ—</returns>
 	inline const Matrix4& GetProjectionMatrix() {
 		return matProjection;
 	}
 
 	/// <summary>
-	/// ƒrƒ…[Ë‰es—ñ‚Ìæ“¾
+	/// ãƒ“ãƒ¥ãƒ¼å°„å½±è¡Œåˆ—ã®å–å¾—
 	/// </summary>
-	/// <returns>ƒrƒ…[Ë‰es—ñ</returns>
+	/// <returns>ãƒ“ãƒ¥ãƒ¼å°„å½±è¡Œåˆ—</returns>
 	inline const Matrix4& GetViewProjectionMatrix() {
 		return matViewProjection;
 	}
 
 	/// <summary>
-	/// ƒrƒ‹ƒ{[ƒhs—ñ‚Ìæ“¾
+	/// ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—ã®å–å¾—
 	/// </summary>
-	/// <returns>ƒrƒ‹ƒ{[ƒhs—ñ</returns>
+	/// <returns>ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—</returns>
 	inline const Matrix4& GetBillboardMatrix() {
 		return matBillboard;
 	}
@@ -78,49 +78,49 @@ public: // ƒƒ“ƒoŠÖ”
 	}
 
 	/// <summary>
-	/// ‹“_À•W‚Ìæ“¾
+	/// è¦–ç‚¹åº§æ¨™ã®å–å¾—
 	/// </summary>
-	/// <returns>À•W</returns>
+	/// <returns>åº§æ¨™</returns>
 	inline const Vector3& GetEye() {
 		return eye;
 	}
 
 	/// <summary>
-	/// ‹“_À•W‚Ìİ’è
+	/// è¦–ç‚¹åº§æ¨™ã®è¨­å®š
 	/// </summary>
-	/// <param name="eye">À•W</param>
+	/// <param name="eye">åº§æ¨™</param>
 	inline void SetEye(Vector3 eye) {
 		this->eye = eye; viewDirty = true;
 	}
 
 	/// <summary>
-	/// ’‹“_À•W‚Ìæ“¾
+	/// æ³¨è¦–ç‚¹åº§æ¨™ã®å–å¾—
 	/// </summary>
-	/// <returns>À•W</returns>
+	/// <returns>åº§æ¨™</returns>
 	inline const Vector3& GetTarget() {
 		return target;
 	}
 
 	/// <summary>
-	/// ’‹“_À•W‚Ìİ’è
+	/// æ³¨è¦–ç‚¹åº§æ¨™ã®è¨­å®š
 	/// </summary>
-	/// <param name="target">À•W</param>
+	/// <param name="target">åº§æ¨™</param>
 	inline void SetTarget(Vector3 target) {
 		this->target = target; viewDirty = true;
 	}
 
 	/// <summary>
-	/// ã•ûŒüƒxƒNƒgƒ‹‚Ìæ“¾
+	/// ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã®å–å¾—
 	/// </summary>
-	/// <returns>ã•ûŒüƒxƒNƒgƒ‹</returns>
+	/// <returns>ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«</returns>
 	inline const Vector3& GetUp() {
 		return up;
 	}
 
 	/// <summary>
-	/// ã•ûŒüƒxƒNƒgƒ‹‚Ìİ’è
+	/// ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã®è¨­å®š
 	/// </summary>
-	/// <param name="up">ã•ûŒüƒxƒNƒgƒ‹</param>
+	/// <param name="up">ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«</param>
 	inline void SetUp(Vector3 up) {
 		this->up = up; viewDirty = true;
 	}
@@ -142,16 +142,16 @@ public: // ƒƒ“ƒoŠÖ”
 
 
 	/// <summary>
-	/// ƒxƒNƒgƒ‹‚É‚æ‚é‹“_ˆÚ“®
+	/// ãƒ™ã‚¯ãƒˆãƒ«ã«ã‚ˆã‚‹è¦–ç‚¹ç§»å‹•
 	/// </summary>
-	/// <param name="move">ˆÚ“®—Ê</param>
+	/// <param name="move">ç§»å‹•é‡</param>
 	void MoveEyeVector(const Vector3& move);
 	//void MoveEyeVector(const Vector3& move);
 
 	/// <summary>
-	/// ƒxƒNƒgƒ‹‚É‚æ‚éˆÚ“®
+	/// ãƒ™ã‚¯ãƒˆãƒ«ã«ã‚ˆã‚‹ç§»å‹•
 	/// </summary>
-	/// <param name="move">ˆÚ“®—Ê</param>
+	/// <param name="move">ç§»å‹•é‡</param>
 	void MoveVector(const Vector3& move);
 	//void MoveVector(const Vector3& move);
 
@@ -161,29 +161,29 @@ public: // ƒƒ“ƒoŠÖ”
 
 	static void MakeLookL(const Vector3& eye, const Vector3& target, const Vector3& up, Matrix4& mat);
 
-protected: // ƒƒ“ƒo•Ï”
+protected: // ãƒ¡ãƒ³ãƒå¤‰æ•°
 	
-	// ƒrƒ…[s—ñ
+	// ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—
 	Matrix4 matView = MathFunc::ConvertXMMATtoMat4(DirectX::XMMatrixIdentity());
-	// ƒrƒ‹ƒ{[ƒhs—ñ
+	// ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 	static Matrix4 matBillboard ;
-	// Y²‰ñ‚èƒrƒ‹ƒ{[ƒhs—ñ
+	// Yè»¸å›ã‚Šãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 	static Matrix4 matBillboardY;
-	// Ë‰es—ñ
+	// å°„å½±è¡Œåˆ—
 	Matrix4 matProjection = MathFunc::ConvertXMMATtoMat4(DirectX::XMMatrixIdentity());
-	// ƒrƒ…[Ë‰es—ñ
+	// ãƒ“ãƒ¥ãƒ¼å°„å½±è¡Œåˆ—
 	Matrix4 matViewProjection = MathFunc::ConvertXMMATtoMat4(DirectX::XMMatrixIdentity());
-	// ƒrƒ…[s—ñƒ_[ƒeƒBƒtƒ‰ƒO
+	// ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ãƒ€ãƒ¼ãƒ†ã‚£ãƒ•ãƒ©ã‚°
 	bool viewDirty = false;
-	// Ë‰es—ñƒ_[ƒeƒBƒtƒ‰ƒO
+	// å°„å½±è¡Œåˆ—ãƒ€ãƒ¼ãƒ†ã‚£ãƒ•ãƒ©ã‚°
 	bool projectionDirty = false;
-	// ‹“_À•W
+	// è¦–ç‚¹åº§æ¨™
 	Vector3 eye = { 0, 0, -1 };
-	// ’‹“_À•W
+	// æ³¨è¦–ç‚¹åº§æ¨™
 	Vector3 target = { 0, 0, 0 };
-	// ã•ûŒüƒxƒNƒgƒ‹
+	// ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 up = { 0, 1, 0 };
-	// ƒAƒXƒyƒNƒg”ä
+	// ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”
 	float aspectRatio = 1.0f;
 
 	float focalLengs = 50;

@@ -11,7 +11,7 @@ GamePart2::~GamePart2() {
 
 void GamePart2::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
-	//音の初期化と読み込み
+	//髻ｳ縺ｮ蛻晄悄蛹悶→隱ｭ縺ｿ霎ｼ縺ｿ
 	audio_ = std::make_unique<Audio>();
 	audio_->Initialize();
 	//audio_->LoadWave("newspaper.wav");
@@ -35,7 +35,7 @@ void GamePart2::Update(Input* input, GameCamera* camera) {
 	//audio_->PlayWave();
 	if (input->TriggerKey(DIK_SPACE)) {
 		_controller->ChangeScene(new TitleScene(_controller));
-	}// ここから下にコード書くとメモリ君がエラー吐く
+	}// 縺薙％縺九ｉ荳九↓繧ｳ繝ｼ繝画嶌縺上→繝｡繝｢繝ｪ蜷帙′繧ｨ繝ｩ繝ｼ蜷舌￥
 }
 
 void GamePart2::Draw(DirectXCommon* dxCommon) {

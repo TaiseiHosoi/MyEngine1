@@ -61,7 +61,7 @@ private:
 
 
 	//ホーミングの角度調整量
-	const int homingRotateValue_ = 5;
+	const float homingRotateValue_ = 5.f;
 
 
 	Vector3 angle = {0 , 0 , 1};

@@ -8,38 +8,38 @@
 class ImGuiManager
 {
 public:
-	// Microsoft::WRL::‚ğÈ—ª
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize(WinApp *winApp,DirectXCommon* dxCommon);
 
 	/// <summary>
-	/// I—¹
+	/// çµ‚äº†
 	/// </summary>
 	void Finalize();
 
 	/// <summary>
-	/// ó•tŠJn
+	/// å—ä»˜é–‹å§‹
 	/// </summary>
 	void Begin();
 
 	/// <summary>
-	/// I—¹
+	/// çµ‚äº†
 	/// </summary>
 	void End();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 private:
 
 	DirectXCommon* dxCommon_ = nullptr;
 
-	// SRV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	// SRVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> srvHeap_;
 };
 

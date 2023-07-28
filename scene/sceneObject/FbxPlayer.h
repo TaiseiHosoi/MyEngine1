@@ -11,6 +11,8 @@
 
 #include "audio.h"
 
+#include "PlayerReticle.h"
+
 
 
 class FbxPlayer
@@ -77,10 +79,15 @@ private:
 
 	//オブジェクト
 	std::unique_ptr<FBXObject3d> gameObject_;
+	std::unique_ptr<Object3d> hoverCarObject_;
+	std::unique_ptr<Mesh> hoverCarModel_;
+
 	int SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
 	std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列
 	std::vector<SphereCollider*> sphere;
 	std::vector<Vector3> spherePos = {};
+
+	PlayerReticle reticle_;
 
 	//hpモデル
 	std::unique_ptr<Object3d> hpObject_;

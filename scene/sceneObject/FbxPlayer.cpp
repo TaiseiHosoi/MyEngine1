@@ -38,10 +38,17 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	gameObject_->SetModel(fbxModel);
 	gameObject_->SetIsBonesWorldMatCalc(true);	//ボーンワールド行列計算あり
 	gameObject_->SetScale({ 4,4,4 });
+	gameObject_->SetPosition({ 0,15.f,0 });
 	gameObject_->Update();
 
+	hoverCarModel_ = Mesh::LoadFormOBJ("hoverCar", false);
+	hoverCarObject_ = Object3d::Create();
+	hoverCarObject_->SetModel(hoverCarModel_.get());
+	hoverCarObject_->SetPosition(gameObject_->GetPosition());
+	hoverCarObject_->SetRotate(gameObject_->GetRotate());
 
-	SPHERE_COLISSION_NUM = gameObject_->GetBonesMatPtr()->size();
+
+	SPHERE_COLISSION_NUM = static_cast<int>(gameObject_->GetBonesMatPtr()->size());
 	sphere.resize(SPHERE_COLISSION_NUM);
 	spherePos.resize(SPHERE_COLISSION_NUM);
 	gameObject_.get()->isBonesWorldMatCalc = true;
@@ -89,7 +96,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	particle_->Update();
 
 	// 現在時刻を取得してシード値とする
-	std::srand(std::time(nullptr));
+	std::srand(static_cast<int>(std::time(nullptr)));
 
 	//初期化
 	FbxPlayer::isAtkCollide = false;
@@ -99,6 +106,8 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	pActManager_ = std::make_unique<PlayerActionManager>();
 	pActManager_->ColliderInitialize(&sphere, SPHERE_COLISSION_NUM);
 	pActManager_->PActionInitialize(gameObject_.get());
+
+	reticle_.Initialize(gameObject_->GetWorldTransform());
 	
 
 }
@@ -141,11 +150,15 @@ void FbxPlayer::Update()
 			}else{}
 			
 		}
+
+		hoverCarObject_->SetPosition(gameObject_->GetPosition());
+		hoverCarObject_->SetRotate(gameObject_->GetRotate());
 		
 		PColliderUpdate();
 
 		particle_->Update();
 		gameObject_->Update();
+		hoverCarObject_->Update();
 		count++;
 		/*ImGui::Begin("hp");
 		ImGui::InputInt("count", &count);
@@ -177,6 +190,10 @@ void FbxPlayer::Update()
 
 	} //ヒットストップ
 
+	reticle_.nierReticleO_->worldTransform.parent_ = &gameObject_->wtf;
+	reticle_.farReticleO_->worldTransform.parent_ = &gameObject_->wtf;
+	reticle_.Update();
+
 }
 
 
@@ -184,18 +201,19 @@ void FbxPlayer::Update()
 void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 
-	gameObject_->Draw(cmdList);
+	//gameObject_->Draw(cmdList);
 
-
+	hoverCarObject_->Draw(cmdList);
 
 	particle_->Draw(cmdList);
 	
+	reticle_.Draw(cmdList);
 
 }
 
 void FbxPlayer::minusHp(int damage)
 {
-	hp - damage;
+	hp -= damage;
 }
 
 FBXObject3d* FbxPlayer::GetObject3d()
