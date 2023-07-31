@@ -71,10 +71,10 @@ void Field::Update()
 	groundObj2_->Update();
 
 	skydomeObj_->Update();
-	ImGui::Begin("gRotY");
+	/*ImGui::Begin("gRotY");
 	ImGui::InputFloat("rocalRoty", &groundObj1_->worldTransform.rotation_.y);
 	ImGui::InputFloat("matRoty", &groundObj1_->worldTransform.matWorld_.m[0][2]);
-	ImGui::End();
+	ImGui::End();*/
 }
 
 void Field::Draw(DirectXCommon* dxcomon_)

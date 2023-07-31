@@ -20,6 +20,7 @@ void Move::Initialize(FBXObject3d* gameObject)
 	gameObject_->PlayAnimation(animNum);
 	_pActManager->SetNowActNum(0);
 	faceAngle_ = gameObject_->wtf.rotation_;
+	nowPos = {};
 }
 
 void Move::Update(Input* input)
@@ -49,8 +50,6 @@ void Move::Update(Input* input)
 	}*/
 
 	//-----行動処理-----//
-	//速度を0にする
-	velocity_ = { 0 , 0 , 0 };
 
 	Vector3 cameraAngle_ = { 0.0f,
 		atan2f(gameObject_->GetCamera().GetTarget().x - gameObject_->GetCamera().GetEye().x,
@@ -60,11 +59,10 @@ void Move::Update(Input* input)
 	Vector3 cameraNorm = gameObject_->GetCamera().GetTarget() - gameObject_->GetCamera().GetEye();
 	cameraNorm.nomalize();
 	float pAngle = atan2f(cameraNorm.x, cameraNorm.z);
-	Vector3 nowPos = gameObject_->GetPosition();
+	
+	Vector3 primaryPos = gameObject_->GetCamera().GetEye() + cameraNorm * 20.0f;
 
-	nowPos = gameObject_->GetCamera().GetEye() + cameraNorm * 20.0f;
-	nowPos.y = 0.3f;
-	//gameObject_->wtf.rotation_.y = pAngle;
+	
 
 	//キー入力があったら
 	if (input_->PushKey(DIK_W) ||
@@ -83,7 +81,7 @@ void Move::Update(Input* input)
 		if (input_->PushKey(DIK_W) && input_->PushKey(DIK_D))
 		{
 			nowPos.x += kDiagonalSpeed;
-			nowPos.y += kDiagonalSpeed;
+			//nowPos.y += kDiagonalSpeed;
 
 			if (faceAngle_.x >= -faceMaxAngle_) {
 				faceAngle_.x -= faceRotSpeed_;
@@ -102,7 +100,7 @@ void Move::Update(Input* input)
 		{
 
 			nowPos.x -= kDiagonalSpeed;
-			nowPos.y += kDiagonalSpeed;
+			//nowPos.y += kDiagonalSpeed;
 			if (faceAngle_.x >= -faceMaxAngle_) {
 				faceAngle_.x -= faceRotSpeed_;
 			}
@@ -119,7 +117,7 @@ void Move::Update(Input* input)
 		{
 
 			nowPos.x += kDiagonalSpeed;
-			nowPos.y -= kDiagonalSpeed;
+			//nowPos.y -= kDiagonalSpeed;
 
 
 			if (faceAngle_.x <= faceMaxAngle_) {
@@ -137,7 +135,7 @@ void Move::Update(Input* input)
 		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_A))
 		{
 			nowPos.x -= kDiagonalSpeed;
-			nowPos.y -= kDiagonalSpeed;
+			//nowPos.y -= kDiagonalSpeed;
 
 			if (faceAngle_.x <= faceMaxAngle_) {
 				faceAngle_.x += faceRotSpeed_;
@@ -153,7 +151,7 @@ void Move::Update(Input* input)
 		//Wを押していたら
 		else if (input_->PushKey(DIK_W))
 		{
-			nowPos.y += kMoveSpeed_;
+			//nowPos.y += kMoveSpeed_;
 
 			if (faceAngle_.x >= -faceMaxAngle_) {
 				faceAngle_.x -= faceRotSpeed_;
@@ -164,7 +162,7 @@ void Move::Update(Input* input)
 		//Sを押していたら
 		else if (input_->PushKey(DIK_S))
 		{
-			nowPos.y -= kMoveSpeed_;
+			//nowPos.y -= kMoveSpeed_;
 
 			if (faceAngle_.x <= faceMaxAngle_) {
 				faceAngle_.x += faceRotSpeed_;
@@ -197,13 +195,15 @@ void Move::Update(Input* input)
 		}
 
 		//押されていないときの処理
+		
 		if (input_->PushKey(DIK_A) != 1 && input_->PushKey(DIK_D) != 1) {
 			if (faceAngle_.y > 0.02f) {
-				faceAngle_.y -= 0.015f;
+				
+				faceAngle_.y -= returnRotSpeed;
 				
 			}
 			else if (faceAngle_.y < -0.02f) {
-				faceAngle_.y += 0.015f;
+				faceAngle_.y += returnRotSpeed;
 				
 			}
 			
@@ -211,10 +211,10 @@ void Move::Update(Input* input)
 
 		if (input_->PushKey(DIK_W) != 1 && input_->PushKey(DIK_S) != 1) {
 			if (faceAngle_.x > 0.02f) {
-				faceAngle_.x -= 0.015f;
+				faceAngle_.x -= returnRotSpeed;
 			}
 			else if (faceAngle_.x < -0.02f) {
-				faceAngle_.x += 0.015f;
+				faceAngle_.x += returnRotSpeed;
 			}
 
 		}
@@ -230,37 +230,43 @@ void Move::Update(Input* input)
 
 		//押されていないときの処理
 		if (faceAngle_.x > 0.02f) {
-			faceAngle_.x -= 0.015f;
+			faceAngle_.x -= returnRotSpeed;
 		}
 		else if (faceAngle_.x < -0.02f) {
-			faceAngle_.x += 0.015f;
+			faceAngle_.x += returnRotSpeed;
 		}
 
 		if (faceAngle_.y > 0.02f) {
-			faceAngle_.y -= 0.015f;
+			faceAngle_.y -= returnRotSpeed;
 			
 		}
 		else if (faceAngle_.y < -0.02f) {
-			faceAngle_.y += 0.015f;
+			faceAngle_.y += returnRotSpeed;
 			
 		}
 	}
 	
 	gameObject_->wtf.rotation_ = { faceAngle_.x, faceAngle_.y + pAngle ,faceAngle_.z};
 
+	//画面上で自機が動くためのmatrix
+	pAngleMat.identity();
+	pAngleMat.rotateY(pAngle);
+	Vector3 viewPos = MathFunc::bVelocity(nowPos, pAngleMat);
 	
-	//if (input_->TriggerMouseButton(0) && _pActManager->GetNowActNum() != ACTION_NUM::atk1) {
-	//	//pActManager_->ChangeAction(new Atk1(pActManager_.get()));
-	//	_pActManager->SetNowActNum(ACTION_NUM::atk1);
-	//}
+	Vector3 playerPos = primaryPos + viewPos;
+	playerPos.y = 0.3f;
+
 
 	//gameObject_->wtf.UpdateMatWorld();
 
 	//velocity_ = MathFunc::MatVector(velocity_, gameObject_->wtf.matWorld_);
 
-	gameObject_->SetPosition(nowPos);
+	gameObject_->SetPosition(playerPos);
 
-
+	//if (input_->TriggerMouseButton(0) && _pActManager->GetNowActNum() != ACTION_NUM::atk1) {
+	//	//pActManager_->ChangeAction(new Atk1(pActManager_.get()));
+	//	_pActManager->SetNowActNum(ACTION_NUM::atk1);
+	//}
 
 	
 }

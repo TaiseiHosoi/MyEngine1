@@ -5,6 +5,9 @@
 #include"Mesh.h"
 #include "Object3d.h"
 #include"json.h"
+#include"SphereCollider.h"
+#include"CollisionManager.h"
+#include"CollisionAttribute.h"
 
 struct LevelData;
 
@@ -12,6 +15,13 @@ struct LevelData;
 
 class JsonManager
 {
+public:
+    struct EnemyState{
+        bool isAlive_ = true;
+        bool isAtk_ = false;
+        int hp_ = 1;
+    };
+
 private:
     std::vector<Enemy*> enemies;
 
@@ -21,6 +31,8 @@ private:
 
     std::vector<Object3d> objects;
     std::vector<Object3d> camObjs;
+    std::vector<Object3d> moaiObjs;
+    std::vector<EnemyState> moaiState;
 
     std::unique_ptr <Mesh> modelSkydome;
     std::unique_ptr <Mesh> modelMoai;
@@ -37,13 +49,17 @@ private:
     Object3d* objSphere = nullptr;
     Object3d* objRoad = nullptr;
 
+    std::vector<SphereCollider> sphere;
+    std::vector<Vector3> moaiSpherePos = {};
+    int moaiDigRot = 0;
+
 
 public:
     void StaticInit();
 
     void AddEnemy(Enemy* enemy);
 
-    void UpdateAllEnemies();
+    void UpdateAllObjects();
 
     void DrawAllEnemies(ID3D12GraphicsCommandList* cmdList);
 

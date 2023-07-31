@@ -161,11 +161,11 @@ void FbxPlayer::Update()
 		gameObject_->Update();
 		hoverCarObject_->Update();
 		count++;
-		ImGui::Begin("pRotY");
+		/*ImGui::Begin("pRotY");
 		ImGui::InputFloat3("rocalPos", &gameObject_->wtf.translation_.x);
 		ImGui::InputFloat("rocalRoty", &gameObject_->wtf.rotation_.y);
 		ImGui::InputFloat("matRoty", &gameObject_->wtf.matWorld_.m[0][2]);
-		ImGui::End();
+		ImGui::End();*/
 
 #pragma region hp
 		hpObject_->SetScale({ static_cast<float>(hp) * 0.04f,0.1f,0.02f });

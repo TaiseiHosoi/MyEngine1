@@ -86,16 +86,16 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 		_controller->field_->Update();
 		//_controller->boss_->Update();
 		_controller->fbxPlayer_->Update();
-		_controller->jsonManager_->UpdateAllEnemies();
+		_controller->jsonManager_->UpdateAllObjects();
 
 		if (input->TriggerKey(DIK_ESCAPE)) {
 			isPause_ = true;
 			pauseMenuOptions_ = 0;
 		}
-		ImGui::Begin("Pause");
+		/*ImGui::Begin("Pause");
 		ImGui::SetWindowPos({200 , 200});
 		ImGui::InputInt("isPause" , &isPause_);
-		ImGui::End();
+		ImGui::End();*/
 	}
 	else {
 		Pause(input, camera);
@@ -194,10 +194,10 @@ void GamePart1::Pause(Input* input, GameCamera* camera)
 		break;
 		}
 	}
-	ImGui::Begin("Pause");
+	/*ImGui::Begin("Pause");
 	ImGui::SetWindowPos({200 , 200});
 	ImGui::InputInt("PauseMenu",&pauseMenuOptions_);
-	ImGui::End();
+	ImGui::End();*/
 
 	camera->SetIsPause(isPause_);
 }

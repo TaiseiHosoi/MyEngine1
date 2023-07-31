@@ -119,11 +119,11 @@ void GameCamera::Update()
 	
 	
 
-	ImGui::Begin("eye");
+	/*ImGui::Begin("eye");
 	ImGui::InputFloat3("nowpos", &e.x);
 	ImGui::InputFloat3("nowtarget", &t.x);
 
-	ImGui::End();
+	ImGui::End();*/
 
 
 	Camera::Update();
