@@ -192,6 +192,7 @@
     <ClCompile Include="engine\sprite\SpriteCommon.cpp" />
     <ClCompile Include="engine\SummarizeEngine\SummarizeEngine.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PlayerHomingBullet.cpp" />
     <ClCompile Include="PlayerReticle.cpp" />
     <ClCompile Include="scene\gameCamera\GameCamera.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
@@ -322,6 +323,7 @@
     <ClInclude Include="engine\sprite\Sprite.h" />
     <ClInclude Include="engine\sprite\SpriteCommon.h" />
     <ClInclude Include="engine\SummarizeEngine\SummarizeEngine.h" />
+    <ClInclude Include="PlayerHomingBullet.h" />
     <ClInclude Include="PlayerReticle.h" />
     <ClInclude Include="scene\gameCamera\GameCamera.h" />
     <ClInclude Include="scene\GameScene.h" />

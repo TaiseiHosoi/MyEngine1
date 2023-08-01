@@ -49,7 +49,7 @@ private:
     Object3d* objSphere = nullptr;
     Object3d* objRoad = nullptr;
 
-    std::vector<SphereCollider> sphere;
+    std::vector<SphereCollider*> moaiSpCollider;
     std::vector<Vector3> moaiSpherePos = {};
     int moaiDigRot = 0;
 

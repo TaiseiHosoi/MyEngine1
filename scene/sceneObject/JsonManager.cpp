@@ -10,7 +10,7 @@ void JsonManager::StaticInit()
 	modelMoai = Mesh::LoadFormOBJ("moai", true);
 	modelCube = Mesh::LoadFormOBJ("cube", true);
 	modelRoad1 = Mesh::LoadFormOBJ("road1", true);
-	modelCam = Mesh::LoadFormOBJ("cube", true);
+	modelCam = Mesh::LoadFormOBJ("cube", true); 
 	
 	//モデルインサート
 	models.insert(std::make_pair("moai", modelMoai.get()));
@@ -63,14 +63,13 @@ void JsonManager::StaticInit()
 			newState.isAtk_ = false;
 			moaiState.push_back(newState);
 
-			/*SphereCollider newSphere;
-			sphere.push_back(newSphere);
-			int nowSphereNum = static_cast<int>(sphere.size()-1);
-			CollisionManager::GetInstance()->AddCollider(&sphere[nowSphereNum]);
-			sphere[nowSphereNum].SetBasisPos(&moaiObjs[moaiObjs.size()-1].worldTransform.translation_);
-			sphere[nowSphereNum].SetRadius(2.0f);
-			sphere[nowSphereNum].SetAttribute(COLLISION_ATTR_ENEMIES);
-			sphere[nowSphereNum].Update();*/
+			moaiSpCollider.push_back(new SphereCollider);
+			int nowSphereNum = static_cast<int>(moaiSpCollider.size()-1);
+			CollisionManager::GetInstance()->AddCollider(moaiSpCollider[nowSphereNum]);
+			moaiSpCollider[nowSphereNum]->SetBasisPos(&moaiObjs[moaiObjs.size()-1].worldTransform.translation_);
+			moaiSpCollider[nowSphereNum]->SetRadius(2.0f);
+			moaiSpCollider[nowSphereNum]->SetAttribute(COLLISION_ATTR_ENEMIES);
+			moaiSpCollider[nowSphereNum]->Update();
 			continue;
 		}
 		// 配列に登録
@@ -107,22 +106,23 @@ void JsonManager::UpdateAllObjects()
 		moaiObjs[i].worldTransform.translation_.x += cosf(moaiDigRot * 3.14f/180.f);
 		moaiObjs[i].worldTransform.translation_.y += sinf(moaiDigRot * 3.14f / 180.f);
 		moaiObjs[i].Update();
-		//sphere[i].Update();
-		//if (sphere[i].GetIsHit() == true) {
-		//	if (sphere[i].GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ALLIES) {
-		//		moaiState[i].hp_--;
-		//	}
-		//}
-		//if (moaiState[i].hp_ >= 0) {
-		//	moaiState[i].isAlive_ = false;
-		//}
 
-		//if (moaiState[i].isAlive_ == false) {	//死去
-		//	moaiObjs.erase(std::cbegin(moaiObjs) + i);
-		//	sphere.erase(std::cbegin(sphere) + i);
-		//	moaiState.erase(std::cbegin(moaiState) + i);
-		//}
-		//
+		moaiSpCollider[i]->Update();
+		if (moaiSpCollider[i]->GetIsHit() == true) {
+			if (moaiSpCollider[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ALLIES) {
+				moaiState[i].hp_--;
+			}
+		}
+		if (moaiState[i].hp_ <= 0) {
+			moaiState[i].isAlive_ = false;
+		}
+
+		if (moaiState[i].isAlive_ == false) {	//死去
+			moaiObjs.erase(std::cbegin(moaiObjs) + i);
+			moaiSpCollider.erase(std::cbegin(moaiSpCollider) + i);
+			moaiState.erase(std::cbegin(moaiState) + i);
+		}
+		
 	}
 }
 

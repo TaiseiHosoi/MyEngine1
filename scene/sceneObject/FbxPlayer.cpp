@@ -123,24 +123,19 @@ void FbxPlayer::Update()
 			atan2(gameObject_.get()->GetCamera().GetTarget().x - gameObject_.get()->GetCamera().GetEye().x,
 				gameObject_.get()->GetCamera().GetTarget().z - gameObject_.get()->GetCamera().GetEye().z);
 
+		//移動処理
+		Move();
 
 		///-----行動マネージャ-----///
 		
-		
-
-		if (input_->TriggerMouseButton(1) && pActManager_->GetNowActNum() == ACTION_NUM::move) {
-			pActManager_->SetNowActNum(ACTION_NUM::guard);
-		}
 
 		//更新
 		pActManager_->ActionUpdate(input_);
 
 		//前フレームとAction_Numが違ったら行動代入
-		if (oldPActNum_ != pActManager_->GetNowActNum()) {
-			if (pActManager_->GetNowActNum() == ACTION_NUM::move) {
-				pActManager_->ChangeAction(new Move(pActManager_.get()));
-			}
-			else if (pActManager_->GetNowActNum() == ACTION_NUM::atk1) {
+		/*if (oldPActNum_ != pActManager_->GetNowActNum()) {
+			
+			if (pActManager_->GetNowActNum() == ACTION_NUM::atk1) {
 				pActManager_->ChangeAction(new Atk1(pActManager_.get()));
 			}
 			else if (pActManager_->GetNowActNum() == ACTION_NUM::guard) {
@@ -150,7 +145,7 @@ void FbxPlayer::Update()
 				pActManager_->ChangeAction(new CounterAtk(pActManager_.get()));
 			}else{}
 			
-		}
+		}*/
 
 		hoverCarObject_->SetPosition(gameObject_->GetPosition());
 		hoverCarObject_->SetRotate(gameObject_->GetRotate());
@@ -161,11 +156,7 @@ void FbxPlayer::Update()
 		gameObject_->Update();
 		hoverCarObject_->Update();
 		count++;
-		/*ImGui::Begin("pRotY");
-		ImGui::InputFloat3("rocalPos", &gameObject_->wtf.translation_.x);
-		ImGui::InputFloat("rocalRoty", &gameObject_->wtf.rotation_.y);
-		ImGui::InputFloat("matRoty", &gameObject_->wtf.matWorld_.m[0][2]);
-		ImGui::End();*/
+		
 
 #pragma region hp
 		hpObject_->SetScale({ static_cast<float>(hp) * 0.04f,0.1f,0.02f });
@@ -215,6 +206,210 @@ void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 void FbxPlayer::minusHp(int damage)
 {
 	hp -= damage;
+}
+
+void FbxPlayer::Move()
+{
+	
+
+	Vector3 cameraNorm = gameObject_->GetCamera().GetTarget() - gameObject_->GetCamera().GetEye();
+	cameraNorm.nomalize();
+	float pAngle = atan2f(cameraNorm.x, cameraNorm.z);
+
+	Vector3 primaryPos = gameObject_->GetCamera().GetEye() + cameraNorm * 20.0f;
+
+
+
+	//キー入力があったら
+	if (input_->PushKey(DIK_W) ||
+		input_->PushKey(DIK_A) ||
+		input_->PushKey(DIK_S) ||
+		input_->PushKey(DIK_D))
+	{
+
+
+		//Z軸方向にの速度を入れる
+		velocity_ = { 0 , 0 , 0.1f };
+
+		float kDiagonalSpeed = kMoveSpeed_ * 0.707f;
+
+		//W,Dを押していたら
+		if (input_->PushKey(DIK_W) && input_->PushKey(DIK_D))
+		{
+			nowPos.x += kDiagonalSpeed;
+			//nowPos.y += kDiagonalSpeed;
+
+			if (faceAngle_.x >= -faceMaxAngle_) {
+				faceAngle_.x -= faceRotSpeed_;
+			}
+			if (faceAngle_.y <= faceMaxAngle_) {
+				faceAngle_.y += faceRotSpeed_;
+
+			}
+
+
+
+		}
+
+		//W,Aを押していたら
+		else if (input_->PushKey(DIK_W) && input_->PushKey(DIK_A))
+		{
+
+			nowPos.x -= kDiagonalSpeed;
+			//nowPos.y += kDiagonalSpeed;
+			if (faceAngle_.x >= -faceMaxAngle_) {
+				faceAngle_.x -= faceRotSpeed_;
+			}
+			if (faceAngle_.y >= -faceMaxAngle_) {
+				faceAngle_.y -= faceRotSpeed_;
+
+			}
+
+
+		}
+
+		//S,Dを押していたら
+		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_D))
+		{
+
+			nowPos.x += kDiagonalSpeed;
+
+
+			if (faceAngle_.x <= faceMaxAngle_) {
+				faceAngle_.x += faceRotSpeed_;
+			}
+			if (faceAngle_.y <= faceMaxAngle_) {
+				faceAngle_.y += faceRotSpeed_;
+
+			}
+
+
+		}
+
+		//S,Aを押していたら
+		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_A))
+		{
+			nowPos.x -= kDiagonalSpeed;
+
+			if (faceAngle_.x <= faceMaxAngle_) {
+				faceAngle_.x += faceRotSpeed_;
+			}
+			if (faceAngle_.y >= -faceMaxAngle_) {
+				faceAngle_.y -= faceRotSpeed_;
+
+			}
+
+
+		}
+
+		//Wを押していたら
+		else if (input_->PushKey(DIK_W))
+		{
+
+			if (faceAngle_.x >= -faceMaxAngle_) {
+				faceAngle_.x -= faceRotSpeed_;
+			}
+
+		}
+
+		//Sを押していたら
+		else if (input_->PushKey(DIK_S))
+		{
+
+			if (faceAngle_.x <= faceMaxAngle_) {
+				faceAngle_.x += faceRotSpeed_;
+			}
+
+		}
+
+		//Dを押していたら
+		else if (input_->PushKey(DIK_D))
+		{
+			nowPos.x += kMoveSpeed_;
+
+			if (faceAngle_.y <= faceMaxAngle_) {
+				faceAngle_.y += faceRotSpeed_;
+
+			}
+
+
+		}
+
+		//Aを押していたら
+		else if (input_->PushKey(DIK_A))
+		{
+			nowPos.x -= kMoveSpeed_;
+			if (faceAngle_.y >= -faceMaxAngle_) {
+				faceAngle_.y -= faceRotSpeed_;
+
+			}
+
+		}
+
+		//押されていないときの処理
+
+		if (input_->PushKey(DIK_A) != 1 && input_->PushKey(DIK_D) != 1) {
+			if (faceAngle_.y > 0.02f) {
+
+				faceAngle_.y -= returnRotSpeed;
+
+			}
+			else if (faceAngle_.y < -0.02f) {
+				faceAngle_.y += returnRotSpeed;
+
+			}
+
+		}
+
+		if (input_->PushKey(DIK_W) != 1 && input_->PushKey(DIK_S) != 1) {
+			if (faceAngle_.x > 0.02f) {
+				faceAngle_.x -= returnRotSpeed;
+			}
+			else if (faceAngle_.x < -0.02f) {
+				faceAngle_.x += returnRotSpeed;
+			}
+
+		}
+
+	}
+	else
+	{
+
+		//押されていないときの処理
+		if (faceAngle_.x > 0.02f) {
+			faceAngle_.x -= returnRotSpeed;
+		}
+		else if (faceAngle_.x < -0.02f) {
+			faceAngle_.x += returnRotSpeed;
+		}
+
+		if (faceAngle_.y > 0.02f) {
+			faceAngle_.y -= returnRotSpeed;
+
+		}
+		else if (faceAngle_.y < -0.02f) {
+			faceAngle_.y += returnRotSpeed;
+
+		}
+	}
+
+	gameObject_->wtf.rotation_ = { faceAngle_.x, faceAngle_.y + pAngle ,faceAngle_.z };
+
+	//画面上で自機が動くためのmatrix
+	pAngleMat.identity();
+	pAngleMat.rotateY(pAngle);
+	Vector3 viewPos = MathFunc::bVelocity(nowPos, pAngleMat);
+
+	Vector3 playerPos = primaryPos + viewPos;
+	playerPos.y = 0.3f;
+
+	gameObject_->SetPosition(playerPos);
+
+	
+}
+
+void FbxPlayer::BulletShot()
+{
 }
 
 FBXObject3d* FbxPlayer::GetObject3d()

@@ -36,6 +36,12 @@ public:
 	//ダメージ
 	static void minusHp(int damage);
 
+	//移動処理
+	void Move();
+
+	//射撃
+	void BulletShot();
+
 	FBXObject3d* GetObject3d();
 
 	//デスフラグのSetter,Getter
@@ -98,17 +104,27 @@ private:
 
 	std::unique_ptr <Audio> audio_;
 
-	//現在の行動
 	
-
-	//移動速度
-	const float kMoveSpeed_ = 0.25f;
-	//旋回速度
-	const float kTurnSpeed_ = MathFunc::Dig2Rad(10);
-	//移動ベクトル
+#pragma region 移動処理で使う変数
 	Vector3 velocity_;
-	//自機の向き
-	Vector3 faceAngle_ = { 0 , 0 , 0 };
+	const float kMoveSpeed_ = 0.4f;//移動速度
+	const float kTurnSpeed_ = MathFunc::Dig2Rad(10);//旋回速度
+	bool isRun_ = false;
+	Vector3 faceAngle_ = {};
+	const float faceMaxAngle_ = 0.4f; //自機回転の最大
+	float faceRotSpeed_ = 0.05f;
+	float returnRotSpeed = 0.03f;
+	Matrix4 pAngleMat = {};//自機の移動用Matrix
+	Vector3 nowPos = {};
+#pragma endregion 移動処理で使う変数
+
+#pragma region 射撃処理変数
+	std::vector<>
+
+#pragma endregion 射撃処理変数
+
+
+
 	
 	//カメラの向き
 	Vector3 cameraAngle_ = {0 , 0 , 0};
