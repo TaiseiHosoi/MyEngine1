@@ -214,6 +214,7 @@
     <ClCompile Include="scene\sceneObject\PlayerAction.cpp" />
     <ClCompile Include="scene\sceneObject\PlayerActionManager.cpp" />
     <ClCompile Include="scene\sceneObject\Stop.cpp" />
+    <ClCompile Include="SplineCurve.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\BasicPS.hlsl">
@@ -344,6 +345,7 @@
     <ClInclude Include="scene\sceneObject\PlayerAction.h" />
     <ClInclude Include="scene\sceneObject\PlayerActionManager.h" />
     <ClInclude Include="scene\sceneObject\Stop.h" />
+    <ClInclude Include="SplineCurve.h" />
     <ClInclude Include="TestLand.h" />
   </ItemGroup>
   <ItemGroup>

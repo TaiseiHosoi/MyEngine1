@@ -326,9 +326,11 @@ void FbxPlayer::Move()
 		else if (input_->PushKey(DIK_D))
 		{
 			nowPos.x += kMoveSpeed_;
+			
 
 			if (faceAngle_.y <= faceMaxAngle_) {
 				faceAngle_.y += faceRotSpeed_;
+				faceAngle_.z += faceRotSpeed_;
 
 			}
 

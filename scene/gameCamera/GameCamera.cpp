@@ -1,6 +1,7 @@
 #include "GameCamera.h"
 #include "Ease.h"
 #include "JsonManager.h"
+#include "SplineCurve.h"
 
 #include <iostream>
 #include <cmath>

@@ -1,4 +1,5 @@
 #include "MathFunc.h"
+#include<iostream>
 #include <cmath>
 
 const float PI = 3.141592f;
@@ -357,4 +358,18 @@ Matrix4 MathFunc::MakeInverse(const Matrix4* mat)
 	}
 
 	return retMat;
+}
+
+Vector3 MathFunc::lerp(const Vector3& start, const Vector3& end, const float t) {
+
+	return start * (1.0f - t) + end * t;
+}
+
+Vector3 MathFunc::slarp(const Vector3& v1, const Vector3& v2, float t)
+{
+	// tをクランプして[0, 1]の範囲に収める（tが0以下ならv1、tが1以上ならv2を返す）
+	t = std::max(0.0f, std::min(1.0f, t));
+
+	// 補間結果を計算して返す
+	return v1 + (v2 - v1) * t;
 }

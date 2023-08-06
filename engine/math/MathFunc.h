@@ -43,5 +43,8 @@ namespace MathFunc {
 	DirectX::XMMATRIX ConvertMat4toXMMat(Matrix4 m);
 
 	Matrix4 MakeInverse(const Matrix4* mat);
+
+	Vector3 lerp(const Vector3& start, const Vector3& end, const float t);
+	Vector3 slarp(const Vector3& v1, const Vector3& v2, float t);
 };
 

@@ -119,7 +119,7 @@ private:
 #pragma endregion 移動処理で使う変数
 
 #pragma region 射撃処理変数
-	std::vector<>
+	//std::vector<>
 
 #pragma endregion 射撃処理変数
 

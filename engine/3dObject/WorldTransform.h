@@ -2,6 +2,7 @@
 #include "Vector3.h"
 #include "Matrix4.h"
 #include "MathFunc.h"
+#include"Quaternion.h"
 
 class WorldTransform {
 public:
