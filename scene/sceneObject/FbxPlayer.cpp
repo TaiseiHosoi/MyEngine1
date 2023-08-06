@@ -330,7 +330,7 @@ void FbxPlayer::Move()
 
 			if (faceAngle_.y <= faceMaxAngle_) {
 				faceAngle_.y += faceRotSpeed_;
-				faceAngle_.z += faceRotSpeed_;
+				
 
 			}
 

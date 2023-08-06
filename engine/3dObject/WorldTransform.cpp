@@ -26,7 +26,7 @@ void WorldTransform::UpdateMatWorld() {
 
     // 各軸の回転をクオータニオンとして作成
     Quaternion qRotZ(sinf(rotation_.x / 2), cosf(rotation_.x / 2), 0, 0);
-    Quaternion qRotY(cosf(-rotation_.y / 2), 0, sinf(-rotation_.y / 2), 0);
+    Quaternion qRotY(cosf(rotation_.y / 2), 0, sinf(rotation_.y / 2), 0);
     Quaternion qRotX(cosf(rotation_.z / 2), 0, 0, sinf(rotation_.z / 2));
 
     // 各軸のクオータニオンを合成
@@ -36,8 +36,8 @@ void WorldTransform::UpdateMatWorld() {
     matScale = MathFunc::Scale(scale_);
 
     // 回転行列を作成
-    //matRot = qRot.ToMatrix4(qRot);
-    matRot = MathFunc::Rotation(rotation_, 6);
+    matRot = qRot.ToMatrix4(qRot);
+    //matRot = MathFunc::Rotation(rotation_, 6);
 
     // 平行移動行列を作成
     matTrans = MathFunc::Move(translation_);
