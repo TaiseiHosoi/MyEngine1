@@ -7,15 +7,15 @@
 
 
 
-GameScene::GameScene()
+GameMain::GameMain()
 {
 }
 
-GameScene::~GameScene()
+GameMain::~GameMain()
 {
 }
 
-void GameScene::Initialize(DirectXCommon* dxcomon)
+void GameMain::Initialize(DirectXCommon* dxcomon)
 {
 	assert(dxcomon);
 	dxCommon_ = dxcomon;
@@ -56,14 +56,11 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 	sceneManager_->SceneInitialize();
 
 	
-	
-
-
 	hitStopManager_ = HitStopManager::GetInstance();
 	hitStopManager_->SetGameCamera(gameCamera_.get());
 }
 
-void GameScene::Update()
+void GameMain::Update()
 {
 	//gameCamera_->Update();
 
@@ -78,7 +75,7 @@ void GameScene::Update()
 
 }
 
-void GameScene::Draw()
+void GameMain::Draw()
 {
 	sceneManager_->SceneDraw();
 }

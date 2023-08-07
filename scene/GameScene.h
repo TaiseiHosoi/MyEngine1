@@ -27,17 +27,17 @@
 
 
 
-class GameScene {
+class GameMain {
 public:
 	/// <summary>
 	/// コンストクラタ
 	/// </summary>
-	GameScene();
+	GameMain();
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~GameScene();
+	~GameMain();
 
 	/// <summary>
 	/// 初期化

@@ -50,10 +50,14 @@ void PlayerHomingBullet::Update()
 	balletVel_ = MathFunc::slarp(balletVel_, toTarget, 0.1f) * 0.1f;
 
 	//角度を合わせる
+	MathFunc::MatVector(balletVel_, object_->worldTransform.matWorld_);
+
+
 	
 
 }
 
-void PlayerHomingBullet::Draw()
+void PlayerHomingBullet::Draw(ID3D12GraphicsCommandList* cmdList)
 {
+	object_->Draw(cmdList);
 }

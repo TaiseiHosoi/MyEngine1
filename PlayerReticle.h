@@ -36,6 +36,10 @@ public:
 	float offsetNier = 10.f;
 	float offsetFar = 30.f;
 
+	float rockLength_ = 200.f;
+
+	bool isRockAccept_;
+
 
 };
 

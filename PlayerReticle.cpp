@@ -24,6 +24,14 @@ void PlayerReticle::Initialize(WorldTransform pairWTF)
 
 void PlayerReticle::Update()
 {
+	Vector3 vel = farReticleO_.get()->worldTransform.matWorld_.GetWorldPos() - nierReticleO_.get()->worldTransform.matWorld_.GetWorldPos();
+	vel.nomalize();
+
+	vel *= rockLength_;
+	
+
+	
+
 	nierReticleO_->Update();
 	farReticleO_->Update();
 

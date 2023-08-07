@@ -9,7 +9,7 @@ public:
 	~PlayerHomingBullet();
 	void Initialize(Mesh* model,Vector3 setPos,Vector3 setRot,WorldTransform* homingTargetPtr);
 	void Update();
-	void Draw();
+	void Draw(ID3D12GraphicsCommandList* cmdList);
 
 private:
 	std::unique_ptr<Object3d> object_;

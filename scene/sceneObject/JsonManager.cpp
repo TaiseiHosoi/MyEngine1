@@ -2,6 +2,10 @@
 #include"MathFunc.h"
 
 
+JsonManager::~JsonManager()
+{
+}
+
 void JsonManager::StaticInit()
 {
 

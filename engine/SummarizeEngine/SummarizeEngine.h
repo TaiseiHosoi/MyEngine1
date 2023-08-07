@@ -29,7 +29,7 @@ private:
 	DirectXCommon* dxCommon_ = nullptr;
 	Audio* audio_ = nullptr;
 	Input* input_ = Input::GetInstance();
-	GameScene* gameScene_ = nullptr;
+	GameMain* gameScene_ = nullptr;
 	ImGuiManager* imGuiManager_ = nullptr;
 
 public:

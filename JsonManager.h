@@ -16,6 +16,8 @@ struct LevelData;
 class JsonManager
 {
 public:
+    ~JsonManager();
+public:
     struct EnemyState{
         bool isAlive_ = true;
         bool isAtk_ = false;
