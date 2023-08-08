@@ -1,4 +1,5 @@
 ﻿#include "PlayerReticle.h"
+#include "CollisionManager.h"
 
 void PlayerReticle::Initialize(WorldTransform pairWTF)
 {
@@ -19,11 +20,18 @@ void PlayerReticle::Initialize(WorldTransform pairWTF)
 
 	nierReticleO_->Update();
 	farReticleO_->Update();
+
+	
 	
 }
 
 void PlayerReticle::Update()
 {
+	Vector3 forwardNorm = farReticleO_->worldTransform.matWorld_.GetWorldPos() - nierReticleO_->worldTransform.matWorld_.GetWorldPos();
+	forwardNorm.nomalize();
+
+	
+	
 	nierReticleO_->Update();
 	farReticleO_->Update();
 

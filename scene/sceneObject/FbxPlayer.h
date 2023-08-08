@@ -7,7 +7,6 @@
 #include"CollisionManager.h"
 #include"CollisionAttribute.h"
 #include"ParticleManager.h"
-#include"PlayerActionManager.h"
 
 #include "audio.h"
 
@@ -63,7 +62,7 @@ public:
 
 private:	
 	
-	std::unique_ptr <PlayerActionManager> pActManager_;
+
 
 	//コライダー処理
 	void PColliderUpdate();
@@ -75,8 +74,6 @@ public:
 	Vector3 GetNowFaceAngle();
 
 	ID3D12Resource* GetConstBuff() { return gameObject_->GetConstBuff(); };
-
-	PlayerActionManager* GetPlayerActionManager() { return pActManager_.get(); };
 
 private:
 

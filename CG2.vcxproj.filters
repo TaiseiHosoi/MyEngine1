@@ -261,9 +261,6 @@
     <ClCompile Include="engine\SummarizeEngine\SummarizeEngine.cpp">
       <Filter>ソース ファイル\SummarizeEngine</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerReticle.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="scene\sceneObject\BasicEnemy.cpp">
       <Filter>ソース ファイル\scene\enemy</Filter>
     </ClCompile>
@@ -276,11 +273,14 @@
     <ClCompile Include="scene\sceneObject\JsonManager.cpp">
       <Filter>ソース ファイル\LevelEditor</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerHomingBullet.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="SplineCurve.cpp">
       <Filter>ソース ファイル\math</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHomingBullet.cpp">
+      <Filter>ソース ファイル\scene\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerReticle.cpp">
+      <Filter>ソース ファイル\scene\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

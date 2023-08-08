@@ -103,11 +103,6 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	FbxPlayer::isAtkCollide = false;
 	isGuardCollide = false;
 
-	//行動マネージャー
-	pActManager_ = std::make_unique<PlayerActionManager>();
-	pActManager_->ColliderInitialize(&sphere, SPHERE_COLISSION_NUM);
-	pActManager_->PActionInitialize(gameObject_.get());
-
 	reticle_.Initialize(gameObject_->GetWorldTransform());
 	
 
@@ -130,22 +125,8 @@ void FbxPlayer::Update()
 		
 
 		//更新
-		pActManager_->ActionUpdate(input_);
-
-		//前フレームとAction_Numが違ったら行動代入
-		/*if (oldPActNum_ != pActManager_->GetNowActNum()) {
-			
-			if (pActManager_->GetNowActNum() == ACTION_NUM::atk1) {
-				pActManager_->ChangeAction(new Atk1(pActManager_.get()));
-			}
-			else if (pActManager_->GetNowActNum() == ACTION_NUM::guard) {
-				pActManager_->ChangeAction(new Guard(pActManager_.get()));
-			}
-			else if (pActManager_->GetNowActNum() == ACTION_NUM::counter) {
-				pActManager_->ChangeAction(new CounterAtk(pActManager_.get()));
-			}else{}
-			
-		}*/
+		
+		
 
 		hoverCarObject_->SetPosition(gameObject_->GetPosition());
 		hoverCarObject_->SetRotate(gameObject_->GetRotate());
@@ -173,10 +154,6 @@ void FbxPlayer::Update()
 		{
 			gameObject_.get()->PlayAnimation(animCT);
 		}
-
-
-
-	oldPActNum_ = pActManager_->GetNowActNum();
 
 
 
