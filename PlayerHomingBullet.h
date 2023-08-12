@@ -9,7 +9,7 @@ public:
 	~PlayerHomingBullet();
 	void Initialize(Mesh* model,Vector3 setPos,Vector3 setRot,WorldTransform* homingTargetPtr);
 	void Update();
-	void Draw();
+	void Draw(ID3D12GraphicsCommandList* cmdList);
 
 private:
 	std::unique_ptr<Object3d> object_;
@@ -17,7 +17,7 @@ private:
 	Vector3 angleVel_ = {};	//ワールド行列とvelをかけた値
 	WorldTransform* homingTargetPtr_ = nullptr;
 	Vector3 balletVel_ = {};	//弾のvel
-	float balletSpeed_ = 0.1f;
+	float balletSpeed_ = 0.4f;
 
 };
 

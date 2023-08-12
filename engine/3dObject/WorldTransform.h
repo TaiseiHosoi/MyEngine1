@@ -14,6 +14,8 @@ public:
 	//ワールド変換行列の更新
 	void UpdateMatWorld();
 
+	
+
 	//メンバ変数
 	//スケール
 	Vector3 scale_ = {1,1,1};

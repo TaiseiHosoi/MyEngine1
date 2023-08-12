@@ -1,12 +1,13 @@
 ﻿#pragma once
 #include "Object3d.h"
+#include "CollisionManager.h"
 class PlayerReticle
 {
 public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(WorldTransform pairWTF);
+	void Initialize(WorldTransform* pairWTF);
 
 	/// <summary>
 	/// 更新処理
@@ -18,7 +19,16 @@ public:
 	/// </summary>
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
-public:
+public://アクセッサ
+	/// <summary>
+	/// ロックオンフラグ
+	/// </summary>
+	/// <returns><isRockOn_>
+	bool GetIsRockTarget() { return isRockOn_; };
+	RaycastHit GetRaycastHit() { return raycastHit; };
+	
+
+private:
 	/// <summary>
 	/// オブジェクト
 	/// </summary>
@@ -36,6 +46,9 @@ public:
 	float offsetNier = 10.f;
 	float offsetFar = 30.f;
 
+	CollisionManager* collider_ = nullptr;
+	RaycastHit raycastHit;
+	bool isRockOn_ = false;
 
 };
 

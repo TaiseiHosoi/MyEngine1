@@ -11,6 +11,7 @@
 #include "audio.h"
 
 #include "PlayerReticle.h"
+#include"PlayerHomingBullet.h"
 
 
 
@@ -116,7 +117,9 @@ private:
 #pragma endregion 移動処理で使う変数
 
 #pragma region 射撃処理変数
-	//std::vector<>
+
+	std::vector<PlayerHomingBullet> bullets_;
+	std::unique_ptr<Mesh> bulletModel_;
 
 #pragma endregion 射撃処理変数
 

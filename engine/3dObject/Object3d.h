@@ -186,6 +186,8 @@ public: // メンバ関数
 	virtual void Draw(ID3D12GraphicsCommandList* cmdList);
 
 public:
+
+	WorldTransform* GetWorldTransformPtr() { return &worldTransform; };
 	/// <summary>
 	/// 座標の取得
 	/// </summary>

@@ -9,6 +9,7 @@
 #include"Atk1.h"
 #include"Guard.h"
 #include"CounterAtk.h"
+#include"RaycastHit.h"
 
 
 int FbxPlayer::hp = 100;
@@ -102,8 +103,12 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	//初期化
 	FbxPlayer::isAtkCollide = false;
 	isGuardCollide = false;
+	
+	
+	reticle_.Initialize(gameObject_->GetWorldTransformPtr());
 
-	reticle_.Initialize(gameObject_->GetWorldTransform());
+	//弾
+	bulletModel_ = Mesh::LoadFormOBJ("cube",true);
 	
 
 }
@@ -121,15 +126,23 @@ void FbxPlayer::Update()
 		//移動処理
 		Move();
 
-		///-----行動マネージャ-----///
-		
+		//弾発射
+		if (reticle_.GetIsRockTarget() == true) {
+			for (int i = 0; i < 5; i++) {
+				PlayerHomingBullet newBullet;
+				newBullet.Initialize(bulletModel_.get(), gameObject_->wtf.translation_, { 0,0,0 }, reticle_.GetRaycastHit().object->GetWorldTransformPtr());
+				bullets_.push_back(newBullet);
+			}
+
+		}
+
 
 		//更新
-		
-		
-
 		hoverCarObject_->SetPosition(gameObject_->GetPosition());
 		hoverCarObject_->SetRotate(gameObject_->GetRotate());
+		for (int i = 0; i < bullets_.size(); i++) {
+			bullets_[i].Update();
+		}
 		
 		PColliderUpdate();
 
@@ -159,8 +172,7 @@ void FbxPlayer::Update()
 
 	} //ヒットストップ
 
-	reticle_.nierReticleO_->worldTransform.parent_ = &gameObject_->wtf;
-	reticle_.farReticleO_->worldTransform.parent_ = &gameObject_->wtf;
+	
 	reticle_.Update();
 
 }
@@ -177,6 +189,10 @@ void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 	particle_->Draw(cmdList);
 	
 	reticle_.Draw(cmdList);
+
+	for (int i = 0; i < bullets_.size(); i++) {
+		bullets_[i].Draw(cmdList);
+	}
 
 }
 
