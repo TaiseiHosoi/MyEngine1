@@ -27,17 +27,17 @@
 
 
 
-class GameScene {
+class Application {
 public:
 	/// <summary>
 	/// コンストクラタ
 	/// </summary>
-	GameScene();
+	Application();
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~GameScene();
+	~Application();
 
 	/// <summary>
 	/// 初期化

@@ -7,9 +7,12 @@ class PlayerHomingBullet
 public:
 	PlayerHomingBullet();
 	~PlayerHomingBullet();
-	void Initialize(Mesh* model,Vector3 setPos,Vector3 setRot,WorldTransform* homingTargetPtr);
+	void Initialize(Mesh* model,Vector3 setPos,Vector3 setRot);
 	void Update();
 	void Draw(ID3D12GraphicsCommandList* cmdList);
+
+public://アクセッサ
+	void SetTargerPtr(WorldTransform* target) { homingTargetPtr_ = target; };
 
 private:
 	std::unique_ptr<Object3d> object_;

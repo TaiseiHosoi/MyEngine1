@@ -67,7 +67,7 @@ void JsonManager::StaticInit()
 			int nowSphereNum = static_cast<int>(moaiSpCollider.size()-1);
 			CollisionManager::GetInstance()->AddCollider(moaiSpCollider[nowSphereNum]);
 			moaiSpCollider[nowSphereNum]->SetBasisPos(&moaiObjs[moaiObjs.size()-1].worldTransform.translation_);
-			moaiSpCollider[nowSphereNum]->SetRadius(2.0f);
+			moaiSpCollider[nowSphereNum]->SetRadius(scale.x);
 			moaiSpCollider[nowSphereNum]->SetAttribute(COLLISION_ATTR_ENEMIES);
 			moaiSpCollider[nowSphereNum]->Update();
 			continue;
@@ -100,11 +100,11 @@ void JsonManager::UpdateAllObjects()
 		moaiDigRot = 0;
 	}
 	for (int i = 0; i < moaiObjs.size(); i++) {
-		float moveSpeed = 0.01f;
+		float moveSpeed = 0.1f;
 
 		
-		moaiObjs[i].worldTransform.translation_.x += cosf(moaiDigRot * 3.14f/180.f);
-		moaiObjs[i].worldTransform.translation_.y += sinf(moaiDigRot * 3.14f / 180.f);
+		moaiObjs[i].worldTransform.translation_.x += cosf(moaiDigRot * 3.14f/180.f) * moveSpeed;
+		moaiObjs[i].worldTransform.translation_.y += sinf(moaiDigRot * 3.14f / 180.f) * moveSpeed;
 		moaiObjs[i].Update();
 
 		moaiSpCollider[i]->Update();

@@ -194,8 +194,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PlayerHomingBullet.cpp" />
     <ClCompile Include="PlayerReticle.cpp" />
+    <ClCompile Include="scene\Application.cpp" />
     <ClCompile Include="scene\gameCamera\GameCamera.cpp" />
-    <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="scene\sceneManager\EndScene.cpp" />
     <ClCompile Include="scene\sceneManager\GamePart1.cpp" />
     <ClCompile Include="scene\sceneManager\GamePart2.cpp" />
@@ -326,6 +326,7 @@
     <ClInclude Include="engine\SummarizeEngine\SummarizeEngine.h" />
     <ClInclude Include="PlayerHomingBullet.h" />
     <ClInclude Include="PlayerReticle.h" />
+    <ClInclude Include="scene\Application.h" />
     <ClInclude Include="scene\gameCamera\GameCamera.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="scene\sceneManager\EndScene.h" />

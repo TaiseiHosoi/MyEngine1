@@ -7,7 +7,7 @@
 #include"Object3d.h"
 #include"Sprite.h"
 #include"Audio.h"
-#include"GameScene.h"
+#include"Application.h"
 #include"ImGuiManager.h"
 #include"fbxsdk.h"
 
@@ -29,7 +29,7 @@ private:
 	DirectXCommon* dxCommon_ = nullptr;
 	Audio* audio_ = nullptr;
 	Input* input_ = Input::GetInstance();
-	GameScene* gameScene_ = nullptr;
+	Application* application_ = nullptr;
 	ImGuiManager* imGuiManager_ = nullptr;
 
 public:

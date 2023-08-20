@@ -24,8 +24,9 @@ public://アクセッサ
 	/// ロックオンフラグ
 	/// </summary>
 	/// <returns><isRockOn_>
-	bool GetIsRockTarget() { return isRockOn_; };
-	RaycastHit GetRaycastHit() { return raycastHit; };
+	//bool GetIsRockTarget() { return isRockOn_; };
+	//RaycastHit* GetRaycastHit() { return raycastHit.get(); };
+	Object3d* GetFarReticleObjPtr() { return farReticleO_.get(); }
 	
 
 private:
@@ -46,9 +47,9 @@ private:
 	float offsetNier = 10.f;
 	float offsetFar = 30.f;
 
-	CollisionManager* collider_ = nullptr;
-	RaycastHit raycastHit;
-	bool isRockOn_ = false;
+	//CollisionManager* collider_ = nullptr;
+	//std::unique_ptr<RaycastHit> raycastHit;
+	//bool isRockOn_ = false;
 
 };
 

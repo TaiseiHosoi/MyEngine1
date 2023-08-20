@@ -118,14 +118,18 @@ private:
 
 #pragma region 射撃処理変数
 
-	std::vector<PlayerHomingBullet> bullets_;
+	std::vector< std::unique_ptr<PlayerHomingBullet>> bullets_;
 	std::unique_ptr<Mesh> bulletModel_;
+
+	struct PRockTarget {	// ターゲット構造体
+		WorldTransform* targetWtfPtr;
+		bool isRockOn;
+	};
+	std::vector<PRockTarget> rockTargets_;
 
 #pragma endregion 射撃処理変数
 
 
-
-	
 	//カメラの向き
 	Vector3 cameraAngle_ = {0 , 0 , 0};
 	//ブレーキアニメーション用フラグ

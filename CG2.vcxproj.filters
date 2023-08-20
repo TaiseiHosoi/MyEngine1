@@ -213,9 +213,6 @@
     <ClCompile Include="scene\gameCamera\GameCamera.cpp">
       <Filter>ソース ファイル\scene\gameCamera</Filter>
     </ClCompile>
-    <ClCompile Include="scene\GameScene.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
     <ClCompile Include="engine\common\DirectXCommon.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
@@ -281,6 +278,9 @@
     </ClCompile>
     <ClCompile Include="PlayerReticle.cpp">
       <Filter>ソース ファイル\scene\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Application.cpp">
+      <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -500,6 +500,9 @@
     </ClInclude>
     <ClInclude Include="PlayerReticle.h">
       <Filter>ヘッダー ファイル\scene\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Application.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

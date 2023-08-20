@@ -127,21 +127,42 @@ void FbxPlayer::Update()
 		Move();
 
 		//弾発射
-		if (reticle_.GetIsRockTarget() == true) {
-			for (int i = 0; i < 5; i++) {
-				PlayerHomingBullet newBullet;
-				newBullet.Initialize(bulletModel_.get(), gameObject_->wtf.translation_, { 0,0,0 }, reticle_.GetRaycastHit().object->GetWorldTransformPtr());
-				bullets_.push_back(newBullet);
-			}
+		Ray ray;
+		ray.start = gameObject_->GetCamera().GetEye();
+		ray.dir = reticle_.GetFarReticleObjPtr()->GetPosition() - ray.start;
+		ray.dir.nomalize();
 
+		RaycastHit raycastHit;
+
+		// レイキャストによるロックオン登録
+		if (CollisionManager::GetInstance()->Raycast(ray, &raycastHit) == true) {
+			if (raycastHit.collider->GetAttribute() == COLLISION_ATTR_ENEMIES && raycastHit.object != nullptr) {
+				// ロックオン処理
+				PRockTarget newRockTarget;
+				rockTargets_.push_back(newRockTarget);
+				int nowRockNum = static_cast<int>(rockTargets_.size()) - 1;
+				rockTargets_[nowRockNum].targetWtfPtr = raycastHit.collider->GetObject3d()->GetWorldTransformPtr();
+				rockTargets_[nowRockNum].isRockOn = true;
+				
+				// そのロックオンによって弾発射
+				std::unique_ptr<PlayerHomingBullet> newBullet;
+				newBullet = std::make_unique<PlayerHomingBullet>();
+				newBullet->Initialize(bulletModel_.get(), gameObject_->GetPosition(), { 0,0,0 });
+				newBullet->SetTargerPtr(rockTargets_[nowRockNum].targetWtfPtr);
+				bullets_.push_back(std::move(newBullet));
+				
+
+				
+			}
 		}
+
 
 
 		//更新
 		hoverCarObject_->SetPosition(gameObject_->GetPosition());
 		hoverCarObject_->SetRotate(gameObject_->GetRotate());
 		for (int i = 0; i < bullets_.size(); i++) {
-			bullets_[i].Update();
+			bullets_[i]->Update();
 		}
 		
 		PColliderUpdate();
@@ -191,7 +212,7 @@ void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 	reticle_.Draw(cmdList);
 
 	for (int i = 0; i < bullets_.size(); i++) {
-		bullets_[i].Draw(cmdList);
+		bullets_[i]->Draw(cmdList);
 	}
 
 }

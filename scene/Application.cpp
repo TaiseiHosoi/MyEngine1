@@ -1,4 +1,4 @@
-#include "GameScene.h"
+#include "Application.h"
 
 #include<sstream>
 #include<iomanip>
@@ -7,15 +7,15 @@
 
 
 
-GameScene::GameScene()
+Application::Application()
 {
 }
 
-GameScene::~GameScene()
+Application::~Application()
 {
 }
 
-void GameScene::Initialize(DirectXCommon* dxcomon)
+void Application::Initialize(DirectXCommon* dxcomon)
 {
 	assert(dxcomon);
 	dxCommon_ = dxcomon;
@@ -63,7 +63,7 @@ void GameScene::Initialize(DirectXCommon* dxcomon)
 	hitStopManager_->SetGameCamera(gameCamera_.get());
 }
 
-void GameScene::Update()
+void Application::Update()
 {
 	//gameCamera_->Update();
 
@@ -78,7 +78,7 @@ void GameScene::Update()
 
 }
 
-void GameScene::Draw()
+void Application::Draw()
 {
 	sceneManager_->SceneDraw();
 }

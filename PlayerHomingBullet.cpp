@@ -10,7 +10,7 @@ PlayerHomingBullet::~PlayerHomingBullet()
 	
 }
 
-void PlayerHomingBullet::Initialize(Mesh* model,Vector3 setPos,Vector3 setRot, WorldTransform* homingTargetPtr)
+void PlayerHomingBullet::Initialize(Mesh* model,Vector3 setPos,Vector3 setRot)
 {
 	
 	//乱数シード生成器
@@ -23,11 +23,10 @@ void PlayerHomingBullet::Initialize(Mesh* model,Vector3 setPos,Vector3 setRot, W
 	balletVel_ = { Dist(rndEngine),Dist(rndEngine) ,Dist(rndEngine) };
 	balletVel_.nomalize();
 
-	homingTargetPtr_ = homingTargetPtr;
-
 	//ObjectInit
 	model_ = model;
 	object_ = Object3d::Create();
+	object_->Initialize(true);
 	object_->SetModel(model_);
 	object_->SetPosition(setPos);
 	object_->SetRotate(setRot);
@@ -42,15 +41,17 @@ void PlayerHomingBullet::Initialize(Mesh* model,Vector3 setPos,Vector3 setRot, W
 
 void PlayerHomingBullet::Update()
 {
-	//敵へのベクトル計算
-	Vector3 toTarget = homingTargetPtr_->translation_ - object_->worldTransform.translation_;
-	toTarget.nomalize();
+	if (homingTargetPtr_ != nullptr) {
+		//敵へのベクトル計算
+		Vector3 toTarget = homingTargetPtr_->translation_ - object_->worldTransform.translation_;
+		toTarget.nomalize();
 
-	//球面線形補間により、今の速度とターゲットへのベクトルを内挿し、新たな速度とする
-	balletVel_ = MathFunc::slarp(balletVel_, toTarget, 0.1f) * 0.1f;
+		//球面線形補間により、今の速度とターゲットへのベクトルを内挿し、新たな速度とする
+		balletVel_ = MathFunc::slarp(balletVel_, toTarget, 0.1f) * 0.1f;
 
-	//角度を合わせる
-	object_->SetPosition(object_->GetPosition() + balletVel_*balletSpeed_);
+		//角度を合わせる
+		object_->SetPosition(object_->GetPosition() + balletVel_ * balletSpeed_);
+	}
 	object_->Update();
 
 }

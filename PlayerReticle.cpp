@@ -22,29 +22,32 @@ void PlayerReticle::Initialize(WorldTransform* pairWTF)
 	nierReticleO_->Update();
 	farReticleO_->Update();
 
-	collider_ = CollisionManager::GetInstance();
-	isRockOn_ = false;
+	//collider_ = CollisionManager::GetInstance();
+	//isRockOn_ = false;
+
+	//raycastHit = std::make_unique<RaycastHit>();
 	
 }
 
 void PlayerReticle::Update()
 {
-	Vector3 forwardNorm = farReticleO_->worldTransform.matWorld_.GetWorldPos() - nierReticleO_->worldTransform.matWorld_.GetWorldPos();
+	/*Vector3 forwardNorm = farReticleO_->worldTransform.matWorld_.GetWorldPos() - nierReticleO_->worldTransform.matWorld_.GetWorldPos();
 	forwardNorm.nomalize();
 
 	Ray ray;
 	ray.start = nierReticleO_->worldTransform.parent_->translation_;
 	ray.dir = forwardNorm;
 	
-
-	if (collider_->Raycast(ray, &raycastHit, 60.f) && isRockOn_ == false) {
-		if (raycastHit.collider->GetAttribute() == COLLISION_ATTR_ENEMIES) {
+	RaycastHit raycastTest;
+	
+	if (collider_->Raycast(ray, &raycastTest, 60.f) == true && isRockOn_ == false) {
+		if (raycastTest.collider->GetAttribute() == COLLISION_ATTR_ENEMIES) {
 			isRockOn_ = true;
 		}
 	}
 	else {
 		isRockOn_ = false;
-	}
+	}*/
 	
 	
 	
