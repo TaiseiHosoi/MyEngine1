@@ -126,10 +126,9 @@ void FbxPlayer::Update()
 		//移動処理
 		Move();
 
-		//弾発射
 		Ray ray;
 		ray.start = gameObject_->GetCamera().GetEye();
-		ray.dir = reticle_.GetFarReticleObjPtr()->GetPosition() - ray.start;
+		ray.dir = reticle_.GetFarReticleObjPtr()->GetPosition() - gameObject_->GetCamera().GetEye();
 		ray.dir.nomalize();
 
 		RaycastHit raycastHit;
@@ -145,11 +144,11 @@ void FbxPlayer::Update()
 				rockTargets_[nowRockNum].isRockOn = true;
 				
 				// そのロックオンによって弾発射
-				std::unique_ptr<PlayerHomingBullet> newBullet;
-				newBullet = std::make_unique<PlayerHomingBullet>();
-				newBullet->Initialize(bulletModel_.get(), gameObject_->GetPosition(), { 0,0,0 });
-				newBullet->SetTargerPtr(rockTargets_[nowRockNum].targetWtfPtr);
-				bullets_.push_back(std::move(newBullet));
+				std::unique_ptr<PlayerHomingBullet> newHomingBullet;
+				newHomingBullet = std::make_unique<PlayerHomingBullet>();
+				newHomingBullet->Initialize(bulletModel_.get(), gameObject_->GetPosition(), { 0,0,0 });
+				newHomingBullet->SetTargerPtr(rockTargets_[nowRockNum].targetWtfPtr);
+				homingBullets_.push_back(std::move(newHomingBullet));
 				
 
 				
@@ -161,8 +160,8 @@ void FbxPlayer::Update()
 		//更新
 		hoverCarObject_->SetPosition(gameObject_->GetPosition());
 		hoverCarObject_->SetRotate(gameObject_->GetRotate());
-		for (int i = 0; i < bullets_.size(); i++) {
-			bullets_[i]->Update();
+		for (int i = 0; i < homingBullets_.size(); i++) {
+			homingBullets_[i]->Update();
 		}
 		
 		PColliderUpdate();
@@ -211,8 +210,8 @@ void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 	
 	reticle_.Draw(cmdList);
 
-	for (int i = 0; i < bullets_.size(); i++) {
-		bullets_[i]->Draw(cmdList);
+	for (int i = 0; i < homingBullets_.size(); i++) {
+		homingBullets_[i]->Draw(cmdList);
 	}
 
 }

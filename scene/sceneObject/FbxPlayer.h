@@ -118,7 +118,7 @@ private:
 
 #pragma region 射撃処理変数
 
-	std::vector< std::unique_ptr<PlayerHomingBullet>> bullets_;
+	std::vector< std::unique_ptr<PlayerHomingBullet>> homingBullets_;
 	std::unique_ptr<Mesh> bulletModel_;
 
 	struct PRockTarget {	// ターゲット構造体
