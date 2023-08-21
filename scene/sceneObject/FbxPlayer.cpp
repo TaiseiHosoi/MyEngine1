@@ -180,7 +180,7 @@ void FbxPlayer::Update()
 			
 			if (rapidBullet->GetSphereCollider()->GetIsHit() == true) {
 				if (rapidBullet->GetSphereCollider()->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIES) {
-					rapidBullet->isDead_ = true;
+					rapidBullet->SetIsDead(true);
 					particle_->RandParticle(rapidBullet->GetSphereCollider()->GetCollisionInfo().inter);
 				}
 			}

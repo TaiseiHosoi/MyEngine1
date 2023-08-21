@@ -14,8 +14,8 @@ public:
 
 public:
 	SphereCollider* GetSphereCollider() { return sphere; };
-	bool ReturnIsDead() { return isDead_; }
-	bool isDead_ = false;
+	bool ReturnIsDead() { return isDead_; };
+	void SetIsDead(bool isDead) { isDead_ = isDead; };
 
 private:
 	std::unique_ptr<Object3d> object_;
@@ -25,7 +25,7 @@ private:
 	SphereCollider* sphere = nullptr;
 	Vector3 pos;
 	
-
+	bool isDead_ = false;
 	std::unique_ptr<Object3d> testObject_;
 
 };

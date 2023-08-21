@@ -435,9 +435,6 @@
     <ClInclude Include="scene\gameCamera\GameCamera.h">
       <Filter>ヘッダー ファイル\scene\gameCamera</Filter>
     </ClInclude>
-    <ClInclude Include="scene\GameScene.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
     <ClInclude Include="TestLand.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>

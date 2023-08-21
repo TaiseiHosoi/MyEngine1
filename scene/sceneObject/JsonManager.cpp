@@ -119,6 +119,7 @@ void JsonManager::UpdateAllObjects()
 		}
 		if (moaiState[i].hp_ <= 0) {
 			moaiState[i].isAlive_ = false;
+			moaiSpCollider[i]->RemoveAttribute(8);
 			
 		}
 
