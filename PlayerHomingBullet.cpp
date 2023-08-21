@@ -53,6 +53,7 @@ void PlayerHomingBullet::Update()
 		object_->SetPosition(object_->GetPosition() + balletVel_ * balletSpeed_);
 	}
 	object_->Update();
+	
 
 }
 

@@ -213,6 +213,7 @@
     <ClCompile Include="scene\sceneObject\Player.cpp" />
     <ClCompile Include="scene\sceneObject\PlayerAction.cpp" />
     <ClCompile Include="scene\sceneObject\PlayerActionManager.cpp" />
+    <ClCompile Include="scene\sceneObject\PlayerRapidBullet.cpp" />
     <ClCompile Include="scene\sceneObject\Stop.cpp" />
     <ClCompile Include="SplineCurve.cpp" />
   </ItemGroup>
@@ -345,6 +346,7 @@
     <ClInclude Include="scene\sceneObject\Player.h" />
     <ClInclude Include="scene\sceneObject\PlayerAction.h" />
     <ClInclude Include="scene\sceneObject\PlayerActionManager.h" />
+    <ClInclude Include="scene\sceneObject\PlayerRapidBullet.h" />
     <ClInclude Include="scene\sceneObject\Stop.h" />
     <ClInclude Include="SplineCurve.h" />
     <ClInclude Include="TestLand.h" />

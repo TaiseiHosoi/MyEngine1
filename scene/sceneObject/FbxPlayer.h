@@ -5,13 +5,13 @@
 #include "input.h"
 #include"SphereCollider.h"
 #include"CollisionManager.h"
-#include"CollisionAttribute.h"
 #include"ParticleManager.h"
 
 #include "audio.h"
 
 #include "PlayerReticle.h"
 #include"PlayerHomingBullet.h"
+#include"PlayerRapidBullet.h"
 
 
 
@@ -32,6 +32,8 @@ public:
 
 	//描画
 	void Draw(ID3D12GraphicsCommandList* cmdList);
+
+	void CreateParticle();
 
 	//ダメージ
 	static void minusHp(int damage);
@@ -118,6 +120,7 @@ private:
 
 #pragma region 射撃処理変数
 
+	//ホーミング弾
 	std::vector< std::unique_ptr<PlayerHomingBullet>> homingBullets_;
 	std::unique_ptr<Mesh> bulletModel_;
 
@@ -126,6 +129,10 @@ private:
 		bool isRockOn;
 	};
 	std::vector<PRockTarget> rockTargets_;
+
+	//連射弾
+	std::list< std::unique_ptr<PlayerRapidBullet>> rapidBullets_;
+	
 
 #pragma endregion 射撃処理変数
 

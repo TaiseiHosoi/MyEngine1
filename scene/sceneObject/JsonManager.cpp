@@ -67,6 +67,7 @@ void JsonManager::StaticInit()
 			int nowSphereNum = static_cast<int>(moaiSpCollider.size()-1);
 			CollisionManager::GetInstance()->AddCollider(moaiSpCollider[nowSphereNum]);
 			moaiSpCollider[nowSphereNum]->SetBasisPos(&moaiObjs[moaiObjs.size()-1].worldTransform.translation_);
+			moaiSpCollider[nowSphereNum]->center = moaiObjs[moaiObjs.size() - 1].worldTransform.translation_;
 			moaiSpCollider[nowSphereNum]->SetRadius(scale.x);
 			moaiSpCollider[nowSphereNum]->SetAttribute(COLLISION_ATTR_ENEMIES);
 			moaiSpCollider[nowSphereNum]->Update();
@@ -105,9 +106,12 @@ void JsonManager::UpdateAllObjects()
 		
 		moaiObjs[i].worldTransform.translation_.x += cosf(moaiDigRot * 3.14f/180.f) * moveSpeed;
 		moaiObjs[i].worldTransform.translation_.y += sinf(moaiDigRot * 3.14f / 180.f) * moveSpeed;
+
 		moaiObjs[i].Update();
 
-		moaiSpCollider[i]->Update();
+		moaiSpCollider[i]->SetBasisPos(&moaiObjs[i].worldTransform.translation_);
+
+		
 		if (moaiSpCollider[i]->GetIsHit() == true) {
 			if (moaiSpCollider[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ALLIES) {
 				moaiState[i].hp_--;
@@ -122,6 +126,7 @@ void JsonManager::UpdateAllObjects()
 			moaiSpCollider.erase(std::cbegin(moaiSpCollider) + i);
 			moaiState.erase(std::cbegin(moaiState) + i);
 		}
+		moaiSpCollider[i]->Update();
 		
 	}
 }
@@ -141,7 +146,9 @@ void JsonManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
 	//}
 	
 	for (int i = 0; i < moaiObjs.size(); i++) {
-		moaiObjs[i].Draw(cmdList);
+		if (moaiState[i].hp_ > 0) {
+			moaiObjs[i].Draw(cmdList);
+		}
 	}
 }
 
