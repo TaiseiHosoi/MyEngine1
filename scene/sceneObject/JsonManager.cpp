@@ -125,7 +125,6 @@ void JsonManager::UpdateAllObjects()
 		if (moaiState[i].isAlive_ == false) {	//死去
 			moaiObjs.erase(std::cbegin(moaiObjs) + i);
 			moaiSpCollider.erase(std::cbegin(moaiSpCollider) + i);
-			moaiSpCollider[i]->SetAttribute(COLLISION_ATTR_ALLIES);
 			moaiState.erase(std::cbegin(moaiState) + i);
 		}
 		moaiSpCollider[i]->Update();
