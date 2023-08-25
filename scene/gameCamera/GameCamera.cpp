@@ -109,7 +109,7 @@ void GameCamera::Update()
 
 	
 	oldPos_ = basePos_;
-	basePos_ = splinePosition(points, startIndex, timeRate);
+	basePos_ = MathFunc::TangentSplinePosition(points, startIndex, timeRate);
 	railTargetPos_ = basePos_ + target;
 
 	Vector3 e = GetEye();

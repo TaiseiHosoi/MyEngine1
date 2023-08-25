@@ -3,6 +3,7 @@
 #include "Matrix4.h"
 #include "Vector3.h"
 #include "Vector4.h"
+#include <vector>
 
 
 //#include "Object3d.h"
@@ -46,5 +47,11 @@ namespace MathFunc {
 
 	Vector3 lerp(const Vector3& start, const Vector3& end, const float t);
 	Vector3 slarp(const Vector3& v1, const Vector3& v2, float t);
+
+	Vector3 InterpolateBetweenPoints(const std::vector<Vector3>& points, size_t currentIndex, float t);	//直前と直後のポイントを考慮している
+
+	Vector3 TangentSplinePosition(const std::vector<Vector3>& points, size_t startIndex, float t);
+
+	Vector3 CalculateTangent(const Vector3& prevPoint, const Vector3& nextPoint);
 };
 
