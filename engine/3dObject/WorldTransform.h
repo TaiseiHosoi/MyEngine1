@@ -2,6 +2,7 @@
 #include "Vector3.h"
 #include "Matrix4.h"
 #include "MathFunc.h"
+#include"Quaternion.h"
 
 class WorldTransform {
 public:
@@ -12,6 +13,8 @@ public:
 
 	//ワールド変換行列の更新
 	void UpdateMatWorld();
+
+	
 
 	//メンバ変数
 	//スケール

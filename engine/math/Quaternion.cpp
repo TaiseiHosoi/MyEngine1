@@ -3,24 +3,13 @@
 #include"MathFunc.h"
 #include <math.h>
 
-Quaternion Quaternion::Multiply(const Quaternion& r)
-{
-	Quaternion result;
-	/*Vector3 vq = {x,y,z};
-	Vector3 vr = {r.x,r.y,r.z};
-
-	result.w = w * r.w - vq.dot(vr);
-	Vector3 qrv = vq.cross(vr) + r.w * vq + w * vr;
-	result.x = qrv.x;
-	result.x = qrv.y;
-	result.x = qrv.z;*/
-
-	result.w = w * r.w - x * r.x - y * r.y - z * r.z;
-	result.x = y * r.z - z * r.y + r.w * x + w * r.x;
-	result.y = z * r.x - x * r.z + r.w * y + w * r.y;
-	result.z = x * r.y - y * r.x + r.w * z + w * r.z;
-
-	return result;
+Quaternion Quaternion::Multiply(const Quaternion& q1, const Quaternion& q2) {
+	return Quaternion(
+		q1.w * q2.w - q1.x * q2.x - q1.y * q2.y - q1.z * q2.z,
+		q1.w * q2.x + q1.x * q2.w + q1.y * q2.z - q1.z * q2.y,
+		q1.w * q2.y - q1.x * q2.z + q1.y * q2.w + q1.z * q2.x,
+		q1.w * q2.z + q1.x * q2.y - q1.y * q2.x + q1.z * q2.w
+	);
 }
 
 Quaternion Quaternion::IdentityQuaternion()
@@ -106,47 +95,18 @@ Quaternion Quaternion::MakeAxisAngle(const Vector3& axis, float angle)
 	return q;
 }
 
-Vector3 Quaternion::RotateVector(const Vector3& vector)
+Quaternion Quaternion::RotateVector(const Quaternion& rotation, const Quaternion& vectorQuat)
 {
+	Quaternion conjugate = rotation;
+	conjugate.x = -conjugate.x;
+	conjugate.y = -conjugate.y;
+	conjugate.z = -conjugate.z;
 
-	Quaternion result;
-
-	Quaternion VecQua;
-
-	VecQua.w = 0;
-	VecQua.x = vector.x;
-	VecQua.y = vector.y;
-	VecQua.z = vector.z;
-
-	Quaternion conQuaternion = this->Conjugate(VecQua);
-
-	result = this->Multiply(VecQua);
-
-	result = result.Multiply(conQuaternion);
-
-	return { result.x,result.y,result.z };
+	Quaternion result = Multiply(rotation, Multiply(vectorQuat, conjugate));
+	return result;
 }
-Matrix4 Quaternion::MakeRotateMatrix(const Quaternion& q)
-{
-	return Matrix4(
-		q.w * q.w + q.x * q.x - q.y * q.y - q.z * q.z,
-		2 * (q.x * q.y + q.w * q.z),
-		2 * (q.x * q.z - q.w * q.y),
-		0,
 
-		2 * (q.x * q.y - q.w * q.z),
-		q.w * q.w - q.x * q.x + q.y * q.y - q.z * q.z,
-		2 * (q.y * q.z + q.w * q.x),
-		0,
 
-		2 * (q.x * q.z + q.w * q.y),
-		2 * (q.y * q.z - q.w * q.x),
-		q.w * q.w - q.x * q.x - q.y * q.y + q.z * q.z,
-		0,
-
-		0, 0, 0, 1
-	);
-}
 
 Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t)
 {
@@ -209,6 +169,28 @@ Quaternion Quaternion::DirectionToDirection(const Vector3& u, const Vector3& v)
 	Quaternion result;
 
 	result = MakeAxisAngle(axis, theta);
+
+	return result;
+}
+Matrix4 Quaternion::ToMatrix4(const Quaternion& q) {
+	float xx = q.x * q.x * 2.0f;
+	float yy = q.y * q.y * 2.0f;
+	float zz = q.z * q.z * 2.0f;
+	float xy = q.x * q.y * 2.0f;
+	float xz = q.x * q.z * 2.0f;
+	float yz = q.y * q.z * 2.0f;
+	float wx = q.w * q.x * 2.0f;
+	float wy = q.w * q.y * 2.0f;
+	float wz = q.w * q.z * 2.0f;
+
+
+
+	Matrix4 result = {
+		1.0f - yy - zz,        xy + wz,       xz - wy, 0.0f,
+			   xy - wz, 1.0f - xx - zz,       yz + wx,0.0f,
+			   xz + wy,        yz - wx,1.0f - xx - yy,0.0f,
+				  0.0f,           0.0f,          0.0f,1.0f
+	};
 
 	return result;
 }

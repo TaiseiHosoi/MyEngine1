@@ -5,13 +5,13 @@
 #include "input.h"
 #include"SphereCollider.h"
 #include"CollisionManager.h"
-#include"CollisionAttribute.h"
 #include"ParticleManager.h"
-#include"PlayerActionManager.h"
 
 #include "audio.h"
 
 #include "PlayerReticle.h"
+#include"PlayerHomingBullet.h"
+#include"PlayerRapidBullet.h"
 
 
 
@@ -33,8 +33,16 @@ public:
 	//描画
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
+	void CreateParticle();
+
 	//ダメージ
 	static void minusHp(int damage);
+
+	//移動処理
+	void Move();
+
+	//射撃
+	void BulletShot();
 
 	FBXObject3d* GetObject3d();
 
@@ -57,7 +65,7 @@ public:
 
 private:	
 	
-	std::unique_ptr <PlayerActionManager> pActManager_;
+
 
 	//コライダー処理
 	void PColliderUpdate();
@@ -69,8 +77,6 @@ public:
 	Vector3 GetNowFaceAngle();
 
 	ID3D12Resource* GetConstBuff() { return gameObject_->GetConstBuff(); };
-
-	PlayerActionManager* GetPlayerActionManager() { return pActManager_.get(); };
 
 private:
 
@@ -98,18 +104,39 @@ private:
 
 	std::unique_ptr <Audio> audio_;
 
-	//現在の行動
+	
+#pragma region 移動処理で使う変数
+	Vector3 velocity_;
+	const float kMoveSpeed_ = 0.4f;//移動速度
+	const float kTurnSpeed_ = MathFunc::Dig2Rad(10);//旋回速度
+	bool isRun_ = false;
+	Vector3 faceAngle_ = {};
+	const float faceMaxAngle_ = 0.4f; //自機回転の最大
+	float faceRotSpeed_ = 0.05f;
+	float returnRotSpeed = 0.03f;
+	Matrix4 pAngleMat = {};//自機の移動用Matrix
+	Vector3 nowPos = {};
+#pragma endregion 移動処理で使う変数
+
+#pragma region 射撃処理変数
+
+	//ホーミング弾
+	std::vector< std::unique_ptr<PlayerHomingBullet>> homingBullets_;
+	std::unique_ptr<Mesh> bulletModel_;
+
+	struct PRockTarget {	// ターゲット構造体
+		WorldTransform* targetWtfPtr;
+		bool isRockOn;
+	};
+	std::vector<PRockTarget> rockTargets_;
+
+	//連射弾
+	std::list< std::unique_ptr<PlayerRapidBullet>> rapidBullets_;
 	
 
-	//移動速度
-	const float kMoveSpeed_ = 0.25f;
-	//旋回速度
-	const float kTurnSpeed_ = MathFunc::Dig2Rad(10);
-	//移動ベクトル
-	Vector3 velocity_;
-	//自機の向き
-	Vector3 faceAngle_ = { 0 , 0 , 0 };
-	
+#pragma endregion 射撃処理変数
+
+
 	//カメラの向き
 	Vector3 cameraAngle_ = {0 , 0 , 0};
 	//ブレーキアニメーション用フラグ

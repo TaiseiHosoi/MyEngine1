@@ -9,6 +9,8 @@
 #include"Atk1.h"
 #include"Guard.h"
 #include"CounterAtk.h"
+#include"RaycastHit.h"
+
 
 
 int FbxPlayer::hp = 100;
@@ -102,19 +104,27 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	//初期化
 	FbxPlayer::isAtkCollide = false;
 	isGuardCollide = false;
+	
+	
+	reticle_.Initialize(gameObject_->GetWorldTransformPtr());
 
-	//行動マネージャー
-	pActManager_ = std::make_unique<PlayerActionManager>();
-	pActManager_->ColliderInitialize(&sphere, SPHERE_COLISSION_NUM);
-	pActManager_->PActionInitialize(gameObject_.get());
+	//弾
+	bulletModel_ = Mesh::LoadFormOBJ("cube",true);
 
-	reticle_.Initialize(gameObject_->GetWorldTransform());
+	
 	
 
 }
 
 void FbxPlayer::Update()
 {
+
+	//デスフラグの立った弾を削除
+	
+		rapidBullets_.remove_if([](std::unique_ptr<PlayerRapidBullet>& bullet) {
+			return bullet->ReturnIsDead();
+			});
+	
 
 	if (isHitStop == false)
 	{
@@ -123,49 +133,83 @@ void FbxPlayer::Update()
 			atan2(gameObject_.get()->GetCamera().GetTarget().x - gameObject_.get()->GetCamera().GetEye().x,
 				gameObject_.get()->GetCamera().GetTarget().z - gameObject_.get()->GetCamera().GetEye().z);
 
+		//移動処理
+		Move();
 
-		///-----行動マネージャ-----///
-		
+		Ray ray;
+		ray.start = gameObject_->GetCamera().GetEye();
+		ray.dir = reticle_.GetFarReticleObjPtr()->worldTransform.matWorld_.GetWorldPos() - gameObject_->GetCamera().GetEye();
 		
 
-		if (input_->TriggerMouseButton(1) && pActManager_->GetNowActNum() == ACTION_NUM::move) {
-			pActManager_->SetNowActNum(ACTION_NUM::guard);
+		RaycastHit raycast;
+
+		// レイキャストによるロックオン登録
+		if (CollisionManager::GetInstance()->Raycast(ray, &raycast, 120.f)) {
+			if (0 == 0) {
+
+			}
+			if (raycast.collider->GetAttribute() == COLLISION_ATTR_ENEMIES && raycast.object != nullptr) {
+				// ロックオン処理
+				PRockTarget newRockTarget;
+				rockTargets_.push_back(newRockTarget);
+				int nowRockNum = static_cast<int>(rockTargets_.size()) - 1;
+				
+				rockTargets_[nowRockNum].targetWtfPtr = raycast.collider->GetObject3d()->GetWorldTransformPtr();
+				rockTargets_[nowRockNum].isRockOn = true;
+				
+				// そのロックオンによって弾発射
+				std::unique_ptr<PlayerHomingBullet> newHomingBullet;
+				newHomingBullet = std::make_unique<PlayerHomingBullet>();
+				newHomingBullet->Initialize(bulletModel_.get(), gameObject_->GetPosition(), gameObject_->GetRotate());
+				newHomingBullet->SetTargerPtr(rockTargets_[nowRockNum].targetWtfPtr);
+				homingBullets_.push_back(std::move(newHomingBullet));
+				
+				
+				
+			}
+		}
+
+		if (input_->TriggerMouseButton(0)) {
+			std::unique_ptr<PlayerRapidBullet> newRapidBullet;
+			newRapidBullet = std::make_unique<PlayerRapidBullet>();
+			newRapidBullet->Initialize(bulletModel_.get(), gameObject_->GetPosition(), gameObject_->GetRotate());
+			rapidBullets_.push_back(std::move(newRapidBullet));
+		}
+
+		for (std::unique_ptr<PlayerRapidBullet>& rapidBullet : rapidBullets_) {
+			
+			if (rapidBullet->GetSphereCollider()->GetIsHit() == true) {
+				if (rapidBullet->GetSphereCollider()->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIES) {
+					rapidBullet->SetIsDead(true);
+					particle_->RandParticle(rapidBullet->GetSphereCollider()->GetCollisionInfo().inter);
+				}
+			}
+		}
+
+		if (input_->TriggerKey(DIK_9)) {
+			int f = 0;
+			f = 1;
 		}
 
 		//更新
-		pActManager_->ActionUpdate(input_);
-
-		//前フレームとAction_Numが違ったら行動代入
-		if (oldPActNum_ != pActManager_->GetNowActNum()) {
-			if (pActManager_->GetNowActNum() == ACTION_NUM::move) {
-				pActManager_->ChangeAction(new Move(pActManager_.get()));
-			}
-			else if (pActManager_->GetNowActNum() == ACTION_NUM::atk1) {
-				pActManager_->ChangeAction(new Atk1(pActManager_.get()));
-			}
-			else if (pActManager_->GetNowActNum() == ACTION_NUM::guard) {
-				pActManager_->ChangeAction(new Guard(pActManager_.get()));
-			}
-			else if (pActManager_->GetNowActNum() == ACTION_NUM::counter) {
-				pActManager_->ChangeAction(new CounterAtk(pActManager_.get()));
-			}else{}
-			
-		}
-
 		hoverCarObject_->SetPosition(gameObject_->GetPosition());
 		hoverCarObject_->SetRotate(gameObject_->GetRotate());
+		for (int i = 0; i < homingBullets_.size(); i++) {
+			homingBullets_[i]->Update();
+		}
+		for (std::unique_ptr<PlayerRapidBullet>& rapidBullet : rapidBullets_) {
+			rapidBullet->Update();
+		}
+		
 		
 		PColliderUpdate();
 
 		particle_->Update();
 		gameObject_->Update();
 		hoverCarObject_->Update();
+
 		count++;
-		ImGui::Begin("pRotY");
-		ImGui::InputFloat3("rocalPos", &gameObject_->wtf.translation_.x);
-		ImGui::InputFloat("rocalRoty", &gameObject_->wtf.rotation_.y);
-		ImGui::InputFloat("matRoty", &gameObject_->wtf.matWorld_.m[0][2]);
-		ImGui::End();
+		
 
 #pragma region hp
 		hpObject_->SetScale({ static_cast<float>(hp) * 0.04f,0.1f,0.02f });
@@ -185,14 +229,9 @@ void FbxPlayer::Update()
 
 
 
-	oldPActNum_ = pActManager_->GetNowActNum();
-
-
-
 	} //ヒットストップ
-
-	reticle_.nierReticleO_->worldTransform.parent_ = &gameObject_->wtf;
-	reticle_.farReticleO_->worldTransform.parent_ = &gameObject_->wtf;
+	
+	
 	reticle_.Update();
 
 }
@@ -210,11 +249,251 @@ void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 	
 	reticle_.Draw(cmdList);
 
+	for (int i = 0; i < homingBullets_.size(); i++) {
+		homingBullets_[i]->Draw(cmdList);
+	}
+	for (std::unique_ptr<PlayerRapidBullet>& rapidBullet : rapidBullets_) {
+		rapidBullet->Draw(cmdList);
+	}
+
+}
+
+void FbxPlayer::CreateParticle()
+{
+	
+		for (int i = 0; i < 10; i++) {
+			
+			const float rnd_pos = 2.0f;
+			Vector3 pos{};
+			pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+			pos.y = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+			pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+
+			const float rnd_vel = 0.3f;
+			Vector3 vel{};
+			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+
+			Vector3 acc{};
+			const float rnd_acc = 0.01f;
+			acc.y = -(float)rand() / RAND_MAX * rnd_acc;
+
+			//追加
+			particle_->Add(60, pos, vel, acc, 0.5f, 0.0f);
+		}
+	
 }
 
 void FbxPlayer::minusHp(int damage)
 {
 	hp -= damage;
+}
+
+void FbxPlayer::Move()
+{
+	
+
+	Vector3 cameraNorm = gameObject_->GetCamera().GetTarget() - gameObject_->GetCamera().GetEye();
+	cameraNorm.nomalize();
+	float pAngle = atan2f(cameraNorm.x, cameraNorm.z);
+
+	Vector3 primaryPos = gameObject_->GetCamera().GetEye() + cameraNorm * 20.0f;
+
+
+
+	//キー入力があったら
+	if (input_->PushKey(DIK_W) ||
+		input_->PushKey(DIK_A) ||
+		input_->PushKey(DIK_S) ||
+		input_->PushKey(DIK_D))
+	{
+
+
+		//Z軸方向にの速度を入れる
+		velocity_ = { 0 , 0 , 0.1f };
+
+		float kDiagonalSpeed = kMoveSpeed_ * 0.707f;
+
+		//W,Dを押していたら
+		if (input_->PushKey(DIK_W) && input_->PushKey(DIK_D))
+		{
+			nowPos.x += kDiagonalSpeed;
+			//nowPos.y += kDiagonalSpeed;
+
+			if (faceAngle_.x >= -faceMaxAngle_) {
+				faceAngle_.x -= faceRotSpeed_;
+			}
+			if (faceAngle_.y <= faceMaxAngle_) {
+				faceAngle_.y += faceRotSpeed_;
+
+			}
+
+
+
+		}
+
+		//W,Aを押していたら
+		else if (input_->PushKey(DIK_W) && input_->PushKey(DIK_A))
+		{
+
+			nowPos.x -= kDiagonalSpeed;
+			//nowPos.y += kDiagonalSpeed;
+			if (faceAngle_.x >= -faceMaxAngle_) {
+				faceAngle_.x -= faceRotSpeed_;
+			}
+			if (faceAngle_.y >= -faceMaxAngle_) {
+				faceAngle_.y -= faceRotSpeed_;
+
+			}
+
+
+		}
+
+		//S,Dを押していたら
+		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_D))
+		{
+
+			nowPos.x += kDiagonalSpeed;
+
+
+			if (faceAngle_.x <= faceMaxAngle_) {
+				faceAngle_.x += faceRotSpeed_;
+			}
+			if (faceAngle_.y <= faceMaxAngle_) {
+				faceAngle_.y += faceRotSpeed_;
+
+			}
+
+
+		}
+
+		//S,Aを押していたら
+		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_A))
+		{
+			nowPos.x -= kDiagonalSpeed;
+
+			if (faceAngle_.x <= faceMaxAngle_) {
+				faceAngle_.x += faceRotSpeed_;
+			}
+			if (faceAngle_.y >= -faceMaxAngle_) {
+				faceAngle_.y -= faceRotSpeed_;
+
+			}
+
+
+		}
+
+		//Wを押していたら
+		else if (input_->PushKey(DIK_W))
+		{
+
+			if (faceAngle_.x >= -faceMaxAngle_) {
+				faceAngle_.x -= faceRotSpeed_;
+			}
+
+		}
+
+		//Sを押していたら
+		else if (input_->PushKey(DIK_S))
+		{
+
+			if (faceAngle_.x <= faceMaxAngle_) {
+				faceAngle_.x += faceRotSpeed_;
+			}
+
+		}
+
+		//Dを押していたら
+		else if (input_->PushKey(DIK_D))
+		{
+			nowPos.x += kMoveSpeed_;
+			
+
+			if (faceAngle_.y <= faceMaxAngle_) {
+				faceAngle_.y += faceRotSpeed_;
+				
+
+			}
+
+
+		}
+
+		//Aを押していたら
+		else if (input_->PushKey(DIK_A))
+		{
+			nowPos.x -= kMoveSpeed_;
+			if (faceAngle_.y >= -faceMaxAngle_) {
+				faceAngle_.y -= faceRotSpeed_;
+
+			}
+
+		}
+
+		//押されていないときの処理
+
+		if (input_->PushKey(DIK_A) != 1 && input_->PushKey(DIK_D) != 1) {
+			if (faceAngle_.y > 0.02f) {
+
+				faceAngle_.y -= returnRotSpeed;
+
+			}
+			else if (faceAngle_.y < -0.02f) {
+				faceAngle_.y += returnRotSpeed;
+
+			}
+
+		}
+
+		if (input_->PushKey(DIK_W) != 1 && input_->PushKey(DIK_S) != 1) {
+			if (faceAngle_.x > 0.02f) {
+				faceAngle_.x -= returnRotSpeed;
+			}
+			else if (faceAngle_.x < -0.02f) {
+				faceAngle_.x += returnRotSpeed;
+			}
+
+		}
+
+	}
+	else
+	{
+
+		//押されていないときの処理
+		if (faceAngle_.x > 0.02f) {
+			faceAngle_.x -= returnRotSpeed;
+		}
+		else if (faceAngle_.x < -0.02f) {
+			faceAngle_.x += returnRotSpeed;
+		}
+
+		if (faceAngle_.y > 0.02f) {
+			faceAngle_.y -= returnRotSpeed;
+
+		}
+		else if (faceAngle_.y < -0.02f) {
+			faceAngle_.y += returnRotSpeed;
+
+		}
+	}
+
+	gameObject_->wtf.rotation_ = { faceAngle_.x, faceAngle_.y + pAngle ,faceAngle_.z };
+
+	//画面上で自機が動くためのmatrix
+	pAngleMat.identity();
+	pAngleMat.rotateY(pAngle);
+	Vector3 viewPos = MathFunc::bVelocity(nowPos, pAngleMat);
+
+	Vector3 playerPos = primaryPos + viewPos;
+	playerPos.y = 0.3f;
+
+	gameObject_->SetPosition(playerPos);
+
+	
+}
+
+void FbxPlayer::BulletShot()
+{
 }
 
 FBXObject3d* FbxPlayer::GetObject3d()

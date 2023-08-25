@@ -1,4 +1,5 @@
 #include "MathFunc.h"
+#include<iostream>
 #include <cmath>
 
 const float PI = 3.141592f;
@@ -357,4 +358,78 @@ Matrix4 MathFunc::MakeInverse(const Matrix4* mat)
 	}
 
 	return retMat;
+}
+
+Vector3 MathFunc::lerp(const Vector3& start, const Vector3& end, const float t) {
+
+	return start * (1.0f - t) + end * t;
+}
+
+Vector3 MathFunc::slarp(const Vector3& v1, const Vector3& v2, float t)
+{
+	// tをクランプして[0, 1]の範囲に収める（tが0以下ならv1、tが1以上ならv2を返す）
+	t = std::max(0.0f, std::min(1.0f, t));
+
+	// 補間結果を計算して返す
+	return v1 + (v2 - v1) * t;
+}
+
+Vector3 MathFunc::InterpolateBetweenPoints(const std::vector<Vector3>& points, size_t currentIndex, float t)
+{
+	size_t numPoints = points.size();
+
+	if (numPoints == 0) {
+		return Vector3(0.0f, 0.0f, 0.0f);
+	}
+
+	if (numPoints == 1) {
+		return points[0];
+	}
+
+	if (currentIndex >= numPoints - 1) {
+		return points[numPoints - 1];
+	}
+
+	size_t prevIndex = currentIndex > 0 ? currentIndex - 1 : currentIndex;
+	size_t nextIndex = currentIndex + 1;
+
+	Vector3 prevPoint = points[prevIndex];
+	Vector3 currentPoint = points[currentIndex];
+	Vector3 nextPoint = points[nextIndex];
+
+	return lerp(currentPoint, nextPoint, t);
+}
+
+Vector3 MathFunc::TangentSplinePosition(const std::vector<Vector3>& points, size_t startIndex, float t)
+{
+	// 補間すべき点の数
+	size_t n = points.size() - 2;
+
+	if (startIndex > n) return points[n];
+	if (startIndex < 1) return points[1];
+
+	Vector3 p0 = points[startIndex - 1];
+	Vector3 p1 = points[startIndex];
+	Vector3 p2 = points[startIndex + 1];
+	Vector3 p3 = points[startIndex + 2];
+
+	Vector3 tangent0 = CalculateTangent(p0, p1);
+	Vector3 tangent1 = CalculateTangent(p1, p2);
+	Vector3 tangent2 = CalculateTangent(p2, p3);
+
+	Vector3 position = 0.5 * (2 * p1 + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * (t * t) + (-p0 + 3 * p1 - 3 * p2 + p3) * (t * t * t));
+
+	Vector3 tangent = lerp(tangent1, tangent2, t); // 補完された接線ベクトル
+
+	// ポジションに接線ベクトルを適用して位置を修正
+	float someScaleFactor = 1.0f; // スプラインの柔らかさ
+	position += tangent * someScaleFactor; // 適切なスケールファクターを使って修正
+
+	return position;
+}
+
+Vector3 MathFunc::CalculateTangent(const Vector3& prevPoint, const Vector3& nextPoint)
+{
+	Vector3 calcVec = nextPoint - prevPoint;
+	return calcVec.nomalize();
 }

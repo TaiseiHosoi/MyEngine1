@@ -192,9 +192,10 @@
     <ClCompile Include="engine\sprite\SpriteCommon.cpp" />
     <ClCompile Include="engine\SummarizeEngine\SummarizeEngine.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PlayerHomingBullet.cpp" />
     <ClCompile Include="PlayerReticle.cpp" />
+    <ClCompile Include="scene\Application.cpp" />
     <ClCompile Include="scene\gameCamera\GameCamera.cpp" />
-    <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="scene\sceneManager\EndScene.cpp" />
     <ClCompile Include="scene\sceneManager\GamePart1.cpp" />
     <ClCompile Include="scene\sceneManager\GamePart2.cpp" />
@@ -212,7 +213,9 @@
     <ClCompile Include="scene\sceneObject\Player.cpp" />
     <ClCompile Include="scene\sceneObject\PlayerAction.cpp" />
     <ClCompile Include="scene\sceneObject\PlayerActionManager.cpp" />
+    <ClCompile Include="scene\sceneObject\PlayerRapidBullet.cpp" />
     <ClCompile Include="scene\sceneObject\Stop.cpp" />
+    <ClCompile Include="SplineCurve.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\BasicPS.hlsl">
@@ -322,9 +325,10 @@
     <ClInclude Include="engine\sprite\Sprite.h" />
     <ClInclude Include="engine\sprite\SpriteCommon.h" />
     <ClInclude Include="engine\SummarizeEngine\SummarizeEngine.h" />
+    <ClInclude Include="PlayerHomingBullet.h" />
     <ClInclude Include="PlayerReticle.h" />
+    <ClInclude Include="scene\Application.h" />
     <ClInclude Include="scene\gameCamera\GameCamera.h" />
-    <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="scene\sceneManager\EndScene.h" />
     <ClInclude Include="scene\sceneManager\GamePart1.h" />
     <ClInclude Include="scene\sceneManager\GamePart2.h" />
@@ -341,7 +345,9 @@
     <ClInclude Include="scene\sceneObject\Player.h" />
     <ClInclude Include="scene\sceneObject\PlayerAction.h" />
     <ClInclude Include="scene\sceneObject\PlayerActionManager.h" />
+    <ClInclude Include="scene\sceneObject\PlayerRapidBullet.h" />
     <ClInclude Include="scene\sceneObject\Stop.h" />
+    <ClInclude Include="SplineCurve.h" />
     <ClInclude Include="TestLand.h" />
   </ItemGroup>
   <ItemGroup>

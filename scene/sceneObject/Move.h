@@ -32,8 +32,12 @@ private:    //固有で必要なもの
     bool isRun_ = false;
     Vector3 faceAngle_ = {};
     //自機回転の最大
-    const float faceMaxAngle_ = 0.2f;
-    float faceRotSpeed_ = 0.02f;
+    const float faceMaxAngle_ = 0.4f;
+    float faceRotSpeed_ = 0.05f;
+    float returnRotSpeed = 0.03f;
+    //自機の移動用Matrix
+    Matrix4 pAngleMat = {};
+    Vector3 nowPos = {};
     
 };
 

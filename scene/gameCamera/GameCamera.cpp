@@ -1,6 +1,7 @@
 #include "GameCamera.h"
 #include "Ease.h"
 #include "JsonManager.h"
+#include "SplineCurve.h"
 
 #include <iostream>
 #include <cmath>
@@ -108,7 +109,7 @@ void GameCamera::Update()
 
 	
 	oldPos_ = basePos_;
-	basePos_ = splinePosition(points, startIndex, timeRate);
+	basePos_ = MathFunc::TangentSplinePosition(points, startIndex, timeRate);
 	railTargetPos_ = basePos_ + target;
 
 	Vector3 e = GetEye();
@@ -116,12 +117,13 @@ void GameCamera::Update()
 	FollowPlayer();
 #pragma endregion レールカメラ処理
 
-	
-	
+	int startIndexInput = static_cast<int>(startIndex);
+	int nowCountInput = static_cast<int>(nowCount);
 
-	ImGui::Begin("eye");
-	ImGui::InputFloat3("nowpos", &e.x);
-	ImGui::InputFloat3("nowtarget", &t.x);
+	ImGui::Begin("cameraRate");
+	ImGui::InputFloat("timeRate", &timeRate);
+	ImGui::InputInt("startIndex", &startIndexInput);
+	ImGui::InputInt("nowCount", &nowCountInput);
 
 	ImGui::End();
 

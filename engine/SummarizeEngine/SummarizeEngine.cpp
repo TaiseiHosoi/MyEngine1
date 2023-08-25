@@ -24,8 +24,8 @@ void SummarizeEngine::Initialize() {
 	//パーティクル静的初期化
 	ParticleManager::StaticInitialize(dxCommon_->GetDevice(), dxCommon_->GetCommandList());
 
-	gameScene_ = new GameScene();
-	gameScene_->Initialize(dxCommon_);
+	application_ = new Application();
+	application_->Initialize(dxCommon_);
 
 	imGuiManager_ = new ImGuiManager;
 	imGuiManager_->Initialize(winApp_, dxCommon_);
@@ -41,7 +41,7 @@ void SummarizeEngine::Update() {
 	//更新
 	input_->Update();
 	imGuiManager_->Begin();
-	gameScene_->Update();
+	application_->Update();
 
 
 };
@@ -51,7 +51,7 @@ void SummarizeEngine::Draw() {
 	dxCommon_->PreDraw();
 
 
-	gameScene_->Draw();
+	application_->Draw();
 
 	imGuiManager_->End();
 
@@ -76,7 +76,7 @@ void SummarizeEngine::Finalize() {
 	//delete[] imageData;
 	//入力開放
 
-	delete gameScene_;
+	delete application_;
 	delete imGuiManager_;
 	delete dxCommon_;
 	delete winApp_;

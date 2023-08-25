@@ -21,7 +21,7 @@ public:
 
 public:
 	// Quaternionの積
-	Quaternion Multiply(const Quaternion& r);
+	Quaternion Multiply(const Quaternion& q1, const Quaternion& q2);
 
 	// 単位Quaternionを返す
 	Quaternion IdentityQuaternion();
@@ -44,11 +44,8 @@ public:
 	// 任意軸回転を表すQuaternionの生成
 	Quaternion MakeAxisAngle(const Vector3& axis, float angle);
 
-	// ベクトルをQuaternionで回転させた結果のベクトルを求める
-	Vector3 RotateVector(const Vector3& vector);
-
-	// Quaternionから回転行列を求める
-	Matrix4 MakeRotateMatrix(const Quaternion& quaternion);
+	// クオータニオンによるベクトルの回転を計算する関数
+	Quaternion RotateVector(const Quaternion& rotation, const Quaternion& vectorQuat);
 
 	// 球面線形補間
 	Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
@@ -58,6 +55,9 @@ public:
 
 	// uからvへの回転を生成
 	Quaternion DirectionToDirection(const Vector3& u, const Vector3& v);
+
+	//Matrix4に変換
+	Matrix4 ToMatrix4(const Quaternion& q);
 
 
 public:
