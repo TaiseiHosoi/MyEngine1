@@ -59,7 +59,7 @@ void JsonManager::StaticInit()
 			moaiObjs.push_back(newObject);
 			EnemyState newState;
 			newState.hp_ = 1;
-			newState.isAlive_ = true;
+			newState.isDead_ = true;
 			newState.isAtk_ = false;
 			moaiState.push_back(newState);
 
@@ -85,6 +85,7 @@ void JsonManager::StaticInit()
 
 void JsonManager::UpdateAllObjects()
 {
+
     /*for (Enemy* enemy : enemies) {
         enemy->Update();
     }*/
@@ -118,19 +119,24 @@ void JsonManager::UpdateAllObjects()
 			}
 		}
 		if (moaiState[i].hp_ <= 0) {
-			moaiState[i].isAlive_ = false;
+			moaiState[i].isDead_ = false;
 			moaiSpCollider[i]->RemoveAttribute(8);
 			
 		}
 
-		if (moaiState[i].isAlive_ == false) {	//死去
-			moaiObjs.erase(std::cbegin(moaiObjs) + i);
-			moaiSpCollider.erase(std::cbegin(moaiSpCollider) + i);
+		if (moaiState[i].isDead_ == false) {	//死去
+			moaiObjs.erase(std::remove_if(moaiObjs.begin(), moaiObjs.end(),
+				[](const EnemyState& state) {
+					return state.isDead_;
+				}),
+				moaiObjs.end());
+			//moaiSpCollider.erase(std::cbegin(moaiSpCollider) + i);
 			moaiState.erase(std::cbegin(moaiState) + i);
 		}
 		moaiSpCollider[i]->Update();
 		
 	}
+
 }
 
 void JsonManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)

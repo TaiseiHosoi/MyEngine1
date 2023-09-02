@@ -1860,6 +1860,94 @@
             "file_name": "cam"
         },
         {
+            "type": "MESH",
+            "name": "moai",
+            "transform": {
+                "translation": [
+                    222.44833374023438,
+                    -382.1688232421875,
+                    30.963613510131836
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "moai"
+        },
+        {
+            "type": "MESH",
+            "name": "moai.001",
+            "transform": {
+                "translation": [
+                    262.73529052734375,
+                    -564.3259887695312,
+                    27.298681259155273
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "moai"
+        },
+        {
+            "type": "MESH",
+            "name": "moai.002",
+            "transform": {
+                "translation": [
+                    322.79058837890625,
+                    -696.5450439453125,
+                    25.328506469726562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "moai"
+        },
+        {
+            "type": "MESH",
+            "name": "moai.003",
+            "transform": {
+                "translation": [
+                    307.80523681640625,
+                    -817.0927734375,
+                    20.320791244506836
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "moai"
+        },
+        {
             "type": "EMPTY",
             "name": "Procedural 2 lanes road profile",
             "transform": {

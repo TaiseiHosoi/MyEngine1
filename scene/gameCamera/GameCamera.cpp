@@ -45,6 +45,7 @@ void GameCamera::Initialize()
 		Vector3 newVec = jsonObjsPtr[0][i].worldTransform.translation_;
 		points.push_back(newVec);
 	}
+	oldStartIndex_ = 0;
 	
 }
 
@@ -61,6 +62,9 @@ void GameCamera::Update()
 #pragma endregion マウス処理
 
 #pragma region レールカメラ処理
+
+	oldStartIndex_ = static_cast<int>(startIndex);	//前フレーム処理
+
 	//経過時間(elapsedTime[s])の計算
 	nowCount++;
 	elapsedCount = nowCount - startCount;
@@ -103,14 +107,13 @@ void GameCamera::Update()
 		}
 		
 	}
-	Vector3 target = basePos_ - oldPos_;
-	target.nomalize();
-
 
 	
-	oldPos_ = basePos_;
-	basePos_ = MathFunc::TangentSplinePosition(points, startIndex, timeRate);
-	railTargetPos_ = basePos_ + target;
+	Vector3 target = MathFunc::TangentSplinePosition(points, startIndex+1, timeRate); // レールカメラの位置からstartIndex+1の位置がターゲット
+	oldPos_ = basePos_;	//前フレームpos保存
+	basePos_ = MathFunc::TangentSplinePosition(points, startIndex, timeRate);	//カメラの位置
+	railTargetPos_ = target;	//ローカル変数に保存
+
 
 	Vector3 e = GetEye();
 	Vector3 t = GetTarget();
@@ -129,6 +132,7 @@ void GameCamera::Update()
 
 
 	Camera::Update();
+	
 }
 
 void GameCamera::SetTargetPos(WorldTransform* targetPos)

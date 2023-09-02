@@ -17,7 +17,7 @@ class JsonManager
 {
 public:
     struct EnemyState{
-        bool isAlive_ = true;
+        bool isDead_ = false;
         bool isAtk_ = false;
         int hp_ = 1;
     };

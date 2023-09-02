@@ -42,8 +42,17 @@ public:
 	{
 		isPause_ = isPause;
 	}
-
+	
+	// jsonで配置したオブジェクトのポインタ
 	void SetJsonObj(std::vector<Object3d>* objs) { jsonObjsPtr = objs; };
+
+	// スプライン曲線用変数のゲッタ
+	int GetStartIndex() { return static_cast<int>(startIndex); };
+	float GetTimeRate() { return timeRate; };
+	std::vector<Vector3> GetPoints() { return points; };
+
+	int GetOldStartIndex() { return oldStartIndex_; };
+
 
 	// 1-> target ,0-> eye
 	WorldTransform swap_[2];
@@ -105,8 +114,8 @@ private:
 	uint32_t targetStartCount = 0;
 	uint32_t nowCount = 0;
 	uint32_t elapsedCount = 0;
-
 	Vector3 oldPos_ = {};
+	int oldStartIndex_ = 0;
 
 };
 

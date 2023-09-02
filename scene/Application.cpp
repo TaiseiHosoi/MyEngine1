@@ -29,7 +29,7 @@ void Application::Initialize(DirectXCommon* dxcomon)
 	FBXObject3d::CreateGraphicsPipeline();
 
 	//敵マネージャ初期化
-	JsonManager_ = std::make_unique<JsonManager>();
+	JsonManager_ = std::make_unique<GameObjManager>();
 	JsonManager_->StaticInit();
 
 	//かめら初期化
