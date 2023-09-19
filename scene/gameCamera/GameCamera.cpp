@@ -1,6 +1,6 @@
 #include "GameCamera.h"
 #include "Ease.h"
-#include "JsonManager.h"
+#include "GameObjManager.h"
 #include "SplineCurve.h"
 
 #include <iostream>
@@ -30,7 +30,7 @@ GameCamera::GameCamera(int window_width , int window_height , Input* input)
 
 	isPause_ = false;
 
-
+	
 	
 }
 
@@ -46,6 +46,12 @@ void GameCamera::Initialize()
 		points.push_back(newVec);
 	}
 	oldStartIndex_ = 0;
+
+	railCameraInfo_ = std::make_unique<RailCameraInfo>();
+	railCameraInfo_->startIndex = startIndex;
+	railCameraInfo_->oldStartIndex = oldStartIndex_;
+	railCameraInfo_->timeRate = timeRate;
+	railCameraInfo_->points = points;
 	
 }
 
@@ -118,17 +124,25 @@ void GameCamera::Update()
 	Vector3 e = GetEye();
 	Vector3 t = GetTarget();
 	FollowPlayer();
+
+	//infoの情報更新
+	railCameraInfo_->startIndex = startIndex;
+	railCameraInfo_->oldStartIndex = oldStartIndex_;
+	railCameraInfo_->timeRate = timeRate;
+	railCameraInfo_->points = points;
 #pragma endregion レールカメラ処理
 
 	int startIndexInput = static_cast<int>(startIndex);
 	int nowCountInput = static_cast<int>(nowCount);
 
-	ImGui::Begin("cameraRate");
+
+
+	/*ImGui::Begin("cameraRate");
 	ImGui::InputFloat("timeRate", &timeRate);
 	ImGui::InputInt("startIndex", &startIndexInput);
 	ImGui::InputInt("nowCount", &nowCountInput);
 
-	ImGui::End();
+	ImGui::End();*/
 
 
 	Camera::Update();
@@ -341,6 +355,8 @@ void GameCamera::ChangeFollowFlag(bool flag)
 {
 	isFollowPlayer_ = flag;
 }
+
+
 
 Vector3 GameCamera::splinePosition(const std::vector<Vector3>& points, size_t startIndex, float t)
 {

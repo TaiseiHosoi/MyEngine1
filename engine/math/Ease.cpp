@@ -5,11 +5,9 @@ double Ease::InQuad(double change, double base, double duration, double time) {	
 	return change * time * time + base;	//changeは移動量。baseは最初の位置。durationは移動時間で、timeが現在の経過時間
 }
 
-double Ease::OutQuad(double change, double base, double duration, double time)
-{	//イージングアウト
+double Ease::OutQuad(double change, double base, double duration, double time) {
 	time /= duration;
-	double ans = change * (1 - (1 - time) * (1 - time) + base);
-	return ans;
+	return -change * time * (time - 2) + base;
 }
 
 double Ease::InOutQuad(double change, double base, double duration, double time)

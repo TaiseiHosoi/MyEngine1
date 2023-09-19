@@ -4,6 +4,13 @@
 #include "Object3d.h"
 #include<vector>
 
+struct RailCameraInfo {
+	int startIndex;
+	int oldStartIndex;
+	float timeRate;
+	std::vector<Vector3>points;
+};
+
 class GameCamera :
 	public Camera
 {
@@ -21,20 +28,20 @@ public:
 	void RemoveEyePos();
 	void ViewPointMovement();
 
-
+	//プレイヤーを追従する
+	void FollowPlayer();
 	//シェイク用
 	float randomFloat(float min , float max);	//ランダムを引き出す
 	void ShakePrim();
 	static void SetShakePrimST(float dura , float mag , bool isShakePrim);
 
-	void SetShakeVec(Vector3 shakeVec);
 
 	//カメラの向きを計算する関数
 	void CulDirection();
 
-	//プレイヤーを追従する
-	void FollowPlayer();
+public:	// アクセッサ
 
+	void SetShakeVec(Vector3 shakeVec);
 	// シーン切り替え用
 	void ChangeFollowFlag(bool flag);
 
@@ -52,6 +59,8 @@ public:
 	std::vector<Vector3> GetPoints() { return points; };
 
 	int GetOldStartIndex() { return oldStartIndex_; };
+
+	RailCameraInfo* GetRailCameraInfo() { return railCameraInfo_.get(); };	//レールカメラの進行状況とレール情報を渡す
 
 
 	// 1-> target ,0-> eye
@@ -108,7 +117,7 @@ private:
 
 	float maxTime = 1.2f;				//全体時間[s]
 	float timeRate;						//何％時間が進んだか
-	size_t startIndex = 1;
+	int startIndex = 1;
 	size_t targetStartIndex = 1;
 	uint32_t startCount = 0;
 	uint32_t targetStartCount = 0;
@@ -116,6 +125,8 @@ private:
 	uint32_t elapsedCount = 0;
 	Vector3 oldPos_ = {};
 	int oldStartIndex_ = 0;
+
+	std::unique_ptr<RailCameraInfo> railCameraInfo_;
 
 };
 

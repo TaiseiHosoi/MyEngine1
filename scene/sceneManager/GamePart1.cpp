@@ -83,17 +83,22 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 	
 
 	if (isPause_ == false) {
+		//test-----------------------------//
+		if (camera->GetStartIndex() != camera->GetOldStartIndex()) {
+			if (camera->GetStartIndex() == 4 || camera->GetStartIndex() == 9) {
+
+				_controller->gameObjectManager_->AddEnemy(0);
+				_controller->gameObjectManager_->GetWalkingEnemies().back()->SetRailCameraInfo(camera->GetRailCameraInfo());	//レールカメラ情報をセット
+				_controller->gameObjectManager_->GetWalkingEnemies().back()->SetPlayerWorldTransform(_controller->fbxPlayer_->GetObject3d()->GetWorldTransformPtr());	//
+			}
+		}
+		
+		//test-----------------------------//
+		
+
 		_controller->field_->Update();
 		_controller->fbxPlayer_->Update();
-
-		if (camera->GetStartIndex() == 6 && camera->GetOldStartIndex() != camera->GetStartIndex()) {
-			_controller->jsonManager_->SetSponePos(MathFunc::TangentSplinePosition(camera->GetPoints(), camera->GetStartIndex()+3,0.5f));
-			_controller->jsonManager_->SetPlayerRot(_controller->fbxPlayer_.get()->GetObject3d()->GetRotate());
-			_controller->jsonManager_->SponeEnemy();
-		}
-
-		
-		_controller->jsonManager_->UpdateAllObjects();
+		_controller->gameObjectManager_->UpdateAllObjects();
 
 		if (input->TriggerKey(DIK_ESCAPE)) {
 			isPause_ = true;
@@ -130,7 +135,7 @@ void GamePart1::Draw(DirectXCommon* dxCommon) {
 	//_controller->boss_->Draw();
 	_controller->fbxPlayer_->Draw(dxCommon->GetCommandList());
 
-	_controller->jsonManager_->DrawAllEnemies(dxCommon->GetCommandList());
+	_controller->gameObjectManager_->DrawAllEnemies(dxCommon->GetCommandList());
 
 	_controller->spriteCommon_->SpritePreDraw();
 	//if (isClickL == true) {

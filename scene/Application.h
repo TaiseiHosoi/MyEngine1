@@ -18,7 +18,7 @@
 #include"ParticleManager.h"
 #include "SceneManager.h"
 #include "HitStopManager.h"
-#include "JsonManager.h"
+#include "GameObjManager.h"
 
 
 #include "FbxPlayer.h"

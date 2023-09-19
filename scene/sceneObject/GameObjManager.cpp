@@ -1,8 +1,8 @@
-﻿#include "JsonManager.h"
+﻿#include "GameObjManager.h"
 #include"MathFunc.h"
 
 
-void JsonManager::StaticInit()
+void GameObjManager::StaticInit()
 {
 
 	//モデルインクルード
@@ -11,6 +11,7 @@ void JsonManager::StaticInit()
 	modelCube = Mesh::LoadFormOBJ("cube", true);
 	modelRoad1 = Mesh::LoadFormOBJ("road1", true);
 	modelCam = Mesh::LoadFormOBJ("cube", true); 
+	modelWalkRobo = Mesh::LoadFormOBJ("walkEnemy",true);
 	
 	//モデルインサート
 	models.insert(std::make_pair("moai", modelMoai.get()));
@@ -18,7 +19,6 @@ void JsonManager::StaticInit()
 	models.insert(std::make_pair("road1", modelRoad1.get()));
 	models.insert(std::make_pair("cam", modelCam.get()));
 	
-
 	levelData = JsonLoader::LoadFile("testScene");
 
 	// レベルデータからオブジェクトを生成、配置
@@ -57,9 +57,10 @@ void JsonManager::StaticInit()
 		}
 		else if (objectData.fileName == "moai") {
 			moaiObjs.push_back(newObject);
+			moaiObjs.back().SetScale({3,3,3});
 			EnemyState newState;
 			newState.hp_ = 1;
-			newState.isDead_ = true;
+			newState.isAlive_ = true;
 			newState.isAtk_ = false;
 			moaiState.push_back(newState);
 
@@ -78,12 +79,21 @@ void JsonManager::StaticInit()
 	}
 }
 
-//void JsonManager::AddEnemy(Enemy* enemy)
-//{
-//    enemies.push_back(enemy);
-//}
+void GameObjManager::AddEnemy(int enemyNum)
+{
+	if (enemyNum == ENEMY_NUM::WALKING_ENEMY) {
+		/*enemies.push_back(new WalkingEnemy());
+		enemies.back()->Initialize(modelMoai.get());*/
+		walkingEnemies.push_back(new WalkingEnemy);
+		walkingEnemies.back()->Initialize(modelWalkRobo.get());
+	}
+}
 
-void JsonManager::UpdateAllObjects()
+
+
+
+
+void GameObjManager::UpdateAllObjects()
 {
 
     /*for (Enemy* enemy : enemies) {
@@ -119,27 +129,37 @@ void JsonManager::UpdateAllObjects()
 			}
 		}
 		if (moaiState[i].hp_ <= 0) {
-			moaiState[i].isDead_ = false;
+			moaiState[i].isAlive_ = false;
 			moaiSpCollider[i]->RemoveAttribute(8);
 			
 		}
 
-		if (moaiState[i].isDead_ == false) {	//死去
-			moaiObjs.erase(std::remove_if(moaiObjs.begin(), moaiObjs.end(),
-				[](const EnemyState& state) {
-					return state.isDead_;
-				}),
-				moaiObjs.end());
-			//moaiSpCollider.erase(std::cbegin(moaiSpCollider) + i);
-			moaiState.erase(std::cbegin(moaiState) + i);
+		if (moaiState[i].isAlive_ == false) {	//死去
+			//moaiObjs.erase(std::remove_if(moaiObjs.begin(), moaiObjs.end(),
+			//	[](const EnemyState& state) {
+			//		return state.isDead_;
+			//	}),
+			//	moaiObjs.end());
+			////moaiSpCollider.erase(std::cbegin(moaiSpCollider) + i);
+			//moaiState.erase(std::cbegin(moaiState) + i);
 		}
 		moaiSpCollider[i]->Update();
 		
 	}
 
+	//if (!moaiObjs.empty()) {
+	//	for (int i = 0; i < enemies.size(); i++) {
+	//		enemies[i]->Update();
+	//	}
+	//}
+	for (int i = 0; i < walkingEnemies.size(); i++) {
+		walkingEnemies[i]->Update();
+	}
+	
+
 }
 
-void JsonManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
+void GameObjManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
 {
     /*for (Enemy* enemy : enemies) {
         enemy->Draw(cmdList);
@@ -158,9 +178,19 @@ void JsonManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
 			moaiObjs[i].Draw(cmdList);
 		}
 	}
+
+	//if (!moaiObjs.empty()) {
+	//	for (int i = 0; i < enemies.size(); i++) {
+	//		enemies[i]->Draw(cmdList);
+	//	}
+	//}
+
+	for (int i = 0; i < walkingEnemies.size(); i++) {
+		walkingEnemies[i]->Draw(cmdList);
+	}
 }
 
-void JsonManager::DestroyAllEnemies()
+void GameObjManager::DestroyAllEnemies()
 {
     /*for (Enemy* enemy : enemies) {
         delete enemy;
