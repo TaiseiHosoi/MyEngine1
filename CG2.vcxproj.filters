@@ -295,7 +295,7 @@
       <Filter>ソース ファイル\scene\enemy</Filter>
     </ClCompile>
     <ClCompile Include="WalkingEnemy.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\scene\enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -523,7 +523,7 @@
       <Filter>ヘッダー ファイル\scene\enemy</Filter>
     </ClInclude>
     <ClInclude Include="WalkingEnemy.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\scene\enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

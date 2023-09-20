@@ -137,12 +137,12 @@ void GameCamera::Update()
 
 
 
-	/*ImGui::Begin("cameraRate");
+	ImGui::Begin("camera");
 	ImGui::InputFloat("timeRate", &timeRate);
 	ImGui::InputInt("startIndex", &startIndexInput);
 	ImGui::InputInt("nowCount", &nowCountInput);
-
-	ImGui::End();*/
+	ImGui::InputFloat3("nowPos",&e.x);
+	ImGui::End();
 
 
 	Camera::Update();

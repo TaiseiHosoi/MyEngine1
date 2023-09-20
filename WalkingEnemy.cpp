@@ -24,11 +24,11 @@ void WalkingEnemy::Initialize(Mesh* model)
 void WalkingEnemy::Update()
 {
 	if (railCameraInfo_ != nullptr) {
-		primaryPos_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);
-		battleLinePos_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, static_cast<size_t>(railCameraInfo_->startIndex) + 1, railCameraInfo_->timeRate);
-		Vector3 detailAdjustV = primaryPos_ - battleLinePos_;
+		primaryPos_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);	
+		battleLinePos_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, static_cast<size_t>(railCameraInfo_->startIndex) + 1, railCameraInfo_->timeRate);	
+		detailAdjustV = primaryPos_ - battleLinePos_;
 		detailAdjustV.nomalize();
-		detailAdjustV *= 40;
+		detailAdjustV *= 120;
 
 		battleLinePos_ += detailAdjustV;
 	}
@@ -73,9 +73,10 @@ void WalkingEnemy::Forward()
 	object3d_->worldTransform.translation_ = nowPos;
 	//object3d_->worldTransform.translation_ = battleLinePos_;
 
-	/*ImGui::Begin("Walk");
-	ImGui::InputInt("%d", &moveCount_);
-	ImGui::End();*/
+	ImGui::Begin("Walk");
+	ImGui::InputFloat3("primaryPos",&primaryPos_.x );
+	ImGui::InputInt("moveCount", &moveCount_);
+	ImGui::End();
 
 }
 
