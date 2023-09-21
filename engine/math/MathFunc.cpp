@@ -374,7 +374,7 @@ Vector3 MathFunc::slarp(const Vector3& v1, const Vector3& v2, float t)
 	return v1 + (v2 - v1) * t;
 }
 
-Vector3 MathFunc::InterpolateBetweenPoints(const std::vector<Vector3>& points, size_t currentIndex, float t)
+Vector3 MathFunc::InterpolateBetweenPoints(const std::vector<Vector3>& points, float& totalTime)
 {
 	size_t numPoints = points.size();
 
@@ -386,18 +386,34 @@ Vector3 MathFunc::InterpolateBetweenPoints(const std::vector<Vector3>& points, s
 		return points[0];
 	}
 
-	if (currentIndex >= numPoints - 1) {
-		return points[numPoints - 1];
+	//合計距離を計算
+	float totalDistance = 0.0f;
+	for (size_t i = 0; i < numPoints - 1; ++i) {
+		totalDistance += CalculateDistance(points[i], points[i + 1]);
 	}
 
-	size_t prevIndex = currentIndex > 0 ? currentIndex - 1 : currentIndex;
-	size_t nextIndex = currentIndex + 1;
+	//一定の速度で移動する時間を計算
+	float speed = 1.0f; //速度を調整
+	float scaledTime = speed * totalTime / totalDistance;
 
-	Vector3 prevPoint = points[prevIndex];
-	Vector3 currentPoint = points[currentIndex];
-	Vector3 nextPoint = points[nextIndex];
+	//現在のセグメントと距離を計算
+	size_t currentIndex = 0;
+	float segmentDistance = CalculateDistance(points[currentIndex], points[currentIndex + 1]);
 
-	return lerp(currentPoint, nextPoint, t);
+	while (scaledTime > segmentDistance) {
+		scaledTime -= segmentDistance;
+		currentIndex++;
+
+		if (currentIndex >= numPoints - 1) {
+			return points[numPoints - 1];
+		}
+
+		segmentDistance = CalculateDistance(points[currentIndex], points[currentIndex + 1]);
+	}
+
+	//現在のポイントと次のポイントの間を補間
+	float tInSegment = scaledTime / segmentDistance;
+	return lerp(points[currentIndex], points[currentIndex + 1], tInSegment);
 }
 
 Vector3 MathFunc::TangentSplinePosition(const std::vector<Vector3>& points, size_t startIndex, float t)
@@ -432,4 +448,9 @@ Vector3 MathFunc::CalculateTangent(const Vector3& prevPoint, const Vector3& next
 {
 	Vector3 calcVec = nextPoint - prevPoint;
 	return calcVec.nomalize();
+}
+
+float MathFunc::CalculateDistance(const Vector3& a, const Vector3& b)
+{
+	return std::sqrt((b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y) + (b.z - a.z) * (b.z - a.z));
 }
