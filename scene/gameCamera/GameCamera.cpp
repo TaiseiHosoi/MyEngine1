@@ -38,7 +38,7 @@ void GameCamera::Initialize()
 {
 	startCount = 0;
 	targetStartCount = 1;
-	nowCount = startCount;
+	//nowCount = startCount;
 	basePos_ = {};
 	//新しいvectorセット
 	for (int i = 0; i < jsonObjsPtr->size(); i++) {
@@ -73,25 +73,25 @@ void GameCamera::Update()
 
 	//経過時間(elapsedTime[s])の計算
 	nowCount++;
-	elapsedCount = nowCount - startCount;
-	float elapsedTime = static_cast<float> (elapsedCount) / 60.f;
+	//elapsedCount = nowCount - startCount;
+	//float elapsedTime = static_cast<float> (elapsedCount) / 60.f;
 
-	//ターゲット用
-	int targetCount = nowCount + 1;
-	int targetElapsedCount = targetCount - targetStartCount;
-	float targetElapsedTime = static_cast<float> (targetElapsedCount) / 60.f;
-	float targetTimeRate = targetElapsedTime / maxTime;
+	////ターゲット用
+	//int targetCount = nowCount + 1;
+	//int targetElapsedCount = targetCount - targetStartCount;
+	//float targetElapsedTime = static_cast<float> (targetElapsedCount) / 60.f;
+	//float targetTimeRate = targetElapsedTime / maxTime;
 
 	//スタート地点		: start
 	//エンド地点		: end
 	//経過時間		: elapsed[s]
 	//移動完了の率	(経過時間/全体時間) : timeRate(％)
 
-	timeRate = elapsedTime / maxTime;
+	//timeRate = elapsedTime / maxTime;
 
 
 
-	if (timeRate >= 1.0f) {
+	/*if (timeRate >= 1.0f) {
 		if (startIndex < points.size() - 3) {
 
 			startIndex += 1;
@@ -112,12 +112,12 @@ void GameCamera::Update()
 			startCount = nowCount;
 		}
 		
-	}
+	}*/
 
-	
-	Vector3 target = MathFunc::TangentSplinePosition(points, startIndex+1, timeRate); // レールカメラの位置からstartIndex+1の位置がターゲット
+	float targetNowCount = nowCount + 1;
+	Vector3 target = MathFunc::InterpolateBetweenPoints(points, targetNowCount); // レールカメラの位置からstartIndex+1の位置がターゲット
 	oldPos_ = basePos_;	//前フレームpos保存
-	basePos_ = MathFunc::TangentSplinePosition(points, startIndex, timeRate);	//カメラの位置
+	basePos_ = MathFunc::InterpolateBetweenPoints(points, nowCount);	//カメラの位置
 	railTargetPos_ = target;	//ローカル変数に保存
 
 

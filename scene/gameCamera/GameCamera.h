@@ -121,7 +121,7 @@ private:
 	size_t targetStartIndex = 1;
 	uint32_t startCount = 0;
 	uint32_t targetStartCount = 0;
-	uint32_t nowCount = 0;
+	float nowCount = 0;
 	uint32_t elapsedCount = 0;
 	Vector3 oldPos_ = {};
 	int oldStartIndex_ = 0;
