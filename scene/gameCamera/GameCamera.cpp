@@ -70,59 +70,25 @@ void GameCamera::Update()
 #pragma region レールカメラ処理
 
 	oldStartIndex_ = static_cast<int>(startIndex);	//前フレーム処理
+	oldPos_ = basePos_;	//前フレームpos保存
 
-	//経過時間(elapsedTime[s])の計算
-	nowCount++;
-	elapsedCount = nowCount - startCount;
-	float elapsedTime = static_cast<float> (elapsedCount) / 60.f;
-
-	//ターゲット用
-	int targetCount = nowCount + 1;
-	int targetElapsedCount = targetCount - targetStartCount;
-	float targetElapsedTime = static_cast<float> (targetElapsedCount) / 60.f;
-	float targetTimeRate = targetElapsedTime / maxTime;
-
-	//スタート地点		: start
-	//エンド地点		: end
-	//経過時間		: elapsed[s]
-	//移動完了の率	(経過時間/全体時間) : timeRate(％)
-
-	timeRate = elapsedTime / maxTime;
-
-
-
-	if (timeRate >= 1.0f) {
-		if (startIndex < points.size() - 3) {
-
-			startIndex += 1;
-			timeRate -= 1.0f;
-			startCount = nowCount;
-		}
-		else if (startIndex >= points.size() - 3 && startIndex <= points.size()) {
-			startIndex += 1;
-			timeRate -= 1.0f;
-			startCount = nowCount;
-			
-		}
-		else {
-			startIndex = 1;
-			timeRate = elapsedTime / maxTime;
-			elapsedCount = 0;
-			nowCount = 0;
-			startCount = nowCount;
-		}
-		
+	// カメラの位置を更新
+	float maxTime = 100.0f; // 移動にかかる最大時間
+	timeRate = CalculateTValueBasedOnElapsedTime(maxTime); // maxTimeに基づいてt値を計算
+	targetTimeRate = timeRate + 0.01f;	//ターゲット位置は少し進んだ場所
+	if (targetTimeRate >= 1.0f) {
+		targetTimeRate -= 1.0f;	//もし1を超えてたら-1
 	}
 
-	
-	Vector3 target = MathFunc::TangentSplinePosition(points, startIndex+1, timeRate); // レールカメラの位置からstartIndex+1の位置がターゲット
-	oldPos_ = basePos_;	//前フレームpos保存
+
+	//値を入力
 	basePos_ = MathFunc::TangentSplinePosition(points, startIndex, timeRate);	//カメラの位置
+	target = MathFunc::TangentSplinePosition(points, startIndex,targetTimeRate);
 	railTargetPos_ = target;	//ローカル変数に保存
 
 
 	Vector3 e = GetEye();
-	Vector3 t = GetTarget();
+	Vector3 targ = GetTarget();
 	FollowPlayer();
 
 	//infoの情報更新
@@ -130,7 +96,6 @@ void GameCamera::Update()
 	railCameraInfo_->oldStartIndex = oldStartIndex_;
 	railCameraInfo_->timeRate = timeRate;
 	railCameraInfo_->points = points;
-#pragma endregion レールカメラ処理
 
 	int startIndexInput = static_cast<int>(startIndex);
 	int nowCountInput = static_cast<int>(nowCount);
@@ -142,6 +107,7 @@ void GameCamera::Update()
 	ImGui::InputInt("startIndex", &startIndexInput);
 	ImGui::InputInt("nowCount", &nowCountInput);
 	ImGui::InputFloat3("nowPos",&e.x);
+	ImGui::InputFloat3("nowTarget", &targ.x);
 	ImGui::End();
 
 
@@ -324,6 +290,25 @@ void GameCamera::CulDirection()
 	dir_ = {cos(rotation_.y) , sin(rotation_.x) , sin(rotation_.y)};
 	dir_.nomalize();
 
+}
+
+float GameCamera::CalculateTValueBasedOnElapsedTime(float maxTime)
+{
+	// 経過時間(elapsedTime[s])の計算
+	nowCount++;
+	elapsedCount = nowCount - startCount;
+	float elapsedTime = static_cast<float>(elapsedCount) / 60.f;
+
+	// t値を計算
+	float t = elapsedTime / maxTime;
+
+	// tが1.0を超える場合の処理
+	if (t >= 1.0f)
+	{
+		t -= 1.0f;
+	}
+
+	return t;
 }
 
 

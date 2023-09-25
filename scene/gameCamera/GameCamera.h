@@ -39,6 +39,9 @@ public:
 	//カメラの向きを計算する関数
 	void CulDirection();
 
+	// 移動にかかる時間に基づいてt値を計算する関数
+	float CalculateTValueBasedOnElapsedTime(float maxTime);
+
 public:	// アクセッサ
 
 	void SetShakeVec(Vector3 shakeVec);
@@ -116,7 +119,8 @@ private:
 	
 
 	float maxTime = 1.2f;				//全体時間[s]
-	float timeRate;						//何％時間が進んだか
+	float timeRate;			//何％時間が進んだか
+	float targetTimeRate;	//ターゲット用
 	int startIndex = 1;
 	size_t targetStartIndex = 1;
 	uint32_t startCount = 0;

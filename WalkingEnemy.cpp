@@ -15,7 +15,7 @@ void WalkingEnemy::Initialize(Mesh* model)
 	object3d_ = std::make_unique<Object3d>();
 	object3d_->Initialize(true);
 	object3d_->SetModel(model_);
-	object3d_->SetScale({ 4,4,4 });
+	object3d_->SetScale({ 1,1,1});
 	object3d_->SetPosition({ object3d_->GetPosition().x,4,object3d_->GetPosition().z });
 	nowPhase_ = 1;	//自機の挙動が何から始まるか
 

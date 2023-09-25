@@ -421,21 +421,73 @@ Vector3 MathFunc::TangentSplinePosition(const std::vector<Vector3>& points, size
 	// 補間すべき点の数
 	size_t n = points.size() - 2;
 
-	if (startIndex > n) return points[n];
+	if (startIndex > n) return points[n];	//値を使わない
 	if (startIndex < 1) return points[1];
 
-	Vector3 p0 = points[startIndex - 1];
-	Vector3 p1 = points[startIndex];
-	Vector3 p2 = points[startIndex + 1];
-	Vector3 p3 = points[startIndex + 2];
+	// 各points間の距離を計算
+	std::vector<float> distances;
+	float totalDistance = 0.0f;
+	for (size_t i = 0; i < n; i++)
+	{
+		float distance = (points[i + 1] - points[i]).length();
+		distances.push_back(distance);
+		totalDistance += distance;
+	}
+
+	// 指定されたtに基づいて移動すべきpoints間を見つける
+	float targetDistance = totalDistance * t;
+	float currentDistance = 0.0f;
+	size_t targetSegment = 0;
+	for (size_t i = 0; i < n; i++)
+	{
+		currentDistance += distances[i];
+		if (currentDistance >= targetDistance)
+		{
+			targetSegment = i;
+			break;
+		}
+	}
+
+	// セグメント内でのtを計算
+	float segmentT = (targetDistance - (currentDistance - distances[targetSegment])) / distances[targetSegment];
+
+
+	Vector3 p0 , p1, p2, p3;
+
+
+	if (targetSegment >= points.size() - 1) {
+		p0 = points[targetSegment];
+		p1 = points[0];
+		p2 = points[1];
+		p3 = points[2];
+	}
+	else if (targetSegment >= points.size() - 2) {
+		p0 = points[targetSegment];
+		p1 = points[targetSegment + 1];
+		p2 = points[0];
+		p3 = points[1];
+	}
+	else if (targetSegment >= points.size()-3) 
+	{
+		p0 = points[targetSegment];
+		p1 = points[targetSegment + 1];
+		p2 = points[targetSegment + 2];
+		p3 = points[0];
+	}
+	else {
+		p0 = points[targetSegment];
+		p1 = points[targetSegment + 1];
+		p2 = points[targetSegment + 2];
+		p3 = points[targetSegment + 3];
+	}
 
 	Vector3 tangent0 = CalculateTangent(p0, p1);
 	Vector3 tangent1 = CalculateTangent(p1, p2);
 	Vector3 tangent2 = CalculateTangent(p2, p3);
 
-	Vector3 position = 0.5 * (2 * p1 + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * (t * t) + (-p0 + 3 * p1 - 3 * p2 + p3) * (t * t * t));
+	Vector3 position = 0.5 * (2 * p1 + (-p0 + p2) * segmentT + (2 * p0 - 5 * p1 + 4 * p2 - p3) * (segmentT * segmentT) + (-p0 + 3 * p1 - 3 * p2 + p3) * (segmentT * segmentT * segmentT));
 
-	Vector3 tangent = lerp(tangent1, tangent2, t); // 補完された接線ベクトル
+	Vector3 tangent = lerp(tangent1, tangent2, segmentT); // 補完された接線ベクトル
 
 	// ポジションに接線ベクトルを適用して位置を修正
 	float someScaleFactor = 1.0f; // スプラインの柔らかさ
