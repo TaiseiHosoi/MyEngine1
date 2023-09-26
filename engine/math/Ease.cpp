@@ -17,6 +17,20 @@ double Ease::InOutQuad(double change, double base, double duration, double time)
 	return -change / 2 * ((--time) * (time - 2) - 1) + base;
 }
 
+float Ease::LinearEasing(float start, float end, int count, int maxCount)
+{
+    if (count <= 0) {
+        return start;
+    }
+    else if (count >= maxCount) {
+        return end;
+    }
+    else {
+        float t = static_cast<float>(count) / maxCount;
+        return start + t * (end - start);
+    }
+}
+
 void Ease::Initialize()
 {
 }

@@ -8,6 +8,7 @@ struct RailCameraInfo {
 	int startIndex;
 	int oldStartIndex;
 	float timeRate;
+	int nowCount;
 	std::vector<Vector3>points;
 };
 
@@ -57,13 +58,14 @@ public:	// アクセッサ
 	void SetJsonObj(std::vector<Object3d>* objs) { jsonObjsPtr = objs; };
 
 	// スプライン曲線用変数のゲッタ
-	int GetStartIndex() { return static_cast<int>(startIndex); };
-	float GetTimeRate() { return timeRate; };
+	int GetStartIndex() { return static_cast<int>(startIndex_); };
+	float GetTimeRate() { return timeRate_; };
+	float GetOldTimeRate() { return timeRate_; };
 	std::vector<Vector3> GetPoints() { return points; };
 
 	int GetOldStartIndex() { return oldStartIndex_; };
 
-	RailCameraInfo* GetRailCameraInfo() { return railCameraInfo_.get(); };	//レールカメラの進行状況とレール情報を渡す
+	RailCameraInfo* GetRailCameraInfo();	//レールカメラの進行状況とレール情報を渡す
 
 
 	// 1-> target ,0-> eye
@@ -119,14 +121,15 @@ private:
 	
 
 	float maxTime = 1.2f;				//全体時間[s]
-	float timeRate;			//何％時間が進んだか
+	float timeRate_;			//何％時間が進んだか
+	float oldTimeRate_;
 	float targetTimeRate;	//ターゲット用
-	int startIndex = 1;
-	size_t targetStartIndex = 1;
-	uint32_t startCount = 0;
-	uint32_t targetStartCount = 0;
-	uint32_t nowCount = 0;
-	uint32_t elapsedCount = 0;
+	int startIndex_ = 1;
+	size_t targetStartIndex_ = 1;
+	uint32_t startCount_ = 0;
+	uint32_t targetStartCount_ = 0;
+	uint32_t nowCount_ = 0;
+	uint32_t elapsedCount_ = 0;
 	Vector3 oldPos_ = {};
 	int oldStartIndex_ = 0;
 

@@ -36,9 +36,9 @@ GameCamera::GameCamera(int window_width , int window_height , Input* input)
 
 void GameCamera::Initialize()
 {
-	startCount = 0;
-	targetStartCount = 1;
-	nowCount = startCount;
+	startCount_ = 0;
+	targetStartCount_ = 1;
+	nowCount_ = startCount_;
 	basePos_ = {};
 	//新しいvectorセット
 	for (int i = 0; i < jsonObjsPtr->size(); i++) {
@@ -48,9 +48,9 @@ void GameCamera::Initialize()
 	oldStartIndex_ = 0;
 
 	railCameraInfo_ = std::make_unique<RailCameraInfo>();
-	railCameraInfo_->startIndex = startIndex;
+	railCameraInfo_->startIndex = startIndex_;
 	railCameraInfo_->oldStartIndex = oldStartIndex_;
-	railCameraInfo_->timeRate = timeRate;
+	railCameraInfo_->timeRate = timeRate_;
 	railCameraInfo_->points = points;
 	
 }
@@ -69,21 +69,22 @@ void GameCamera::Update()
 
 #pragma region レールカメラ処理
 
-	oldStartIndex_ = static_cast<int>(startIndex);	//前フレーム処理
+	oldStartIndex_ = static_cast<int>(startIndex_);	//前フレーム処理
+	oldTimeRate_ = timeRate_;
 	oldPos_ = basePos_;	//前フレームpos保存
 
 	// カメラの位置を更新
-	float maxTime = 100.0f; // 移動にかかる最大時間
-	timeRate = CalculateTValueBasedOnElapsedTime(maxTime); // maxTimeに基づいてt値を計算
-	targetTimeRate = timeRate + 0.01f;	//ターゲット位置は少し進んだ場所
+	float maxTime = 30.0f; // 移動にかかる最大時間
+	timeRate_ = CalculateTValueBasedOnElapsedTime(maxTime); // maxTimeに基づいてt値を計算
+	targetTimeRate = timeRate_ + 0.01f;	//ターゲット位置は少し進んだ場所
 	if (targetTimeRate >= 1.0f) {
 		targetTimeRate -= 1.0f;	//もし1を超えてたら-1
 	}
 
 
 	//値を入力
-	basePos_ = MathFunc::TangentSplinePosition(points, startIndex, timeRate);	//カメラの位置
-	target = MathFunc::TangentSplinePosition(points, startIndex,targetTimeRate);
+	basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
+	target = MathFunc::TangentSplinePosition(points, startIndex_,targetTimeRate);
 	railTargetPos_ = target;	//ローカル変数に保存
 
 
@@ -92,18 +93,19 @@ void GameCamera::Update()
 	FollowPlayer();
 
 	//infoの情報更新
-	railCameraInfo_->startIndex = startIndex;
+	railCameraInfo_->startIndex = startIndex_;
 	railCameraInfo_->oldStartIndex = oldStartIndex_;
-	railCameraInfo_->timeRate = timeRate;
+	railCameraInfo_->timeRate = timeRate_;
+	railCameraInfo_->nowCount = nowCount_;
 	railCameraInfo_->points = points;
 
-	int startIndexInput = static_cast<int>(startIndex);
-	int nowCountInput = static_cast<int>(nowCount);
+	int startIndexInput = static_cast<int>(startIndex_);
+	int nowCountInput = static_cast<int>(nowCount_);
 
 
 
 	ImGui::Begin("camera");
-	ImGui::InputFloat("timeRate", &timeRate);
+	ImGui::InputFloat("timeRate", &timeRate_);
 	ImGui::InputInt("startIndex", &startIndexInput);
 	ImGui::InputInt("nowCount", &nowCountInput);
 	ImGui::InputFloat3("nowPos",&e.x);
@@ -295,9 +297,9 @@ void GameCamera::CulDirection()
 float GameCamera::CalculateTValueBasedOnElapsedTime(float maxTime)
 {
 	// 経過時間(elapsedTime[s])の計算
-	nowCount++;
-	elapsedCount = nowCount - startCount;
-	float elapsedTime = static_cast<float>(elapsedCount) / 60.f;
+	nowCount_++;
+	elapsedCount_ = nowCount_ - startCount_;
+	float elapsedTime = static_cast<float>(elapsedCount_) / 60.f;
 
 	// t値を計算
 	float t = elapsedTime / maxTime;
@@ -306,6 +308,7 @@ float GameCamera::CalculateTValueBasedOnElapsedTime(float maxTime)
 	if (t >= 1.0f)
 	{
 		t -= 1.0f;
+		nowCount_ = 0;
 	}
 
 	return t;
@@ -341,6 +344,10 @@ void GameCamera::ChangeFollowFlag(bool flag)
 	isFollowPlayer_ = flag;
 }
 
+RailCameraInfo* GameCamera::GetRailCameraInfo()
+{
+	return railCameraInfo_.get();
+}
 
 
 Vector3 GameCamera::splinePosition(const std::vector<Vector3>& points, size_t startIndex, float t)

@@ -35,7 +35,6 @@ private:// メンバ変数
     RailCameraInfo* railCameraInfo_ = nullptr;
     Vector3 primaryPos_;    //ゲームの進行度から求める進行点
     Vector3 battleLinePos_; //敵が居座って戦闘するライン
-    Vector3 detailAdjustV;  //いるべき位置を調整する値A
     WorldTransform* playerWorldTransform = nullptr;
 
     int oldFlamePhase_ = 0;
