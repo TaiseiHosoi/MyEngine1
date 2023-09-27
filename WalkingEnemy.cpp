@@ -18,6 +18,7 @@ void WalkingEnemy::Initialize(Mesh* model)
 	object3d_->SetScale({ 4,4,4});
 	object3d_->SetPosition({ object3d_->GetPosition().x,4,object3d_->GetPosition().z });
 	nowPhase_ = 1;	//自機の挙動が何から始まるか
+	advancedValue_ = 0.0f;
 
 }
 
@@ -25,7 +26,7 @@ void WalkingEnemy::Update()
 {
 	if (railCameraInfo_ != nullptr) {
 		primaryPos_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);	
-		battleLinePos_ = MathFunc::TangentSplinePosition(railCameraInfo_->points,railCameraInfo_->startIndex, railCameraInfo_->timeRate + 0.02f);
+		
 	}
 	
 	if (oldFlamePhase_ != nowPhase_) {
@@ -38,8 +39,9 @@ void WalkingEnemy::Update()
 	}
 	else if (nowPhase_ == 1) {
 		Forward();
+		object3d_->worldTransform.translation_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + advancedValue_);
 	}
-
+	
 	object3d_->worldTransform.rotation_.y = -playerWorldTransform->rotation_.y;
 	object3d_->Update();
 
@@ -57,19 +59,9 @@ void WalkingEnemy::Forward()
 		moveCount_++;
 	}
 	
-	Vector3 backVel = primaryPos_ - battleLinePos_;
-	Vector3 backLinePos = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate-0.05f);
-
-	Vector3 nowPos = { Ease::LinearEasing(battleLinePos_.x,backLinePos.x,moveCount_,maxTime),
-		Ease::LinearEasing(battleLinePos_.y,backLinePos.y,moveCount_,maxTime),
-		Ease::LinearEasing(battleLinePos_.z,backLinePos.z,moveCount_,maxTime)
-	};
-
-	object3d_->worldTransform.translation_ = nowPos;
-	//object3d_->worldTransform.translation_ = battleLinePos_;
+	advancedValue_ = Ease::LinearEasing(-0.002f,0.005f,moveCount_,maxTime);
 
 	ImGui::Begin("WalkEnemy");
-	ImGui::InputFloat3("Pos",&nowPos.x );
 	ImGui::InputInt("moveCount", &moveCount_);
 	ImGui::End();
 

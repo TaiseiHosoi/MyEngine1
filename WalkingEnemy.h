@@ -37,10 +37,13 @@ private:// メンバ変数
     Vector3 battleLinePos_; //敵が居座って戦闘するライン
     WorldTransform* playerWorldTransform = nullptr;
 
+    //phase関係
     int oldFlamePhase_ = 0;
     int nowPhase_ = 0;
     int moveCount_ = 0;
 
+    //
+    float advancedValue_ = 0.0f;    //進んだ値
     
 };
 
