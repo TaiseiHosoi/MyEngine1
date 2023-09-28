@@ -59,7 +59,7 @@ void WalkingEnemy::Forward()
 		moveCount_++;
 	}
 	
-	advancedValue_ = Ease::LinearEasing(-0.002f,0.005f,moveCount_,maxTime);
+	advancedValue_ = Ease::LinearEaseOutEasing(-0.002f,0.003f,moveCount_,maxTime);
 
 	ImGui::Begin("WalkEnemy");
 	ImGui::InputInt("moveCount", &moveCount_);

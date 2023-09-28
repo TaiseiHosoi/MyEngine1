@@ -76,7 +76,7 @@ void GameCamera::Update()
 	// カメラの位置を更新
 	float maxTime = 30.0f; // 移動にかかる最大時間
 	timeRate_ = CalculateTValueBasedOnElapsedTime(maxTime); // maxTimeに基づいてt値を計算
-	targetTimeRate = timeRate_ + 0.01f;	//ターゲット位置は少し進んだ場所
+	targetTimeRate = timeRate_ + 0.006f;	//ターゲット位置は少し進んだ場所
 	if (targetTimeRate >= 1.0f) {
 		targetTimeRate -= 1.0f;	//もし1を超えてたら-1
 	}

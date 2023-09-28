@@ -154,7 +154,7 @@ void Camera::UpdateProjectionMatrix()
 	MakePerspectiveL(
 		1.0f ,
 		aspectRatio ,
-		0.1f , 100000.0f ,
+		0.1f , 150000.0f ,
 		matProjection
 	);
 }

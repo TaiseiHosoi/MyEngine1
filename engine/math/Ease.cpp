@@ -31,6 +31,21 @@ float Ease::LinearEasing(float start, float end, int count, int maxCount)
     }
 }
 
+float Ease::LinearEaseOutEasing(float start, float end, int count, int maxCount)
+{
+    if (count <= 0) {
+        return start;
+    }
+    else if (count >= maxCount) {
+        return end;
+    }
+    else {
+        float t = static_cast<float>(count) / maxCount;
+        t = 1 - (1 - t) * (1 - t); // イージング関数を適用
+        return start + t * (end - start);
+    }
+}
+
 void Ease::Initialize()
 {
 }
