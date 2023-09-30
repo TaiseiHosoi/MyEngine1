@@ -21,7 +21,7 @@ GameCamera::GameCamera(int window_width , int window_height , Input* input)
 	input_ = Input::GetInstance();
 
 	//カメラの初期化
-	Vector3 eye = {0.0f , 15.0f , -5.0f};
+	Vector3 eye = {0.0f , 10.0f , -5.0f};
 	Vector3 up = {0 , 1 , 0};
 	Vector3 target = {0 , 0 , 300.0f};
 	this->SetEye(eye);
@@ -74,9 +74,9 @@ void GameCamera::Update()
 	oldPos_ = basePos_;	//前フレームpos保存
 
 	// カメラの位置を更新
-	float maxTime = 30.0f; // 移動にかかる最大時間
+	float maxTime = 90.0f; // 移動にかかる最大時間
 	timeRate_ = CalculateTValueBasedOnElapsedTime(maxTime); // maxTimeに基づいてt値を計算
-	targetTimeRate = timeRate_ + 0.006f;	//ターゲット位置は少し進んだ場所
+	targetTimeRate = timeRate_ + 0.01f;	//ターゲット位置は少し進んだ場所
 	if (targetTimeRate >= 1.0f) {
 		targetTimeRate -= 1.0f;	//もし1を超えてたら-1
 	}
@@ -323,7 +323,7 @@ void GameCamera::FollowPlayer()
 	
 		//Vector3 basePos = {0 , 10.f , followerPos_->translation_.z};
 
-		Vector3 tempEye = { basePos_.x,basePos_.y,basePos_.z };
+		Vector3 tempEye = { basePos_.x,3.0f,basePos_.z };
 		//tempEye.z -= dir_.z * MAX_CAMERA_DISTANCE;
 		//railTargetPos_.z -= dir_.z * MAX_CAMERA_DISTANCE;
 

@@ -77,13 +77,18 @@ void GameObjManager::StaticInit()
 		// 配列に登録
 		objects.push_back(newObject);
 	}
+
+#pragma region ポップデータ読み込み
+	ResetCommands("Resources/enemyPop2.csv", walkingEnemyPopCommands_);
+
+#pragma endregion ポップデータ読み込み
+
+
 }
 
 void GameObjManager::AddEnemy(int enemyNum)
 {
 	if (enemyNum == ENEMY_NUM::WALKING_ENEMY) {
-		/*enemies.push_back(new WalkingEnemy());
-		enemies.back()->Initialize(modelMoai.get());*/
 		walkingEnemies.push_back(new WalkingEnemy);
 		walkingEnemies.back()->Initialize(modelWalkRobo.get());
 	}
@@ -164,7 +169,9 @@ void GameObjManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
     /*for (Enemy* enemy : enemies) {
         enemy->Draw(cmdList);
     }*/
-
+	for (int i = 0; i < walkingEnemies.size(); i++) {
+		walkingEnemies[i]->Draw(cmdList);
+	}
 	for (int i = 0; i < objects.size(); i++) {
 		objects[i].Draw(cmdList);
 	}
@@ -185,9 +192,7 @@ void GameObjManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
 	//	}
 	//}
 
-	for (int i = 0; i < walkingEnemies.size(); i++) {
-		walkingEnemies[i]->Draw(cmdList);
-	}
+	
 }
 
 void GameObjManager::DestroyAllEnemies()
@@ -196,4 +201,98 @@ void GameObjManager::DestroyAllEnemies()
         delete enemy;
     }
     enemies.clear();*/
+}
+
+void GameObjManager::LoadData(const char* filename, std::stringstream& stream)
+{
+	//ファイルを開く
+	std::ifstream file;
+	file.open(filename);
+
+	assert(file.is_open());
+
+	//ファイルの内容を文字列ストリームにコピー
+	stream << file.rdbuf();
+
+	//ファイルを閉じる
+	file.close();
+}
+
+void GameObjManager::ResetCommands(const char* filename, std::stringstream& stream)
+{
+	stream.str("");
+	stream.clear(std::stringstream::goodbit);
+	LoadData(filename, stream);
+
+}
+
+void GameObjManager::UpdateWalkingEnemyPopCommands()
+{
+	//待機処理
+	if (isStand_) {
+		standTime_--;
+		if (standTime_ <= 0) {
+			//待機完了
+			isStand_ = false;
+		}
+		return;
+	}
+	// 1行分の文字列を入れる変数
+	std::string line;
+
+	//コマンド実行ループ
+	while (getline(walkingEnemyPopCommands_, line)) {
+		// 1行分の文字数をストリームに変換して解折しやすくなる
+		std::istringstream line_stream(line);
+
+		std::string word;
+		//,区切りで行の先頭文字を取得
+		getline(line_stream, word, ',');
+
+		//"//"から始まる行はコメント
+		if (word.find("//") == 0) {
+			//コメント行を飛ばす
+			continue;
+		}
+		// POPコマンド
+		if (word.find("POP") == 0) {
+
+			//レーン
+			std::getline(line_stream, word, ',');
+			int lane = static_cast<int>(std::atof(word.c_str()));
+
+			// ID
+			std::getline(line_stream, word, ',');
+			int ID = static_cast<int>(std::atof(word.c_str()));
+
+			float depth = 40.0f;	//奥行
+			float xDifference = 10.0f;	//左右差
+			if (lane == 1) {
+				GenerBullet(Vector3(-xDifference, 0, depth), ID);
+			}
+			else if (lane == 2) {
+				GenerBullet(Vector3(0, 0, depth), ID);
+			}
+			else if (lane == 3) {
+				GenerBullet(Vector3(xDifference, 0, depth), ID);
+			}
+			else {
+				GenerBullet(Vector3(0, 3.0f, depth), ID);
+			}
+		}
+		// WAITコマンド
+		else if (word.find("WAIT") == 0) {
+			std::getline(line_stream, word, ',');
+
+			//待ち時間
+			int32_t waitTime = std::atoi(word.c_str());
+
+			//待機開始
+			isStand_ = true;
+			standTime_ = waitTime;
+
+			//抜ける
+			break;
+		}
+	}
 }

@@ -9,6 +9,9 @@
 #include"SphereCollider.h"
 #include"CollisionManager.h"
 #include"CollisionAttribute.h"
+#include <cassert>
+#include<fstream>
+#include<string>
 
 struct LevelData;
 
@@ -59,6 +62,12 @@ private:
 
     //その他
     int moaiDigRot = 0; //自機の回転用クロック変数
+    bool isStand_ = false;  //待機フラグ
+    int standTime_ = 0; //ポップデータの待機時間
+
+
+    //csv
+    std::stringstream walkingEnemyPopCommands_;
 
 
 public:
@@ -71,6 +80,13 @@ public:
     void DrawAllEnemies(ID3D12GraphicsCommandList* cmdList);
 
     void DestroyAllEnemies();
+
+    void LoadData(const char* filename, std::stringstream& stream);
+
+    void ResetCommands(const char* filename, std::stringstream& stream);
+
+    void UpdateWalkingEnemyPopCommands();
+
 
 public:
     std::vector<Object3d>* GetCamObjsPtr() { return &camObjs; };
