@@ -179,6 +179,37 @@ Vector3 MathFunc:: bVelocity(Vector3& velocity, Matrix4& mat) {
 	return result;
 }
 
+Vector3 MathFunc::RotateVecAngleY(Vector3 v, float angle)
+{
+	float cosA = cos(angle);
+	float sinA = sin(angle);
+
+	Vector3 result(
+		v.x * cosA + v.z * sinA,
+		v.y,
+		-v.x * sinA + v.z * cosA
+	);
+
+	return result;
+}
+
+float MathFunc::angleYAxis(const Vector3 v)
+{
+	// ベクトルをX-Z平面に射影
+	Vector3 projectedVector(v.x, 0.0f, v.z);
+
+	// ベクトルを正規化
+	projectedVector.nomalize();
+
+	// X軸とのなす角を計算
+	float angle = std::acos(projectedVector.dot(Vector3(0.0f, 0.0f, 1.0f)));
+
+
+	return angle;
+}
+
+
+
 Vector3 MathFunc::GetWorldtransform(const Matrix4 matrix4) {
 	//ワールド座標を入れる変数
 	Vector3 worldPos;

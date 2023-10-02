@@ -33,6 +33,10 @@ namespace MathFunc {
 
 	Vector3 bVelocity(Vector3& velocity, Matrix4& mat);
 
+	Vector3 RotateVecAngleY(Vector3 v, float angle);	//Vector3を任意の角度で回転
+
+	float angleYAxis(const Vector3 v);	//Y軸の角度を求める
+
 
 	//座標変換
 	Vector3 wDivision(const Vector3& v, const Matrix4& m);

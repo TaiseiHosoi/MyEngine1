@@ -64,16 +64,22 @@ private:
     int moaiDigRot = 0; //自機の回転用クロック変数
     bool isStand_ = false;  //待機フラグ
     int standTime_ = 0; //ポップデータの待機時間
-
+    int gameTime_ = 0;
 
     //csv
     std::stringstream walkingEnemyPopCommands_;
+
+    //レールカメラ情報
+    RailCameraInfo* railCameraInfo_ = nullptr;
+
+    //プレイヤー情報
+    WorldTransform* playerWorldTF_ = nullptr;
 
 
 public:
     void StaticInit();
 
-    void AddEnemy(int enemyNum);
+    void AddEnemy(int enemyNum,int popTime,Vector3 offsetPos);
 
     void UpdateAllObjects();
 
@@ -87,6 +93,10 @@ public:
 
     void UpdateWalkingEnemyPopCommands();
 
+    void SetRailCamInfo(RailCameraInfo* info) { railCameraInfo_ = info; };
+
+    void SetPlayerWorldTF(WorldTransform* worldTF) { playerWorldTF_ = worldTF; };
+
 
 public:
     std::vector<Object3d>* GetCamObjsPtr() { return &camObjs; };
@@ -95,7 +105,7 @@ public:
 
     std::vector<WalkingEnemy*>GetWalkingEnemies() { return walkingEnemies; }
 
-
+    
 
     // その他の敵の管理機能
 };

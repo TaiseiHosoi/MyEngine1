@@ -71,7 +71,9 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	pauseMenuOptions_ = 0;
 	backToTitle_ = 0;
 
-
+	//ゲームオブジェクトクラスに情報セット
+	_controller->gameObjectManager_->SetRailCamInfo(camera->GetRailCameraInfo());
+	_controller->gameObjectManager_->SetPlayerWorldTF(_controller->fbxPlayer_->GetObject3d()->GetWorldTransformPtr());
 
 }
 
@@ -87,7 +89,7 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 
 		if (camera->GetRailCameraInfo()->nowCount == 200 || camera->GetRailCameraInfo()->nowCount == 800) {
 
-			_controller->gameObjectManager_->AddEnemy(0);
+			_controller->gameObjectManager_->AddEnemy(0,0,{0,0,0});
 			_controller->gameObjectManager_->GetWalkingEnemies().back()->SetRailCameraInfo(camera->GetRailCameraInfo());	//レールカメラ情報をセット
 			_controller->gameObjectManager_->GetWalkingEnemies().back()->SetPlayerWorldTransform(_controller->fbxPlayer_->GetObject3d()->GetWorldTransformPtr());	//
 		}

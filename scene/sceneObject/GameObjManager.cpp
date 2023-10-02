@@ -80,17 +80,22 @@ void GameObjManager::StaticInit()
 
 #pragma region ポップデータ読み込み
 	ResetCommands("Resources/enemyPop2.csv", walkingEnemyPopCommands_);
-
+	gameTime_ = 0;
+	standTime_ = 0;
+	isStand_ = false;
 #pragma endregion ポップデータ読み込み
 
 
 }
 
-void GameObjManager::AddEnemy(int enemyNum)
+void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
 {
 	if (enemyNum == ENEMY_NUM::WALKING_ENEMY) {
 		walkingEnemies.push_back(new WalkingEnemy);
 		walkingEnemies.back()->Initialize(modelWalkRobo.get());
+		walkingEnemies.back()->SetOffsetVec3(offsetPos);
+		walkingEnemies.back()->SetRailCameraInfo(railCameraInfo_);
+		walkingEnemies.back()->SetPlayerWorldTransform(playerWorldTF_);
 	}
 }
 
@@ -100,7 +105,8 @@ void GameObjManager::AddEnemy(int enemyNum)
 
 void GameObjManager::UpdateAllObjects()
 {
-
+	
+	UpdateWalkingEnemyPopCommands();
     /*for (Enemy* enemy : enemies) {
         enemy->Update();
     }*/
@@ -228,6 +234,7 @@ void GameObjManager::ResetCommands(const char* filename, std::stringstream& stre
 
 void GameObjManager::UpdateWalkingEnemyPopCommands()
 {
+	gameTime_++;	//毎f処理
 	//待機処理
 	if (isStand_) {
 		standTime_--;
@@ -265,19 +272,28 @@ void GameObjManager::UpdateWalkingEnemyPopCommands()
 			std::getline(line_stream, word, ',');
 			int ID = static_cast<int>(std::atof(word.c_str()));
 
-			float depth = 40.0f;	//奥行
-			float xDifference = 10.0f;	//左右差
+			
+
+			
 			if (lane == 1) {
-				GenerBullet(Vector3(-xDifference, 0, depth), ID);
+				//offset
+				Vector3 offset = { -10,2,0 };
+				AddEnemy(0,0,offset);
 			}
 			else if (lane == 2) {
-				GenerBullet(Vector3(0, 0, depth), ID);
+				//offset
+				Vector3 offset = { 0,2,0 };
+				AddEnemy(0, 0, offset);
 			}
 			else if (lane == 3) {
-				GenerBullet(Vector3(xDifference, 0, depth), ID);
+				//offset
+				Vector3 offset = { 10,2,0 };
+				AddEnemy(0, 0, offset);
 			}
 			else {
-				GenerBullet(Vector3(0, 3.0f, depth), ID);
+				//offset
+				Vector3 offset = { 0,2,0 };
+				AddEnemy(0, 0, offset);
 			}
 		}
 		// WAITコマンド
