@@ -200,8 +200,14 @@ void FbxPlayer::Update()
 		for (std::unique_ptr<PlayerRapidBullet>& rapidBullet : rapidBullets_) {
 			rapidBullet->Update();
 		}
+
+
+		//y固定
+		float yPos = 2.0f;
+		hoverCarObject_->worldTransform.translation_.y = yPos;
+		gameObject_->wtf.translation_.y = yPos;
 		
-		
+		//更新
 		PColliderUpdate();
 
 		particle_->Update();
@@ -300,7 +306,7 @@ void FbxPlayer::Move()
 	cameraNorm.nomalize();
 	float pAngle = atan2f(cameraNorm.x, cameraNorm.z);
 
-	Vector3 primaryPos = gameObject_->GetCamera().GetEye() + cameraNorm * 20.0f;
+	Vector3 primaryPos = gameObject_->GetCamera().GetEye() + cameraNorm * 10.0f;
 
 
 

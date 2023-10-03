@@ -17,8 +17,9 @@ public: // アクセッサ
     void SetPlayerWorldTransform(WorldTransform* worldTransform) { playerWorldTransform = worldTransform; };
     void SetOffsetVec3(const Vector3 v) { offsetPos_ = v; };
 
-public:
+public: //　行動
     void Forward();
+    void Deceleration();
     void Turn();
     void Atk();
 

@@ -1,0 +1,4062 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "LIGHT",
+            "name": "Light",
+            "transform": {
+                "translation": [
+                    4.076245307922363,
+                    1.0054539442062378,
+                    5.903861999511719
+                ],
+                "rotation": [
+                    37.26104736328125,
+                    3.1637091636657715,
+                    106.93632507324219
+                ],
+                "scaling": [
+                    1.0,
+                    0.9999999403953552,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "CAMERA",
+            "name": "Camera",
+            "transform": {
+                "translation": [
+                    7.358891487121582,
+                    -6.925790786743164,
+                    4.958309173583984
+                ],
+                "rotation": [
+                    63.559295654296875,
+                    2.2983238068263745e-07,
+                    46.69194412231445
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "koosu",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP",
+            "transform": {
+                "translation": [
+                    -789.1231689453125,
+                    -1040.2340087890625,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "CURVE",
+            "name": "NURBSカーブ",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.001",
+            "transform": {
+                "translation": [
+                    -785.2066040039062,
+                    -980.3662719726562,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.002",
+            "transform": {
+                "translation": [
+                    -781.3563842773438,
+                    -920.4899291992188,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.003",
+            "transform": {
+                "translation": [
+                    -777.5061645507812,
+                    -860.6136474609375,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.004",
+            "transform": {
+                "translation": [
+                    -773.6559448242188,
+                    -800.7373657226562,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.005",
+            "transform": {
+                "translation": [
+                    -769.6973876953125,
+                    -740.8749389648438,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.006",
+            "transform": {
+                "translation": [
+                    -758.2374267578125,
+                    -681.9807739257812,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.007",
+            "transform": {
+                "translation": [
+                    -746.7586669921875,
+                    -623.0889892578125,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.008",
+            "transform": {
+                "translation": [
+                    -735.27978515625,
+                    -564.197265625,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.009",
+            "transform": {
+                "translation": [
+                    -723.801025390625,
+                    -505.3055725097656,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.010",
+            "transform": {
+                "translation": [
+                    -702.9805297851562,
+                    -449.06353759765625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.011",
+            "transform": {
+                "translation": [
+                    -681.8289184570312,
+                    -392.9154052734375,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.012",
+            "transform": {
+                "translation": [
+                    -660.6773681640625,
+                    -336.76727294921875,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.013",
+            "transform": {
+                "translation": [
+                    -631.8087158203125,
+                    -284.50201416015625,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.014",
+            "transform": {
+                "translation": [
+                    -599.3269653320312,
+                    -234.05465698242188,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.015",
+            "transform": {
+                "translation": [
+                    -566.84521484375,
+                    -183.60728454589844,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.016",
+            "transform": {
+                "translation": [
+                    -523.4823608398438,
+                    -142.23294067382812,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.017",
+            "transform": {
+                "translation": [
+                    -479.6955871582031,
+                    -101.2119140625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.018",
+            "transform": {
+                "translation": [
+                    -430.525390625,
+                    -67.61203002929688,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.019",
+            "transform": {
+                "translation": [
+                    -377.9391174316406,
+                    -38.721195220947266,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.020",
+            "transform": {
+                "translation": [
+                    -323.0543212890625,
+                    -15.384875297546387,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.021",
+            "transform": {
+                "translation": [
+                    -265.4299621582031,
+                    1.3313493728637695,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.022",
+            "transform": {
+                "translation": [
+                    -207.04295349121094,
+                    14.228737831115723,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.023",
+            "transform": {
+                "translation": [
+                    -147.41807556152344,
+                    20.9278621673584,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.024",
+            "transform": {
+                "translation": [
+                    -87.66529846191406,
+                    25.197834014892578,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.025",
+            "transform": {
+                "translation": [
+                    -27.66681671142578,
+                    24.795318603515625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.026",
+            "transform": {
+                "translation": [
+                    32.27012634277344,
+                    22.913238525390625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.027",
+            "transform": {
+                "translation": [
+                    92.09312438964844,
+                    18.30818748474121,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.028",
+            "transform": {
+                "translation": [
+                    151.86570739746094,
+                    13.126562118530273,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.029",
+            "transform": {
+                "translation": [
+                    211.579833984375,
+                    7.276447772979736,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.030",
+            "transform": {
+                "translation": [
+                    271.4405212402344,
+                    3.3457770347595215,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.031",
+            "transform": {
+                "translation": [
+                    331.1820068359375,
+                    -1.573464035987854,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.032",
+            "transform": {
+                "translation": [
+                    390.29510498046875,
+                    -11.64959716796875,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.033",
+            "transform": {
+                "translation": [
+                    448.6923828125,
+                    -25.42479705810547,
+                    6.289609432220459
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.034",
+            "transform": {
+                "translation": [
+                    507.1804504394531,
+                    -38.803932189941406,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.035",
+            "transform": {
+                "translation": [
+                    565.7442016601562,
+                    -51.852783203125,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.036",
+            "transform": {
+                "translation": [
+                    624.6293334960938,
+                    -63.22332763671875,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.037",
+            "transform": {
+                "translation": [
+                    683.8733520507812,
+                    -72.71833038330078,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.038",
+            "transform": {
+                "translation": [
+                    743.27587890625,
+                    -80.65861511230469,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.039",
+            "transform": {
+                "translation": [
+                    803.2166137695312,
+                    -83.32860565185547,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.040",
+            "transform": {
+                "translation": [
+                    863.1470947265625,
+                    -85.82037353515625,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.041",
+            "transform": {
+                "translation": [
+                    922.4088745117188,
+                    -76.45178985595703,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.042",
+            "transform": {
+                "translation": [
+                    981.6693725585938,
+                    -67.06039428710938,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.043",
+            "transform": {
+                "translation": [
+                    1034.3023681640625,
+                    -38.4416618347168,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.044",
+            "transform": {
+                "translation": [
+                    1084.1824951171875,
+                    -6.603414535522461,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.045",
+            "transform": {
+                "translation": [
+                    1116.0242919921875,
+                    44.25025939941406,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.046",
+            "transform": {
+                "translation": [
+                    1142.7789306640625,
+                    96.82503509521484,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.047",
+            "transform": {
+                "translation": [
+                    1148.3519287109375,
+                    156.565673828125,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.048",
+            "transform": {
+                "translation": [
+                    1153.9251708984375,
+                    216.30645751953125,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.049",
+            "transform": {
+                "translation": [
+                    1148.0281982421875,
+                    275.4050598144531,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.050",
+            "transform": {
+                "translation": [
+                    1135.82177734375,
+                    334.1497497558594,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.051",
+            "transform": {
+                "translation": [
+                    1123.6151123046875,
+                    392.89520263671875,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.052",
+            "transform": {
+                "translation": [
+                    1111.40869140625,
+                    451.6404113769531,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.053",
+            "transform": {
+                "translation": [
+                    1089.4345703125,
+                    507.44219970703125,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.054",
+            "transform": {
+                "translation": [
+                    1067.150634765625,
+                    563.150634765625,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.055",
+            "transform": {
+                "translation": [
+                    1044.8668212890625,
+                    618.8590698242188,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.056",
+            "transform": {
+                "translation": [
+                    1022.5829467773438,
+                    674.5675048828125,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.057",
+            "transform": {
+                "translation": [
+                    1000.299072265625,
+                    730.2759399414062,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.058",
+            "transform": {
+                "translation": [
+                    973.4127807617188,
+                    783.845703125,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.059",
+            "transform": {
+                "translation": [
+                    945.2014770507812,
+                    836.7997436523438,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.060",
+            "transform": {
+                "translation": [
+                    916.9901733398438,
+                    889.75390625,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.061",
+            "transform": {
+                "translation": [
+                    888.7791137695312,
+                    942.70751953125,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.062",
+            "transform": {
+                "translation": [
+                    860.5678100585938,
+                    995.6617431640625,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.063",
+            "transform": {
+                "translation": [
+                    832.3565673828125,
+                    1048.61572265625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.064",
+            "transform": {
+                "translation": [
+                    804.145263671875,
+                    1101.5697021484375,
+                    6.289609432220459
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.065",
+            "transform": {
+                "translation": [
+                    773.370849609375,
+                    1153.04736328125,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.066",
+            "transform": {
+                "translation": [
+                    741.7243041992188,
+                    1204.02294921875,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.067",
+            "transform": {
+                "translation": [
+                    710.0778198242188,
+                    1254.9984130859375,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.068",
+            "transform": {
+                "translation": [
+                    678.4313354492188,
+                    1305.9737548828125,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.069",
+            "transform": {
+                "translation": [
+                    646.7848510742188,
+                    1356.94921875,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.070",
+            "transform": {
+                "translation": [
+                    611.597900390625,
+                    1405.500732421875,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.071",
+            "transform": {
+                "translation": [
+                    575.5215454101562,
+                    1453.443603515625,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.072",
+            "transform": {
+                "translation": [
+                    539.4451904296875,
+                    1501.3863525390625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.073",
+            "transform": {
+                "translation": [
+                    503.3688659667969,
+                    1549.328857421875,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.074",
+            "transform": {
+                "translation": [
+                    466.46795654296875,
+                    1596.5816650390625,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.075",
+            "transform": {
+                "translation": [
+                    425.6346740722656,
+                    1640.54345703125,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.076",
+            "transform": {
+                "translation": [
+                    384.80133056640625,
+                    1684.5052490234375,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.077",
+            "transform": {
+                "translation": [
+                    343.9679870605469,
+                    1728.467041015625,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.078",
+            "transform": {
+                "translation": [
+                    303.13470458984375,
+                    1772.4288330078125,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.079",
+            "transform": {
+                "translation": [
+                    257.652099609375,
+                    1811.498291015625,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.080",
+            "transform": {
+                "translation": [
+                    211.66836547851562,
+                    1850.0404052734375,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.081",
+            "transform": {
+                "translation": [
+                    165.68463134765625,
+                    1888.5826416015625,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.082",
+            "transform": {
+                "translation": [
+                    119.63141632080078,
+                    1927.027587890625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.083",
+            "transform": {
+                "translation": [
+                    68.23280334472656,
+                    1957.9764404296875,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.084",
+            "transform": {
+                "translation": [
+                    16.813039779663086,
+                    1988.8958740234375,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.085",
+            "transform": {
+                "translation": [
+                    -34.606727600097656,
+                    2019.8153076171875,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.086",
+            "transform": {
+                "translation": [
+                    -88.54373168945312,
+                    2045.4039306640625,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.087",
+            "transform": {
+                "translation": [
+                    -145.0899200439453,
+                    2065.46728515625,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.088",
+            "transform": {
+                "translation": [
+                    -201.63607788085938,
+                    2085.530029296875,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.089",
+            "transform": {
+                "translation": [
+                    -259.1827087402344,
+                    2100.98291015625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.090",
+            "transform": {
+                "translation": [
+                    -318.95849609375,
+                    2106.15966796875,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.091",
+            "transform": {
+                "translation": [
+                    -378.7352294921875,
+                    2111.33642578125,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.092",
+            "transform": {
+                "translation": [
+                    -438.09027099609375,
+                    2109.9658203125,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.093",
+            "transform": {
+                "translation": [
+                    -496.7106018066406,
+                    2097.1728515625,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.094",
+            "transform": {
+                "translation": [
+                    -555.3309326171875,
+                    2084.380126953125,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.095",
+            "transform": {
+                "translation": [
+                    -610.7579345703125,
+                    2063.36376953125,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.096",
+            "transform": {
+                "translation": [
+                    -662.6492919921875,
+                    2033.2425537109375,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.097",
+            "transform": {
+                "translation": [
+                    -714.541015625,
+                    2003.121337890625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.098",
+            "transform": {
+                "translation": [
+                    -762.4478149414062,
+                    1967.904296875,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.099",
+            "transform": {
+                "translation": [
+                    -804.2000122070312,
+                    1924.8148193359375,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.100",
+            "transform": {
+                "translation": [
+                    -845.95263671875,
+                    1881.724609375,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.101",
+            "transform": {
+                "translation": [
+                    -887.7047729492188,
+                    1838.6351318359375,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.102",
+            "transform": {
+                "translation": [
+                    -920.59033203125,
+                    1788.6575927734375,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.103",
+            "transform": {
+                "translation": [
+                    -952.0104370117188,
+                    1737.5421142578125,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.104",
+            "transform": {
+                "translation": [
+                    -983.430419921875,
+                    1686.427001953125,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.105",
+            "transform": {
+                "translation": [
+                    -1014.8504638671875,
+                    1635.3114013671875,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.106",
+            "transform": {
+                "translation": [
+                    -1040.5618896484375,
+                    1581.3092041015625,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.107",
+            "transform": {
+                "translation": [
+                    -1063.1097412109375,
+                    1525.70703125,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.108",
+            "transform": {
+                "translation": [
+                    -1085.657958984375,
+                    1470.104736328125,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.109",
+            "transform": {
+                "translation": [
+                    -1108.20556640625,
+                    1414.5030517578125,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.110",
+            "transform": {
+                "translation": [
+                    -1130.753173828125,
+                    1358.9013671875,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.111",
+            "transform": {
+                "translation": [
+                    -1164.4017333984375,
+                    1310.593505859375,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.112",
+            "transform": {
+                "translation": [
+                    -1206.4920654296875,
+                    1267.834228515625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.113",
+            "transform": {
+                "translation": [
+                    -1248.5828857421875,
+                    1225.07421875,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.114",
+            "transform": {
+                "translation": [
+                    -1290.6734619140625,
+                    1182.314697265625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.115",
+            "transform": {
+                "translation": [
+                    -1332.763916015625,
+                    1139.554931640625,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.116",
+            "transform": {
+                "translation": [
+                    -1374.8544921875,
+                    1096.79541015625,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.117",
+            "transform": {
+                "translation": [
+                    -1416.9451904296875,
+                    1054.035888671875,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.118",
+            "transform": {
+                "translation": [
+                    -1459.0357666015625,
+                    1011.276123046875,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.119",
+            "transform": {
+                "translation": [
+                    -1501.1265869140625,
+                    968.5161743164062,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.120",
+            "transform": {
+                "translation": [
+                    -1543.2166748046875,
+                    925.7568969726562,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.121",
+            "transform": {
+                "translation": [
+                    -1585.306884765625,
+                    882.9976806640625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.122",
+            "transform": {
+                "translation": [
+                    -1617.9859619140625,
+                    832.8087768554688,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.123",
+            "transform": {
+                "translation": [
+                    -1649.7991943359375,
+                    781.9376220703125,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.124",
+            "transform": {
+                "translation": [
+                    -1681.612548828125,
+                    731.0657348632812,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.125",
+            "transform": {
+                "translation": [
+                    -1713.426025390625,
+                    680.1941528320312,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.126",
+            "transform": {
+                "translation": [
+                    -1745.2392578125,
+                    629.3226318359375,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.127",
+            "transform": {
+                "translation": [
+                    -1777.0523681640625,
+                    578.4511108398438,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.128",
+            "transform": {
+                "translation": [
+                    -1808.8658447265625,
+                    527.57958984375,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.129",
+            "transform": {
+                "translation": [
+                    -1840.67919921875,
+                    476.7081298828125,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.130",
+            "transform": {
+                "translation": [
+                    -1870.5130615234375,
+                    424.92242431640625,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.131",
+            "transform": {
+                "translation": [
+                    -1888.588134765625,
+                    367.7102966308594,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.132",
+            "transform": {
+                "translation": [
+                    -1906.663330078125,
+                    310.4981384277344,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.133",
+            "transform": {
+                "translation": [
+                    -1924.7388916015625,
+                    253.28512573242188,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.134",
+            "transform": {
+                "translation": [
+                    -1942.8138427734375,
+                    196.07302856445312,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.135",
+            "transform": {
+                "translation": [
+                    -1960.88916015625,
+                    138.85997009277344,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.136",
+            "transform": {
+                "translation": [
+                    -1978.9644775390625,
+                    81.64739990234375,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.137",
+            "transform": {
+                "translation": [
+                    -1997.0396728515625,
+                    24.434829711914062,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.138",
+            "transform": {
+                "translation": [
+                    -2003.9715576171875,
+                    -34.709102630615234,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.139",
+            "transform": {
+                "translation": [
+                    -2006.2041015625,
+                    -94.66754150390625,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.140",
+            "transform": {
+                "translation": [
+                    -2008.4365234375,
+                    -154.6259765625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.141",
+            "transform": {
+                "translation": [
+                    -2010.6690673828125,
+                    -214.58441162109375,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.142",
+            "transform": {
+                "translation": [
+                    -2012.9012451171875,
+                    -274.5428466796875,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.143",
+            "transform": {
+                "translation": [
+                    -2015.1337890625,
+                    -334.50128173828125,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.144",
+            "transform": {
+                "translation": [
+                    -2015.2744140625,
+                    -394.2623596191406,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.145",
+            "transform": {
+                "translation": [
+                    -2001.867919921875,
+                    -452.745361328125,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.146",
+            "transform": {
+                "translation": [
+                    -1988.46142578125,
+                    -511.2283935546875,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.147",
+            "transform": {
+                "translation": [
+                    -1975.054931640625,
+                    -569.7113647460938,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.148",
+            "transform": {
+                "translation": [
+                    -1961.6483154296875,
+                    -628.1943969726562,
+                    6.289609432220459
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.149",
+            "transform": {
+                "translation": [
+                    -1948.241943359375,
+                    -686.6773681640625,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.150",
+            "transform": {
+                "translation": [
+                    -1932.975341796875,
+                    -744.4857788085938,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.151",
+            "transform": {
+                "translation": [
+                    -1905.777587890625,
+                    -797.9674682617188,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.152",
+            "transform": {
+                "translation": [
+                    -1878.580078125,
+                    -851.4490966796875,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.153",
+            "transform": {
+                "translation": [
+                    -1851.38232421875,
+                    -904.9307250976562,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.154",
+            "transform": {
+                "translation": [
+                    -1824.1846923828125,
+                    -958.412353515625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.155",
+            "transform": {
+                "translation": [
+                    -1796.9869384765625,
+                    -1011.8941040039062,
+                    6.289609432220459
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.156",
+            "transform": {
+                "translation": [
+                    -1762.8857421875,
+                    -1060.776611328125,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.157",
+            "transform": {
+                "translation": [
+                    -1724.0093994140625,
+                    -1106.478271484375,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.158",
+            "transform": {
+                "translation": [
+                    -1685.13330078125,
+                    -1152.1798095703125,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.159",
+            "transform": {
+                "translation": [
+                    -1646.25732421875,
+                    -1197.8814697265625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.160",
+            "transform": {
+                "translation": [
+                    -1607.3809814453125,
+                    -1243.5830078125,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.161",
+            "transform": {
+                "translation": [
+                    -1563.06982421875,
+                    -1283.34716796875,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.162",
+            "transform": {
+                "translation": [
+                    -1514.1173095703125,
+                    -1318.0408935546875,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.163",
+            "transform": {
+                "translation": [
+                    -1465.1649169921875,
+                    -1352.7347412109375,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.164",
+            "transform": {
+                "translation": [
+                    -1416.212158203125,
+                    -1387.4283447265625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.165",
+            "transform": {
+                "translation": [
+                    -1366.41357421875,
+                    -1420.405029296875,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.166",
+            "transform": {
+                "translation": [
+                    -1309.0787353515625,
+                    -1438.0894775390625,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.167",
+            "transform": {
+                "translation": [
+                    -1251.744140625,
+                    -1455.7738037109375,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.168",
+            "transform": {
+                "translation": [
+                    -1194.4095458984375,
+                    -1473.458251953125,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.169",
+            "transform": {
+                "translation": [
+                    -1136.43212890625,
+                    -1480.381103515625,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.170",
+            "transform": {
+                "translation": [
+                    -1077.4000244140625,
+                    -1469.647216796875,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.171",
+            "transform": {
+                "translation": [
+                    -1018.3678588867188,
+                    -1458.913330078125,
+                    6.289610385894775
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.172",
+            "transform": {
+                "translation": [
+                    -963.9508666992188,
+                    -1439.8477783203125,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.173",
+            "transform": {
+                "translation": [
+                    -923.5404052734375,
+                    -1395.496826171875,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.174",
+            "transform": {
+                "translation": [
+                    -883.1298828125,
+                    -1351.1458740234375,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.175",
+            "transform": {
+                "translation": [
+                    -842.8721923828125,
+                    -1306.7177734375,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.176",
+            "transform": {
+                "translation": [
+                    -830.7464599609375,
+                    -1248.0537109375,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.177",
+            "transform": {
+                "translation": [
+                    -818.9447631835938,
+                    -1189.2257080078125,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.178",
+            "transform": {
+                "translation": [
+                    -807.1431884765625,
+                    -1130.397705078125,
+                    6.289610862731934
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        },
+        {
+            "type": "MESH",
+            "name": "cameraP.179",
+            "transform": {
+                "translation": [
+                    -795.3414306640625,
+                    -1071.5697021484375,
+                    6.289609909057617
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "camera"
+        }
+    ]
+}

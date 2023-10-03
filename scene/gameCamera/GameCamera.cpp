@@ -84,9 +84,18 @@ void GameCamera::Update()
 
 	//値を入力
 	basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
+	
+	
+
 	target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
 	railTargetPos_ = target;	//ローカル変数に保存
 
+
+	Vector3 minusVec = railTargetPos_ - basePos_;
+	minusVec.nomalize();
+	minusVec *= 15.0f;	//引きカメラ
+
+	basePos_ += minusVec;
 
 	Vector3 e = GetEye();
 	Vector3 targ = GetTarget();
@@ -323,7 +332,7 @@ void GameCamera::FollowPlayer()
 	
 		//Vector3 basePos = {0 , 10.f , followerPos_->translation_.z};
 
-		Vector3 tempEye = { basePos_.x,3.0f,basePos_.z };
+		Vector3 tempEye = { basePos_.x,6.0f,basePos_.z };
 		//tempEye.z -= dir_.z * MAX_CAMERA_DISTANCE;
 		//railTargetPos_.z -= dir_.z * MAX_CAMERA_DISTANCE;
 
