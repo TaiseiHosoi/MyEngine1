@@ -63,13 +63,13 @@ LevelData* JsonLoader::LoadFile(const std::string& fileName) {
 			// トランスフォームのパラメータ読み込み
 			nlohmann::json& transform = object["transform"];
 			// 平行移動
-			objectData.translation.m128_f32[0] = (float)transform["translation"][1] * 1.f;
+			objectData.translation.m128_f32[0] = (float)transform["translation"][0] * 1.f;
 			objectData.translation.m128_f32[1] = (float)transform["translation"][2] * 1.f;
-			objectData.translation.m128_f32[2] = (float)transform["translation"][0] * -1.f;
+			objectData.translation.m128_f32[2] = (float)transform["translation"][1] * -1.f;
 			objectData.translation.m128_f32[3] = 1.0f;
 			// 回転角-
-			objectData.rotation.m128_f32[0] = ((float)transform["rotation"][1] + 90.f) * 3.14f / 180.f;
-			objectData.rotation.m128_f32[1] = ((float)transform["rotation"][2] + 90.f) * 3.14f / 180.f;
+			objectData.rotation.m128_f32[0] = ((float)transform["rotation"][1]) * -3.14f / 180.f;
+			objectData.rotation.m128_f32[1] = ((float)transform["rotation"][2]) * 3.14f / 180.f;
 			objectData.rotation.m128_f32[2] = ((float)transform["rotation"][0]) * 3.14f / 180.f;
 			objectData.rotation.m128_f32[3] = 0.0f;
 			// スケーリング

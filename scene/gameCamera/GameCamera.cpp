@@ -76,7 +76,7 @@ void GameCamera::Update()
 	// カメラの位置を更新
 	float maxTime = 90.0f; // 移動にかかる最大時間
 	timeRate_ = CalculateTValueBasedOnElapsedTime(maxTime); // maxTimeに基づいてt値を計算
-	targetTimeRate = timeRate_ + 0.01f;	//ターゲット位置は少し進んだ場所
+	targetTimeRate = timeRate_ + 0.003f;	//ターゲット位置は少し進んだ場所
 	if (targetTimeRate >= 1.0f) {
 		targetTimeRate -= 1.0f;	//もし1を超えてたら-1
 	}
@@ -84,7 +84,7 @@ void GameCamera::Update()
 
 	//値を入力
 	basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
-	target = MathFunc::TangentSplinePosition(points, startIndex_,targetTimeRate);
+	target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
 	railTargetPos_ = target;	//ローカル変数に保存
 
 
@@ -104,14 +104,14 @@ void GameCamera::Update()
 
 
 
-	//ImGui::Begin("camera");
-	//ImGui::InputFloat("timeRate", &timeRate_);
-	//ImGui::InputInt("startIndex", &startIndexInput);
-	//ImGui::InputInt("nowCount", &nowCountInput);
-	//ImGui::InputFloat3("nowPos",&e.x);
-	//ImGui::InputFloat3("nowTarget", &targ.x);
-	//ImGui::End();
-
+	ImGui::Begin("camera");
+	ImGui::InputFloat("timeRate", &timeRate_);
+	ImGui::InputInt("startIndex", &startIndexInput);
+	ImGui::InputInt("nowCount", &nowCountInput);
+	ImGui::InputFloat3("nowPos", &e.x);
+	ImGui::InputFloat3("nowTarget", &targ.x);
+	ImGui::End();
+	
 
 	Camera::Update();
 	

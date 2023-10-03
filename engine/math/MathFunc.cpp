@@ -2,6 +2,7 @@
 #include<iostream>
 #include <cmath>
 
+
 const float PI = 3.141592f;
 
 float MathFunc::Dig2Rad(float dig)
@@ -202,7 +203,7 @@ float MathFunc::angleYAxis(const Vector3 v)
 	projectedVector.nomalize();
 
 	// X軸とのなす角を計算
-	float angle = std::acos(projectedVector.dot(Vector3(0.0f, 0.0f, 1.0f)));
+	float angle = std::atan(projectedVector.dot(Vector3(0.0f, 0.0f, 1.0f)));
 
 
 	return angle;
@@ -486,19 +487,19 @@ Vector3 MathFunc::TangentSplinePosition(const std::vector<Vector3>& points, size
 	Vector3 p0 , p1, p2, p3;
 
 
-	if (targetSegment >= points.size() - 1) {
+	if (targetSegment == points.size() - 3) {
 		p0 = points[targetSegment];
 		p1 = points[0];
 		p2 = points[1];
 		p3 = points[2];
 	}
-	else if (targetSegment >= points.size() - 2) {
+	else if (targetSegment == points.size() - 2) {
 		p0 = points[targetSegment];
 		p1 = points[targetSegment + 1];
 		p2 = points[0];
 		p3 = points[1];
 	}
-	else if (targetSegment >= points.size()-3) 
+	else if (targetSegment == points.size()-1) 
 	{
 		p0 = points[targetSegment];
 		p1 = points[targetSegment + 1];

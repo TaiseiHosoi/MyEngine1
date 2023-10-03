@@ -9,7 +9,7 @@ void GameObjManager::StaticInit()
 	// モデル読み込み
 	modelMoai = Mesh::LoadFormOBJ("moai", true);
 	modelCube = Mesh::LoadFormOBJ("cube", true);
-	modelRoad1 = Mesh::LoadFormOBJ("road1", true);
+	modelRoad1 = Mesh::LoadFormOBJ("alphaVerLoad", true);
 	modelCam = Mesh::LoadFormOBJ("cube", true); 
 	modelWalkRobo = Mesh::LoadFormOBJ("walkEnemy",true);
 	
@@ -51,7 +51,7 @@ void GameObjManager::StaticInit()
 		DirectX::XMStoreFloat3(&scale, objectData.scaling);
 		newObject.SetScale(Vector3(scale.x,scale.y,scale.z));
 
-		if (objectData.fileName == "cam") {
+		if (objectData.fileName == "camera") {
 			camObjs.push_back(newObject);
 			continue;
 		}
@@ -116,7 +116,9 @@ void GameObjManager::UpdateAllObjects()
 	}
 	for (int i = 0; i < camObjs.size(); i++) {
 		camObjs[i].Update();
+
 	}
+
 
 	moaiDigRot++;
 	if (moaiDigRot >= 360) {
@@ -166,6 +168,18 @@ void GameObjManager::UpdateAllObjects()
 	for (int i = 0; i < walkingEnemies.size(); i++) {
 		walkingEnemies[i]->Update();
 	}
+
+	//ImGui::Begin("objects");
+	//for (int i = 0; i < objects.size(); i++) {
+	//	Vector3 monitT = { objects[i].GetMatWorld().m[3][0], objects[i].GetMatWorld().m[3][1],objects[i].GetMatWorld().m[3][2] };
+	//	Vector3 monitR = { objects[i].worldTransform.rotation_.x, objects[i].worldTransform.rotation_.y,objects[i].worldTransform.rotation_.z };
+	//	Vector3 monitS = { objects[i].worldTransform.scale_.x, objects[i].worldTransform.scale_.y,objects[i].worldTransform.scale_.z };
+	//	ImGui::InputFloat3("Trans", &monitT.x);
+	//	ImGui::InputFloat3("Rot",&monitR.x);
+	//	ImGui::InputFloat3("Scale", &monitS.x);
+
+	//}
+	//ImGui::End();
 	
 
 }
