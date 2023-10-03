@@ -87,4 +87,8 @@ void WalkingEnemy::Forward()
 
 }
 
+void WalkingEnemy::Deceleration()
+{
+}
+
 
