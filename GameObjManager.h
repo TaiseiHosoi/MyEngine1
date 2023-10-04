@@ -48,6 +48,7 @@ private:
     std::vector<Object3d> camObjs;
     std::vector<Object3d> moaiObjs;
     std::vector<EnemyState> moaiState;
+    std::vector<EnemyState> walkingEnemyState;
 
     //オブジェクト
     Object3d* objSkydome = nullptr;
@@ -59,6 +60,8 @@ private:
     //当たり判定
     std::vector<SphereCollider*> moaiSpCollider;
     std::vector<Vector3> moaiSpherePos = {};
+    std::vector<SphereCollider*> walkingEnemySpCollider;
+    std::vector<Vector3> walkingEnemySpherePos = {};
 
     //その他
     int moaiDigRot = 0; //自機の回転用クロック変数

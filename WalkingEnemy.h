@@ -16,6 +16,7 @@ public: // アクセッサ
     void SetRailCameraInfo(RailCameraInfo* info) override{ railCameraInfo_ = info; };
     void SetPlayerWorldTransform(WorldTransform* worldTransform) { playerWorldTransform = worldTransform; };
     void SetOffsetVec3(const Vector3 v) { offsetPos_ = v; };
+    Object3d* GetObject3d() { return object3d_.get(); }
 
 public: //　行動
     void Forward();

@@ -66,9 +66,9 @@ void WalkingEnemy::Update()
 
 	object3d_->Update();
 
-	ImGui::Begin("WalkEnemy");
-	ImGui::InputFloat3("nowOffset",&nowOffset.x);
-	ImGui::End();
+	//ImGui::Begin("WalkEnemy");
+	//ImGui::InputFloat3("nowOffset",&nowOffset.x);
+	//ImGui::End();
 
 }
 

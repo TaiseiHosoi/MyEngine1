@@ -43,17 +43,13 @@ void Field::Update()
 
 	groundObj1_->Update();
 
-	ImGui::Begin("field");
-	ImGui::InputFloat3("Trans", &groundObj1_->worldTransform.translation_.x);
-	ImGui::InputFloat3("Rot", &groundObj1_->worldTransform.rotation_.x);
-	ImGui::InputFloat3("Scale", &groundObj1_->worldTransform.scale_.x);
-	ImGui::End();
+	//ImGui::Begin("field");
+	//ImGui::InputFloat3("Trans", &groundObj1_->worldTransform.translation_.x);
+	//ImGui::InputFloat3("Rot", &groundObj1_->worldTransform.rotation_.x);
+	//ImGui::InputFloat3("Scale", &groundObj1_->worldTransform.scale_.x);
+	//ImGui::End();
 
 	skydomeObj_->Update();
-	/*ImGui::Begin("gRotY");
-	ImGui::InputFloat("rocalRoty", &groundObj1_->worldTransform.rotation_.y);
-	ImGui::InputFloat("matRoty", &groundObj1_->worldTransform.matWorld_.m[0][2]);
-	ImGui::End();*/
 }
 
 void Field::Draw(DirectXCommon* dxcomon_)
