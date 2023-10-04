@@ -128,7 +128,7 @@ void FbxPlayer::Update()
 
 	if (isHitStop == false)
 	{
-
+		//ワールド上の自機の回転量yを求める
 		cameraAngle_.y =
 			atan2(gameObject_.get()->GetCamera().GetTarget().x - gameObject_.get()->GetCamera().GetEye().x,
 				gameObject_.get()->GetCamera().GetTarget().z - gameObject_.get()->GetCamera().GetEye().z);
@@ -200,8 +200,14 @@ void FbxPlayer::Update()
 		for (std::unique_ptr<PlayerRapidBullet>& rapidBullet : rapidBullets_) {
 			rapidBullet->Update();
 		}
+
+
+		//y固定
+		float yPos = 2.0f;
+		hoverCarObject_->worldTransform.translation_.y = yPos;
+		gameObject_->wtf.translation_.y = yPos;
 		
-		
+		//更新
 		PColliderUpdate();
 
 		particle_->Update();
@@ -233,7 +239,9 @@ void FbxPlayer::Update()
 	
 	
 	reticle_.Update();
-
+	//ImGui::Begin("Player");
+	//ImGui::InputFloat3("PlayerPos", &gameObject_->wtf.matWorld_.m[3][0]);
+	//ImGui::End();
 }
 
 
@@ -298,7 +306,7 @@ void FbxPlayer::Move()
 	cameraNorm.nomalize();
 	float pAngle = atan2f(cameraNorm.x, cameraNorm.z);
 
-	Vector3 primaryPos = gameObject_->GetCamera().GetEye() + cameraNorm * 20.0f;
+	Vector3 primaryPos = gameObject_->GetCamera().GetEye() + cameraNorm * 10.0f;
 
 
 

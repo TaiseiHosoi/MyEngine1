@@ -3,6 +3,8 @@
 class BasicEnemy :
     public Enemy
 {
+public:
+
     void Initialize(Mesh* Model) override;
 
     void Update() override;

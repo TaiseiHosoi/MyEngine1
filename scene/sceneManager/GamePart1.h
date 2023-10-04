@@ -1,6 +1,6 @@
 #pragma once
 #include "IScene.h"
-#include "JsonManager.h"
+#include "GameObjManager.h"
 
 // 追いかけパート
 class GamePart1 :

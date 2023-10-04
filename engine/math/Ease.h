@@ -8,6 +8,8 @@ public:
 	static double InQuad(double change, double base, double duration, double time);
 	static double OutQuad(double change, double base, double duration, double time);
 	static double InOutQuad(double change, double base, double duration, double time) ;
+	static float LinearEasing(float start, float end, int count, int maxCount);
+	static float LinearEaseOutEasing(float start, float end, int count, int maxCount);
 	//↓ここから下は使いません。。↓
 	void Initialize();
 	void Update();

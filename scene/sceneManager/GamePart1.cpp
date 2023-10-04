@@ -4,7 +4,7 @@
 
 GamePart1::GamePart1(SceneManager* controller) {
 	_controller = controller;
-	
+
 }
 
 GamePart1::~GamePart1() {
@@ -22,7 +22,7 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	attack_->Initialize(_controller->spriteCommon_.get(), 6);
 	attack_->SetSize({ 128,112 });
 	attack_->SetPozition({ 900,550 });
-	
+
 	attack2_ = std::make_unique<Sprite>();
 	attack2_->Initialize(_controller->spriteCommon_.get(), 7);
 	attack2_->SetSize({ 128,112 });
@@ -44,35 +44,38 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	move_->SetPozition({ 100,550 });
 
 	enemyHp_ = std::make_unique<Sprite>();
-	enemyHp_->Initialize(_controller->spriteCommon_.get() , 12);
-	enemyHp_->SetAnchorPoint({0 , 0});
-	enemyHp_->SetSize({1280 , 32});
-	enemyHp_->SetPozition({0 , 10});
+	enemyHp_->Initialize(_controller->spriteCommon_.get(), 12);
+	enemyHp_->SetAnchorPoint({ 0 , 0 });
+	enemyHp_->SetSize({ 1280 , 32 });
+	enemyHp_->SetPozition({ 0 , 10 });
 
 	enemyHpRed_ = std::make_unique<Sprite>();
-	enemyHpRed_->Initialize(_controller->spriteCommon_.get() , 13);
-	enemyHpRed_->SetAnchorPoint({0 , 0});
-	enemyHpRed_->SetSize({1280 , 32});
-	enemyHpRed_->SetPozition({0 , 10});
+	enemyHpRed_->Initialize(_controller->spriteCommon_.get(), 13);
+	enemyHpRed_->SetAnchorPoint({ 0 , 0 });
+	enemyHpRed_->SetSize({ 1280 , 32 });
+	enemyHpRed_->SetPozition({ 0 , 10 });
 
 	playerHp_ = std::make_unique<Sprite>();
-	playerHp_->Initialize(_controller->spriteCommon_.get() , 14);
-	playerHp_->SetAnchorPoint({0 , 0});
-	playerHp_->SetSize({300 , 32});
-	playerHp_->SetPozition({50 , 650});
+	playerHp_->Initialize(_controller->spriteCommon_.get(), 14);
+	playerHp_->SetAnchorPoint({ 0 , 0 });
+	playerHp_->SetSize({ 300 , 32 });
+	playerHp_->SetPozition({ 50 , 650 });
 
 	playerHpRed_ = std::make_unique<Sprite>();
-	playerHpRed_->Initialize(_controller->spriteCommon_.get() , 13);
-	playerHpRed_->SetAnchorPoint({0 , 0});
-	playerHpRed_->SetSize({300 , 32});
-	playerHpRed_->SetPozition({50 , 650});
+	playerHpRed_->Initialize(_controller->spriteCommon_.get(), 13);
+	playerHpRed_->SetAnchorPoint({ 0 , 0 });
+	playerHpRed_->SetSize({ 300 , 32 });
+	playerHpRed_->SetPozition({ 50 , 650 });
 
 	isPause_ = false;
 	pauseMenuOptions_ = 0;
 	backToTitle_ = 0;
 
-	
-	
+	//ゲームオブジェクトクラスに情報セット
+	_controller->gameObjectManager_->SetRailCamInfo(camera->GetRailCameraInfo());
+	_controller->gameObjectManager_->SetPlayerWorldTF(_controller->fbxPlayer_->GetObject3d()->GetWorldTransformPtr());
+	camera->ResetGameCam();
+
 }
 
 void GamePart1::Update(Input* input, GameCamera* camera) {
@@ -80,13 +83,25 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 	//BGMを流す
 	//PlaySounds();
 
-	
+
 
 	if (isPause_ == false) {
+		//test-----------------------------//
+
+		if (camera->GetRailCameraInfo()->nowCount == 200 || camera->GetRailCameraInfo()->nowCount == 800) {
+
+			_controller->gameObjectManager_->AddEnemy(0,0,{0,0,0});
+			_controller->gameObjectManager_->GetWalkingEnemies().back()->SetRailCameraInfo(camera->GetRailCameraInfo());	//レールカメラ情報をセット
+			_controller->gameObjectManager_->GetWalkingEnemies().back()->SetPlayerWorldTransform(_controller->fbxPlayer_->GetObject3d()->GetWorldTransformPtr());	//
+		}
+
+
+		//test-----------------------------//
+
+
 		_controller->field_->Update();
-		//_controller->boss_->Update();
 		_controller->fbxPlayer_->Update();
-		_controller->jsonManager_->UpdateAllObjects();
+		_controller->gameObjectManager_->UpdateAllObjects();
 
 		if (input->TriggerKey(DIK_ESCAPE)) {
 			isPause_ = true;
@@ -101,9 +116,9 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 		Pause(input, camera);
 	}
 
-	
 
-	playerHp_->SetSize({300 * _controller->fbxPlayer_->GetHp() / 100.0f, 32});
+
+	playerHp_->SetSize({ 300 * _controller->fbxPlayer_->GetHp() / 100.0f, 32 });
 	//enemyHp_->SetSize({1280.0f * _controller->boss_->GetHp() / 100.0f , 32});
 
 	/*if (_controller->boss_->GetHp() <= 0) {
@@ -123,7 +138,7 @@ void GamePart1::Draw(DirectXCommon* dxCommon) {
 	//_controller->boss_->Draw();
 	_controller->fbxPlayer_->Draw(dxCommon->GetCommandList());
 
-	_controller->jsonManager_->DrawAllEnemies(dxCommon->GetCommandList());
+	_controller->gameObjectManager_->DrawAllEnemies(dxCommon->GetCommandList());
 
 	_controller->spriteCommon_->SpritePreDraw();
 	//if (isClickL == true) {
@@ -181,17 +196,17 @@ void GamePart1::Pause(Input* input, GameCamera* camera)
 		{
 			//再開する
 		case GamePart1::RESUME:
-		isPause_ = false;
-		break;
+			isPause_ = false;
+			break;
 
-		//タイトルに戻る
+			//タイトルに戻る
 		case GamePart1::BACK_TO_TITLE:
-		backToTitle_ = true;
-		isPause_ = false;
-		break;
+			backToTitle_ = true;
+			isPause_ = false;
+			break;
 
 		default:
-		break;
+			break;
 		}
 	}
 	/*ImGui::Begin("Pause");

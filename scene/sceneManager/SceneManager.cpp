@@ -10,7 +10,7 @@
 SceneManager::SceneManager(DirectXCommon* dxCommon, GameCamera* camera) {
 	_dxCommon = dxCommon;
 	
-	_scene.reset(new GamePart1(&*this));
+	_scene.reset(new TitleScene(&*this));
 	_camera = camera;
 	
 

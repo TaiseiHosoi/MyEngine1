@@ -1,6 +1,6 @@
 #include "GameCamera.h"
 #include "Ease.h"
-#include "JsonManager.h"
+#include "GameObjManager.h"
 #include "SplineCurve.h"
 
 #include <iostream>
@@ -21,7 +21,7 @@ GameCamera::GameCamera(int window_width , int window_height , Input* input)
 	input_ = Input::GetInstance();
 
 	//カメラの初期化
-	Vector3 eye = {0.0f , 15.0f , -5.0f};
+	Vector3 eye = {0.0f , 10.0f , -5.0f};
 	Vector3 up = {0 , 1 , 0};
 	Vector3 target = {0 , 0 , 300.0f};
 	this->SetEye(eye);
@@ -30,21 +30,28 @@ GameCamera::GameCamera(int window_width , int window_height , Input* input)
 
 	isPause_ = false;
 
-
+	
 	
 }
 
 void GameCamera::Initialize()
 {
-	startCount = 0;
-	targetStartCount = 1;
-	nowCount = startCount;
+	startCount_ = 0;
+	targetStartCount_ = 1;
+	nowCount_ = startCount_;
 	basePos_ = {};
 	//新しいvectorセット
 	for (int i = 0; i < jsonObjsPtr->size(); i++) {
 		Vector3 newVec = jsonObjsPtr[0][i].worldTransform.translation_;
 		points.push_back(newVec);
 	}
+	oldStartIndex_ = 0;
+
+	railCameraInfo_ = std::make_unique<RailCameraInfo>();
+	railCameraInfo_->startIndex = startIndex_;
+	railCameraInfo_->oldStartIndex = oldStartIndex_;
+	railCameraInfo_->timeRate = timeRate_;
+	railCameraInfo_->points = points;
 	
 }
 
@@ -61,74 +68,62 @@ void GameCamera::Update()
 #pragma endregion マウス処理
 
 #pragma region レールカメラ処理
-	//経過時間(elapsedTime[s])の計算
-	nowCount++;
-	elapsedCount = nowCount - startCount;
-	float elapsedTime = static_cast<float> (elapsedCount) / 60.f;
 
-	//ターゲット用
-	int targetCount = nowCount + 1;
-	int targetElapsedCount = targetCount - targetStartCount;
-	float targetElapsedTime = static_cast<float> (targetElapsedCount) / 60.f;
-	float targetTimeRate = targetElapsedTime / maxTime;
+	oldStartIndex_ = static_cast<int>(startIndex_);	//前フレーム処理
+	oldTimeRate_ = timeRate_;
+	oldPos_ = basePos_;	//前フレームpos保存
 
-	//スタート地点		: start
-	//エンド地点		: end
-	//経過時間		: elapsed[s]
-	//移動完了の率	(経過時間/全体時間) : timeRate(％)
-
-	timeRate = elapsedTime / maxTime;
-
-
-
-	if (timeRate >= 1.0f) {
-		if (startIndex < points.size() - 3) {
-
-			startIndex += 1;
-			timeRate -= 1.0f;
-			startCount = nowCount;
-		}
-		else if (startIndex >= points.size() - 3 && startIndex <= points.size()) {
-			startIndex += 1;
-			timeRate -= 1.0f;
-			startCount = nowCount;
-			
-		}
-		else {
-			startIndex = 1;
-			timeRate = elapsedTime / maxTime;
-			elapsedCount = 0;
-			nowCount = 0;
-			startCount = nowCount;
-		}
-		
+	// カメラの位置を更新
+	float maxTime = 60.0f; // 移動にかかる最大時間
+	timeRate_ = CalculateTValueBasedOnElapsedTime(maxTime); // maxTimeに基づいてt値を計算
+	targetTimeRate = timeRate_ + 0.003f;	//ターゲット位置は少し進んだ場所
+	if (targetTimeRate >= 1.0f) {
+		targetTimeRate -= 1.0f;	//もし1を超えてたら-1
 	}
-	Vector3 target = basePos_ - oldPos_;
-	target.nomalize();
 
 
+	//値を入力
+	basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
 	
-	oldPos_ = basePos_;
-	basePos_ = MathFunc::TangentSplinePosition(points, startIndex, timeRate);
-	railTargetPos_ = basePos_ + target;
+	
+
+	target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
+	railTargetPos_ = target;	//ローカル変数に保存
+
+
+	Vector3 minusVec = railTargetPos_ - basePos_;
+	minusVec.nomalize();
+	minusVec *= 15.0f;	//引きカメラ
+
+	basePos_ += minusVec;
 
 	Vector3 e = GetEye();
-	Vector3 t = GetTarget();
+	Vector3 targ = GetTarget();
 	FollowPlayer();
-#pragma endregion レールカメラ処理
 
-	int startIndexInput = static_cast<int>(startIndex);
-	int nowCountInput = static_cast<int>(nowCount);
+	//infoの情報更新
+	railCameraInfo_->startIndex = startIndex_;
+	railCameraInfo_->oldStartIndex = oldStartIndex_;
+	railCameraInfo_->timeRate = timeRate_;
+	railCameraInfo_->nowCount = nowCount_;
+	railCameraInfo_->points = points;
 
-	ImGui::Begin("cameraRate");
-	ImGui::InputFloat("timeRate", &timeRate);
-	ImGui::InputInt("startIndex", &startIndexInput);
-	ImGui::InputInt("nowCount", &nowCountInput);
+	int startIndexInput = static_cast<int>(startIndex_);
+	int nowCountInput = static_cast<int>(nowCount_);
 
-	ImGui::End();
 
+
+	//ImGui::Begin("camera");
+	//ImGui::InputFloat("timeRate", &timeRate_);
+	//ImGui::InputInt("startIndex", &startIndexInput);
+	//ImGui::InputInt("nowCount", &nowCountInput);
+	//ImGui::InputFloat3("nowPos", &e.x);
+	//ImGui::InputFloat3("nowTarget", &targ.x);
+	//ImGui::End();
+	
 
 	Camera::Update();
+	
 }
 
 void GameCamera::SetTargetPos(WorldTransform* targetPos)
@@ -273,6 +268,11 @@ void GameCamera::SetShakeVec(Vector3 shakeVec)
 	shakeVec_ = shakeVec;
 }
 
+void GameCamera::ResetGameCam()
+{
+	nowCount_ = 0;
+}
+
 void GameCamera::CulDirection()
 {
 	//LShiftを押すと敵をターゲットする
@@ -308,6 +308,26 @@ void GameCamera::CulDirection()
 
 }
 
+float GameCamera::CalculateTValueBasedOnElapsedTime(float maxTime)
+{
+	// 経過時間(elapsedTime[s])の計算
+	nowCount_++;
+	elapsedCount_ = nowCount_ - startCount_;
+	float elapsedTime = static_cast<float>(elapsedCount_) / 60.f;
+
+	// t値を計算
+	float t = elapsedTime / maxTime;
+
+	// tが1.0を超える場合の処理
+	if (t >= 1.0f)
+	{
+		t -= 1.0f;
+		nowCount_ = 0;
+	}
+
+	return t;
+}
+
 
 
 void GameCamera::FollowPlayer()
@@ -317,7 +337,7 @@ void GameCamera::FollowPlayer()
 	
 		//Vector3 basePos = {0 , 10.f , followerPos_->translation_.z};
 
-		Vector3 tempEye = { basePos_.x,basePos_.y,basePos_.z };
+		Vector3 tempEye = { basePos_.x,6.0f,basePos_.z };
 		//tempEye.z -= dir_.z * MAX_CAMERA_DISTANCE;
 		//railTargetPos_.z -= dir_.z * MAX_CAMERA_DISTANCE;
 
@@ -337,6 +357,12 @@ void GameCamera::ChangeFollowFlag(bool flag)
 {
 	isFollowPlayer_ = flag;
 }
+
+RailCameraInfo* GameCamera::GetRailCameraInfo()
+{
+	return railCameraInfo_.get();
+}
+
 
 Vector3 GameCamera::splinePosition(const std::vector<Vector3>& points, size_t startIndex, float t)
 {

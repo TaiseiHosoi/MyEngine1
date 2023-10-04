@@ -2,6 +2,7 @@
 #include<iostream>
 #include <cmath>
 
+
 const float PI = 3.141592f;
 
 float MathFunc::Dig2Rad(float dig)
@@ -178,6 +179,37 @@ Vector3 MathFunc:: bVelocity(Vector3& velocity, Matrix4& mat) {
 
 	return result;
 }
+
+Vector3 MathFunc::RotateVecAngleY(Vector3 v, float angle)
+{
+	float cosA = cos(angle);
+	float sinA = sin(angle);
+
+	Vector3 result(
+		v.x * cosA + v.z * sinA,
+		v.y,
+		-v.x * sinA + v.z * cosA
+	);
+
+	return result;
+}
+
+float MathFunc::angleYAxis(const Vector3 v)
+{
+	// ベクトルをX-Z平面に射影
+	Vector3 projectedVector(v.x, 0.0f, v.z);
+
+	// ベクトルを正規化
+	projectedVector.nomalize();
+
+	// X軸とのなす角を計算
+	float angle = std::atan(projectedVector.dot(Vector3(0.0f, 0.0f, 1.0f)));
+
+
+	return angle;
+}
+
+
 
 Vector3 MathFunc::GetWorldtransform(const Matrix4 matrix4) {
 	//ワールド座標を入れる変数
@@ -374,7 +406,7 @@ Vector3 MathFunc::slarp(const Vector3& v1, const Vector3& v2, float t)
 	return v1 + (v2 - v1) * t;
 }
 
-Vector3 MathFunc::InterpolateBetweenPoints(const std::vector<Vector3>& points, size_t currentIndex, float t)
+Vector3 MathFunc::InterpolateBetweenPoints(const std::vector<Vector3>& points, float& totalTime)
 {
 	size_t numPoints = points.size();
 
@@ -386,18 +418,34 @@ Vector3 MathFunc::InterpolateBetweenPoints(const std::vector<Vector3>& points, s
 		return points[0];
 	}
 
-	if (currentIndex >= numPoints - 1) {
-		return points[numPoints - 1];
+	//合計距離を計算
+	float totalDistance = 0.0f;
+	for (size_t i = 0; i < numPoints - 1; ++i) {
+		totalDistance += CalculateDistance(points[i], points[i + 1]);
 	}
 
-	size_t prevIndex = currentIndex > 0 ? currentIndex - 1 : currentIndex;
-	size_t nextIndex = currentIndex + 1;
+	//一定の速度で移動する時間を計算
+	float speed = 1.0f; //速度を調整
+	float scaledTime = speed * totalTime / totalDistance;
 
-	Vector3 prevPoint = points[prevIndex];
-	Vector3 currentPoint = points[currentIndex];
-	Vector3 nextPoint = points[nextIndex];
+	//現在のセグメントと距離を計算
+	size_t currentIndex = 0;
+	float segmentDistance = CalculateDistance(points[currentIndex], points[currentIndex + 1]);
 
-	return lerp(currentPoint, nextPoint, t);
+	while (scaledTime > segmentDistance) {
+		scaledTime -= segmentDistance;
+		currentIndex++;
+
+		if (currentIndex >= numPoints - 1) {
+			return points[numPoints - 1];
+		}
+
+		segmentDistance = CalculateDistance(points[currentIndex], points[currentIndex + 1]);
+	}
+
+	//現在のポイントと次のポイントの間を補間
+	float tInSegment = scaledTime / segmentDistance;
+	return lerp(points[currentIndex], points[currentIndex + 1], tInSegment);
 }
 
 Vector3 MathFunc::TangentSplinePosition(const std::vector<Vector3>& points, size_t startIndex, float t)
@@ -405,21 +453,73 @@ Vector3 MathFunc::TangentSplinePosition(const std::vector<Vector3>& points, size
 	// 補間すべき点の数
 	size_t n = points.size() - 2;
 
-	if (startIndex > n) return points[n];
+	if (startIndex > n) return points[n];	//値を使わない
 	if (startIndex < 1) return points[1];
 
-	Vector3 p0 = points[startIndex - 1];
-	Vector3 p1 = points[startIndex];
-	Vector3 p2 = points[startIndex + 1];
-	Vector3 p3 = points[startIndex + 2];
+	// 各points間の距離を計算
+	std::vector<float> distances;
+	float totalDistance = 0.0f;
+	for (size_t i = 0; i < n; i++)
+	{
+		float distance = (points[i + 1] - points[i]).length();
+		distances.push_back(distance);
+		totalDistance += distance;
+	}
+
+	// 指定されたtに基づいて移動すべきpoints間を見つける
+	float targetDistance = totalDistance * t;
+	float currentDistance = 0.0f;
+	size_t targetSegment = 0;
+	for (size_t i = 0; i < n; i++)
+	{
+		currentDistance += distances[i];
+		if (currentDistance >= targetDistance)
+		{
+			targetSegment = i;
+			break;
+		}
+	}
+
+	// セグメント内でのtを計算
+	float segmentT = (targetDistance - (currentDistance - distances[targetSegment])) / distances[targetSegment];
+
+
+	Vector3 p0 , p1, p2, p3;
+
+
+	if (targetSegment == points.size() - 3) {
+		p0 = points[targetSegment];
+		p1 = points[0];
+		p2 = points[1];
+		p3 = points[2];
+	}
+	else if (targetSegment == points.size() - 2) {
+		p0 = points[targetSegment];
+		p1 = points[targetSegment + 1];
+		p2 = points[0];
+		p3 = points[1];
+	}
+	else if (targetSegment == points.size()-1) 
+	{
+		p0 = points[targetSegment];
+		p1 = points[targetSegment + 1];
+		p2 = points[targetSegment + 2];
+		p3 = points[0];
+	}
+	else {
+		p0 = points[targetSegment];
+		p1 = points[targetSegment + 1];
+		p2 = points[targetSegment + 2];
+		p3 = points[targetSegment + 3];
+	}
 
 	Vector3 tangent0 = CalculateTangent(p0, p1);
 	Vector3 tangent1 = CalculateTangent(p1, p2);
 	Vector3 tangent2 = CalculateTangent(p2, p3);
 
-	Vector3 position = 0.5 * (2 * p1 + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * (t * t) + (-p0 + 3 * p1 - 3 * p2 + p3) * (t * t * t));
+	Vector3 position = 0.5 * (2 * p1 + (-p0 + p2) * segmentT + (2 * p0 - 5 * p1 + 4 * p2 - p3) * (segmentT * segmentT) + (-p0 + 3 * p1 - 3 * p2 + p3) * (segmentT * segmentT * segmentT));
 
-	Vector3 tangent = lerp(tangent1, tangent2, t); // 補完された接線ベクトル
+	Vector3 tangent = lerp(tangent1, tangent2, segmentT); // 補完された接線ベクトル
 
 	// ポジションに接線ベクトルを適用して位置を修正
 	float someScaleFactor = 1.0f; // スプラインの柔らかさ
@@ -432,4 +532,9 @@ Vector3 MathFunc::CalculateTangent(const Vector3& prevPoint, const Vector3& next
 {
 	Vector3 calcVec = nextPoint - prevPoint;
 	return calcVec.nomalize();
+}
+
+float MathFunc::CalculateDistance(const Vector3& a, const Vector3& b)
+{
+	return std::sqrt((b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y) + (b.z - a.z) * (b.z - a.z));
 }

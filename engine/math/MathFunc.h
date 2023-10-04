@@ -33,6 +33,10 @@ namespace MathFunc {
 
 	Vector3 bVelocity(Vector3& velocity, Matrix4& mat);
 
+	Vector3 RotateVecAngleY(Vector3 v, float angle);	//Vector3を任意の角度で回転
+
+	float angleYAxis(const Vector3 v);	//Y軸の角度を求める
+
 
 	//座標変換
 	Vector3 wDivision(const Vector3& v, const Matrix4& m);
@@ -48,10 +52,12 @@ namespace MathFunc {
 	Vector3 lerp(const Vector3& start, const Vector3& end, const float t);
 	Vector3 slarp(const Vector3& v1, const Vector3& v2, float t);
 
-	Vector3 InterpolateBetweenPoints(const std::vector<Vector3>& points, size_t currentIndex, float t);	//直前と直後のポイントを考慮している
+	Vector3 InterpolateBetweenPoints(const std::vector<Vector3>& points, float& totalTime);	//直前と直後のポイントを考慮している&距離を考慮してスピードを一定に
 
 	Vector3 TangentSplinePosition(const std::vector<Vector3>& points, size_t startIndex, float t);
 
 	Vector3 CalculateTangent(const Vector3& prevPoint, const Vector3& nextPoint);
+
+	float CalculateDistance(const Vector3& a, const Vector3& b);	//2点間の距離
 };
 

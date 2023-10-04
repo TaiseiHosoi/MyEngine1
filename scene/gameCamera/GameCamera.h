@@ -4,6 +4,14 @@
 #include "Object3d.h"
 #include<vector>
 
+struct RailCameraInfo {
+	int startIndex;
+	int oldStartIndex;
+	float timeRate;
+	int nowCount;
+	std::vector<Vector3>points;
+};
+
 class GameCamera :
 	public Camera
 {
@@ -20,21 +28,25 @@ public:
 	WorldTransform* GetEyePos();
 	void RemoveEyePos();
 	void ViewPointMovement();
+	void ResetGameCam();
 
-
+	//プレイヤーを追従する
+	void FollowPlayer();
 	//シェイク用
 	float randomFloat(float min , float max);	//ランダムを引き出す
 	void ShakePrim();
 	static void SetShakePrimST(float dura , float mag , bool isShakePrim);
 
-	void SetShakeVec(Vector3 shakeVec);
 
 	//カメラの向きを計算する関数
 	void CulDirection();
 
-	//プレイヤーを追従する
-	void FollowPlayer();
+	// 移動にかかる時間に基づいてt値を計算する関数
+	float CalculateTValueBasedOnElapsedTime(float maxTime);
 
+public:	// アクセッサ
+
+	void SetShakeVec(Vector3 shakeVec);
 	// シーン切り替え用
 	void ChangeFollowFlag(bool flag);
 
@@ -42,8 +54,20 @@ public:
 	{
 		isPause_ = isPause;
 	}
-
+	
+	// jsonで配置したオブジェクトのポインタ
 	void SetJsonObj(std::vector<Object3d>* objs) { jsonObjsPtr = objs; };
+
+	// スプライン曲線用変数のゲッタ
+	int GetStartIndex() { return static_cast<int>(startIndex_); };
+	float GetTimeRate() { return timeRate_; };
+	float GetOldTimeRate() { return timeRate_; };
+	std::vector<Vector3> GetPoints() { return points; };
+
+	int GetOldStartIndex() { return oldStartIndex_; };
+
+	RailCameraInfo* GetRailCameraInfo();	//レールカメラの進行状況とレール情報を渡す
+
 
 	// 1-> target ,0-> eye
 	WorldTransform swap_[2];
@@ -98,15 +122,19 @@ private:
 	
 
 	float maxTime = 1.2f;				//全体時間[s]
-	float timeRate;						//何％時間が進んだか
-	size_t startIndex = 1;
-	size_t targetStartIndex = 1;
-	uint32_t startCount = 0;
-	uint32_t targetStartCount = 0;
-	uint32_t nowCount = 0;
-	uint32_t elapsedCount = 0;
-
+	float timeRate_;			//何％時間が進んだか
+	float oldTimeRate_;
+	float targetTimeRate;	//ターゲット用
+	int startIndex_ = 1;
+	size_t targetStartIndex_ = 1;
+	uint32_t startCount_ = 0;
+	uint32_t targetStartCount_ = 0;
+	uint32_t nowCount_ = 0;
+	uint32_t elapsedCount_ = 0;
 	Vector3 oldPos_ = {};
+	int oldStartIndex_ = 0;
+
+	std::unique_ptr<RailCameraInfo> railCameraInfo_;
 
 };
 

@@ -20,7 +20,7 @@ public:
 private:
 	std::unique_ptr<Object3d> object_;
 	Mesh* model_ = nullptr;
-	float bulletSpeed_ = 4.f;
+	float bulletSpeed_ = 8.f;
 	CollisionManager* collider = nullptr;
 	SphereCollider* sphere = nullptr;
 	Vector3 pos;

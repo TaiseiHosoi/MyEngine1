@@ -18,7 +18,7 @@
 #include"ParticleManager.h"
 #include "SceneManager.h"
 #include "HitStopManager.h"
-#include "JsonManager.h"
+#include "GameObjManager.h"
 
 
 #include "FbxPlayer.h"
@@ -68,6 +68,6 @@ private:
 	HitStopManager* hitStopManager_;
 	CollisionManager* collisionManager_ = nullptr;
 	//敵マネージャ
-	std::unique_ptr<JsonManager> JsonManager_;
+	std::unique_ptr<GameObjManager> JsonManager_;
 
 };
