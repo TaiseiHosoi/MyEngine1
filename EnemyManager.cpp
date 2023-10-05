@@ -7,10 +7,7 @@ EnemyManager::EnemyManager(int maxEnemies) : maxEnemies(maxEnemies) {
 }
 
 EnemyManager::~EnemyManager() {
-    for (Enemy* enemy : enemies) {
-        delete enemy;
-    }
-    enemies.clear();
+   
 }
 
 void EnemyManager::InitializeEnemies() {

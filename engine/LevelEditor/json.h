@@ -4,6 +4,7 @@
 #include<string>
 #include <map>
 
+#pragma warning(disable: 4324)
 // レベルデータ
 struct LevelData {
 

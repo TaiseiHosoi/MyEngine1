@@ -90,6 +90,8 @@ void GameObjManager::StaticInit()
 
 void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
 {
+	static_cast<void>(popTime);
+
 	if (enemyNum == ENEMY_NUM::WALKING_ENEMY) {
 		//オブジェクト処理
 		walkingEnemies.push_back(new WalkingEnemy);	
@@ -324,7 +326,7 @@ void GameObjManager::UpdateWalkingEnemyPopCommands()
 
 			// ID
 			std::getline(line_stream, word, ',');
-			int ID = static_cast<int>(std::atof(word.c_str()));
+			//int ID = static_cast<int>(std::atof(word.c_str()));
 
 			
 

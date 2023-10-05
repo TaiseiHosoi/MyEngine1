@@ -42,6 +42,8 @@ void Guard::Initialize(FBXObject3d* gameObject)
 
 void Guard::Update(Input* input)
 {
+	static_cast<void>(input);
+
 	if (isGuard == false) {
 		_pActManager->SetNowActNum(ACTION_NUM::move);
 	}

@@ -9,6 +9,7 @@
 
 #pragma warning(push)
 #pragma warning(disable:4267)
+#pragma warning(disable:5267)
 #include <DirectXTex.h>
 #include <unordered_map>
 #include <vector>

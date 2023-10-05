@@ -54,7 +54,7 @@ Matrix4 MathFunc::Rotation(Vector3 rotation, int X_1_Y_2_Z_3_XYZ_6) {
 	int rotationX = 1;
 	int rotationY = 2;
 	int rotationZ = 3;
-	int rotationXYZ = 6;
+	
 
 	if (X_1_Y_2_Z_3_XYZ_6 == rotationX) {
 		Matrix4 matRotX = {
@@ -63,10 +63,10 @@ Matrix4 MathFunc::Rotation(Vector3 rotation, int X_1_Y_2_Z_3_XYZ_6) {
 		  0.0f,-sin(rotation.x),cos(rotation.x),0.0f,
 		  0.0f,0.0f,0.0f,1.0f
 		};
-		Matrix4 rotationX = Initialize();
-		rotationX *= matRotX;
+		Matrix4 rotationXVal = Initialize();
+		rotationXVal *= matRotX;
 
-		return rotationX;
+		return rotationXVal;
 	}
 	else if (X_1_Y_2_Z_3_XYZ_6 == rotationY) {
 		Matrix4 matRotY = {
@@ -75,10 +75,10 @@ Matrix4 MathFunc::Rotation(Vector3 rotation, int X_1_Y_2_Z_3_XYZ_6) {
 			sin(rotation.y), 0.0f, cos(rotation.y),  0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		};
-		Matrix4 rotationY = Initialize();
-		rotationY *= matRotY;
+		Matrix4 rotationYVal = Initialize();
+		rotationYVal *= matRotY;
 
-		return rotationY;
+		return rotationYVal;
 	}
 	else if (X_1_Y_2_Z_3_XYZ_6 == rotationZ) {
 		Matrix4 matRotZ = {
@@ -87,10 +87,10 @@ Matrix4 MathFunc::Rotation(Vector3 rotation, int X_1_Y_2_Z_3_XYZ_6) {
 		  0.0f,0.0f,1.0f,0.0f,
 		  0.0f,0.0f,0.0f,1.0f
 		};
-		Matrix4 rotationZ = Initialize();
-		rotationZ *= matRotZ;
+		Matrix4 rotationZVal = Initialize();
+		rotationZVal *= matRotZ;
 
-		return rotationZ;
+		return rotationZVal;
 	}
 	else {
 		Matrix4 matRotXYZ;

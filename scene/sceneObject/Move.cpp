@@ -25,7 +25,7 @@ void Move::Initialize(FBXObject3d* gameObject)
 
 void Move::Update(Input* input)
 {
-	
+	static_cast<void>(input);
 }
 
 void Move::Draw()

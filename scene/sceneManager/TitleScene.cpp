@@ -8,6 +8,7 @@ TitleScene::~TitleScene() {
 }
 
 void TitleScene::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
+	static_cast<void>(dxCommon);
 
 	//音の初期化と読み込み
 		//音の初期化と読み込み

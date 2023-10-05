@@ -20,13 +20,13 @@ FbxLoader* FbxLoader::GetInstance()
 	return &instance;
 }
 
-void FbxLoader::Initialize(ID3D12Device* device)
+void FbxLoader::Initialize(ID3D12Device* deviceArg)
 {
 	// 再初期化チェック
 	assert(fbxManager == nullptr);
 
 	// 引数からメンバ変数に代入
-	this->device = device;
+	this->device = deviceArg;
 
 	// FBXマネージャの生成
 	fbxManager = FbxManager::Create();
@@ -289,7 +289,7 @@ void FbxLoader::ParseMeshVertices(FBXModel* fbxmodel, FbxMesh* fbxMesh)
 	auto& indices = fbxmodel->indices;
 
 	// 頂点座標データの数
-	const int controlPointsCount = fbxMesh->GetControlPointsCount();
+	//const int controlPointsCount = fbxMesh->GetControlPointsCount();
 	
 
 	FbxStringList uvSetNameList;
@@ -410,7 +410,7 @@ void FbxLoader::ParseMeshVertices(FBXModel* fbxmodel, FbxMesh* fbxMesh)
 			int controlPointIndex = fbxMesh->GetPolygonVertex(polIndex, polVertexIndex);
 			meshVerticeControlpoints[controlPointIndex].push_back(static_cast<int>(indices.size()));
 			// インデックス座標を設定
-			indices.push_back(forCalc);
+			indices.push_back(static_cast<unsigned short>(forCalc));
 			forCalc++;
 		}
 	}
@@ -497,7 +497,7 @@ void FbxLoader::ParseMeshFaces(FBXModel* fbxmodel, FbxMesh* fbxMesh)
 			// 3頂点目までなら
 			if (j < 3) {
 				// 1点追加し、他の2点と三角形を構築する
-				indices.push_back(index);
+				indices.push_back(static_cast<unsigned short>(index));
 			}
 			// 4頂点目
 			else {
@@ -505,9 +505,9 @@ void FbxLoader::ParseMeshFaces(FBXModel* fbxmodel, FbxMesh* fbxMesh)
 				int index2 = indices[indices.size() - 1];
 				int index3 = index;
 				int index0 = indices[indices.size() - 3];
-				indices.push_back(index2);
-				indices.push_back(index3);
-				indices.push_back(index0);
+				indices.push_back(static_cast<unsigned short>(index2));
+				indices.push_back(static_cast<unsigned short>(index3));
+				indices.push_back(static_cast<unsigned short>(index0));
 			}
 		}
 	}

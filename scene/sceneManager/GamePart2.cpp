@@ -11,6 +11,9 @@ GamePart2::~GamePart2() {
 
 void GamePart2::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
+	static_cast<void>(camera);
+	static_cast<void>(dxCommon);
+
 	//音の初期化と読み込み
 	audio_ = std::make_unique<Audio>();
 	audio_->Initialize();
@@ -31,6 +34,7 @@ void GamePart2::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 }
 
 void GamePart2::Update(Input* input, GameCamera* camera) {
+	static_cast<void>(camera);
 
 	//audio_->PlayWave();
 	if (input->TriggerKey(DIK_SPACE)) {
@@ -39,6 +43,7 @@ void GamePart2::Update(Input* input, GameCamera* camera) {
 }
 
 void GamePart2::Draw(DirectXCommon* dxCommon) {
+	static_cast<void>(dxCommon);
 
 	_controller->spriteCommon_->SpritePreDraw();
 	if (isSwapCamera == true) {

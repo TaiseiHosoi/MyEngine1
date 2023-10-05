@@ -13,6 +13,8 @@ GamePart1::~GamePart1() {
 
 void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
+	static_cast<void>(dxCommon);
+
 	//音の初期化と読み込み
 	audio_ = std::make_unique<Audio>();
 	audio_->Initialize();

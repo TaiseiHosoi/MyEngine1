@@ -145,9 +145,7 @@ void FbxPlayer::Update()
 
 		// レイキャストによるロックオン登録
 		if (CollisionManager::GetInstance()->Raycast(ray, &raycast, 120.f)) {
-			if (0 == 0) {
 
-			}
 			if (raycast.collider->GetAttribute() == COLLISION_ATTR_ENEMIES && raycast.object != nullptr) {
 				// ロックオン処理
 				PRockTarget newRockTarget;
@@ -288,7 +286,7 @@ void FbxPlayer::CreateParticle()
 			acc.y = -(float)rand() / RAND_MAX * rnd_acc;
 
 			//追加
-			particle_->Add(60, pos, vel, acc, 0.5f, 0.0f);
+			particle_->Add(60, pos, vel, acc);
 		}
 	
 }
@@ -514,9 +512,9 @@ bool FbxPlayer::GetIsAtkCollide()
 	return FbxPlayer::isAtkCollide;
 }
 
-void FbxPlayer::SetIsAtkCollide(bool isAtkCollide)
+void FbxPlayer::SetIsAtkCollide(bool isAtkCollideArg)
 {
-	FbxPlayer::isAtkCollide = isAtkCollide;
+	FbxPlayer::isAtkCollide = isAtkCollideArg;
 }
 
 bool FbxPlayer::GetIsGuardCollide()
@@ -524,9 +522,9 @@ bool FbxPlayer::GetIsGuardCollide()
 	return isGuardCollide;
 }
 
-void FbxPlayer::SetIsGuardCollide(bool isGuardCollide)
+void FbxPlayer::SetIsGuardCollide(bool isGuardCollideArg)
 {
-	FbxPlayer::isGuardCollide = isGuardCollide;
+	FbxPlayer::isGuardCollide = isGuardCollideArg;
 }
 
 int FbxPlayer::GetHp()
@@ -534,9 +532,9 @@ int FbxPlayer::GetHp()
 	return FbxPlayer::hp;
 }
 
-void FbxPlayer::SetHp(int hp)
+void FbxPlayer::SetHp(int hpArg)
 {
-	FbxPlayer::hp = hp;
+	FbxPlayer::hp = hpArg;
 }
 
 void FbxPlayer::PColliderUpdate()

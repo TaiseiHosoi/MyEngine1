@@ -57,7 +57,7 @@ Quaternion Quaternion::Inverse(const Quaternion& quaternion)
 	Quaternion result = quaternion;
 
 	float norm = Norm(result);
-	result = Conjugate(result);
+	result = Conjugate();
 	result /= (norm * norm);
 
 	return result;
