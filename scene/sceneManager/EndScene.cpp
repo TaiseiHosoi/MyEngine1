@@ -3,6 +3,7 @@
 
 #include "TitleScene.h"
 
+
 EndScene::EndScene(SceneManager* controller) {
 	_controller = controller;
 }
@@ -10,7 +11,7 @@ EndScene::~EndScene() {
 
 }
 
-void EndScene::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
+void EndScene::Initialize( DirectXCommon* dxCommon,GameCamera* camera) {
 
 	//音の初期化と読み込み
 	audio_ = std::make_unique<Audio>();
@@ -23,9 +24,13 @@ void EndScene::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	end_->SetPozition({ 0,0 });
 
 	_controller->fbxPlayer_->GetObject3d()->SetPosition(Vector3(30, 0, 0));
+
+	static_cast< void >(dxCommon);
+	static_cast<void>(camera);
 }
 
 void EndScene::Update(Input* input, GameCamera* camera) {
+	static_cast< void >(camera);
 
 	//audio_->PlayWave();
 	if (input->TriggerKey(DIK_SPACE)) {
@@ -34,6 +39,8 @@ void EndScene::Update(Input* input, GameCamera* camera) {
 }
 
 void EndScene::Draw(DirectXCommon* dxCommon) {
+	static_cast<void>(dxCommon);
+
 	_controller->spriteCommon_->SpritePreDraw();
 	end_->Draw();
 	_controller->spriteCommon_->SpritePostDraw();

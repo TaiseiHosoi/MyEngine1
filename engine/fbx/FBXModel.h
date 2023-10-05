@@ -11,7 +11,7 @@
 
 
 
-
+#pragma warning(disable: 4324)
 // ノード
 struct Node
 {

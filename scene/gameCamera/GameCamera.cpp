@@ -21,9 +21,9 @@ GameCamera::GameCamera(int window_width , int window_height , Input* input)
 	input_ = Input::GetInstance();
 
 	//カメラの初期化
-	Vector3 eye = {0.0f , 10.0f , -5.0f};
-	Vector3 up = {0 , 1 , 0};
-	Vector3 target = {0 , 0 , 300.0f};
+	Vector3 eyeVal = {0.0f , 10.0f , -5.0f};
+	Vector3 upVal = {0 , 1 , 0};
+	Vector3 targetVal = {0 , 0 , 300.0f};
 	this->SetEye(eye);
 	this->SetUp(up);
 	this->SetTarget(target);
@@ -110,8 +110,7 @@ void GameCamera::Update()
 	railCameraInfo_->nowCount = nowCount_;
 	railCameraInfo_->points = points;
 
-	int startIndexInput = static_cast<int>(startIndex_);
-	int nowCountInput = static_cast<int>(nowCount_);
+	
 
 
 

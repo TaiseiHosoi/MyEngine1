@@ -19,7 +19,7 @@ void SummarizeEngine::Initialize() {
 	FbxLoader::GetInstance()->Initialize(dxCommon_->GetDevice());
 
 	// 3Dオブジェクト静的初期化
-	Object3d::StaticInitialize(dxCommon_->GetDevice(), WinApp::window_width, WinApp::window_height);
+	Object3d::StaticInitialize(dxCommon_->GetDevice());
 
 	//パーティクル静的初期化
 	ParticleManager::StaticInitialize(dxCommon_->GetDevice(), dxCommon_->GetCommandList());

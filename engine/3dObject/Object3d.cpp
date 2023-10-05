@@ -499,7 +499,7 @@ bool Object3d::Initialize(bool isRimArg)
 
 	return true;
 
-	name = typeid(*this).name();
+	
 }
 
 void Object3d::Update()
@@ -568,8 +568,8 @@ void Object3d::Draw(ID3D12GraphicsCommandList* cmdListArg)
 {
 	// nullptrチェック
 	assert(device);
-	assert(cmdList);
-
+	assert(cmdListArg);
+	cmdList = cmdListArg;
 	// パイプラインステートの設定
 	cmdListArg->SetPipelineState(pipelinestate.Get());
 	// ルートシグネチャの設定
@@ -584,32 +584,32 @@ void Object3d::Draw(ID3D12GraphicsCommandList* cmdListArg)
 	if (isRim == false)
 	{
 		// 定数バッファビューをセット
-		cmdList->SetGraphicsRootConstantBufferView(0, constBuffB0->GetGPUVirtualAddress());
+		cmdListArg->SetGraphicsRootConstantBufferView(0, constBuffB0->GetGPUVirtualAddress());
 
 		//モデルを描画
-		model->Draw(cmdList, 1);
+		model->Draw(cmdListArg, 1);
 	}
 	else
 	{
 
 		// パイプラインステートの設定
-		cmdList->SetPipelineState(rimPipelinestate.Get());
+		cmdListArg->SetPipelineState(rimPipelinestate.Get());
 		// ルートシグネチャの設定
-		cmdList->SetGraphicsRootSignature(rimRootsignature.Get());
+		cmdListArg->SetGraphicsRootSignature(rimRootsignature.Get());
 		// 定数バッファビューをセット
-		cmdList->SetGraphicsRootConstantBufferView(0, constBuffB0->GetGPUVirtualAddress());
+		cmdListArg->SetGraphicsRootConstantBufferView(0, constBuffB0->GetGPUVirtualAddress());
 		// 定数バッファビューをセット
-		cmdList->SetGraphicsRootConstantBufferView(1, constBuffCameraPosition->GetGPUVirtualAddress());
+		cmdListArg->SetGraphicsRootConstantBufferView(1, constBuffCameraPosition->GetGPUVirtualAddress());
 		// 定数バッファビューをセット
-		cmdList->SetGraphicsRootConstantBufferView(2, constBuffRim->GetGPUVirtualAddress());
+		cmdListArg->SetGraphicsRootConstantBufferView(2, constBuffRim->GetGPUVirtualAddress());
 
 		//モデルを描画
 		model->RimDraw(cmdList);
 
 		// パイプラインステートの設定
-		cmdList->SetPipelineState(pipelinestate.Get());
+		cmdListArg->SetPipelineState(pipelinestate.Get());
 		// ルートシグネチャの設定
-		cmdList->SetGraphicsRootSignature(rootsignature.Get());
+		cmdListArg->SetGraphicsRootSignature(rootsignature.Get());
 	}
 }
 

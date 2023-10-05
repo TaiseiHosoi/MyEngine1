@@ -27,6 +27,7 @@ void CounterAtk::Initialize(FBXObject3d* gameObject)
 
 void CounterAtk::Update(Input* input)
 {
+	static_cast<void>(input);
 	Vector3 angleVec = gameObject_->GetPosition() - gameObject_->GetCamera().GetTarget();
 	float homingAngle = atan2f(angleVec.x, angleVec.z);
 	gameObject_->wtf.rotation_.y = homingAngle;

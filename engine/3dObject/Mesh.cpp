@@ -91,8 +91,8 @@ bool Mesh::LoadTexture(const std::string& directoryPath, const std::string& file
 
 	//ユニコード文字列に変換する
 	wchar_t wfilepath[128];
-	//int iBufferSize = MultiByteToWideChar(CP_ACP, 0, filepath.c_str(), -1, wfilepath, _countof(wfilepath));
-
+	int iBufferSize = MultiByteToWideChar(CP_ACP, 0, filepath.c_str(), -1, wfilepath, _countof(wfilepath));
+	static_cast< void >(iBufferSize);
 
 	//// WICテクスチャのロード
 	//result = LoadFromWICFile(L"Resources/tex1.png", WIC_FLAGS_NONE, &metadata, scratchImg);

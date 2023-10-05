@@ -687,6 +687,6 @@ void ParticleManager::RandParticle(Vector3 pos)
 			static_cast<float>((rand() % 20 - 10) / 10.0f) },
 			{ static_cast<float>((rand() % 20 - 10) / 100.0f),
 			static_cast<float>((rand() % 20 - 10) / 100.0f) ,
-			static_cast<float>((rand() % 20 - 10) / 100.0f) }, 0.4f, 0.0f);
+			static_cast<float>((rand() % 20 - 10) / 100.0f) });
 	}
 }

@@ -134,7 +134,7 @@ void Sprite::Draw()
 
 
 	// 定数バッファにデータ転送
-	HRESULT resultVal = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);
+	//HRESULT resultVal = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);
 	if (SUCCEEDED(result)) {
 		constMapTransform->mat = matWorld * matProjection;	// 行列の合成	
 	}
