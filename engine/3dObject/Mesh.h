@@ -75,7 +75,7 @@ public:
 	bool LoadTexture(const std::string& directoryPath, const std::string& filename);
 
 	//setter
-	static void SetDevice(ID3D12Device* device) { Mesh::device = device; }
+	static void SetDevice(ID3D12Device* dev) { Mesh::device = dev; }
 
 	//デスクリプターヒープの初期化
 	void InitializeDescriptorHeap();

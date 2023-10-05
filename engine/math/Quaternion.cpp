@@ -17,7 +17,7 @@ Quaternion Quaternion::IdentityQuaternion()
 	return *this = { 0.0f,0.0f,0.0f,1.0f };
 }
 
-Quaternion Quaternion::Conjugate(const Quaternion& quaternion)
+Quaternion Quaternion::Conjugate()
 {
 	Quaternion result;
 

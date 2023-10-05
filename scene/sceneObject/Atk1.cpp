@@ -29,7 +29,7 @@ void Atk1::Initialize(FBXObject3d* gameObject)
 
 void Atk1::Update(Input* input)
 {
-
+	input_ = input;
 	//カウントプラス
 	animFlameCT++;
 	

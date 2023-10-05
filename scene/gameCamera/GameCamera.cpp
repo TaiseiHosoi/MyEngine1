@@ -30,7 +30,7 @@ GameCamera::GameCamera(int window_width , int window_height , Input* input)
 
 	isPause_ = false;
 
-	
+	input_ = input;
 	
 }
 
@@ -74,8 +74,10 @@ void GameCamera::Update()
 	oldPos_ = basePos_;	//前フレームpos保存
 
 	// カメラの位置を更新
-	float maxTime = 60.0f; // 移動にかかる最大時間
-	timeRate_ = CalculateTValueBasedOnElapsedTime(maxTime); // maxTimeに基づいてt値を計算
+
+	float maxTimeVal = 90.0f; // 移動にかかる最大時間
+	timeRate_ = CalculateTValueBasedOnElapsedTime(maxTimeVal); // maxTimeに基づいてt値を計算
+
 	targetTimeRate = timeRate_ + 0.003f;	//ターゲット位置は少し進んだ場所
 	if (targetTimeRate >= 1.0f) {
 		targetTimeRate -= 1.0f;	//もし1を超えてたら-1
@@ -166,7 +168,7 @@ void GameCamera::ViewPointMovement()
 	//カメラの回転ベクトル
 	Vector3 rotat = {0 , 0 , 0};
 	//カメラの移動の速さ
-	const float cameraSpeed = 0.0005f;
+	//const float cameraSpeed = 0.0005f;
 
 	Vector2 windowWH = Vector2(WinApp::window_width / 2 , WinApp::window_height / 2);
 	POINT mousePosition;
@@ -308,15 +310,15 @@ void GameCamera::CulDirection()
 
 }
 
-float GameCamera::CalculateTValueBasedOnElapsedTime(float maxTime)
+float GameCamera::CalculateTValueBasedOnElapsedTime(float maxTimeArg)
 {
 	// 経過時間(elapsedTime[s])の計算
 	nowCount_++;
 	elapsedCount_ = nowCount_ - startCount_;
-	float elapsedTime = static_cast<float>(elapsedCount_) / 60.f;
+	float elapsedTimeVal = static_cast<float>(elapsedCount_) / 60.f;
 
 	// t値を計算
-	float t = elapsedTime / maxTime;
+	float t = elapsedTimeVal / maxTimeArg;
 
 	// tが1.0を超える場合の処理
 	if (t >= 1.0f)
@@ -364,20 +366,20 @@ RailCameraInfo* GameCamera::GetRailCameraInfo()
 }
 
 
-Vector3 GameCamera::splinePosition(const std::vector<Vector3>& points, size_t startIndex, float t)
+Vector3 GameCamera::splinePosition(const std::vector<Vector3>& pointsArg, size_t startIndex, float t)
 {
 	//補間すべき点の数
-	size_t n = points.size() - 2;
+	size_t n = pointsArg.size() - 2;
 
 	if (startIndex > n)return points[n];
 	if (startIndex < 1)return points[1];
 
-	Vector3 p0 = points[startIndex - 1];
-	Vector3 p1 = points[startIndex];
-	Vector3 p2 = points[startIndex + 1];
-	Vector3 p3 = points[startIndex + 2];
+	Vector3 p0Val = pointsArg[startIndex - 1];
+	Vector3 p1Val = pointsArg[startIndex];
+	Vector3 p2Val = pointsArg[startIndex + 1];
+	Vector3 p3Val = pointsArg[startIndex + 2];
 
-	Vector3 position = 0.5 * (2 * p1 + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * (t * t) + (-p0 + 3 * p1 - 3 * p2 + p3) * (t * t * t));
+	Vector3 position = 0.5 * (2 * p1Val + (-p0Val + p2Val) * t + (2 * p0Val - 5 * p1Val + 4 * p2Val - p3Val) * (t * t) + (-p0Val + 3 * p1Val - 3 * p2Val + p3Val) * (t * t * t));
 
 	return position;
 }

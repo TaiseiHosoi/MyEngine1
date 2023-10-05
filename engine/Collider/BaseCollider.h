@@ -34,29 +34,29 @@ public:
 		return shapeType;
 	}
 
-	inline void OnCllision(const CollisionInfo& info)
+	inline void OnCllision(const CollisionInfo& infoArg)
 	{
 		isHit = true;
-		this->info = info;
+		this->info = infoArg;
 	}
 
-	inline void SetAttribute(unsigned short attribute)
+	inline void SetAttribute(unsigned short attributeArg)
 	{
-		this->attribute = attribute;
+		this->attribute = attributeArg;
 	}
 
 	unsigned short GetAttribute() {
 		return this->attribute;
 	}
 
-	inline void AddAttribute(unsigned short attribute)
+	inline void AddAttribute(unsigned short attributeArg)
 	{
-		this->attribute |= attribute;
+		this->attribute |= attributeArg;
 	}
 
-	inline void RemoveAttribute(unsigned short attribute)
+	inline void RemoveAttribute(unsigned short attributeArg)
 	{
-		this->attribute &= !attribute;
+		this->attribute &= !attributeArg;
 	}
 
 	inline bool GetIsHit()
