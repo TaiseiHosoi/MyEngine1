@@ -18,9 +18,9 @@ public:
 	//更新
 	void Update() override;
 
-	inline void SetRadius(float radius)
+	inline void SetRadius(float radiusArg)
 	{
-		this->radius = radius; 
+		this->radius = radiusArg; 
 	}
 	
 	float GetRadius()

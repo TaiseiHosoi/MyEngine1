@@ -27,7 +27,7 @@ public:
 	Quaternion IdentityQuaternion();
 
 	// 共役Quaternionを返す
-	static Quaternion Conjugate(const Quaternion& quaternion);
+	static Quaternion Conjugate();
 
 	// Quaternionのnormを返す
 	static float Norm(const Quaternion& quaternion);

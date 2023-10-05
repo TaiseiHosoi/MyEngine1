@@ -333,7 +333,7 @@ void DirectXCommon::PostDraw() {
 	HRESULT result;
 
 	// バックバッファの番号を取得(2つなので0番か1番)
-	UINT bbIndex = swapChain_->GetCurrentBackBufferIndex();
+	//UINT bbIndex = swapChain_->GetCurrentBackBufferIndex();
 
 	// 5.リソースバリアを戻す
 	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;		// 描画状態から

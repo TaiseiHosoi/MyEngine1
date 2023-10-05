@@ -96,7 +96,7 @@ public: // 静的メンバ関数
 	/// <param name="device">デバイス</param>
 	/// <param name="window_width">画面幅</param>
 	/// <param name="window_height">画面高さ</param>
-	static void StaticInitialize(ID3D12Device* device , int window_width , int window_height);
+	static void StaticInitialize(ID3D12Device* device);
 
 	/// <summary>
 	/// 通常描画前処理
@@ -160,7 +160,7 @@ private:// 静的メンバ関数
 	/// </summary>
 	/// <param name="window_width">画面横幅</param>
 	/// <param name="window_height">画面縦幅</param>
-	static void InitializeCamera(int window_width , int window_height);
+	static void InitializeCamera();
 
 	/// <summary>
 	/// グラフィックパイプライン生成
@@ -256,7 +256,7 @@ public:
 	//virtual void OnCollision(const CollisionInfo& info) {};
 
 	//アクセッサ
-	void SetModel(Mesh* model) { this->model = model; }
+	void SetModel(Mesh* modelArg) { this->model = modelArg; }
 
 	inline Mesh* GetModel() { return model; };
 

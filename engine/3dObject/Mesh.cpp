@@ -91,7 +91,7 @@ bool Mesh::LoadTexture(const std::string& directoryPath, const std::string& file
 
 	//ユニコード文字列に変換する
 	wchar_t wfilepath[128];
-	int iBufferSize = MultiByteToWideChar(CP_ACP, 0, filepath.c_str(), -1, wfilepath, _countof(wfilepath));
+	//int iBufferSize = MultiByteToWideChar(CP_ACP, 0, filepath.c_str(), -1, wfilepath, _countof(wfilepath));
 
 
 	//// WICテクスチャのロード
@@ -348,10 +348,10 @@ void Mesh::LoadFromOBJInternal(const std::string& modelname, bool smoothing)
 		if (key == "mtllib")
 		{
 			//マテリアルファイル名読み込み
-			string filename;
-			line_stream >> filename;
+			string fileName;
+			line_stream >> fileName;
 			//マテリアル読み込み
-			LoadMaterial(directoryPath, filename);
+			LoadMaterial(directoryPath, fileName);
 		}
 
 		//先頭文字列がvなら頂点座標

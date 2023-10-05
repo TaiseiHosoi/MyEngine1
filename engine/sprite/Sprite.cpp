@@ -134,7 +134,7 @@ void Sprite::Draw()
 
 
 	// 定数バッファにデータ転送
-	HRESULT result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);
+	HRESULT resultVal = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);
 	if (SUCCEEDED(result)) {
 		constMapTransform->mat = matWorld * matProjection;	// 行列の合成	
 	}
@@ -230,16 +230,16 @@ void Sprite::SetSize(XMFLOAT2 size)
 	Update();
 }
 
-void Sprite::SetIsFlipY(bool isFlipY)
+void Sprite::SetIsFlipY(bool isFlipYArg)
 {
-	this->isFlipY = isFlipY;
+	this->isFlipY = isFlipYArg;
 
 	Update();
 }
 
-void Sprite::SetIsFlipX(bool isFlipX)
+void Sprite::SetIsFlipX(bool isFlipXArg)
 {
-	this->isFlipX = isFlipX;
+	this->isFlipX = isFlipXArg;
 
 	Update();
 }

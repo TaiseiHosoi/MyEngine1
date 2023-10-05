@@ -174,9 +174,9 @@ public: // メンバ関数
 	///	<param name="position">初期座標</param>
 	///	<param name="velocity">速度</param>
 	///	<param name="accel">加速度</param>
-	void Add(int life, Vector3 position, Vector3 velociy, Vector3 accel, float start_scale, float end_scale);
+	void Add(int life, Vector3 position, Vector3 velociy, Vector3 accel);
 
-	static void SetCamera(Camera* camera) { ParticleManager::camera = camera; }
+	static void SetCamera(Camera* cameraArg) { ParticleManager::camera = cameraArg; }
 
 	// ワールドトランスフォームの設定
 	void SetWorldTransform(WorldTransform wtf) { wtf_ = wtf; };
