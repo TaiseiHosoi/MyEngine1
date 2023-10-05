@@ -37,21 +37,25 @@ void TitleScene::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	titleCamerapos[1].parent_ = &titleCamerapos[0];
 	titleCamerapos[1].UpdateMatWorld();
 
-	target.initialize();
+	/*target.initialize();
 	target = titleCamerapos[0];
 	target.UpdateMatWorld();
 
 	eye.initialize();
 	eye = titleCamerapos[1];
-	eye.UpdateMatWorld();
+	eye.UpdateMatWorld();*/
 
 	//_controller->fbxPlayer_->Update();
-	camera->Update();
+	/*camera->Update();
 	camera->SetEyePos(&titleCamerapos[1]);
 	camera->SetTargetPos(&titleCamerapos[0]);
-	camera->ChangeFollowFlag(false);
+	camera->ChangeFollowFlag(false);*/
 
 	/*_controller->boss_->SetHp(100);*/
+
+	//ゲームオブジェクトクラスに情報セット
+	_controller->gameObjectManager_->SetRailCamInfo(camera->GetRailCameraInfo());
+	_controller->gameObjectManager_->SetPlayerWorldTF(_controller->fbxPlayer_->GetObject3d()->GetWorldTransformPtr());
 }
 
 void TitleScene::Update(Input* input, GameCamera* camera) {

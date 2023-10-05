@@ -91,11 +91,28 @@ void GameObjManager::StaticInit()
 void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
 {
 	if (enemyNum == ENEMY_NUM::WALKING_ENEMY) {
-		walkingEnemies.push_back(new WalkingEnemy);
+		//オブジェクト処理
+		walkingEnemies.push_back(new WalkingEnemy);	
 		walkingEnemies.back()->Initialize(modelWalkRobo.get());
 		walkingEnemies.back()->SetOffsetVec3(offsetPos);
 		walkingEnemies.back()->SetRailCameraInfo(railCameraInfo_);
 		walkingEnemies.back()->SetPlayerWorldTransform(playerWorldTF_);
+
+		//ステート処理
+		EnemyState newState;
+		newState.hp_ = 1;
+		newState.isAlive_ = true;
+		newState.isAtk_ = false;
+		walkingEnemyState.push_back(newState);
+
+		//当たり判定処理
+		walkingEnemySpCollider.push_back(new SphereCollider);
+		CollisionManager::GetInstance()->AddCollider(walkingEnemySpCollider.back());
+		walkingEnemySpCollider.back()->SetBasisPos(&walkingEnemies[walkingEnemies.size() - 1][0].GetObject3d()->worldTransform.translation_);
+		walkingEnemySpCollider.back()->center = walkingEnemies[walkingEnemies.size() - 1][0].GetObject3d()->worldTransform.translation_;
+		walkingEnemySpCollider.back()->SetRadius(walkingEnemies.back()->GetObject3d()->GetScale().x);
+		walkingEnemySpCollider.back()->SetAttribute(COLLISION_ATTR_ENEMIES);
+		walkingEnemySpCollider.back()->Update();
 	}
 }
 
@@ -167,6 +184,29 @@ void GameObjManager::UpdateAllObjects()
 	//}
 	for (int i = 0; i < walkingEnemies.size(); i++) {
 		walkingEnemies[i]->Update();
+
+		if (walkingEnemySpCollider[i]->GetIsHit() == true) {
+			if (walkingEnemySpCollider[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ALLIES) {
+				walkingEnemyState[i].hp_--;
+			}
+		}
+		if (walkingEnemyState[i].hp_ <= 0) {
+			walkingEnemyState[i].isAlive_ = false;
+			walkingEnemySpCollider[i]->RemoveAttribute(8);
+
+		}
+
+		if (walkingEnemyState[i].isAlive_ == false) {	//死去
+			//walkingEnemyObjs.erase(std::remove_if(walkingEnemyObjs.begin(), walkingEnemyObjs.end(),
+			//	[](const EnemyState& state) {
+			//		return state.isDead_;
+			//	}),
+			//	walkingEnemyObjs.end());
+			////walkingEnemySpCollider.erase(std::cbegin(walkingEnemySpCollider) + i);
+			//walkingEnemyState.erase(std::cbegin(walkingEnemyState) + i);
+		}
+		walkingEnemySpCollider[i]->Update();
+		
 	}
 
 	//ImGui::Begin("objects");
@@ -291,22 +331,22 @@ void GameObjManager::UpdateWalkingEnemyPopCommands()
 			
 			if (lane == 1) {
 				//offset
-				Vector3 offset = { -10,2,0 };
+				Vector3 offset = { -10,0,0 };
 				AddEnemy(0,0,offset);
 			}
 			else if (lane == 2) {
 				//offset
-				Vector3 offset = { 0,2,0 };
+				Vector3 offset = { 0,0,0 };
 				AddEnemy(0, 0, offset);
 			}
 			else if (lane == 3) {
 				//offset
-				Vector3 offset = { 10,2,0 };
+				Vector3 offset = { 10,0,0 };
 				AddEnemy(0, 0, offset);
 			}
 			else {
 				//offset
-				Vector3 offset = { 0,2,0 };
+				Vector3 offset = { 0,0,0 };
 				AddEnemy(0, 0, offset);
 			}
 		}

@@ -74,8 +74,10 @@ void GameCamera::Update()
 	oldPos_ = basePos_;	//前フレームpos保存
 
 	// カメラの位置を更新
+
 	float maxTimeVal = 90.0f; // 移動にかかる最大時間
 	timeRate_ = CalculateTValueBasedOnElapsedTime(maxTimeVal); // maxTimeに基づいてt値を計算
+
 	targetTimeRate = timeRate_ + 0.003f;	//ターゲット位置は少し進んだ場所
 	if (targetTimeRate >= 1.0f) {
 		targetTimeRate -= 1.0f;	//もし1を超えてたら-1
@@ -113,13 +115,13 @@ void GameCamera::Update()
 
 
 
-	ImGui::Begin("camera");
-	ImGui::InputFloat("timeRate", &timeRate_);
-	ImGui::InputInt("startIndex", &startIndexInput);
-	ImGui::InputInt("nowCount", &nowCountInput);
-	ImGui::InputFloat3("nowPos", &e.x);
-	ImGui::InputFloat3("nowTarget", &targ.x);
-	ImGui::End();
+	//ImGui::Begin("camera");
+	//ImGui::InputFloat("timeRate", &timeRate_);
+	//ImGui::InputInt("startIndex", &startIndexInput);
+	//ImGui::InputInt("nowCount", &nowCountInput);
+	//ImGui::InputFloat3("nowPos", &e.x);
+	//ImGui::InputFloat3("nowTarget", &targ.x);
+	//ImGui::End();
 	
 
 	Camera::Update();
@@ -266,6 +268,11 @@ void GameCamera::SetShakePrimST(float dura , float mag , bool isShakePrim)
 void GameCamera::SetShakeVec(Vector3 shakeVec)
 {
 	shakeVec_ = shakeVec;
+}
+
+void GameCamera::ResetGameCam()
+{
+	nowCount_ = 0;
 }
 
 void GameCamera::CulDirection()

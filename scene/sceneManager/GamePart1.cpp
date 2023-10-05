@@ -74,6 +74,7 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	//ゲームオブジェクトクラスに情報セット
 	_controller->gameObjectManager_->SetRailCamInfo(camera->GetRailCameraInfo());
 	_controller->gameObjectManager_->SetPlayerWorldTF(_controller->fbxPlayer_->GetObject3d()->GetWorldTransformPtr());
+	camera->ResetGameCam();
 
 }
 

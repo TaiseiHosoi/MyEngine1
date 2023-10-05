@@ -28,6 +28,7 @@ public:
 	WorldTransform* GetEyePos();
 	void RemoveEyePos();
 	void ViewPointMovement();
+	void ResetGameCam();
 
 	//プレイヤーを追従する
 	void FollowPlayer();

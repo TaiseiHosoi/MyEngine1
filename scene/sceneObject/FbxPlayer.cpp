@@ -128,7 +128,7 @@ void FbxPlayer::Update()
 
 	if (isHitStop == false)
 	{
-
+		//ワールド上の自機の回転量yを求める
 		cameraAngle_.y =
 			atan2(gameObject_.get()->GetCamera().GetTarget().x - gameObject_.get()->GetCamera().GetEye().x,
 				gameObject_.get()->GetCamera().GetTarget().z - gameObject_.get()->GetCamera().GetEye().z);
