@@ -1,5 +1,5 @@
 #pragma once
-#include <memory>
+
 #include <stack>
 
 
@@ -13,7 +13,10 @@
 #include "ParticleManager.h"
 #include "SphereCollider.h"
 
-
+#pragma warning(push)
+#pragma warning(disable:4365)
+#include <memory>
+#pragma warning(pop)
 
 class Input;
 class PlayerAction;

@@ -6,7 +6,7 @@
 #include "Audio.h"
 #include "Mesh.h"
 #include "sstream"
-#include "memory"
+
 #include "list"
 #include "GameCamera.h"
 #include"CollisionPrimitive.h"
@@ -24,6 +24,10 @@
 #include "FbxPlayer.h"
 
 #include"Ground.h"
+#pragma warning(push)
+#pragma warning(disable:4365)
+#include "memory"
+#pragma warning(pop)
 
 
 

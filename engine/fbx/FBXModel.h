@@ -1,4 +1,6 @@
 #pragma once
+#include "Defined.h"
+MY_ENGINE_SUPPRESS_WARNINGS_BEGIN
 #include <string>
 #include <DirectXMath.h>
 #include <vector>
@@ -8,6 +10,7 @@
 #include <d3d12.h>
 #include <d3dx12.h>
 #include <fbxsdk.h>
+MY_ENGINE_SUPPRESS_WARNINGS_END
 
 
 

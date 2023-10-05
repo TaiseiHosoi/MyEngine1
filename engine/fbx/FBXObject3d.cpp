@@ -1,7 +1,10 @@
 #include "FBXObject3d.h"
+#include"Defined.h"
+MY_ENGINE_SUPPRESS_WARNINGS_BEGIN
 #include <d3dcompiler.h>
-#pragma comment(lib, "d3dcompiler.lib")
 #include"MathFunc.h"
+MY_ENGINE_SUPPRESS_WARNINGS_END
+#pragma comment(lib, "d3dcompiler.lib")
 
 using namespace Microsoft::WRL;
 using namespace DirectX;
@@ -177,6 +180,16 @@ void FBXObject3d::CreateGraphicsPipeline()
 
 }
 
+void FBXObject3d::SetDevice(ID3D12Device* deviceArg)
+{
+	FBXObject3d::device = deviceArg;
+}
+
+void FBXObject3d::SetCamera(Camera* cameraArg)
+{
+	FBXObject3d::camera = cameraArg;
+}
+
 bool FBXObject3d::Initialize()
 {
 
@@ -271,7 +284,7 @@ void FBXObject3d::Update()
 		ResizeBonesMat(bones);
 	}
 	
-	for (int i = 0; i < bones.size(); i++) {
+	for (size_t i = 0; i < bones.size(); i++) {
 		//今の姿勢行列
 		XMMATRIX matCurrentPose;
 		//今の姿勢行列を取得
@@ -337,6 +350,26 @@ std::unique_ptr<FBXObject3d> FBXObject3d::Create()
 }
 
 
+const Vector3& FBXObject3d::GetPosition() const
+{
+	return wtf.translation_;
+}
+
+const Vector3& FBXObject3d::GetRotate() const
+{
+	return wtf.rotation_;
+}
+
+const Vector3& FBXObject3d::GetScale() const
+{
+	return wtf.scale_;
+}
+
+void FBXObject3d::SetModel(FBXModel* fbxmodelArg)
+{
+	this->fbxmodel = fbxmodelArg;
+}
+
 void FBXObject3d::SetFlame(int flame)
 {
 	isChangeFlame = true;
@@ -400,6 +433,11 @@ void FBXObject3d::ResetCurrentTime(int animNum)
 	//リセと
 	currentTime = takeinfo->mLocalTimeSpan.GetStart();
 	
+}
+
+ID3D12Resource* FBXObject3d::GetConstBuff()
+{
+	return constBuffTransform.Get();
 }
 
 

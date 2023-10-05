@@ -525,6 +525,12 @@
     <ClInclude Include="WalkingEnemy.h">
       <Filter>ヘッダー ファイル\scene\enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Defined.h">
+      <Filter>ヘッダー ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="PadingType.h">
+      <Filter>ヘッダー ファイル\base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Obj.hlsli">

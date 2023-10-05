@@ -40,7 +40,7 @@ float Ease::LinearEaseOutEasing(float start, float end, int count, int maxCount)
         return end;
     }
     else {
-        float t = static_cast<float>(count) / maxCount;
+        float t = static_cast<float>(count) / static_cast<float>(maxCount);
         t = 1 - (1 - t) * (1 - t); // イージング関数を適用
         return start + t * (end - start);
     }

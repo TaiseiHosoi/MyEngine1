@@ -1,4 +1,6 @@
 #pragma once
+#include"Defined.h"
+MY_ENGINE_SUPPRESS_WARNINGS_BEGIN
 #include "FBXModel.h"
 #include"fbx/FBXLoader.h"
 #include"WorldTransform.h"
@@ -10,7 +12,7 @@
 #include <d3dx12.h>
 #include <DirectXMath.h>
 #include <string>
-
+MY_ENGINE_SUPPRESS_WARNINGS_END
 
 
 
@@ -54,8 +56,8 @@ public: // 静的メンバ関数
 	/// グラフィックパイプラインの生成
 	/// </summary>
 	// setter
-	static void SetDevice(ID3D12Device* deviceArg) { FBXObject3d::device = deviceArg; }
-	static void SetCamera(Camera* cameraArg) { FBXObject3d::camera = cameraArg; }
+	static void SetDevice(ID3D12Device* deviceArg);
+	static void SetCamera(Camera* cameraArg);
 
 
 private: // 静的メンバ変数
@@ -115,15 +117,15 @@ public: // メンバ関数
 	/// 座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	const Vector3& GetPosition() const { return wtf.translation_; }
-	const Vector3& GetRotate() const { return wtf.rotation_; }
-	const Vector3& GetScale() const { return wtf.scale_; }
+	const Vector3& GetPosition() const;
+	const Vector3& GetRotate() const;
+	const Vector3& GetScale() const;
 
 	/// <summary>
 	/// モデルをセット
 	/// </summary>
 	/// <param name="fbxmodel"></param>
-	void SetModel(FBXModel* fbxmodelArg) { this->fbxmodel = fbxmodelArg; }
+	void SetModel(FBXModel* fbxmodelArg);
 
 	/// <summary>
 	/// フレームカウント指定
@@ -153,7 +155,7 @@ public: // メンバ関数
 	bool GetIsAnimRot();
 	int ConvertFbxTimeToInt(FbxTime time);	//FbxTime型変数をintに変換
 	void ResetCurrentTime(int animNum);
-	ID3D12Resource* GetConstBuff() { return constBuffTransform.Get(); };
+	ID3D12Resource* GetConstBuff();
 
 	/// <summary>
 	/// ワールドトランスフォーム取得

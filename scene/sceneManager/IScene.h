@@ -5,7 +5,7 @@
 #include "Audio.h"
 #include "Mesh.h"
 #include "sstream"
-#include "memory"
+
 #include "list"
 #include "GameCamera.h"
 #include "Player.h"
@@ -20,6 +20,11 @@
 
 #include "DirectXCommon.h"
 #include "Input.h"
+
+#pragma warning(push)
+#pragma warning(disable:4365)
+#include "memory"
+#pragma warning(pop)
 
 // シーン管理のための基底クラス
 // (純粋基底クラス)

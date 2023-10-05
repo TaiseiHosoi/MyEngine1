@@ -99,7 +99,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	particle_->Update();
 
 	// 現在時刻を取得してシード値とする
-	std::srand(static_cast<int>(std::time(nullptr)));
+	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
 	//初期化
 	FbxPlayer::isAtkCollide = false;

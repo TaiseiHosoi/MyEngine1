@@ -1,21 +1,20 @@
 #pragma once
+
+
+#include "Defined.h"
+MY_ENGINE_SUPPRESS_WARNINGS_BEGIN
+#include <DirectXTex.h>
+#include <unordered_map>
+#include <vector>
+#include <d3d12.h>
+#include <d3dx12.h>
 #include <cassert>
 #include <string>
 #include <Windows.h>
 #include <fstream>
 #include <sstream>
 #include <DirectXMath.h>
-
-
-#pragma warning(push)
-#pragma warning(disable:4267)
-#pragma warning(disable:5267)
-#include <DirectXTex.h>
-#include <unordered_map>
-#include <vector>
-#include <d3d12.h>
-#include <d3dx12.h>
-#pragma warning(pop)
+MY_ENGINE_SUPPRESS_WARNINGS_END
 
 
 using namespace std;
