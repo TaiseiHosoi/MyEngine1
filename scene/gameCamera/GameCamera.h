@@ -63,6 +63,7 @@ public:	// アクセッサ
 	float GetTimeRate() { return timeRate_; };
 	float GetOldTimeRate() { return timeRate_; };
 	std::vector<Vector3> GetPoints() { return points; };
+	void SetCamMode(int num);
 
 	int GetOldStartIndex() { return oldStartIndex_; };
 
@@ -107,6 +108,9 @@ private:
 	//レールカメラ用
 	Vector3 basePos_ = {};
 	Vector3 railTargetPos_ = {};
+	//シーン0用
+	Vector3 directionLoot_ = {};
+	Vector3 offsetPos_ = {10.f,0,20.f};
 	
 	//制御店の集合(vectorコンテナ),補完する区間の添字、時間経過率
 	Vector3 splinePosition(const std::vector<Vector3>& points, size_t startIndex, float t);
@@ -135,6 +139,9 @@ private:
 	int oldStartIndex_ = 0;
 
 	std::unique_ptr<RailCameraInfo> railCameraInfo_;
+
+	//camMode
+	int camMode_ = 0;
 
 };
 

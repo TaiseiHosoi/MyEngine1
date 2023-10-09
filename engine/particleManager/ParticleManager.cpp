@@ -27,10 +27,11 @@ ParticleManager::~ParticleManager() {
 
 void ParticleManager::StaticInitialize(ID3D12Device* Device, ID3D12GraphicsCommandList* cmdlist)
 {
+	static_cast<void>(cmdlist);
 	// nullptrチェック
 	assert(Device);
 	assert(cmdlist);
-
+	
 	device = Device;
 	//cmdList = cmdlist;
 

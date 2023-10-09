@@ -83,25 +83,56 @@ void GameCamera::Update()
 		targetTimeRate -= 1.0f;	//もし1を超えてたら-1
 	}
 
+	if (camMode_ == 0) {
 
-	//値を入力
-	basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
-	
-	
+		//進行上の向いている方向(顔の向きではない)
+		directionLoot_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + 0.005f)
+			- MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);
+		directionLoot_.nomalize();
 
-	target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
-	railTargetPos_ = target;	//ローカル変数に保存
+		//ワールド上の自機の回転量yを求める
+		Vector3 nowOffset;
+		float dirAngle = atan2(directionLoot_.x, directionLoot_.z);
+		nowOffset = offsetPos_;
+		nowOffset = MathFunc::RotateVecAngleY(nowOffset, dirAngle);
+
+		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
+		
+		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
+		railTargetPos_ = target;	//ローカル変数に保存
+		
+
+		Vector3 minusVec =  nowOffset;
+		minusVec.nomalize();
+		minusVec *= 10.0f;	
+
+		basePos_ += minusVec;
+
+		Vector3 e = GetEye();
+		Vector3 targ = GetTarget();
+		FollowPlayer();
 
 
-	Vector3 minusVec = railTargetPos_ - basePos_;
-	minusVec.nomalize();
-	minusVec *= 15.0f;	//引きカメラ
+		
+	}
+	else if (camMode_ == 1) {
+		//値を入力
+		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
 
-	basePos_ += minusVec;
+		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
+		railTargetPos_ = target;	//ローカル変数に保存
 
-	Vector3 e = GetEye();
-	Vector3 targ = GetTarget();
-	FollowPlayer();
+
+		Vector3 minusVec = railTargetPos_ - basePos_;
+		minusVec.nomalize();
+		minusVec *= 15.0f;	//引きカメラ
+
+		basePos_ += minusVec;
+
+		Vector3 e = GetEye();
+		Vector3 targ = GetTarget();
+		FollowPlayer();
+	}
 
 	//infoの情報更新
 	railCameraInfo_->startIndex = startIndex_;
@@ -333,30 +364,22 @@ float GameCamera::CalculateTValueBasedOnElapsedTime(float maxTimeArg)
 
 void GameCamera::FollowPlayer()
 {
-	
-
-	
-		//Vector3 basePos = {0 , 10.f , followerPos_->translation_.z};
 
 		Vector3 tempEye = { basePos_.x,6.0f,basePos_.z };
-		//tempEye.z -= dir_.z * MAX_CAMERA_DISTANCE;
-		//railTargetPos_.z -= dir_.z * MAX_CAMERA_DISTANCE;
+
 
 		SetEye(tempEye);
 		SetTarget(railTargetPos_);
-
-		//SetEye(Vector3(0,500,-1));
-		//SetTarget(Vector3(0,0,0));
-		
-		//SetTarget({ tempEye.x,tempEye.y,tempEye.z + 1.f });
-
-	
-	
 }
 
 void GameCamera::ChangeFollowFlag(bool flag)
 {
 	isFollowPlayer_ = flag;
+}
+
+void GameCamera::SetCamMode(int num)
+{
+	camMode_ = num;
 }
 
 RailCameraInfo* GameCamera::GetRailCameraInfo()

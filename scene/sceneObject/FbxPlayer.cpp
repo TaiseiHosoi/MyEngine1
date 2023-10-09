@@ -300,11 +300,13 @@ void FbxPlayer::Move()
 {
 	
 
-	Vector3 cameraNorm = gameObject_->GetCamera().GetTarget() - gameObject_->GetCamera().GetEye();
-	cameraNorm.nomalize();
-	float pAngle = atan2f(cameraNorm.x, cameraNorm.z);
+	Vector3 primaryNorm = MathFunc::TangentSplinePosition( railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate+0.005f)
+		- MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);
+	primaryNorm.nomalize();
 
-	Vector3 primaryPos = gameObject_->GetCamera().GetEye() + cameraNorm * 10.0f;
+	float pAngle = atan2f(primaryNorm.x, primaryNorm.z);
+
+	Vector3 primaryPos = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + 0.002f) + primaryNorm * 10.0f;
 
 
 
@@ -587,4 +589,9 @@ Vector3 FbxPlayer::GetNowFaceAngle()
 
 	Vector3 nowVelocity_ = MathFunc::MatVector(velocity_, gameObject_->wtf.matWorld_);
 	return nowVelocity_;
+}
+
+void FbxPlayer::SetRailCameraInfo(RailCameraInfo* info)
+{
+	railCameraInfo_ = info;
 }
