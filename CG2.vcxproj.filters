@@ -225,33 +225,6 @@
     <ClCompile Include="engine\common\WinApp.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
-    <ClCompile Include="scene\sceneObject\Atk1.cpp">
-      <Filter>ソース ファイル\scene\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\CounterAtk.cpp">
-      <Filter>ソース ファイル\scene\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\FbxPlayer.cpp">
-      <Filter>ソース ファイル\scene\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\Guard.cpp">
-      <Filter>ソース ファイル\scene\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\Move.cpp">
-      <Filter>ソース ファイル\scene\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\Player.cpp">
-      <Filter>ソース ファイル\scene\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\PlayerAction.cpp">
-      <Filter>ソース ファイル\scene\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\PlayerActionManager.cpp">
-      <Filter>ソース ファイル\scene\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\Stop.cpp">
-      <Filter>ソース ファイル\scene\Player</Filter>
-    </ClCompile>
     <ClCompile Include="engine\particleManager\ParticleManager.cpp">
       <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>
@@ -264,37 +237,52 @@
     <ClCompile Include="engine\SummarizeEngine\SummarizeEngine.cpp">
       <Filter>ソース ファイル\SummarizeEngine</Filter>
     </ClCompile>
-    <ClCompile Include="scene\sceneObject\BasicEnemy.cpp">
-      <Filter>ソース ファイル\scene\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>ソース ファイル\scene\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="engine\LevelEditor\json.cpp">
       <Filter>ソース ファイル\LevelEditor</Filter>
     </ClCompile>
     <ClCompile Include="scene\sceneObject\GameObjManager.cpp">
       <Filter>ソース ファイル\LevelEditor</Filter>
     </ClCompile>
-    <ClCompile Include="SplineCurve.cpp">
-      <Filter>ソース ファイル\math</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerReticle.cpp">
-      <Filter>ソース ファイル\scene\Player</Filter>
-    </ClCompile>
     <ClCompile Include="scene\Application.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
-    <ClCompile Include="scene\sceneObject\PlayerRapidBullet.cpp">
+    <ClCompile Include="engine\math\SplineCurve.cpp">
+      <Filter>ソース ファイル\math</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\Player\Atk1.cpp">
+      <Filter>ソース ファイル\scene\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\Player\FbxPlayer.cpp">
+      <Filter>ソース ファイル\scene\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\Player\Move.cpp">
+      <Filter>ソース ファイル\scene\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\Player\PlayerAction.cpp">
+      <Filter>ソース ファイル\scene\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\Player\PlayerActionManager.cpp">
+      <Filter>ソース ファイル\scene\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\Player\PlayerReticle.cpp">
+      <Filter>ソース ファイル\scene\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\Player\PlayerHomingBullet.cpp">
       <Filter>ソース ファイル\scene\Player\bullet</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerHomingBullet.cpp">
+    <ClCompile Include="scene\sceneObject\Player\PlayerRapidBullet.cpp">
       <Filter>ソース ファイル\scene\Player\bullet</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyManager.cpp">
+    <ClCompile Include="scene\sceneObject\Enemy\BasicEnemy.cpp">
       <Filter>ソース ファイル\scene\enemy</Filter>
     </ClCompile>
-    <ClCompile Include="WalkingEnemy.cpp">
+    <ClCompile Include="scene\sceneObject\Enemy\Enemy.cpp">
+      <Filter>ソース ファイル\scene\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\Enemy\EnemyManager.cpp">
+      <Filter>ソース ファイル\scene\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\Enemy\WalkingEnemy.cpp">
       <Filter>ソース ファイル\scene\enemy</Filter>
     </ClCompile>
   </ItemGroup>
@@ -441,9 +429,6 @@
     <ClInclude Include="scene\gameCamera\GameCamera.h">
       <Filter>ヘッダー ファイル\scene\gameCamera</Filter>
     </ClInclude>
-    <ClInclude Include="TestLand.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
     <ClInclude Include="engine\common\DirectXCommon.h">
       <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
@@ -455,30 +440,6 @@
     </ClInclude>
     <ClInclude Include="engine\common\WinApp.h">
       <Filter>ヘッダー ファイル\base</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\Atk1.h">
-      <Filter>ヘッダー ファイル\scene\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\CounterAtk.h">
-      <Filter>ヘッダー ファイル\scene\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\FbxPlayer.h">
-      <Filter>ヘッダー ファイル\scene\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\Move.h">
-      <Filter>ヘッダー ファイル\scene\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\Player.h">
-      <Filter>ヘッダー ファイル\scene\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\PlayerAction.h">
-      <Filter>ヘッダー ファイル\scene\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\PlayerActionManager.h">
-      <Filter>ヘッダー ファイル\scene\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\Stop.h">
-      <Filter>ヘッダー ファイル\scene\Player</Filter>
     </ClInclude>
     <ClInclude Include="engine\particleManager\ParticleManager.h">
       <Filter>ヘッダー ファイル\Effect</Filter>
@@ -492,37 +453,52 @@
     <ClInclude Include="engine\SummarizeEngine\SummarizeEngine.h">
       <Filter>ヘッダー ファイル\SummarizeEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>ヘッダー ファイル\scene\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\BasicEnemy.h">
-      <Filter>ヘッダー ファイル\scene\enemy</Filter>
-    </ClInclude>
     <ClInclude Include="engine\LevelEditor\json.h">
       <Filter>ヘッダー ファイル\LevelEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjManager.h">
-      <Filter>ヘッダー ファイル\LevelEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="SplineCurve.h">
-      <Filter>ヘッダー ファイル\math</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerReticle.h">
-      <Filter>ヘッダー ファイル\scene\Player</Filter>
     </ClInclude>
     <ClInclude Include="scene\Application.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
-    <ClInclude Include="scene\sceneObject\PlayerRapidBullet.h">
+    <ClInclude Include="engine\math\SplineCurve.h">
+      <Filter>ヘッダー ファイル\math</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\LevelEditor\GameObjManager.h">
+      <Filter>ヘッダー ファイル\LevelEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Player\Atk1.h">
+      <Filter>ヘッダー ファイル\scene\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Player\FbxPlayer.h">
+      <Filter>ヘッダー ファイル\scene\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Player\Move.h">
+      <Filter>ヘッダー ファイル\scene\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Player\PlayerAction.h">
+      <Filter>ヘッダー ファイル\scene\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Player\PlayerActionManager.h">
+      <Filter>ヘッダー ファイル\scene\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Player\PlayerReticle.h">
+      <Filter>ヘッダー ファイル\scene\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Player\PlayerHomingBullet.h">
       <Filter>ヘッダー ファイル\scene\Player\bullet</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerHomingBullet.h">
+    <ClInclude Include="scene\sceneObject\Player\PlayerRapidBullet.h">
       <Filter>ヘッダー ファイル\scene\Player\bullet</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyManager.h">
+    <ClInclude Include="scene\sceneObject\Enemy\BasicEnemy.h">
       <Filter>ヘッダー ファイル\scene\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="WalkingEnemy.h">
+    <ClInclude Include="scene\sceneObject\Enemy\Enemy.h">
+      <Filter>ヘッダー ファイル\scene\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Enemy\EnemyManager.h">
+      <Filter>ヘッダー ファイル\scene\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Enemy\WalkingEnemy.h">
       <Filter>ヘッダー ファイル\scene\enemy</Filter>
     </ClInclude>
   </ItemGroup>
@@ -540,5 +516,6 @@
     <None Include="Resources\shaders\Particle.hlsli">
       <Filter>リソース ファイル</Filter>
     </None>
+    <None Include=".editorconfig" />
   </ItemGroup>
 </Project>

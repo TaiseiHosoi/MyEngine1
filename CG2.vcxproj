@@ -159,8 +159,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="engine\3dObject\Mesh.cpp" />
     <ClCompile Include="engine\3dObject\Object3d.cpp" />
     <ClCompile Include="engine\3dObject\WorldTransform.cpp" />
@@ -187,6 +185,7 @@
     <ClCompile Include="engine\math\MathFunc.cpp" />
     <ClCompile Include="engine\math\Matrix4.cpp" />
     <ClCompile Include="engine\math\Quaternion.cpp" />
+    <ClCompile Include="engine\math\SplineCurve.cpp" />
     <ClCompile Include="engine\math\Vector2.cpp" />
     <ClCompile Include="engine\math\Vector3.cpp" />
     <ClCompile Include="engine\math\Vector4.cpp" />
@@ -195,8 +194,6 @@
     <ClCompile Include="engine\sprite\SpriteCommon.cpp" />
     <ClCompile Include="engine\SummarizeEngine\SummarizeEngine.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="PlayerHomingBullet.cpp" />
-    <ClCompile Include="PlayerReticle.cpp" />
     <ClCompile Include="scene\Application.cpp" />
     <ClCompile Include="scene\gameCamera\GameCamera.cpp" />
     <ClCompile Include="scene\sceneManager\EndScene.cpp" />
@@ -205,21 +202,20 @@
     <ClCompile Include="scene\sceneManager\IScene.cpp" />
     <ClCompile Include="scene\sceneManager\SceneManager.cpp" />
     <ClCompile Include="scene\sceneManager\TitleScene.cpp" />
-    <ClCompile Include="scene\sceneObject\Atk1.cpp" />
-    <ClCompile Include="scene\sceneObject\BasicEnemy.cpp" />
-    <ClCompile Include="scene\sceneObject\CounterAtk.cpp" />
+    <ClCompile Include="scene\sceneObject\Enemy\BasicEnemy.cpp" />
+    <ClCompile Include="scene\sceneObject\Enemy\Enemy.cpp" />
+    <ClCompile Include="scene\sceneObject\Enemy\EnemyManager.cpp" />
+    <ClCompile Include="scene\sceneObject\Enemy\WalkingEnemy.cpp" />
     <ClCompile Include="scene\sceneObject\GameObjManager.cpp" />
-    <ClCompile Include="scene\sceneObject\FbxPlayer.cpp" />
     <ClCompile Include="scene\sceneObject\Ground.cpp" />
-    <ClCompile Include="scene\sceneObject\Guard.cpp" />
-    <ClCompile Include="scene\sceneObject\Move.cpp" />
-    <ClCompile Include="scene\sceneObject\Player.cpp" />
-    <ClCompile Include="scene\sceneObject\PlayerAction.cpp" />
-    <ClCompile Include="scene\sceneObject\PlayerActionManager.cpp" />
-    <ClCompile Include="scene\sceneObject\PlayerRapidBullet.cpp" />
-    <ClCompile Include="scene\sceneObject\Stop.cpp" />
-    <ClCompile Include="SplineCurve.cpp" />
-    <ClCompile Include="WalkingEnemy.cpp" />
+    <ClCompile Include="scene\sceneObject\Player\Atk1.cpp" />
+    <ClCompile Include="scene\sceneObject\Player\FbxPlayer.cpp" />
+    <ClCompile Include="scene\sceneObject\Player\Move.cpp" />
+    <ClCompile Include="scene\sceneObject\Player\PlayerAction.cpp" />
+    <ClCompile Include="scene\sceneObject\Player\PlayerActionManager.cpp" />
+    <ClCompile Include="scene\sceneObject\Player\PlayerHomingBullet.cpp" />
+    <ClCompile Include="scene\sceneObject\Player\PlayerRapidBullet.cpp" />
+    <ClCompile Include="scene\sceneObject\Player\PlayerReticle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\BasicPS.hlsl">
@@ -290,9 +286,8 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyManager.h" />
-    <ClInclude Include="GameObjManager.h" />
+    <ClInclude Include="engine\LevelEditor\GameObjManager.h" />
+    <ClInclude Include="engine\math\SplineCurve.h" />
     <ClInclude Include="engine\3dObject\Mesh.h" />
     <ClInclude Include="engine\3dObject\Object3d.h" />
     <ClInclude Include="engine\3dObject\WorldTransform.h" />
@@ -330,8 +325,6 @@
     <ClInclude Include="engine\sprite\Sprite.h" />
     <ClInclude Include="engine\sprite\SpriteCommon.h" />
     <ClInclude Include="engine\SummarizeEngine\SummarizeEngine.h" />
-    <ClInclude Include="PlayerHomingBullet.h" />
-    <ClInclude Include="PlayerReticle.h" />
     <ClInclude Include="scene\Application.h" />
     <ClInclude Include="scene\gameCamera\GameCamera.h" />
     <ClInclude Include="scene\sceneManager\EndScene.h" />
@@ -341,22 +334,22 @@
     <ClInclude Include="scene\sceneManager\SceneIntegrate.h" />
     <ClInclude Include="scene\sceneManager\SceneManager.h" />
     <ClInclude Include="scene\sceneManager\TitleScene.h" />
-    <ClInclude Include="scene\sceneObject\Atk1.h" />
-    <ClInclude Include="scene\sceneObject\BasicEnemy.h" />
-    <ClInclude Include="scene\sceneObject\CounterAtk.h" />
-    <ClInclude Include="scene\sceneObject\FbxPlayer.h" />
+    <ClInclude Include="scene\sceneObject\Enemy\BasicEnemy.h" />
+    <ClInclude Include="scene\sceneObject\Enemy\Enemy.h" />
+    <ClInclude Include="scene\sceneObject\Enemy\EnemyManager.h" />
+    <ClInclude Include="scene\sceneObject\Enemy\WalkingEnemy.h" />
     <ClInclude Include="scene\sceneObject\Ground.h" />
-    <ClInclude Include="scene\sceneObject\Move.h" />
-    <ClInclude Include="scene\sceneObject\Player.h" />
-    <ClInclude Include="scene\sceneObject\PlayerAction.h" />
-    <ClInclude Include="scene\sceneObject\PlayerActionManager.h" />
-    <ClInclude Include="scene\sceneObject\PlayerRapidBullet.h" />
-    <ClInclude Include="scene\sceneObject\Stop.h" />
-    <ClInclude Include="SplineCurve.h" />
-    <ClInclude Include="TestLand.h" />
-    <ClInclude Include="WalkingEnemy.h" />
+    <ClInclude Include="scene\sceneObject\Player\Atk1.h" />
+    <ClInclude Include="scene\sceneObject\Player\FbxPlayer.h" />
+    <ClInclude Include="scene\sceneObject\Player\Move.h" />
+    <ClInclude Include="scene\sceneObject\Player\PlayerAction.h" />
+    <ClInclude Include="scene\sceneObject\Player\PlayerActionManager.h" />
+    <ClInclude Include="scene\sceneObject\Player\PlayerHomingBullet.h" />
+    <ClInclude Include="scene\sceneObject\Player\PlayerRapidBullet.h" />
+    <ClInclude Include="scene\sceneObject\Player\PlayerReticle.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="Resources\shaders\Basic.hlsli" />
     <None Include="Resources\shaders\FBX.hlsli" />
     <None Include="Resources\shaders\Obj.hlsli" />
