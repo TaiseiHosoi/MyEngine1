@@ -52,7 +52,9 @@ void SceneManager::ObjectInitialize() {
 		fbxPlayer_ = std::make_unique<FbxPlayer>();
 		fbxPlayer_.get()->Initialize(hitokunFbxM_.get());
 		fbxPlayer_->GetObject3d()->wtf.translation_.z = 0;
+		fbxPlayer_->SetRailCameraInfo(_camera->GetRailCameraInfo());
 		_camera->SetFollowerPos(fbxPlayer_.get()->GetObject3d()->GetWorldTransformPtr());
+		
 
 		//boss
 		/*boss_ = std::make_unique<Boss>();

@@ -27,9 +27,7 @@ private://リソース
 	std::unique_ptr <Sprite> title2_;
 	std::unique_ptr <Sprite> mouse_;
 private:
-	//1->eye ,0-> target 
-	WorldTransform titleCamerapos[2];
-	WorldTransform swapCamerapos[2];
+
 
 	WorldTransform target;
 	WorldTransform eye;
@@ -41,7 +39,6 @@ private:
 	// 時間計測に必要なデータ
 	size_t startCount = 0;
 	size_t nowCount = 0;
-	size_t elapsedCount = 0;
 	float maxTime = 5.0f;
 	float timeRate;
 

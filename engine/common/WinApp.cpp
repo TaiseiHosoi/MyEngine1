@@ -1,4 +1,4 @@
-#include "WinApp.h"
+﻿#include "WinApp.h"
 #include"imgui_impl_win32.h"
 
 #pragma comment(lib, "winmm.lib")
@@ -15,7 +15,7 @@ void WinApp::Initialize() {
 	//ウィンドウクラスの設定
 	w.cbSize = sizeof(WNDCLASSEX);
 	w.lpfnWndProc = (WNDPROC)WindowProc;		//ウィンドウプロシージャを設定
-	w.lpszClassName = "SLASHER";			//ウィンドウクラス名
+	w.lpszClassName = "キンミラシューター";			//ウィンドウクラス名
 	w.hInstance = GetModuleHandle(nullptr);		//ウィンドウハンドル
 	w.hCursor = LoadCursor(NULL, IDC_ARROW);	//カーソル指定
 
@@ -28,7 +28,7 @@ void WinApp::Initialize() {
 
 	//ウィンドウオブジェクトの生成
 	hwnd = CreateWindow(w.lpszClassName,	//クラス名
-		"SLASHER",			//タイトルバーの文字
+		"KINMIRA Shoter",			//タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,	//標準的なウィンドウスタイル
 		CW_USEDEFAULT,			//表示X座標（OS任せ）
 		CW_USEDEFAULT,			//表示Y座標（OS任せ）

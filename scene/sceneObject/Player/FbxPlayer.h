@@ -76,6 +76,8 @@ private:
 public:
 	Vector3 GetNowFaceAngle();
 
+	void SetRailCameraInfo(RailCameraInfo* info);
+
 	ID3D12Resource* GetConstBuff() { return gameObject_->GetConstBuff(); };
 
 private:
@@ -139,6 +141,7 @@ private:
 
 	//カメラの向き
 	Vector3 cameraAngle_ = {0 , 0 , 0};
+	RailCameraInfo* railCameraInfo_ = nullptr;
 	//ブレーキアニメーション用フラグ
 	bool isbrake = false;
 	int brakeFlameCount = 0;
