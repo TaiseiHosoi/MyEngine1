@@ -20,7 +20,7 @@ void PlayerRapidBullet::Initialize(Mesh* model, Vector3 setPos, Vector3 setRot)
 	pos = object_->worldTransform.matWorld_.GetWorldPos();
 	sphere->SetAttribute(COLLISION_ATTR_ALLIES);
 	sphere->SetBasisPos(&pos);
-	sphere->SetRadius(11.0f);
+	sphere->SetRadius(1.0f);
 	sphere->Update();
 
 	testObject_ = Object3d::Create();

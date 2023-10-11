@@ -3,6 +3,12 @@
 #include"Object3d.h"
 #include"GameCamera.h"
 
+struct EnemyState {
+    bool isAlive_ = true;
+    bool isAtk_ = false;
+    int hp_ = 1;
+};
+
 class Enemy
 {
 public:

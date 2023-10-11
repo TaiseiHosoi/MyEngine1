@@ -7,6 +7,7 @@ WalkingEnemy::WalkingEnemy()
 
 WalkingEnemy::~WalkingEnemy()
 {
+	delete model_;
 }
 
 void WalkingEnemy::Initialize(Mesh* model)
@@ -19,7 +20,21 @@ void WalkingEnemy::Initialize(Mesh* model)
 	object3d_->SetPosition({ object3d_->GetPosition().x,4,object3d_->GetPosition().z });
 	nowPhase_ = 1;	//自機の挙動が何から始まるか
 	advancedValue_ = 0.0f;
+
+	//当たり判定初期化
+	sphere_ = std::make_unique<SphereCollider>();
+	CollisionManager::GetInstance()->AddCollider(sphere_.get());
+	sphere_->SetAttribute(COLLISION_ATTR_ENEMIES);
+	sphere_->SetBasisPos(&object3d_->worldTransform.translation_);
+	sphere_->SetRadius(object3d_->worldTransform.scale_.x);
+	sphere_->Update();
+
+	collider_ = CollisionManager::GetInstance();
 	
+	//ステータス初期化
+	state_.hp_ = 1;
+	state_.isAlive_ = true;
+	state_.isAtk_ = false;
 
 }
 
@@ -65,6 +80,7 @@ void WalkingEnemy::Update()
 
 
 	object3d_->Update();
+	sphere_->Update();
 
 	//ImGui::Begin("WalkEnemy");
 	//ImGui::InputFloat3("nowOffset",&nowOffset.x);
@@ -75,6 +91,11 @@ void WalkingEnemy::Update()
 void WalkingEnemy::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	object3d_->Draw(cmdList);
+}
+
+EnemyState* WalkingEnemy::GetState()
+{
+	return &state_;
 }
 
 void WalkingEnemy::Forward()

@@ -103,21 +103,6 @@ void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
 		walkingEnemies.back()->SetRailCameraInfo(railCameraInfo_);
 		walkingEnemies.back()->SetPlayerWorldTransform(playerWorldTF_);
 
-		//ステート処理
-		EnemyState newState;
-		newState.hp_ = 1;
-		newState.isAlive_ = true;
-		newState.isAtk_ = false;
-		walkingEnemyState.push_back(newState);
-
-		//当たり判定処理
-		walkingEnemySpCollider.push_back(new SphereCollider);
-		CollisionManager::GetInstance()->AddCollider(walkingEnemySpCollider.back());
-		walkingEnemySpCollider.back()->SetBasisPos(&walkingEnemies[walkingEnemies.size() - 1][0].GetObject3d()->worldTransform.translation_);
-		walkingEnemySpCollider.back()->center = walkingEnemies[walkingEnemies.size() - 1][0].GetObject3d()->worldTransform.translation_;
-		walkingEnemySpCollider.back()->SetRadius(walkingEnemies.back()->GetObject3d()->GetScale().x);
-		walkingEnemySpCollider.back()->SetAttribute(COLLISION_ATTR_ENEMIES);
-		walkingEnemySpCollider.back()->Update();
 	}
 }
 
@@ -190,27 +175,18 @@ void GameObjManager::UpdateAllObjects()
 	for (int i = 0; i < walkingEnemies.size(); i++) {
 		walkingEnemies[i]->Update();
 
-		if (walkingEnemySpCollider[i]->GetIsHit() == true) {
-			if (walkingEnemySpCollider[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ALLIES) {
-				walkingEnemyState[i].hp_--;
+		if (walkingEnemies[i]->GetSphereCollider()->GetIsHit() == true) {
+			if (walkingEnemies[i]->GetSphereCollider()->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ALLIES) {
+				walkingEnemies[i]->GetState()->hp_--;
 			}
 		}
-		if (walkingEnemyState[i].hp_ <= 0) {
-			walkingEnemyState[i].isAlive_ = false;
-			walkingEnemySpCollider[i]->RemoveAttribute(8);
+		if (walkingEnemies[i]->GetState()->hp_ <= 0) {
+			walkingEnemies[i]->GetState()->isAlive_ = false;
+			walkingEnemies[i]->GetSphereCollider()->RemoveAttribute(8);
 
 		}
 
-		if (walkingEnemyState[i].isAlive_ == false) {	//死去
-			//walkingEnemyObjs.erase(std::remove_if(walkingEnemyObjs.begin(), walkingEnemyObjs.end(),
-			//	[](const EnemyState& state) {
-			//		return state.isDead_;
-			//	}),
-			//	walkingEnemyObjs.end());
-			////walkingEnemySpCollider.erase(std::cbegin(walkingEnemySpCollider) + i);
-			//walkingEnemyState.erase(std::cbegin(walkingEnemyState) + i);
-		}
-		walkingEnemySpCollider[i]->Update();
+		
 		
 	}
 
