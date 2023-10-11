@@ -68,9 +68,9 @@ LevelData* JsonLoader::LoadFile(const std::string& fileName) {
 			objectData.translation.m128_f32[2] = (float)transform["translation"][1] * -1.f;
 			objectData.translation.m128_f32[3] = 1.0f;
 			// 回転角-
-			objectData.rotation.m128_f32[0] = ((float)transform["rotation"][1]) * -3.14f / 180.f;
+			objectData.rotation.m128_f32[0] = ((float)transform["rotation"][0]) * 3.14f / 180.f;
 			objectData.rotation.m128_f32[1] = ((float)transform["rotation"][2]) * 3.14f / 180.f;
-			objectData.rotation.m128_f32[2] = ((float)transform["rotation"][0]) * 3.14f / 180.f;
+			objectData.rotation.m128_f32[2] = ((float)transform["rotation"][1]) * 3.14f / 180.f;
 			objectData.rotation.m128_f32[3] = 0.0f;
 			// スケーリング
 			objectData.scaling.m128_f32[0] = (float)transform["scaling"][1];

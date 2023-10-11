@@ -42,6 +42,8 @@ private:
     std::unique_ptr <Mesh> modelRoad1;
     std::unique_ptr <Mesh> modelCam;
     std::unique_ptr<Mesh> modelWalkRobo;
+    std::unique_ptr<Mesh> modelTower1;
+    std::unique_ptr<Mesh> modelBill1;
 
     //オブジェクトの配列
     std::vector<Object3d> objects;

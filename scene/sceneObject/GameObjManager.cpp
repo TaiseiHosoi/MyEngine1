@@ -12,12 +12,15 @@ void GameObjManager::StaticInit()
 	modelRoad1 = Mesh::LoadFormOBJ("alphaVerLoad", true);
 	modelCam = Mesh::LoadFormOBJ("cube", true); 
 	modelWalkRobo = Mesh::LoadFormOBJ("walkEnemy",true);
-	
+	modelBill1 = Mesh::LoadFormOBJ("bill1", true);
+	modelTower1 = Mesh::LoadFormOBJ("tower1", true);
 	//モデルインサート
 	models.insert(std::make_pair("moai", modelMoai.get()));
 	models.insert(std::make_pair("Cube", modelCube.get()));
 	models.insert(std::make_pair("road1", modelRoad1.get()));
 	models.insert(std::make_pair("cam", modelCam.get()));
+	models.insert(std::make_pair("bill1", modelBill1.get()));
+	models.insert(std::make_pair("tower1", modelTower1.get()));
 	
 	levelData = JsonLoader::LoadFile("testScene");
 
@@ -211,17 +214,17 @@ void GameObjManager::UpdateAllObjects()
 		
 	}
 
-	//ImGui::Begin("objects");
-	//for (int i = 0; i < objects.size(); i++) {
-	//	Vector3 monitT = { objects[i].GetMatWorld().m[3][0], objects[i].GetMatWorld().m[3][1],objects[i].GetMatWorld().m[3][2] };
-	//	Vector3 monitR = { objects[i].worldTransform.rotation_.x, objects[i].worldTransform.rotation_.y,objects[i].worldTransform.rotation_.z };
-	//	Vector3 monitS = { objects[i].worldTransform.scale_.x, objects[i].worldTransform.scale_.y,objects[i].worldTransform.scale_.z };
-	//	ImGui::InputFloat3("Trans", &monitT.x);
-	//	ImGui::InputFloat3("Rot",&monitR.x);
-	//	ImGui::InputFloat3("Scale", &monitS.x);
+	ImGui::Begin("objects");
+	for (int i = 0; i < objects.size(); i++) {
+		Vector3 monitT = { objects[i].GetMatWorld().m[3][0], objects[i].GetMatWorld().m[3][1],objects[i].GetMatWorld().m[3][2] };
+		Vector3 monitR = { objects[i].worldTransform.rotation_.x, objects[i].worldTransform.rotation_.y,objects[i].worldTransform.rotation_.z };
+		Vector3 monitS = { objects[i].worldTransform.scale_.x, objects[i].worldTransform.scale_.y,objects[i].worldTransform.scale_.z };
+		ImGui::InputFloat3("Trans", &monitT.x);
+		ImGui::InputFloat3("Rot",&monitR.x);
+		ImGui::InputFloat3("Scale", &monitS.x);
 
-	//}
-	//ImGui::End();
+	}
+	ImGui::End();
 	
 
 }

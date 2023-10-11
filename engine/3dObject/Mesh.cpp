@@ -363,10 +363,6 @@ void Mesh::LoadFromOBJInternal(const std::string& modelname, bool smoothing)
 			line_stream >> position.z;
 			//座標データに入力
 			positions.emplace_back(position);
-			//頂点データに追加
-			/*VertexPosNormalUv vertex{};
-			vertex.pos = position;
-			vertices.emplace_back(vertex);*/
 		}
 		//先頭文字列がvtならテクスチャ
 		if (key == "vt") {
@@ -413,9 +409,6 @@ void Mesh::LoadFromOBJInternal(const std::string& modelname, bool smoothing)
 				smoothDate[indexPosition].emplace_back(vertices.size() - 1);
 				//インデックスデータの追加
 				indices.emplace_back((unsigned short)indices.size());
-
-				////頂点インデックスに追加
-				//indices.emplace_back(indexPosition - 1);
 
 			}
 		}
