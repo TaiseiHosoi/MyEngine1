@@ -1,3 +1,7 @@
+/**
+ * @file DirectXCommon.h
+ * @brief DirectXコマンドなどを引き出す
+ */
 #pragma once
 
 #include <Windows.h>
@@ -15,20 +19,28 @@ class DirectXCommon
 {
 public:
 	// 初期化 
+	// クラス初期化
 	void Initialize(WinApp* winApp);
+	// デバイス初期化
 	void InitializeDevice();
+	// commandの初期化
 	void InitializeCommand();
+	// スワップチェイン初期化
 	void InitializeSwapchain();
+	// レンダーターゲットビュー初期化
 	void InitializeRenderTargetView();
+	// 深度バッファ初期化
 	void InitializeDepthBuffer();
+	// フェンス設定初期化
 	void InitializeFence();
 
 	// 描画前処理
 	void PreDraw();
 	// 描画後処理
 	void PostDraw();
-
+	// デバイスゲッタ
 	ID3D12Device* GetDevice() const { return device_.Get(); }
+	// コマンドリストヘッダ
 	ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
 	//バックバッハの数をw取得
 	size_t GetBackBufferCount() const { return backBuffers.size(); }

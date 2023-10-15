@@ -5,6 +5,4 @@
 #include "TitleScene.h"
 #include "GamePart1.h"
 #include "GamePart2.h"
-
-
 #include "EndScene.h"

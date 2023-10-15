@@ -1,3 +1,7 @@
+/**
+ * @file FBXObject3d.h
+ * @brief FBXSDKオブジェクトを初期化、更新、描画するクラス
+ */
 #pragma once
 #include "FBXModel.h"
 #include"fbx/FBXLoader.h"
@@ -149,10 +153,15 @@ public: // メンバ関数
 	/// </summary>
 	/// <returns></returns>
 	FbxTime GetCurrentTimer();
+	// 終了時間ゲット
 	FbxTime GetEndTime();
+	// アニメーション繰り返し状況ゲット
 	bool GetIsAnimRot();
-	int ConvertFbxTimeToInt(FbxTime time);	//FbxTime型変数をintに変換
+	// FbxTime型をintに変換(なくてもオーバーライドされる)
+	int ConvertFbxTimeToInt(FbxTime time);
+	// animNumのリセットとアニメーション処理
 	void ResetCurrentTime(int animNum);
+	// 定数バッファゲッタ
 	ID3D12Resource* GetConstBuff() { return constBuffTransform.Get(); };
 
 	/// <summary>
@@ -160,6 +169,10 @@ public: // メンバ関数
 	/// </summary>
 	/// <returns></returns>
 	WorldTransform GetWorldTransform();
+	/// <summary>
+	/// ワールドトランスフォーム取得
+	/// </summary>
+	/// <returns></returns>
 	WorldTransform* GetWorldTransformPtr();
 
 	/// <summary>

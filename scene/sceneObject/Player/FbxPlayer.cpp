@@ -3,8 +3,6 @@
 #include "GameCamera.h"
 #include <random>
 #include "HitStopManager.h"
-//#include "Boss.h"	//苦肉の策
-//PlayerAction
 #include"Move.h"
 #include"Atk1.h"
 

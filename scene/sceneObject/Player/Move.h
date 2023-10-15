@@ -1,3 +1,7 @@
+/**
+ * @file Move.h
+ * @brief 自機の移動
+ */
 #pragma once
 #include "PlayerAction.h"
 class Move :
@@ -11,8 +15,13 @@ public:
     Move(PlayerActionManager* pActManager);
     ~Move() override;
 
+    // 初期化
     void Initialize(FBXObject3d* gameObject) override;
+
+    // 更新
     void Update(Input* input) override;
+
+    // 描画
     void Draw() override;
 
 private:

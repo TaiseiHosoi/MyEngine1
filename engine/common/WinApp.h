@@ -1,3 +1,7 @@
+/**
+ * @file WinApp.h
+ * @brief Window設定など管理
+ */
 #pragma once
 #include <Windows.h>
 
@@ -16,7 +20,9 @@ public:
 	void Finalize();
 
 	// getter
+	// hwndゲッタ
 	HWND GetHwnd()const { return hwnd; }
+	// hInstanceゲッタ
 	HINSTANCE GetHInstance() const { return w.hInstance; }
 
 	// シングルトンインスタンスの取得

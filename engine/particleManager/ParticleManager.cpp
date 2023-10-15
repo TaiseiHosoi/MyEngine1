@@ -586,10 +586,8 @@ void ParticleManager::Draw(ID3D12GraphicsCommandList* cmdList)
 	cmdList->SetGraphicsRootConstantBufferView(0, constBuff->GetGPUVirtualAddress());
 	// シェーダリソースビューをセット
 	cmdList->SetGraphicsRootDescriptorTable(1, gpuDescHandleSRV);
-	// /*描画コマンド*/
-	//cmdList->DrawInstanced(_countof(vertices), 1, 0, 0);
-	//cmdList->DrawInstanced((UINT)std::distance(particles.begin(), particles.end()), 1, 0, 0);
-			// 描画コマンド
+
+	// 描画コマンド
 	if (std::distance(particles.begin(), particles.end()) < _countof(vertices))
 	{
 		cmdList->DrawInstanced(static_cast<UINT> (std::distance(particles.begin(), particles.end())), 1, 0, 0);
@@ -599,44 +597,7 @@ void ParticleManager::Draw(ID3D12GraphicsCommandList* cmdList)
 		cmdList->DrawInstanced(vertexCount, 1, 0, 0);
 	}
 }
-//
-//void ParticleManager::Draw()
-//{
-//	// nullptrチェック
-//	assert(device);
-//	assert(cmdList);
-//
-//	// 頂点バッファの設定
-//	cmdList->IASetVertexBuffers(0, 1, &vbView);
-//
-//	// パイプラインステートの設定
-//	cmdList->SetPipelineState(pipelinestate.Get());
-//	// ルートシグネチャの設定
-//	cmdList->SetGraphicsRootSignature(rootsignature.Get());
-//	// プリミティブ形状を設定
-//	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
-//
-//	// デスクリプタヒープの配列
-//	ID3D12DescriptorHeap* ppHeaps[] = { descHeap.Get() };
-//	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
-//
-//	// 定数バッファビューをセット
-//	cmdList->SetGraphicsRootConstantBufferView(0, constBuff->GetGPUVirtualAddress());
-//	// シェーダリソースビューをセット
-//	cmdList->SetGraphicsRootDescriptorTable(1, gpuDescHandleSRV);
-//	// /*描画コマンド*/
-//	//cmdList->DrawInstanced(_countof(vertices), 1, 0, 0);
-//	//cmdList->DrawInstanced((UINT)std::distance(particles.begin(), particles.end()), 1, 0, 0);
-//			// 描画コマンド
-//	if (std::distance(particles.begin(), particles.end()) < vertexCount)
-//	{
-//		cmdList->DrawInstanced(static_cast<UINT> (std::distance(particles.begin(), particles.end())), 1, 0, 0);
-//	}
-//	else
-//	{
-//		cmdList->DrawInstanced(vertexCount, 1, 0, 0);
-//	}
-//}
+
 
 void ParticleManager::Add(int life, Vector3 position, Vector3 velociy, Vector3 accel)
 {
@@ -655,29 +616,7 @@ void ParticleManager::RandParticle(Vector3 pos)
 {
 	for (int i = 0; i < 20; i++)
 	{
-		////X,Y,Z全て[-5.0f,+5.0f]でランダムに分布
-		//const float rnd_pos = 5.0f;
-		//Vector3 pos{};
-		///*pos = wtf_.translation_;*/
-		//pos.x += (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-		//pos.y += (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-		//pos.z += (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-		////X,Y,Z全て[-0.05f,+0.05f]でランダムに分布
-		//const float rnd_vel = 0.05f;
-		//Vector3 vel{};
-		//vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-		//vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-		//vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-		//// 重力に見立ててYのみ[-0.001f,0]でランダムに分布
-		//Vector3 acc{};
-		//const float rnd_acc = 0.001f;
-		//acc.y = -(float)rand() / RAND_MAX * rnd_acc;
 
-		//Vector4 col{};
-		//const float rnd_col = 1.0f;
-		//col.x = (float)rand() / RAND_MAX * rnd_col;
-		//col.y = (float)rand() / RAND_MAX * rnd_col;
-		//col.z = (float)rand() / RAND_MAX * rnd_col;
 
 		// 追加
 		wtf_.translation_ = pos;

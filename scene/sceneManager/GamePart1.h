@@ -1,3 +1,7 @@
+/**
+ * @file GamePart1.h
+ * @brief ゲームシーン1 基底クラス:IScene
+ */
 #pragma once
 #include "IScene.h"
 #include "GameObjManager.h"
@@ -13,11 +17,19 @@ public:
 	GamePart1(SceneManager* controller);
 	~GamePart1() override;
 
+	// 初期化
 	void Initialize(DirectXCommon* dxCommon, GameCamera* camera) override;
+
+	// 更新
 	void Update(Input* input, GameCamera* camera) override;
+
+	// 描画
 	void Draw(DirectXCommon* dxCommon) override;
+
+	// ポーズシーン切り替え
 	void Pause(Input* input, GameCamera* camera);
 
+	// サウンド再生
 	void PlaySounds();
 
 private:
@@ -51,7 +63,6 @@ private:
 
 	
 
-public:
 
 };
 

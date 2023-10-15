@@ -1,3 +1,7 @@
+/**
+ * @file ParticleManager.h
+ * @brief パーティクル管理クラス
+ */
 #pragma once
 
 #include <Windows.h>
@@ -158,7 +162,6 @@ public: // メンバ関数
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 	/// <summary>
 	/// マネージャーの座標をもとにランダムに放出する
@@ -182,9 +185,12 @@ public: // メンバ関数
 	void SetWorldTransform(WorldTransform wtf) { wtf_ = wtf; };
 	// パーティクル発生位置の設定
 	void Setposition(Vector3 position) { wtf_.translation_ = position; };
+	// マット行列セット
 	void SetMatWorld(Matrix4 mat) { wtf_.matWorld_ = mat; };
+	// ビルボード行列をセット
 	void SetBillboardMatWorld(Matrix4 mat) { bill = mat; };
 
+	// ワールドトランスフォームゲッタ
 	WorldTransform GetWorldTransform()
 	{
 		return wtf_;

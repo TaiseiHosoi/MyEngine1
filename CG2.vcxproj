@@ -78,14 +78,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)lib\libignore\fbx_sdk\include;$(SolutionDir)DirectXTex;$(ProjectDir)lib\libignore\fbx_sdk\include;$(IncludePath);$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)lib\libignore\fbx_sdk\lib;$(LibraryPath);$(ProjectDir)lib\libignore\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)lib\libignore\DirectXTex\inc;$(ProjectDir)lib\libignore\fbx_sdk\include;$(SolutionDir)DirectXTex;$(ProjectDir)lib\libignore\fbx_sdk\include;$(IncludePath);$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)lib\libignore\fbx_sdk\lib;$(LibraryPath);$(ProjectDir)lib\libignore\DirectXTex\lib\$(Configuration)</LibraryPath>
     <TargetName>キンミラシューター</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)lib\libignore\fbx_sdk\include;$(SolutionDir)DirectXTex;$(IncludePath);$(IncludePath)</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)lib\libignore\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)lib\libignore\DirectXTex\inc;$(ProjectDir)lib\libignore\fbx_sdk\include;$(SolutionDir)DirectXTex;$(IncludePath);$(IncludePath)</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)lib\libignore\fbx_sdk\lib;$(LibraryPath);$(ProjectDir)MyEngine1\lib\libignore\DirectXTex\lib\$(Configuration)</LibraryPath>
     <TargetName>キンミラシューター</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -131,7 +131,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)キンミラシューター$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -154,7 +154,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libfbxsdk-mt.lib;libxml2-mt.lib;zlib-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libfbxsdk-mt.lib;libxml2-mt.lib;zlib-mt.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)キンミラシューター$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -357,9 +357,6 @@
     <None Include="Resources\shaders\RimLight.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
-      <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
-    </ProjectReference>
     <ProjectReference Include="imgui\imgui.vcxproj">
       <Project>{4a6c89d9-e9a1-4f46-8403-7a559e4f166c}</Project>
     </ProjectReference>

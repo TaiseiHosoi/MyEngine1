@@ -1,4 +1,8 @@
-﻿#pragma once
+﻿/**
+ * @file SplineCurve.h
+ * @brief スプライン曲線クラス
+ */
+#pragma once
 #include <iostream>
 #include <vector>
 #include <cmath>

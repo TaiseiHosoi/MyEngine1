@@ -1,3 +1,7 @@
+/**
+ * @file BaseCollider.h
+ * @brief コライダー基底クラス
+ */
 #pragma once
 
 #include "CollisionTypes.h"
@@ -13,14 +17,16 @@ public:
 
 public:
 	BaseCollider() = default;
-	//仮想デストラクタ
+	// 仮想デストラクタ
 	virtual ~BaseCollider() = default;
 
+	// オブジェクトセット
 	inline void SetObject3d(Object3d* object)
 	{
 		this->object3d = object;
 	}
 
+	// オブジェクトゲット
 	inline Object3d* GetObject3d()
 	{
 		return object3d;
@@ -34,36 +40,43 @@ public:
 		return shapeType;
 	}
 
+	// ヒット時情報セット
 	inline void OnCllision(const CollisionInfo& infoArg)
 	{
 		isHit = true;
 		this->info = infoArg;
 	}
 
+	// 属性セット
 	inline void SetAttribute(unsigned short attributeArg)
 	{
 		this->attribute = attributeArg;
 	}
 
+	// 属性ゲット
 	unsigned short GetAttribute() {
 		return this->attribute;
 	}
 
+	// 属性追加
 	inline void AddAttribute(unsigned short attributeArg)
 	{
 		this->attribute |= attributeArg;
 	}
 
+	// 属性削除
 	inline void RemoveAttribute(unsigned short attributeArg)
 	{
 		this->attribute &= !attributeArg;
 	}
 
+	// isHitゲッタ
 	inline bool GetIsHit()
 	{
 		return isHit;
 	}
 
+	// 衝突相手の情報ゲッタ
 	inline CollisionInfo GetCollisionInfo()
 	{
 		return info;

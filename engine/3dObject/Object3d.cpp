@@ -505,27 +505,7 @@ bool Object3d::Initialize(bool isRimArg)
 void Object3d::Update()
 {
 	HRESULT result;
-	//Matrix4 matScale, matRot, matTrans;
 
-	//matScale.identity();
-	//matRot.identity();
-	//matTrans.identity();
-
-	//matScale = MathFunc::Scale(scale);
-	//matRot = MathFunc::Rotation(rotation, 6);
-	//matTrans = MathFunc::Move(position);
-
-	//// ワールド行列の合成
-	//matWorld.identity(); // 変形をリセット
-	//matWorld *= matScale;// ワールド行列にスケーリングを反映
-	//matWorld *= matRot; // ワールド行列に回転を反映
-	//matWorld *= matTrans; // ワールド行列に平行移動を反映
-
-	//// 親オブジェクトがあれば
-	//if (parent != nullptr) {
-	//	// 親オブジェクトのワールド行列を掛ける
-	//	matWorld *= parent->matWorld;
-	//}
 
 	worldTransform.UpdateMatWorld();
 
@@ -539,7 +519,7 @@ void Object3d::Update()
 	constBuffB0->Unmap(0, nullptr);
 
 
-	XMVECTOR CameraVec = { 10000.0f,10000.0f,10000.0f/*camera_->GetEye().x - worldTransform.translation_.x + 2.0f,camera_->GetEye().x - worldTransform.translation_.y + 2.0f,camera_->GetEye().x - worldTransform.translation_.z*/};
+	XMVECTOR CameraVec = { 10000.0f,10000.0f,10000.0f};
 
 	CameraVec = XMVector3Normalize(CameraVec);
 	// 定数バッファB2へデータ転送
@@ -557,10 +537,7 @@ void Object3d::Update()
 	constMap3->Emission = rim.Emission;
 	constBuffRim->Unmap(0, nullptr);
 
-	//if (collider)
-	//{
-	//	collider->Update();
-	//}
+
 
 }
 
@@ -618,10 +595,3 @@ void Object3d::SetCamera(Camera* camera)
 	Object3d::camera_ = camera; 
 }
 
-//void Object3d::SetCollider(BaseCollider* collider)
-//{
-//	collider->SetObject(this);
-//	this->collider = collider;
-//	CollisionManager::GetInstance()->AddCollider(this->collider);
-//	this->collider->Update();
-//}

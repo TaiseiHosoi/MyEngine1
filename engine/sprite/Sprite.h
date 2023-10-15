@@ -1,3 +1,7 @@
+/**
+ * @file Sprite.h
+ * @brief 2D画像クラス
+ */
 #pragma once
 #include"SpriteCommon.h"
 #include <DirectXMath.h>
@@ -34,47 +38,64 @@ public:
 		RT,//右上
 	};
 public:
-	//初期化
+	// 初期化
 	void Initialize(SpriteCommon* spritecommon_, uint32_t texturerIndex = UINT32_MAX);
 
+	// 描画
 	void Draw();
 
+	// 更新
 	void Update();
 
+	// 描画位置セット
 	void SetPozition(const XMFLOAT2& position_);
 
+	// 描画位置ゲッタ
 	const XMFLOAT2& GetPosition() const { return position; }
 
+	// 回転角セット
 	void SetRotation(float rotation_);
 
+	// 回転角ゲット
 	float GetRotation() { return rotation; }
 
+	// カラーセット
 	void SetColor(const XMFLOAT4& color_) { color = color_; }
 
+	// カラーゲット
 	XMFLOAT4 GetColor() { return color; }
 
+	// スケールをセット
 	void SetScale(const XMFLOAT3& scale_) { scale = scale_; }
 
+	// スケールをゲット
 	XMFLOAT3 GetScale() { return scale; }
 
+	//  アンカーポイントをセット
 	void SetAnchorPoint(const XMFLOAT2& anchorPoint_) { anchorPoint = anchorPoint_; }
 
+	// アンカーポイントをゲット
 	XMFLOAT2 GetAnchorPoint() { return anchorPoint; }
 
+	// テクスチャ番号セット
 	void SetTextureIndex(uint32_t texNmb) { textureIndex_ = texNmb; }
 
+	// テクスチャ番号ゲッタ
 	uint32_t GetTextureIndex() { return textureIndex_; }
 
+	// テクスチャサイズセット
 	void SetTexSize(XMFLOAT2 texSize) { textureSize = texSize; }
 
+	// テクスチャサイズゲット
 	XMFLOAT2 GetTexSize() { return textureSize; }
 
+	// サイズのゲッタ
 	XMFLOAT2 GetSize() { return size_; }
 
+	// サイズのセッタ
 	void SetSize(XMFLOAT2 size);
 
-	/*void SetAnchorPoint(const XMFLOAT2& anchorpoint_) { anchorpoint = anchorpoint_; };*/
-
+	// アンカーポイントゲッタ
 	XMFLOAT2 GetAnchorPonit() { return anchorpoint; }
 
 	/// 上下反転の設定

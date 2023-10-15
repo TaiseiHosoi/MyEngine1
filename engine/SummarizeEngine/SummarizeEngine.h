@@ -1,3 +1,7 @@
+/**
+ * @file SummarizeEngine.h
+ * @brief エンジン内の必要クラスやメソッドを一括管理するクラス
+ */
 #pragma once
 #include"WinApp.h"
 #include"DirectXCommon.h"
@@ -13,15 +17,21 @@
 
 const float PI = 3.14f;
 
-//using namespace Microsoft::WRL;
 template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 class SummarizeEngine {
 public:
 
+	// 初期化
 	void Initialize();
+
+	// 更新
 	void Update();
+	
+	//描画
 	void Draw();
+
+	// 終了時実行処理
 	void Finalize();
 
 private:

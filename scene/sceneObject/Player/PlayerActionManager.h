@@ -1,3 +1,7 @@
+/**
+ * @file PlayerAction.h
+ * @brief プレイヤーの行動マネージャー
+ */
 #pragma once
 #include <memory>
 #include <stack>

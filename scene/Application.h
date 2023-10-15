@@ -1,3 +1,7 @@
+/**
+ * @file Application.h
+ * @brief アプリ層を切り分けたクラス
+ */
 #pragma once
 #include "DirectXCommon.h"
 #include "SpriteCommon.h"

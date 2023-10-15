@@ -1,3 +1,7 @@
+/**
+ * @file Ground.h
+ * @brief フィールドや背景オブジェクト
+ */
 #pragma once
 #include "DirectXCommon.h"
 
@@ -13,13 +17,19 @@ public:
 	~Field();
 
 public:
+	// 初期化
 	void Initialize();
 
+	// 更新
 	void Update();
 
+	// 描画
 	void Draw(DirectXCommon* dxcomon_);
 
+	// 自機が接地しているか
 	static bool PlayerOnGround(Vector3 wolPos, float Obj_R);
+
+	// 敵が接地しているか
 	static bool EnemyOnGround(Vector3 wolPos, float Obj_R);
 
 

@@ -1,3 +1,7 @@
+/**
+ * @file PlayerAction.h
+ * @brief 自機行動の基底クラス
+ */
 #pragma once
 #include "Object3d.h"
 #include "FBXObject3d.h"

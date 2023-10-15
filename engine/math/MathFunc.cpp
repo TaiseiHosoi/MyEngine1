@@ -135,12 +135,6 @@ Matrix4 MathFunc::Move(Vector3 Move) {
 	return matMove;
 }
 
-//void AffinTrans::affin(WorldTransform& affin) {
-//	affin.matWorld_ = Initialize();
-//	affin.matWorld_ *= Scale(affin.scale_);
-//	affin.matWorld_ *= Rotation(affin.rotation_, 6);
-//	affin.matWorld_ *= Move(affin.translation_);
-//}
 
 Vector3 MathFunc::MatVector(const Vector3 vector3, const Matrix4 matrix4) {
 

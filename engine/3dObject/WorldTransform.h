@@ -1,4 +1,9 @@
+/**
+ * @file WorldTransform.h
+ * @brief ゲームでの位置、回転、スケールを持つ。
+ */
 #pragma once
+
 #include "Vector3.h"
 #include "Matrix4.h"
 #include "MathFunc.h"
@@ -9,6 +14,7 @@ public:
 	WorldTransform(Vector3 scale, Vector3 rotation, Vector3 translation);
 	WorldTransform() {};
 	//メンバ関数
+	// 初期化
 	void initialize();
 
 	//ワールド変換行列の更新

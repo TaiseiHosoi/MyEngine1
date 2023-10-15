@@ -114,9 +114,6 @@ void GameObjManager::UpdateAllObjects()
 {
 	
 	UpdateWalkingEnemyPopCommands();
-    /*for (Enemy* enemy : enemies) {
-        enemy->Update();
-    }*/
 
 	for (int i = 0; i < objects.size();i++) {
 		objects[i].Update();
@@ -167,11 +164,7 @@ void GameObjManager::UpdateAllObjects()
 		
 	}
 
-	//if (!moaiObjs.empty()) {
-	//	for (int i = 0; i < enemies.size(); i++) {
-	//		enemies[i]->Update();
-	//	}
-	//}
+
 	for (int i = 0; i < walkingEnemies.size(); i++) {
 		walkingEnemies[i]->Update();
 
@@ -207,19 +200,13 @@ void GameObjManager::UpdateAllObjects()
 
 void GameObjManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
 {
-    /*for (Enemy* enemy : enemies) {
-        enemy->Draw(cmdList);
-    }*/
+
 	for (int i = 0; i < walkingEnemies.size(); i++) {
 		walkingEnemies[i]->Draw(cmdList);
 	}
 	for (int i = 0; i < objects.size(); i++) {
 		objects[i].Draw(cmdList);
 	}
-
-	//for (int i = 0; i < camObjs.size(); i++) {
-	//	camObjs[i].Draw(cmdList);
-	//}
 	
 	for (int i = 0; i < moaiObjs.size(); i++) {
 		if (moaiState[i].hp_ > 0) {
@@ -227,21 +214,15 @@ void GameObjManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
 		}
 	}
 
-	//if (!moaiObjs.empty()) {
-	//	for (int i = 0; i < enemies.size(); i++) {
-	//		enemies[i]->Draw(cmdList);
-	//	}
-	//}
-
 	
 }
 
 void GameObjManager::DestroyAllEnemies()
 {
-    /*for (Enemy* enemy : enemies) {
-        delete enemy;
-    }
-    enemies.clear();*/
+    //for (Enemy* enemy : enemies) {
+    //    delete enemy;
+    //}
+    //enemies.clear();
 }
 
 void GameObjManager::LoadData(const char* filename, std::stringstream& stream)

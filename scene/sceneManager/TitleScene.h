@@ -1,3 +1,7 @@
+/**
+ * @file TitleScene.h
+ * @brief タイトルシーン 基底クラス:IScene
+ */
 #pragma once
 #include "IScene.h"
 
@@ -11,11 +15,15 @@ public:
 	TitleScene(SceneManager* controller);
 	~TitleScene() override;
 
+	// 初期化
 	void Initialize(DirectXCommon* dxCommon, GameCamera* camera) override;
+	// 更新
 	void Update(Input* input, GameCamera* camera) override;
+	// 描画
 	void Draw(DirectXCommon* dxCommon) override;
 public:
 
+	// カメラのモード切り替え
 	void ChangeCamera(Input* input,GameCamera* camera);
 
 private:

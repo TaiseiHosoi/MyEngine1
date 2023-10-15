@@ -1,3 +1,7 @@
+/**
+ * @file CollisionPrimitive.h
+ * @brief 当たり判定の対応する形の構造体
+ */
 #pragma once
 #include"DirectXMath.h"
 #include"Vector3.h"

@@ -1,4 +1,8 @@
-﻿#pragma once
+﻿/**
+ * @file GameObjManager.h
+ * @brief 読み込みデータでロードしたゲーム内の出現オブジェクトを一括管理する
+ */
+#pragma once
 #include<vector>
 #include"Enemy.h"
 #include"WalkingEnemy.h"
@@ -59,8 +63,7 @@ private:
     //当たり判定
     std::vector<SphereCollider*> moaiSpCollider;
     std::vector<Vector3> moaiSpherePos = {};
-    /*std::vector<SphereCollider*> walkingEnemySpCollider;
-    std::vector<Vector3> walkingEnemySpherePos = {};*/
+
 
     //その他
     int moaiDigRot = 0; //自機の回転用クロック変数
@@ -79,32 +82,50 @@ private:
 
 
 public:
+    // ゲーム起動時の初期化
     void StaticInit();
 
+    /// <summary>
+    /// 敵の追加
+    /// </summary>
+    /// <param name="enemyNum"></敵の種類(Enum管理)>
+    /// <param name="popTime"></ディレイ>
+    /// <param name="offsetPos"></沸き位置ずらす値>
     void AddEnemy(int enemyNum,int popTime,Vector3 offsetPos);
 
+    // 全オブジェクト更新
     void UpdateAllObjects();
 
+    // 全敵オブジェ描画
     void DrawAllEnemies(ID3D12GraphicsCommandList* cmdList);
 
+    // 全敵消滅
     void DestroyAllEnemies();
 
+    // ファイル情報読み取り
     void LoadData(const char* filename, std::stringstream& stream);
 
+    //ファイル読みとりリセット
     void ResetCommands(const char* filename, std::stringstream& stream);
 
+    // 歩兵敵ポップコマンド
     void UpdateWalkingEnemyPopCommands();
 
+    // レールカメラ情報セット
     void SetRailCamInfo(RailCameraInfo* info) { railCameraInfo_ = info; };
 
+    // プレイヤーのworldTFのセット
     void SetPlayerWorldTF(WorldTransform* worldTF) { playerWorldTF_ = worldTF; };
 
 
 public:
+    // camObjsのゲッタ
     std::vector<Object3d>* GetCamObjsPtr() { return &camObjs; };
 
+    // enemiesのゲッタ
     std::vector<Enemy*>GetEnemies() { return enemies; }
 
+    // 歩兵敵のゲッタ
     std::vector<WalkingEnemy*>GetWalkingEnemies() { return walkingEnemies; }
 
     

@@ -1,4 +1,8 @@
 #pragma once
+/**
+ * @file Mesh.h
+ * @brief Wavefront3Dモデルの面情報
+ */
 #include <cassert>
 #include <string>
 #include <Windows.h>

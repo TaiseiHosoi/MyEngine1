@@ -1,3 +1,7 @@
+/**
+ * @file RaycastHit.h
+ * @brief レイキャストの衝突した際に使う情報構造体
+ */
 #pragma once
 #include "BaseCollider.h"
 

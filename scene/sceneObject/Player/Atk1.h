@@ -1,3 +1,7 @@
+/**
+ * @file Atk.h
+ * @brief 自機の攻撃バリエーション1
+ */
 #pragma once
 #include "PlayerAction.h"
 class Atk1 :
@@ -11,8 +15,13 @@ public:
     Atk1(PlayerActionManager* pActManager);
     ~Atk1() override;
 
+    // 初期化
     void Initialize(FBXObject3d* gameObject) override;
+    
+    // 更新
     void Update(Input* input) override;
+    
+    // 描画
     void Draw() override;
 
 private:

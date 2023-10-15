@@ -59,12 +59,12 @@ void GameCamera::Update()
 {
 #pragma region マウス処理
 	//マウス処理
-	//if (GetActiveWindow() == WinApp::GetInstance()->GetHwnd())
-	//{
-	//	ShowCursor(false);
-	//	//ViewPointMovement();
-	//	CulDirection();
-	//}
+	if (GetActiveWindow() == WinApp::GetInstance()->GetHwnd())
+	{
+		ShowCursor(false);
+		//ViewPointMovement();
+		CulDirection();
+	}
 #pragma endregion マウス処理
 
 #pragma region レールカメラ処理
@@ -140,18 +140,6 @@ void GameCamera::Update()
 	railCameraInfo_->timeRate = timeRate_;
 	railCameraInfo_->nowCount = nowCount_;
 	railCameraInfo_->points = points;
-
-	
-
-
-
-	//ImGui::Begin("camera");
-	//ImGui::InputFloat("timeRate", &timeRate_);
-	//ImGui::InputInt("startIndex", &startIndexInput);
-	//ImGui::InputInt("nowCount", &nowCountInput);
-	//ImGui::InputFloat3("nowPos", &e.x);
-	//ImGui::InputFloat3("nowTarget", &targ.x);
-	//ImGui::End();
 	
 
 	Camera::Update();
