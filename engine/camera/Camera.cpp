@@ -38,8 +38,6 @@ void Camera::UpdateViewMatrix()
 	// カメラZ軸（視線方向）
 	Vector3 cameraAxisZ = targetPosition - eyePosition;
 
-	// 0ベクトルだと向きが定まらないので除外
-
 	// ベクトルを正規化
 	cameraAxisZ.nomalize();
 
@@ -55,11 +53,7 @@ void Camera::UpdateViewMatrix()
 	// Y軸はZ軸→X軸の外積で求まる
 	cameraAxisY = cameraAxisZ.cross(cameraAxisX);
 
-	// ここまでで直交した3方向のベクトルが揃う
-	//（ワールド座標系でのカメラの右方向、上方向、前方向）	
-
 	// カメラ回転行列
-
 	Matrix4 matCameraRot;
 	// カメラ座標系→ワールド座標系の変換行列
 	matCameraRot.m[0][0] = cameraAxisX.x;

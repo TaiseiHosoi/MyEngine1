@@ -1,3 +1,7 @@
+/**
+ * @file SphereCollider.h
+ * @brief 球のコライダー
+ */
 #pragma once
 
 #include "BaseCollider.h"
@@ -15,24 +19,28 @@ public:
 		shapeType = COLLISIONSHAPE_SPHERE;
 	}
 
-	//更新
+	// 更新
 	void Update() override;
 
+	// 半径セット
 	inline void SetRadius(float radiusArg)
 	{
 		this->radius = radiusArg; 
 	}
 	
+	// 半径ゲット
 	float GetRadius()
 	{
 		return radius; 
 	}
 	
+	// 中心位置セット
 	inline void SetBasisPos(Vector3* pos)
 	{
 		basisPos = pos;
 	}
 
+	// 中心位置ゲット
 	Vector3 GetBasisPos()
 	{
 		return *basisPos;

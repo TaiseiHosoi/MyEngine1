@@ -1,3 +1,7 @@
+/**
+ * @file SpriteCommon.h
+ * @brief 2Dスプライトの管理クラス
+ */
 #pragma once
 #include"DirectXCommon.h"
 #include <DirectXTex.h>
@@ -26,7 +30,7 @@ public:
 		XMMATRIX mat;	//3D変換行列
 	};
 public:
-	//初期化
+	// 初期化
 	void Initialize(DirectXCommon* dxcommon);
 
 	DirectXCommon* GetDxCommon() { return dxcommon_; }
@@ -34,8 +38,6 @@ public:
 	ComPtr<ID3D12RootSignature> GetRootSignature() { return rootSignature.Get(); }
 
 	ComPtr<ID3D12PipelineState> GetPipelineState() { return pipelineState.Get(); }
-
-	//ID3D12Resource* GetConstBuffMaterial() { return constBuffMaterial; }
 
 	ID3D12DescriptorHeap* GetSrvHeap() { return srvHeap.Get(); }
 
@@ -45,21 +47,23 @@ public:
 
 	D3D12_RESOURCE_DESC& GetResourceDesc() { return resDesc; }
 
+	// テクスチャをロード
 	void LoadTexture(uint32_t index, const std::string& fileName);
 
+	// テクスチャのコマンドセット
 	void SetTextureCommands(uint32_t index);
 
+	// texBuff[index]ゲッタ
 	Microsoft::WRL::ComPtr<ID3D12Resource> GetTexBuff(uint32_t index) { return texBuff[index]; }
 
+	// texBuff[index].getゲッタ
 	ComPtr<ID3D12Resource> GetTextureBuffer(uint32_t index)const { return texBuff[index].Get(); }
 
+	// スプライトの描画前処理
 	void SpritePreDraw();
 
-
+	// スプライトの描画後処理
 	void SpritePostDraw();
-	//ID3D12Resource* GetConstBuffTransform() { return constBuffTransform; }
-
-	//ConstBufferDataTransform* GetConstMapTransform() { return constMapTransform; }
 
 	//SRV用デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> srvHeap;
@@ -88,10 +92,6 @@ private:
 
 	// パイプランステートの生成
 	ComPtr<ID3D12PipelineState> pipelineState = nullptr;
-
-
-	//// テクスチャバッファ
-	//ID3D12Resource* texBuff = nullptr;
 
 	std::array<Microsoft::WRL::ComPtr<ID3D12Resource>, kMaxSRVCount>texBuff;
 

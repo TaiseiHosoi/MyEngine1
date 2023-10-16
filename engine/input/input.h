@@ -1,3 +1,7 @@
+/**
+ * @file Input.h
+ * @brief インプット関連クラス
+ */
 #pragma once
 #define DIRECTINPUT_VERSION	0x0800
 #include <wrl.h>

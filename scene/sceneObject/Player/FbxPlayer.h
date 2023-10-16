@@ -1,3 +1,7 @@
+/**
+ * @file FbxPlayer.h
+ * @brief 自機の基本クラス
+ */
 #pragma once
 #include "Object3d.h"
 #include "FBXObject3d.h"
@@ -33,6 +37,7 @@ public:
 	//描画
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
+	//パーティクル発生
 	void CreateParticle();
 
 	//ダメージ
@@ -44,21 +49,32 @@ public:
 	//射撃
 	void BulletShot();
 
+	// 自機Object3d変数のゲッタ
 	FBXObject3d* GetObject3d();
 
-	//デスフラグのSetter,Getter
+	//デスフラグのSetter
 	void SetIsDead(bool isDead) { isDead_ = isDead; }
+
+	//デスフラグのGetter
 	bool GetIsDead() { return isDead_; }
 
 	//スタティック用の変数アクセッサ
 	//攻撃に当たり判定が発生しているかのアクセッサ
 	static bool GetIsAtkCollide();
+
+	//攻撃に当たり判定が発生しているかのアクセッサ
 	static void SetIsAtkCollide(bool isAtkCollide);
+
 	//ガードの判定が出ているかのアクセッサ
 	static bool GetIsGuardCollide();
+
+	//ガードの判定が出ているかのアクセッサ
 	static void SetIsGuardCollide(bool isGuardCollide);
+
 	//hpアクセッサ
 	static int GetHp();	
+
+	//hpアクセッサ
 	static void SetHp(int hp);	
 	
 
@@ -70,14 +86,18 @@ private:
 	//コライダー処理
 	void PColliderUpdate();
 
+	//ガード成功時
 	bool GetGuardExcute() { return isGuard; }
 
 
 public:
+	//自機の向いている方向のゲッタ
 	Vector3 GetNowFaceAngle();
 
+	//レールカメラ情報セッタ
 	void SetRailCameraInfo(RailCameraInfo* info);
 
+	//ゲームオブジェクトの定数バッファゲッタ
 	ID3D12Resource* GetConstBuff() { return gameObject_->GetConstBuff(); };
 
 private:

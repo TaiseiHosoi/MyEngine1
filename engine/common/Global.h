@@ -1,3 +1,7 @@
+/**
+ * @file Global.h
+ * @brief 読み込みデータでロードしたゲーム内の出現オブジェクトを一括管理する
+ */
 #pragma once
 
 #include <Windows.h>

@@ -1,3 +1,7 @@
+/**
+ * @file ImGuiManager.h
+ * @brief ImGuiをエンジンで使うための管理クラス
+ */
 #pragma once
 #include"imgui.h"
 #include"WinApp.h"

@@ -1,3 +1,7 @@
+/**
+ * @file SceneManager.h
+ * @brief シーン管理クラス
+ */
 #pragma once
 #include <memory>
 #include <stack>
@@ -47,10 +51,13 @@ public:
 
 	// シーンを変更する
 	void ChangeScene(IScene*);
+
+	// ゲームのシーン設定をリセットする(敵の発生情報など)
 	void ResetParameters();
 
+	// jsonManager情報をセット
 	void SetJsonManager(GameObjManager* jsonmanager) { gameObjectManager_ = jsonmanager; };
-	//ID3D12GraphicsCommandList* GetCommandList() { return _dxCommon->GetCommandList(); };
+
 public:
 	
 	std::unique_ptr <Audio> audio;
@@ -59,19 +66,12 @@ public:
 	std::unique_ptr<ParticleManager> particleManager_;
 	
 	GameObjManager* gameObjectManager_ = nullptr;
-	//std::unique_ptr <Object3d> object3d;
-	//std::unique_ptr <Mesh> model;
 
 	//FBXモデル
 	std::unique_ptr<FBXModel> hitokunFbxM_;
 	std::unique_ptr<FBXObject3d>hitokunFbxO_;
-	//FBXモデル
-	//std::unique_ptr<FBXModel> bossFbxM_;
-	//std::unique_ptr<FBXObject3d> bossFbxO_;
-
 	std::unique_ptr<FbxPlayer> fbxPlayer_;
 	
-
 	std::unique_ptr<Field> field_;
 
 

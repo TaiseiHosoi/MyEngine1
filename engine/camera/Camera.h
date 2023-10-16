@@ -1,3 +1,7 @@
+/**
+ * @file Camera.h
+ * @brief カメラの基本クラス
+ */
 #pragma once
 
 #include <DirectXMath.h>
@@ -40,7 +44,6 @@ public: // メンバ関数
 	/// </summary>
 	void UpdateProjectionMatrix();
 
-	float GetAxisY();
 
 	/// <summary>
 	/// ビュー行列の取得

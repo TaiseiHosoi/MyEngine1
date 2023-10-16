@@ -1,3 +1,7 @@
+/**
+ * @file Vector3.h
+ * @brief ベクター3クラス
+ */
 #pragma once
 
 class Vector4

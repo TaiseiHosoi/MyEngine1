@@ -8,9 +8,6 @@ WinApp* WinApp::WinApp_  = nullptr;
 void WinApp::Initialize() {
 #pragma region WindousAPI初期化処理
 
-	//コンソールへの文字出力
-	//OutputDebugStringA("Hello,DirectX!!\n");
-
 
 	//ウィンドウクラスの設定
 	w.cbSize = sizeof(WNDCLASSEX);

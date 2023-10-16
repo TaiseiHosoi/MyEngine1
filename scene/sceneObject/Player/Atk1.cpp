@@ -141,78 +141,7 @@ void Atk1::Update(Input* input)
 		}
 
 	}
-	//else if (isCombo2 == true && isCombo1 == false) {
-
-	//	if (atkMovePhase == 0) {
-	//		int maxCurrent = 30;
-	//		if (animFlameCT == 0) {	//初フレーム(初期化)
-	//			animNum = 2;
-	//			gameObject_->PlayAnimation(animNum);
-
-	//		}
-
-	//		//少し打ち上がる動作
-	//		gameObject_->SetPosition({ gameObject_->GetWorldTransform().translation_.x,
-	//			static_cast<float>(Ease::OutQuad(5, 0, maxCurrent,animFlameCT)),
-	//			gameObject_->GetWorldTransform().translation_.z }
-	//		);
-
-	//		//アニメーション
-	//		gameObject_->AnimFlameInter(animFlameCT, maxCurrent + 3);
-	//		
-	//		if (animFlameCT >= maxCurrent) {
-	//			atkMovePhase = 1;	//カレント最大値になったらフェーズを進める
-	//			animFlameCT = 0;
-	//		}
-
-	//		////何フレーム目に攻撃判定が出るか
-	//		//if (animFlameCT > 10 && animFlameCT < 30) {
-	//		//	FbxPlayer::isAtkCollide = true;
-	//		//}
-	//		//else {
-	//		//	FbxPlayer::isAtkCollide = false;
-	//		//}
-
-	//	}
-	//	else if (atkMovePhase == 1) {
-	//		int maxCurrent = 60;
-
-	//		if (animFlameCT == 0) {	//初フレーム(初期化)
-	//			animNum = 3;
-	//			gameObject_->PlayAnimation(animNum);
-
-	//		}
-
-	//		//アニメーション管理
-	//		gameObject_->AnimFlameInter(10, 20);
-	//		
-
-	//		//回転
-	//		float rotSpeed = 0.8f;
-	//		gameObject_->wtf.rotation_.x += rotSpeed;
-
-
-	//		////何フレーム目に攻撃判定が出るか
-	//		//if (animFlameCT > 10 && animFlameCT < 60) {
-	//		//	FbxPlayer::isAtkCollide = true;
-	//		//}
-	//		//else {
-	//		//	FbxPlayer::isAtkCollide = false;
-	//		//}
-
-	//		//フェーズ管理
-	//		if (animFlameCT >= maxCurrent) {
-	//			isAtk = false;
-	//			isCombo2 = false;	//カレント最大値になったらフェーズを進める
-	//			animFlameCT = 0;
-	//			gameObject_->AnimFlameInter(animFlameCT, 80);
-	//			animNum = 5;
-	//			gameObject_->PlayAnimation(animNum);
-	//			atkMovePhase = 0;
-	//			gameObject_->wtf.translation_.y = 0;
-	//		}
-	//	}
-	//}
+	
 
 	if (isAtk == false) {
 		_pActManager->SetNowActNum(ACTION_NUM::move);

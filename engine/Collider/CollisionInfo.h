@@ -1,3 +1,7 @@
+/**
+ * @file CollisionInfo.h
+ * @brief 衝突情報構造体
+ */
 #pragma once
 #include "MathFunc.h"
 

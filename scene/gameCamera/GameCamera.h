@@ -1,3 +1,8 @@
+/**
+ * @file GameCamera.h
+ * @brief ゲーム用カメラクラス
+ */
+
 #pragma once
 #include"Camera.h"
 #include"Input.h"
@@ -18,25 +23,55 @@ class GameCamera :
 public:
 	//コンストラクタ
 	GameCamera(int window_width , int window_height , Input* input);
+
+	// 初期化
 	void Initialize();
+
+	// 更新
 	void Update();
+
+	// ターゲットワールドトランスフォームセッタ
 	void SetTargetPos(WorldTransform* targetPos);
+
+	// ターゲットワールドトランスフォームゲッタ
 	WorldTransform* GetTargetPos();
+
+	// ターゲット位置の破棄
 	void RemoveTargetPos();
+
+	// eyePosセッタ
 	void SetEyePos(WorldTransform* eyePos);
+
+	// followerのワールドトランスフォームセット
 	void SetFollowerPos(WorldTransform* wtf);
+
+	//  eyePosのワールドトランスフォームゲッタ
 	WorldTransform* GetEyePos();
+
+	// eyePosの破棄
 	void RemoveEyePos();
+
+	// マウス操作関数
 	void ViewPointMovement();
+
+	// ゲームカメラリセット
 	void ResetGameCam();
 
-	//プレイヤーを追従する
+	// プレイヤーを追従する
 	void FollowPlayer();
-	//シェイク用
+	// シェイク用
 	float randomFloat(float min , float max);	//ランダムを引き出す
-	void ShakePrim();
-	static void SetShakePrimST(float dura , float mag , bool isShakePrim);
 
+	// 画面シェイク関数
+	void ShakePrim();
+
+	/// <summary>
+	/// 画面シェイク関数情報セット
+	/// </summary>
+	/// <param name="dura"></時間>
+	/// <param name="mag"></大きさ>
+	/// <param name="isShakePrim"></シェイクさせるか>
+	static void SetShakePrimST(float dura , float mag , bool isShakePrim);
 
 	//カメラの向きを計算する関数
 	void CulDirection();
@@ -46,10 +81,13 @@ public:
 
 public:	// アクセッサ
 
+	// シェイクのベクトルセット
 	void SetShakeVec(Vector3 shakeVec);
+
 	// シーン切り替え用
 	void ChangeFollowFlag(bool flag);
 
+	// ポーズ中かのセット
 	void SetIsPause(bool isPause)
 	{
 		isPause_ = isPause;
@@ -59,14 +97,22 @@ public:	// アクセッサ
 	void SetJsonObj(std::vector<Object3d>* objs) { jsonObjsPtr = objs; };
 
 	// スプライン曲線用変数のゲッタ
+	// startIndex_ゲッタ
 	int GetStartIndex() { return static_cast<int>(startIndex_); };
+	// timeRate_ゲッタ
 	float GetTimeRate() { return timeRate_; };
+	// oldTimeRate_ゲッタ
 	float GetOldTimeRate() { return timeRate_; };
+	// points_ゲッタ
 	std::vector<Vector3> GetPoints() { return points; };
+
+	//カメラモードのセット
 	void SetCamMode(int num);
 
+	// oldStartIndex_のゲッタ
 	int GetOldStartIndex() { return oldStartIndex_; };
 
+	// レールカメラ情報ゲッタ
 	RailCameraInfo* GetRailCameraInfo();	//レールカメラの進行状況とレール情報を渡す
 
 

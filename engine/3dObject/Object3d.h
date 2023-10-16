@@ -1,5 +1,8 @@
 #pragma once
-
+/**
+ * @file Object3D.h
+ * @brief Wavefrontの情報を初期化、更新、描画する。
+ */
 #include <Windows.h>
 #include <wrl.h>
 #include <d3d12.h>
@@ -142,12 +145,7 @@ private: // 静的メンバ変数
 	static Matrix4 matView;
 	//// 射影行列
 	static Matrix4 matProjection;
-	//// 視点座標
-	//static XMFLOAT3 eye;
-	//// 注視点座標
-	//static XMFLOAT3 target;
-	//// 上方向ベクトル
-	//static XMFLOAT3 up;
+
 
 private:// 静的メンバ関数
 	/// <summary>
@@ -243,21 +241,12 @@ public:
 	/// <param name="position">座標</param>
 	void SetRimEmission(const float& rimEmission) { this->rim.Emission = rimEmission; }
 
-	/// <summary>
-	/// コライダーのセット
-	/// </summary>
-	/// <param name="collider">コライダー</param>
-	//void SetCollider(BaseCollider* collider);
 
-	/// <summary>
-	/// 衝突時のコールバック関数
-	/// </summary>
-	/// <param name="info">衝突情報</param>
-	//virtual void OnCollision(const CollisionInfo& info) {};
 
 	//アクセッサ
+	// モデルセッタ
 	void SetModel(Mesh* modelArg) { this->model = modelArg; }
-
+	// モデルゲッタ
 	inline Mesh* GetModel() { return model; };
 
 #pragma region 共通の定数バッファ
@@ -275,16 +264,7 @@ public: // メンバ変数
 	Rim rim;
 	// 色
 	XMFLOAT4 color = {1 , 1 , 1 , 1};
-	//// ローカルスケール
-	//Vector3 scale = { 1,1,1 };
-	//// X,Y,Z軸回りのローカル回転角
-	//Vector3 rotation = { 0,0,0 };
-	//// ローカル座標
-	//Vector3 position = { 0,0,0 };
-	//// ローカルワールド変換行列
-	//Matrix4 matWorld;
-	//// 親オブジェクト
-	//Object3d* parent = nullptr;
+
 
 	//モデル
 	Mesh* model = nullptr;

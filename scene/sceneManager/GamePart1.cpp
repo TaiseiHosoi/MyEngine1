@@ -15,59 +15,61 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
 	static_cast<void>(dxCommon);
 
-	//音の初期化と読み込み
-	audio_ = std::make_unique<Audio>();
-	audio_->Initialize();
-	audio_->LoadWave("newspaper.wav");
-
-	attack_ = std::make_unique<Sprite>();
-	attack_->Initialize(_controller->spriteCommon_.get(), 6);
-	attack_->SetSize({ 128,112 });
-	attack_->SetPozition({ 900,550 });
-
-	attack2_ = std::make_unique<Sprite>();
-	attack2_->Initialize(_controller->spriteCommon_.get(), 7);
-	attack2_->SetSize({ 128,112 });
-	attack2_->SetPozition({ 900,550 });
-
-	guard_ = std::make_unique<Sprite>();
-	guard_->Initialize(_controller->spriteCommon_.get(), 8);
-	guard_->SetSize({ 160,256 });
-	guard_->SetPozition({ 1100,450 });
-
-	guard2_ = std::make_unique<Sprite>();
-	guard2_->Initialize(_controller->spriteCommon_.get(), 9);
-	guard2_->SetSize({ 160,256 });
-	guard2_->SetPozition({ 1100,450 });
-
 	move_ = std::make_unique<Sprite>();
 	move_->Initialize(_controller->spriteCommon_.get(), 10);
 	move_->SetSize({ 128,80 });
 	move_->SetPozition({ 100,550 });
 
-	enemyHp_ = std::make_unique<Sprite>();
-	enemyHp_->Initialize(_controller->spriteCommon_.get(), 12);
-	enemyHp_->SetAnchorPoint({ 0 , 0 });
-	enemyHp_->SetSize({ 1280 , 32 });
-	enemyHp_->SetPozition({ 0 , 10 });
+	////音の初期化と読み込み
+	//audio_ = std::make_unique<Audio>();
+	//audio_->Initialize();
+	//audio_->LoadWave("newspaper.wav");
 
-	enemyHpRed_ = std::make_unique<Sprite>();
-	enemyHpRed_->Initialize(_controller->spriteCommon_.get(), 13);
-	enemyHpRed_->SetAnchorPoint({ 0 , 0 });
-	enemyHpRed_->SetSize({ 1280 , 32 });
-	enemyHpRed_->SetPozition({ 0 , 10 });
+	//attack_ = std::make_unique<Sprite>();
+	//attack_->Initialize(_controller->spriteCommon_.get(), 6);
+	//attack_->SetSize({ 128,112 });
+	//attack_->SetPozition({ 900,550 });
 
-	playerHp_ = std::make_unique<Sprite>();
-	playerHp_->Initialize(_controller->spriteCommon_.get(), 14);
-	playerHp_->SetAnchorPoint({ 0 , 0 });
-	playerHp_->SetSize({ 300 , 32 });
-	playerHp_->SetPozition({ 50 , 650 });
+	//attack2_ = std::make_unique<Sprite>();
+	//attack2_->Initialize(_controller->spriteCommon_.get(), 7);
+	//attack2_->SetSize({ 128,112 });
+	//attack2_->SetPozition({ 900,550 });
 
-	playerHpRed_ = std::make_unique<Sprite>();
-	playerHpRed_->Initialize(_controller->spriteCommon_.get(), 13);
-	playerHpRed_->SetAnchorPoint({ 0 , 0 });
-	playerHpRed_->SetSize({ 300 , 32 });
-	playerHpRed_->SetPozition({ 50 , 650 });
+	//guard_ = std::make_unique<Sprite>();
+	//guard_->Initialize(_controller->spriteCommon_.get(), 8);
+	//guard_->SetSize({ 160,256 });
+	//guard_->SetPozition({ 1100,450 });
+
+	//guard2_ = std::make_unique<Sprite>();
+	//guard2_->Initialize(_controller->spriteCommon_.get(), 9);
+	//guard2_->SetSize({ 160,256 });
+	//guard2_->SetPozition({ 1100,450 });
+
+
+
+	//enemyHp_ = std::make_unique<Sprite>();
+	//enemyHp_->Initialize(_controller->spriteCommon_.get(), 12);
+	//enemyHp_->SetAnchorPoint({ 0 , 0 });
+	//enemyHp_->SetSize({ 1280 , 32 });
+	//enemyHp_->SetPozition({ 0 , 10 });
+
+	//enemyHpRed_ = std::make_unique<Sprite>();
+	//enemyHpRed_->Initialize(_controller->spriteCommon_.get(), 13);
+	//enemyHpRed_->SetAnchorPoint({ 0 , 0 });
+	//enemyHpRed_->SetSize({ 1280 , 32 });
+	//enemyHpRed_->SetPozition({ 0 , 10 });
+
+	//playerHp_ = std::make_unique<Sprite>();
+	//playerHp_->Initialize(_controller->spriteCommon_.get(), 14);
+	//playerHp_->SetAnchorPoint({ 0 , 0 });
+	//playerHp_->SetSize({ 300 , 32 });
+	//playerHp_->SetPozition({ 50 , 650 });
+
+	//playerHpRed_ = std::make_unique<Sprite>();
+	//playerHpRed_->Initialize(_controller->spriteCommon_.get(), 13);
+	//playerHpRed_->SetAnchorPoint({ 0 , 0 });
+	//playerHpRed_->SetSize({ 300 , 32 });
+	//playerHpRed_->SetPozition({ 50 , 650 });
 
 	isPause_ = false;
 	pauseMenuOptions_ = 0;
@@ -77,7 +79,7 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	_controller->gameObjectManager_->SetRailCamInfo(camera->GetRailCameraInfo());
 	_controller->gameObjectManager_->SetPlayerWorldTF(_controller->fbxPlayer_->GetObject3d()->GetWorldTransformPtr());
 	
-	camera->ResetGameCam();
+	//camera->ResetGameCam();
 
 }
 
@@ -121,7 +123,7 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 
 
 
-	playerHp_->SetSize({ 300 * _controller->fbxPlayer_->GetHp() / 100.0f, 32 });
+	//playerHp_->SetSize({ 300 * _controller->fbxPlayer_->GetHp() / 100.0f, 32 });
 	//enemyHp_->SetSize({1280.0f * _controller->boss_->GetHp() / 100.0f , 32});
 
 	/*if (_controller->boss_->GetHp() <= 0) {
@@ -144,23 +146,9 @@ void GamePart1::Draw(DirectXCommon* dxCommon) {
 	_controller->gameObjectManager_->DrawAllEnemies(dxCommon->GetCommandList());
 
 	_controller->spriteCommon_->SpritePreDraw();
-	//if (isClickL == true) {
-	//	attack2_->Draw();
-	//}
-	//else {
-	//	attack_->Draw();
-	//}
-	//if (isClickR == true) {
-	//	guard2_->Draw();
-	//}
-	//else {
-	//	guard_->Draw();
-	//}
+
 	move_->Draw();
-	//enemyHpRed_->Draw();
-	//enemyHp_->Draw();
-	//playerHpRed_->Draw();
-	//playerHp_->Draw();
+
 
 	_controller->spriteCommon_->SpritePostDraw();
 

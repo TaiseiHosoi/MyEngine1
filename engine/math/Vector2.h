@@ -1,3 +1,7 @@
+/**
+ * @file Vector2.h
+ * @brief ベクター2クラス
+ */
 #pragma once
 class Vector2
 {

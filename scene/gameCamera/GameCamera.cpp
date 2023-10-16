@@ -59,12 +59,12 @@ void GameCamera::Update()
 {
 #pragma region マウス処理
 	//マウス処理
-	//if (GetActiveWindow() == WinApp::GetInstance()->GetHwnd())
-	//{
-	//	ShowCursor(false);
-	//	//ViewPointMovement();
-	//	CulDirection();
-	//}
+	if (GetActiveWindow() == WinApp::GetInstance()->GetHwnd())
+	{
+		ShowCursor(false);
+		//ViewPointMovement();
+		CulDirection();
+	}
 #pragma endregion マウス処理
 
 #pragma region レールカメラ処理
@@ -81,6 +81,10 @@ void GameCamera::Update()
 	targetTimeRate = timeRate_ + 0.003f;	//ターゲット位置は少し進んだ場所
 	if (targetTimeRate >= 1.0f) {
 		targetTimeRate -= 1.0f;	//もし1を超えてたら-1
+	}
+	if (input_->TriggerKey(DIK_G)) {
+		timeRate_ = 0.95f;
+		railCameraInfo_->timeRate = 0.95f;
 	}
 
 	if (camMode_ == 0) {
@@ -134,24 +138,14 @@ void GameCamera::Update()
 		FollowPlayer();
 	}
 
+
+
 	//infoの情報更新
 	railCameraInfo_->startIndex = startIndex_;
 	railCameraInfo_->oldStartIndex = oldStartIndex_;
 	railCameraInfo_->timeRate = timeRate_;
 	railCameraInfo_->nowCount = nowCount_;
 	railCameraInfo_->points = points;
-
-	
-
-
-
-	//ImGui::Begin("camera");
-	//ImGui::InputFloat("timeRate", &timeRate_);
-	//ImGui::InputInt("startIndex", &startIndexInput);
-	//ImGui::InputInt("nowCount", &nowCountInput);
-	//ImGui::InputFloat3("nowPos", &e.x);
-	//ImGui::InputFloat3("nowTarget", &targ.x);
-	//ImGui::End();
 	
 
 	Camera::Update();

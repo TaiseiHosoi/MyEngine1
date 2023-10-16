@@ -12,12 +12,15 @@ void GameObjManager::StaticInit()
 	modelRoad1 = Mesh::LoadFormOBJ("alphaVerLoad", true);
 	modelCam = Mesh::LoadFormOBJ("cube", true); 
 	modelWalkRobo = Mesh::LoadFormOBJ("walkEnemy",true);
-	
+	modelBill1 = Mesh::LoadFormOBJ("bill1", true);
+	modelTower1 = Mesh::LoadFormOBJ("tower1", true);
 	//モデルインサート
 	models.insert(std::make_pair("moai", modelMoai.get()));
 	models.insert(std::make_pair("Cube", modelCube.get()));
 	models.insert(std::make_pair("road1", modelRoad1.get()));
 	models.insert(std::make_pair("cam", modelCam.get()));
+	models.insert(std::make_pair("bill1", modelBill1.get()));
+	models.insert(std::make_pair("tower1", modelTower1.get()));
 	
 	levelData = JsonLoader::LoadFile("testScene");
 
@@ -29,7 +32,11 @@ void GameObjManager::StaticInit()
 		if (it != models.end()) {
 			model = it->second;
 		}
-
+		
+		// 建物を一時的に消去
+		if (objectData.fileName == "bill1" || objectData.fileName == "tower1") {
+			continue;
+		}
 		// モデルを指定して3Dオブジェクトを生成
 		Object3d newObject;
 		newObject.Initialize(true);
@@ -100,21 +107,6 @@ void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
 		walkingEnemies.back()->SetRailCameraInfo(railCameraInfo_);
 		walkingEnemies.back()->SetPlayerWorldTransform(playerWorldTF_);
 
-		//ステート処理
-		EnemyState newState;
-		newState.hp_ = 1;
-		newState.isAlive_ = true;
-		newState.isAtk_ = false;
-		walkingEnemyState.push_back(newState);
-
-		//当たり判定処理
-		walkingEnemySpCollider.push_back(new SphereCollider);
-		CollisionManager::GetInstance()->AddCollider(walkingEnemySpCollider.back());
-		walkingEnemySpCollider.back()->SetBasisPos(&walkingEnemies[walkingEnemies.size() - 1][0].GetObject3d()->worldTransform.translation_);
-		walkingEnemySpCollider.back()->center = walkingEnemies[walkingEnemies.size() - 1][0].GetObject3d()->worldTransform.translation_;
-		walkingEnemySpCollider.back()->SetRadius(walkingEnemies.back()->GetObject3d()->GetScale().x);
-		walkingEnemySpCollider.back()->SetAttribute(COLLISION_ATTR_ENEMIES);
-		walkingEnemySpCollider.back()->Update();
 	}
 }
 
@@ -126,9 +118,6 @@ void GameObjManager::UpdateAllObjects()
 {
 	
 	UpdateWalkingEnemyPopCommands();
-    /*for (Enemy* enemy : enemies) {
-        enemy->Update();
-    }*/
 
 	for (int i = 0; i < objects.size();i++) {
 		objects[i].Update();
@@ -179,68 +168,49 @@ void GameObjManager::UpdateAllObjects()
 		
 	}
 
-	//if (!moaiObjs.empty()) {
-	//	for (int i = 0; i < enemies.size(); i++) {
-	//		enemies[i]->Update();
-	//	}
-	//}
+
 	for (int i = 0; i < walkingEnemies.size(); i++) {
 		walkingEnemies[i]->Update();
 
-		if (walkingEnemySpCollider[i]->GetIsHit() == true) {
-			if (walkingEnemySpCollider[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ALLIES) {
-				walkingEnemyState[i].hp_--;
+		if (walkingEnemies[i]->GetSphereCollider()->GetIsHit() == true) {
+			if (walkingEnemies[i]->GetSphereCollider()->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ALLIES) {
+				walkingEnemies[i]->GetState()->hp_--;
 			}
 		}
-		if (walkingEnemyState[i].hp_ <= 0) {
-			walkingEnemyState[i].isAlive_ = false;
-			walkingEnemySpCollider[i]->RemoveAttribute(8);
+		if (walkingEnemies[i]->GetState()->hp_ <= 0) {
+			walkingEnemies[i]->GetState()->isAlive_ = false;
+			walkingEnemies[i]->GetSphereCollider()->RemoveAttribute(8);
 
 		}
 
-		if (walkingEnemyState[i].isAlive_ == false) {	//死去
-			//walkingEnemyObjs.erase(std::remove_if(walkingEnemyObjs.begin(), walkingEnemyObjs.end(),
-			//	[](const EnemyState& state) {
-			//		return state.isDead_;
-			//	}),
-			//	walkingEnemyObjs.end());
-			////walkingEnemySpCollider.erase(std::cbegin(walkingEnemySpCollider) + i);
-			//walkingEnemyState.erase(std::cbegin(walkingEnemyState) + i);
-		}
-		walkingEnemySpCollider[i]->Update();
+		
 		
 	}
 
-	//ImGui::Begin("objects");
-	//for (int i = 0; i < objects.size(); i++) {
-	//	Vector3 monitT = { objects[i].GetMatWorld().m[3][0], objects[i].GetMatWorld().m[3][1],objects[i].GetMatWorld().m[3][2] };
-	//	Vector3 monitR = { objects[i].worldTransform.rotation_.x, objects[i].worldTransform.rotation_.y,objects[i].worldTransform.rotation_.z };
-	//	Vector3 monitS = { objects[i].worldTransform.scale_.x, objects[i].worldTransform.scale_.y,objects[i].worldTransform.scale_.z };
-	//	ImGui::InputFloat3("Trans", &monitT.x);
-	//	ImGui::InputFloat3("Rot",&monitR.x);
-	//	ImGui::InputFloat3("Scale", &monitS.x);
+	/*ImGui::Begin("objects");
+	for (int i = 0; i < objects.size(); i++) {
+		Vector3 monitT = { objects[i].GetMatWorld().m[3][0], objects[i].GetMatWorld().m[3][1],objects[i].GetMatWorld().m[3][2] };
+		Vector3 monitR = { objects[i].worldTransform.rotation_.x, objects[i].worldTransform.rotation_.y,objects[i].worldTransform.rotation_.z };
+		Vector3 monitS = { objects[i].worldTransform.scale_.x, objects[i].worldTransform.scale_.y,objects[i].worldTransform.scale_.z };
+		ImGui::InputFloat3("Trans", &monitT.x);
+		ImGui::InputFloat3("Rot",&monitR.x);
+		ImGui::InputFloat3("Scale", &monitS.x);
 
-	//}
-	//ImGui::End();
+	}
+	ImGui::End();*/
 	
 
 }
 
 void GameObjManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
 {
-    /*for (Enemy* enemy : enemies) {
-        enemy->Draw(cmdList);
-    }*/
+
 	for (int i = 0; i < walkingEnemies.size(); i++) {
 		walkingEnemies[i]->Draw(cmdList);
 	}
 	for (int i = 0; i < objects.size(); i++) {
 		objects[i].Draw(cmdList);
 	}
-
-	//for (int i = 0; i < camObjs.size(); i++) {
-	//	camObjs[i].Draw(cmdList);
-	//}
 	
 	for (int i = 0; i < moaiObjs.size(); i++) {
 		if (moaiState[i].hp_ > 0) {
@@ -248,21 +218,15 @@ void GameObjManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
 		}
 	}
 
-	//if (!moaiObjs.empty()) {
-	//	for (int i = 0; i < enemies.size(); i++) {
-	//		enemies[i]->Draw(cmdList);
-	//	}
-	//}
-
 	
 }
 
 void GameObjManager::DestroyAllEnemies()
 {
-    /*for (Enemy* enemy : enemies) {
-        delete enemy;
-    }
-    enemies.clear();*/
+    //for (Enemy* enemy : enemies) {
+    //    delete enemy;
+    //}
+    //enemies.clear();
 }
 
 void GameObjManager::LoadData(const char* filename, std::stringstream& stream)

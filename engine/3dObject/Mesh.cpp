@@ -94,9 +94,6 @@ bool Mesh::LoadTexture(const std::string& directoryPath, const std::string& file
 	int iBufferSize = MultiByteToWideChar(CP_ACP, 0, filepath.c_str(), -1, wfilepath, _countof(wfilepath));
 	static_cast< void >(iBufferSize);
 
-	//// WICテクスチャのロード
-	//result = LoadFromWICFile(L"Resources/tex1.png", WIC_FLAGS_NONE, &metadata, scratchImg);
-	//assert(SUCCEEDED(result));
 	// WICテクスチャのロード
 	result = LoadFromWICFile(wfilepath, WIC_FLAGS_NONE, &metadata, scratchImg);
 	assert(SUCCEEDED(result));
@@ -215,11 +212,11 @@ void Mesh::CreateBuffers()
 
 	// 頂点バッファビューの作成
 	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
-	/*vbView.SizeInBytes = sizeof(vertices);*/
+
 	vbView.SizeInBytes = sizeVB;
 	vbView.StrideInBytes = sizeof(vertices[0]);
 
-	/*UINT sizeIB = static_cast<UINT>(sizeof(indices));*/
+
 	UINT sizeIB = static_cast<UINT>(sizeof(unsigned short) * indices.size());
 	// リソース設定
 	resourceDesc.Width = sizeIB;
@@ -234,11 +231,7 @@ void Mesh::CreateBuffers()
 	result = indexBuff->Map(0, nullptr, (void**)&indexMap);
 	if (SUCCEEDED(result)) {
 
-		// 全インデックスに対して
-		//for (int i = 0; i < _countof(indices); i++)
-		//{
-		//	indexMap[i] = indices[i];	// インデックスをコピー
-		//}
+
 		std::copy(indices.begin(), indices.end(), indexMap);
 
 		indexBuff->Unmap(0, nullptr);
@@ -322,11 +315,9 @@ void Mesh::LoadFromOBJInternal(const std::string& modelname, bool smoothing)
 	//oBJファイルからデータを読み込む
 		//ファイルストリーム
 	std::ifstream file;
-	//.objファイルを開く
-	/*file.open("Resources/triangle_tex/triangle_tex.obj");*/
-	//const string modelname = "cube";
-	const string filename = modelname + ".obj";//"triangle.obj"
-	const string directoryPath = "Resources/" + modelname + "/";//"Resources/triangle/triangle.obj"
+
+	const string filename = modelname + ".obj";	// "triangle.obj"
+	const string directoryPath = "Resources/" + modelname + "/";	// "Resources/triangle/triangle.obj"
 	file.open(directoryPath + filename);
 	//ファイルオープン失敗をチェック
 	assert(!file.fail());
@@ -363,10 +354,6 @@ void Mesh::LoadFromOBJInternal(const std::string& modelname, bool smoothing)
 			line_stream >> position.z;
 			//座標データに入力
 			positions.emplace_back(position);
-			//頂点データに追加
-			/*VertexPosNormalUv vertex{};
-			vertex.pos = position;
-			vertices.emplace_back(vertex);*/
 		}
 		//先頭文字列がvtならテクスチャ
 		if (key == "vt") {
@@ -413,9 +400,6 @@ void Mesh::LoadFromOBJInternal(const std::string& modelname, bool smoothing)
 				smoothDate[indexPosition].emplace_back(vertices.size() - 1);
 				//インデックスデータの追加
 				indices.emplace_back((unsigned short)indices.size());
-
-				////頂点インデックスに追加
-				//indices.emplace_back(indexPosition - 1);
 
 			}
 		}

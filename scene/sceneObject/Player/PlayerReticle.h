@@ -1,4 +1,8 @@
-﻿#pragma once
+﻿/**
+ * @file PlayerReticle.h
+ * @brief 自機のレティクル
+ */
+#pragma once
 #include "Object3d.h"
 #include "CollisionManager.h"
 class PlayerReticle
@@ -24,8 +28,6 @@ public://アクセッサ
 	/// ロックオンフラグ
 	/// </summary>
 	/// <returns><isRockOn_>
-	//bool GetIsRockTarget() { return isRockOn_; };
-	//RaycastHit* GetRaycastHit() { return raycastHit.get(); };
 	Object3d* GetFarReticleObjPtr() { return farReticleO_.get(); }
 	
 

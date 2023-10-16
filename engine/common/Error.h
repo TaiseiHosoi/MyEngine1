@@ -1,3 +1,7 @@
+/**
+ * @file Error.h
+ * @brief DirectX機能,Windows機能,バージョン指定,をインクルード
+ */
 #pragma once
 #include <Windows.h>
 #include <d3d12.h>

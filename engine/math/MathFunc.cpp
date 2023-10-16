@@ -135,12 +135,6 @@ Matrix4 MathFunc::Move(Vector3 Move) {
 	return matMove;
 }
 
-//void AffinTrans::affin(WorldTransform& affin) {
-//	affin.matWorld_ = Initialize();
-//	affin.matWorld_ *= Scale(affin.scale_);
-//	affin.matWorld_ *= Rotation(affin.rotation_, 6);
-//	affin.matWorld_ *= Move(affin.translation_);
-//}
 
 Vector3 MathFunc::MatVector(const Vector3 vector3, const Matrix4 matrix4) {
 
@@ -487,7 +481,7 @@ Vector3 MathFunc::TangentSplinePosition(const std::vector<Vector3>& points, size
 	Vector3 p0 , p1, p2, p3;
 
 
-	if (targetSegment == points.size() - 3) {
+	if (targetSegment == points.size() - 1) {
 		p0 = points[targetSegment];
 		p1 = points[0];
 		p2 = points[1];
@@ -499,7 +493,7 @@ Vector3 MathFunc::TangentSplinePosition(const std::vector<Vector3>& points, size
 		p2 = points[0];
 		p3 = points[1];
 	}
-	else if (targetSegment == points.size()-1) 
+	else if (targetSegment == points.size()-3) 
 	{
 		p0 = points[targetSegment];
 		p1 = points[targetSegment + 1];

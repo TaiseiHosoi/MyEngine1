@@ -359,33 +359,7 @@ void FbxLoader::ParseMeshVertices(FBXModel* fbxmodel, FbxMesh* fbxMesh)
 			bool isUnMapped;
 			fbxMesh->GetPolygonVertexUV(polIndex, polVertexIndex, uvSetName, uvVec2, isUnMapped);
 
-			/*vertices.push_back(FBXModel::VertexPosNormalUv{
-				{vertexInfo[0],vertexInfo[1],vertexInfo[2]},
-				{normalVec4.mData[0],normalVec4.mData[1],normalVec4.mData[2]},
-				{uvVec2.mData[0],uvVec2.mData[1]},
-				0,0
-				});*/
 
-				// インデックス座標のチェックと再採番
-
-					// 法線座標とUV座標が未設定の場合、頂点情報に付与して再設定
-
-					//std::vector<float> newVertexInfo;
-					//
-					//// 位置座標
-					//newVertexInfo.push_back(vertexInfo[0]);
-					//newVertexInfo.push_back(vertexInfo[1]);
-					//newVertexInfo.push_back(vertexInfo[2]);
-					//
-
-					//newVertexInfo.push_back(normalVec4[0]);
-					//newVertexInfo.push_back(normalVec4[1]);
-					//newVertexInfo.push_back(normalVec4[2]);
-
-					//
-					//// UV座標
-					//newVertexInfo.push_back(uvVec2[0]);
-					//newVertexInfo.push_back(uvVec2[1]);
 
 			FBXModel::VertexPosNormalUv nowProtVertice = {};
 			nowProtVertice.pos = { vertexInfo[0] ,vertexInfo[1] ,vertexInfo[2] };
@@ -415,25 +389,7 @@ void FbxLoader::ParseMeshVertices(FBXModel* fbxmodel, FbxMesh* fbxMesh)
 		}
 	}
 
-	//meshVertice.resize(vertexInfoList.size());
-	//// 頂点情報を生成
-	//for (int i = 0; i < vertexInfoList.size(); i++)
-	//{
-	//	std::vector<float> vertexInfo = vertexInfoList[i];
-	//	vertices.push_back(FBXModel::VertexPosNormalUv{
-	//		{
-	//			vertexInfo[0], vertexInfo[1], vertexInfo[2]
-	//		},
-	//		{
-	//			vertexInfo[3], vertexInfo[4], vertexInfo[5]
-	//		},
-	//		{
-	//			vertexInfo[6], 1.0f - vertexInfo[7] 
-	//		}
-	//	});
 
-
-	//}
 
 	int hoge = 0;
 	if (hoge == 0) {

@@ -1,4 +1,8 @@
-﻿#pragma once
+﻿/**
+ * @file json.h
+ * @brief json情報読み取り
+ */
+#pragma once
 #include <vector>
 #include <DirectXMath.h>
 #include<string>

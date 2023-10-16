@@ -40,7 +40,6 @@ void Application::Initialize(DirectXCommon* dxcomon)
 	gameCamera_->Initialize();
 	//カメラのポインタをセット
 	//カメラ位置セット
-	//gameCamera_->SetTarget(hitokunFbxO_.get()->wtf.translation_);
 	gameCamera_->SetEye({ 0 , 5 , -20 });
 	gameCamera_->SetTarget({ 0 , 0 , 0 });
 
@@ -65,7 +64,6 @@ void Application::Initialize(DirectXCommon* dxcomon)
 
 void Application::Update()
 {
-	//gameCamera_->Update();
 
 	collisionManager_->CheckAllCollisions();
 

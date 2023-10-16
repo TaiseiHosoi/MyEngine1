@@ -43,25 +43,17 @@ void Field::Update()
 
 	groundObj1_->Update();
 
-	//ImGui::Begin("field");
-	//ImGui::InputFloat3("Trans", &groundObj1_->worldTransform.translation_.x);
-	//ImGui::InputFloat3("Rot", &groundObj1_->worldTransform.rotation_.x);
-	//ImGui::InputFloat3("Scale", &groundObj1_->worldTransform.scale_.x);
-	//ImGui::End();
 
 	skydomeObj_->Update();
 }
 
 void Field::Draw(DirectXCommon* dxcomon_)
 {
-	//Object3d::PreDraw(dxcomon_->GetCommandList());
-
+	
 	groundObj1_->Draw(dxcomon_->GetCommandList());
-	//groundObj2_->Draw(dxcomon_->GetCommandList());
 
 	skydomeObj_->Draw(dxcomon_->GetCommandList());
 
-	//Object3d::PostDraw();
 }
 
 bool Field::PlayerOnGround(Vector3 wolPos, float Obj_R) {

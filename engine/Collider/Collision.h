@@ -1,3 +1,7 @@
+/**
+ * @file Collision.h
+ * @brief 球、レイ、平面、三角形などの対応したもの同士の当たり判定クラス
+ */
 #pragma once
 #include "CollisionPrimitive.h"
 

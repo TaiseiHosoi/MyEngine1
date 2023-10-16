@@ -1,3 +1,7 @@
+/**
+ * @file MeshCollider.h
+ * @brief シェイプタイプがメッシュのコライダー
+ */
 #pragma once
 #include "BaseCollider.h"
 #include "CollisionPrimitive.h"

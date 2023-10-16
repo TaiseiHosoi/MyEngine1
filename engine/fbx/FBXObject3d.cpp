@@ -284,7 +284,7 @@ void FBXObject3d::Update()
 			
 			bonesMat[i] = MathFunc::ConvertXMMATtoMat4(matCurrentPose) * wtf.matWorld_;
 			
-		//}
+	
 
 
 	}
