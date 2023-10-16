@@ -5,6 +5,8 @@
 #pragma once
 #include "IScene.h"
 
+
+
 class TitleScene :public IScene
 {
 protected:
@@ -34,8 +36,21 @@ private://リソース
 	std::unique_ptr <Sprite> title_;
 	std::unique_ptr <Sprite> title2_;
 	std::unique_ptr <Sprite> mouse_;
+	std::unique_ptr <Sprite> blackBackTitle_;
+	std::unique_ptr <Sprite> sceneChangeLeft_;
+	std::unique_ptr <Sprite> sceneChangeRight_;
+	std::unique_ptr <Sprite> leftMouseButtonStr_;
 private:
 
+	enum SceneSwapPhaseNum {
+		NONE,
+		START,
+		MOVE1,
+		DIRECTION1,
+		DIRECTION2,
+		MOVE2,
+		END
+	};
 
 	WorldTransform target;
 	WorldTransform eye;
@@ -49,6 +64,13 @@ private:
 	size_t nowCount = 0;
 	float maxTime = 5.0f;
 	float timeRate;
+
+	// シーン切り替え演出用
+	size_t sceneSwapCount_ = 0;
+	const size_t MAX_SWAP_COUNT = 30;
+	const size_t MAX_BACK_SWAP_COUNT = 45;
+	size_t oldSSCount_ = 0;
+	size_t sceneSwapPhase_ = 0;
 
 	//音用変数
 	std::unique_ptr<Audio> audio_;

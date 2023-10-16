@@ -82,6 +82,10 @@ void GameCamera::Update()
 	if (targetTimeRate >= 1.0f) {
 		targetTimeRate -= 1.0f;	//もし1を超えてたら-1
 	}
+	if (input_->TriggerKey(DIK_G)) {
+		timeRate_ = 0.95f;
+		railCameraInfo_->timeRate = 0.95f;
+	}
 
 	if (camMode_ == 0) {
 
@@ -133,6 +137,8 @@ void GameCamera::Update()
 		Vector3 targ = GetTarget();
 		FollowPlayer();
 	}
+
+
 
 	//infoの情報更新
 	railCameraInfo_->startIndex = startIndex_;

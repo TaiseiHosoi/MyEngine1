@@ -32,7 +32,11 @@ void GameObjManager::StaticInit()
 		if (it != models.end()) {
 			model = it->second;
 		}
-
+		
+		// 建物を一時的に消去
+		if (objectData.fileName == "bill1" || objectData.fileName == "tower1") {
+			continue;
+		}
 		// モデルを指定して3Dオブジェクトを生成
 		Object3d newObject;
 		newObject.Initialize(true);
@@ -183,7 +187,7 @@ void GameObjManager::UpdateAllObjects()
 		
 	}
 
-	ImGui::Begin("objects");
+	/*ImGui::Begin("objects");
 	for (int i = 0; i < objects.size(); i++) {
 		Vector3 monitT = { objects[i].GetMatWorld().m[3][0], objects[i].GetMatWorld().m[3][1],objects[i].GetMatWorld().m[3][2] };
 		Vector3 monitR = { objects[i].worldTransform.rotation_.x, objects[i].worldTransform.rotation_.y,objects[i].worldTransform.rotation_.z };
@@ -193,7 +197,7 @@ void GameObjManager::UpdateAllObjects()
 		ImGui::InputFloat3("Scale", &monitS.x);
 
 	}
-	ImGui::End();
+	ImGui::End();*/
 	
 
 }

@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file PlayerRapidBullet.h
- * @brief ©‹@‚Ì‘¬Ë’e
+ * @brief è‡ªæ©Ÿã®é€Ÿå°„å¼¾
  */
 #pragma once
 #include"Object3d.h"
@@ -12,24 +12,24 @@
 class PlayerRapidBullet
 {
 public:
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	void Initialize(Mesh* model, Vector3 setPos, Vector3 setRot);
 
-	// XV
+	// æ›´æ–°
 	void Update();
 
-	// •`‰æ
+	// æç”»
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
 public:
 
-	// ‹…ƒRƒ‰ƒCƒ_[ƒQƒbƒ^
+	// çƒã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚²ãƒƒã‚¿
 	SphereCollider* GetSphereCollider() { return sphere; };
 
-	// €–Sƒtƒ‰ƒOƒQƒbƒ^
+	// æ­»äº¡æ™‚ãƒ•ãƒ©ã‚°ã‚²ãƒƒã‚¿
 	bool ReturnIsDead() { return isDead_; };
 
-	// €–Sƒtƒ‰ƒOƒZƒbƒ^
+	// æ­»äº¡æ™‚ãƒ•ãƒ©ã‚°ã‚»ãƒƒã‚¿
 	void SetIsDead(bool isDead) { isDead_ = isDead; };
 
 private:

@@ -27,6 +27,7 @@ float Ease::LinearEasing(float start, float end, int count, int maxCount)
     }
     else {
         float t = static_cast<float>(count) / maxCount;
+        t = t * t; // イージング関数を適用
         return start + t * (end - start);
     }
 }

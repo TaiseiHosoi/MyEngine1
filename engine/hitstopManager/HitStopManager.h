@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file HitStop.h
- * @brief ƒqƒbƒgƒXƒgƒbƒv‚ÌŠÇ—ƒNƒ‰ƒX
+ * @brief ãƒ’ãƒƒãƒˆã‚¹ãƒˆãƒƒãƒ—ã®ç®¡ç†ã‚¯ãƒ©ã‚¹
  */
 #pragma once
 #include "GameCamera.h"
@@ -11,36 +11,36 @@ class HitStopManager
 {
 public:
 
-	// ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	static HitStopManager* GetInstance();
 
-	// XV
+	// æ›´æ–°
 	void Update();
 	
 	/// <summary>
-	/// ƒqƒbƒgƒXƒgƒbƒvî•ñƒZƒbƒg
+	/// ãƒ’ãƒƒãƒˆã‚¹ãƒˆãƒƒãƒ—æƒ…å ±ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="hitStopFlag"></“®ìƒtƒ‰ƒO>
-	/// <param name="timer"></‘±ŠÔ>
+	/// <param name="hitStopFlag"></å‹•ä½œãƒ•ãƒ©ã‚°>
+	/// <param name="timer"></æŒç¶šæ™‚é–“>
 	void SetHitStop(bool* hitStopFlag , int timer);
 
-	// ƒJƒƒ‰ƒZƒbƒg
+	// ã‚«ãƒ¡ãƒ©ã‚»ãƒƒãƒˆ
 	void SetGameCamera(GameCamera* gameCamera);
 
-	// ƒJƒƒ‰ƒQƒbƒ^
+	// ã‚«ãƒ¡ãƒ©ã‚²ãƒƒã‚¿
 	GameCamera* GetGameCamera();
 
 private:
-	// ƒVƒFƒCƒN‚ÌƒAƒ“ƒOƒ‹ŒvZ
+	// ã‚·ã‚§ã‚¤ã‚¯ã®ã‚¢ãƒ³ã‚°ãƒ«è¨ˆç®—
 	void CulShakeAngle();
 	
-	// “®ìˆ—
+	// å‹•ä½œå‡¦ç†
 	void Execute();
 	
-	// ƒJƒƒ‰‚ÌƒVƒFƒCƒN
+	// ã‚«ãƒ¡ãƒ©ã®ã‚·ã‚§ã‚¤ã‚¯
 	void CameraShake();
 	
-	// I—¹ˆ—
+	// çµ‚äº†æ™‚å‡¦ç†
 	void Finalize();
 
 private:

@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file Vector3.h
- * @brief ƒxƒNƒ^[3ƒNƒ‰ƒX
+ * @brief ãƒ™ã‚¯ã‚¿ãƒ¼3ã‚¯ãƒ©ã‚¹
  */
 #pragma once
 
@@ -15,23 +15,23 @@ public:
 
 public:
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Vector3();
 	Vector3(float x, float y, float z);
 
-	//@‹——£
+	//ã€€è·é›¢
 	float length() const;
-	// –@üˆ—
+	// æ³•ç·šå‡¦ç†
 	Vector3& nomalize();
-	// “àÏ
+	// å†…ç©
 	float dot(const Vector3& v) const;
-	// ŠOÏ
+	// å¤–ç©
 	Vector3 cross(const Vector3& v) const;
-	// ˆø‚«Z
+	// å¼•ãç®—
 	Vector3 sub(const Vector3& v)const;
-	// ƒ‰[ƒv
+	// ãƒ©ãƒ¼ãƒ—
 	Vector3 lerp(const Vector3& start, const Vector3& end, const float t);
-	// ƒXƒvƒ‰ƒCƒ“ƒ‰[ƒv
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³ãƒ©ãƒ¼ãƒ—
 	Vector3 slarp(const Vector3& v1, const Vector3& v2, float t);
 	
 	Vector3 operator+() const;

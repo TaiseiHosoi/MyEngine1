@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 /**
  * @file Mesh.h
  * @brief Wavefront3Dモデルの面情報

@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * @file SummarizeEngine.h
- * @brief ƒGƒ“ƒWƒ““à‚Ì•K—vƒNƒ‰ƒX‚âƒƒ\ƒbƒh‚ğˆêŠ‡ŠÇ—‚·‚éƒNƒ‰ƒX
+ * @brief ã‚¨ãƒ³ã‚¸ãƒ³å†…ã®å¿…è¦ã‚¯ãƒ©ã‚¹ã‚„ãƒ¡ã‚½ãƒƒãƒ‰ã‚’ä¸€æ‹¬ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
  */
 #pragma once
 #include"WinApp.h"
@@ -22,16 +22,16 @@ template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 class SummarizeEngine {
 public:
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	void Initialize();
 
-	// XV
+	// æ›´æ–°
 	void Update();
 	
-	//•`‰æ
+	//æç”»
 	void Draw();
 
-	// I—¹Àsˆ—
+	// çµ‚äº†æ™‚å®Ÿè¡Œå‡¦ç†
 	void Finalize();
 
 private:

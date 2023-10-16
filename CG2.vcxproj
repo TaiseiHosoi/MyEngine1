@@ -85,7 +85,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(ProjectDir)lib\libignore\DirectXTex\inc;$(ProjectDir)lib\libignore\fbx_sdk\include;$(SolutionDir)DirectXTex;$(IncludePath);$(IncludePath)</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)lib\libignore\fbx_sdk\lib;$(LibraryPath);$(ProjectDir)MyEngine1\lib\libignore\DirectXTex\lib\$(Configuration)</LibraryPath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)lib\libignore\fbx_sdk\lib;$(LibraryPath);$(ProjectDir)MyEngine1\lib\libignore\DirectXTex\lib\$(Configuration);C:\Users\taise\source\repos\MyEngine1\lib\libignore\DirectXTex\lib\Release</LibraryPath>
     <TargetName>キンミラシューター</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)imgui;$(ProjectDir)engine\math;$(ProjectDir)engine\sprite;$(ProjectDir)engine\input;$(ProjectDir)engine\imguiManager;$(ProjectDir)engine\fbx;$(ProjectDir)engine\hitstopManager;$(ProjectDir)engine\Collider;$(ProjectDir)engine\camera;$(ProjectDir)engine\audio;$(ProjectDir)engine\3dObject;$(ProjectDir)engine\common;$(ProjectDir)engine\particleManager;$(ProjectDir)engine\LevelEditor;$(ProjectDir)engine\SummarizeEngine;$(ProjectDir)engine;$(ProjectDir)scene\sceneObject;$(ProjectDir)scene\sceneManager;$(ProjectDir)scene\gameCamera;$(ProjectDir)scene\sceneObject\Enemy;$(ProjectDir)scene\sceneObject\Player;$(ProjectDir)scene;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)imgui;$(ProjectDir)engine\math;$(ProjectDir)engine\sprite;$(ProjectDir)engine\input;$(ProjectDir)engine\imguiManager;$(ProjectDir)engine\fbx;$(ProjectDir)engine\hitstopManager;$(ProjectDir)engine\Collider;$(ProjectDir)engine\camera;$(ProjectDir)engine\audio;$(ProjectDir)engine\3dObject;$(ProjectDir)engine\common;$(ProjectDir)engine\particleManager;$(ProjectDir)engine\LevelEditor;$(ProjectDir)engine\SummarizeEngine;$(ProjectDir)engine;$(ProjectDir)scene\sceneObject;$(ProjectDir)scene\sceneManager;$(ProjectDir)scene\sceneObject\Player;$(ProjectDir)scene\sceneObject\Enemy;$(ProjectDir)scene\gameCamera;$(ProjectDir)scene\sceneObject\Enemy;$(ProjectDir)scene\sceneObject\Player;$(ProjectDir)scene;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -143,7 +143,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)imgui;$(ProjectDir)engine\math;$(ProjectDir)engine\sprite;$(ProjectDir)engine\input;$(ProjectDir)engine\imguiManager;$(ProjectDir)engine\fbx;$(ProjectDir)engine\hitstopManager;$(ProjectDir)engine\Collider;$(ProjectDir)engine\camera;$(ProjectDir)engine\audio;$(ProjectDir)engine\3dObject;$(ProjectDir)engine\common;$(ProjectDir)engine\particleManager;$(ProjectDir)engine\LevelEditor;$(ProjectDir)engine\SummarizeEngine;$(ProjectDir)engine;$(ProjectDir)scene\sceneObject;$(ProjectDir)scene\sceneManager;$(ProjectDir)scene\gameCamera;$(ProjectDir)scene;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)imgui;$(ProjectDir)engine\math;$(ProjectDir)engine\sprite;$(ProjectDir)engine\input;$(ProjectDir)engine\imguiManager;$(ProjectDir)engine\fbx;$(ProjectDir)engine\hitstopManager;$(ProjectDir)engine\Collider;$(ProjectDir)engine\camera;$(ProjectDir)engine\audio;$(ProjectDir)engine\3dObject;$(ProjectDir)engine\common;$(ProjectDir)engine\particleManager;$(ProjectDir)engine\LevelEditor;$(ProjectDir)engine\SummarizeEngine;$(ProjectDir)engine;$(ProjectDir)scene\sceneObject;$(ProjectDir)scene\sceneManager;$(ProjectDir)scene\sceneObject\Player;$(ProjectDir)scene\sceneObject\Enemy;$(ProjectDir)scene\gameCamera;$(ProjectDir)scene;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
