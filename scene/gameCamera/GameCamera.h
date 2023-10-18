@@ -9,6 +9,12 @@
 #include "Object3d.h"
 #include<vector>
 
+enum CAM_MODE {
+	title,
+	battle,
+	startDirection
+};
+
 struct RailCameraInfo {
 	int startIndex;
 	int oldStartIndex;
@@ -156,7 +162,7 @@ private:
 	Vector3 railTargetPos_ = {};
 	//シーン0用
 	Vector3 directionLoot_ = {};
-	Vector3 offsetPos_ = {10.f,0,20.f};
+	Vector3 titleScOffsetPos_ = {10.f,0,20.f};
 	
 	//制御店の集合(vectorコンテナ),補完する区間の添字、時間経過率
 	Vector3 splinePosition(const std::vector<Vector3>& points, size_t startIndex, float t);
@@ -187,6 +193,7 @@ private:
 	std::unique_ptr<RailCameraInfo> railCameraInfo_;
 
 	//camMode
+
 	int camMode_ = 0;
 
 };

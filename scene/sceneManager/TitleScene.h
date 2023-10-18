@@ -71,6 +71,7 @@ private:
 	const size_t MAX_BACK_SWAP_COUNT = 45;
 	size_t oldSSCount_ = 0;
 	size_t sceneSwapPhase_ = 0;
+	float easeStrength_ = 0;
 
 	//音用変数
 	std::unique_ptr<Audio> audio_;

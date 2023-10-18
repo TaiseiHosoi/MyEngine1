@@ -69,12 +69,11 @@ void GameCamera::Update()
 
 #pragma region レールカメラ処理
 
-	oldStartIndex_ = static_cast<int>(startIndex_);	//前フレーム処理
+	oldStartIndex_ = startIndex_;	//前フレーム処理
 	oldTimeRate_ = timeRate_;
 	oldPos_ = basePos_;	//前フレームpos保存
 
 	// カメラの位置を更新
-
 	float maxTimeVal = 90.0f; // 移動にかかる最大時間
 	timeRate_ = CalculateTValueBasedOnElapsedTime(maxTimeVal); // maxTimeに基づいてt値を計算
 
@@ -87,9 +86,9 @@ void GameCamera::Update()
 		railCameraInfo_->timeRate = 0.95f;
 	}
 
-	if (camMode_ == 0) {
+	if (camMode_ == CAM_MODE::title) {
 
-		//進行上の向いている方向(顔の向きではない)
+		//進行上の向いている方向
 		directionLoot_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + 0.005f)
 			- MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);
 		directionLoot_.nomalize();
@@ -97,7 +96,7 @@ void GameCamera::Update()
 		//ワールド上の自機の回転量yを求める
 		Vector3 nowOffset;
 		float dirAngle = atan2(directionLoot_.x, directionLoot_.z);
-		nowOffset = offsetPos_;
+		nowOffset = titleScOffsetPos_;
 		nowOffset = MathFunc::RotateVecAngleY(nowOffset, dirAngle);
 
 		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
@@ -105,7 +104,6 @@ void GameCamera::Update()
 		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
 		railTargetPos_ = target;	//ローカル変数に保存
 		
-
 		Vector3 minusVec =  nowOffset;
 		minusVec.nomalize();
 		minusVec *= 10.0f;	
@@ -119,7 +117,7 @@ void GameCamera::Update()
 
 		
 	}
-	else if (camMode_ == 1) {
+	else if (camMode_ == CAM_MODE::battle) {
 		//値を入力
 		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
 
@@ -135,6 +133,30 @@ void GameCamera::Update()
 
 		Vector3 e = GetEye();
 		Vector3 targ = GetTarget();
+		FollowPlayer();
+	}
+	else if (camMode_ == CAM_MODE::battle) {
+		//進行上の向いている方向
+		directionLoot_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + 0.005f)
+			- MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);
+		directionLoot_.nomalize();
+
+		//ワールド上の自機の回転量yを求める
+		Vector3 nowOffset;
+		float dirAngle = atan2(directionLoot_.x, directionLoot_.z);
+		nowOffset = titleScOffsetPos_;
+		nowOffset = MathFunc::RotateVecAngleY(nowOffset, dirAngle);
+
+		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
+
+		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
+		railTargetPos_ = target;	//ローカル変数に保存
+
+		Vector3 minusVec = nowOffset;
+		minusVec.nomalize();
+		minusVec *= 10.0f;
+
+		basePos_ += minusVec;
 		FollowPlayer();
 	}
 

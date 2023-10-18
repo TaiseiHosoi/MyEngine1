@@ -119,7 +119,8 @@ void WalkingEnemy::Forward()
 		moveCount_++;
 	}
 	
-	advancedValue_ = Ease::LinearEaseOutEasing(-0.002f,0.006f,moveCount_,maxTime);
+	float easeStrength = 3.0f;
+	advancedValue_ = Ease::LinearEaseOutEasing(-0.002f,0.006f,moveCount_,maxTime, easeStrength);
 
 	
 

@@ -113,7 +113,8 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 
 	}else if (sceneSwapPhase_ == SceneSwapPhaseNum::MOVE1) {
 		sceneSwapCount_++;
-		float nowScrollVec = Ease::LinearEaseOutEasing(static_cast<float>(WinApp::GetInstance()->window_width), 0, static_cast<int>(sceneSwapCount_), static_cast<int>(MAX_SWAP_COUNT));
+		easeStrength_ = 3.f;
+		float nowScrollVec = Ease::LinearEaseOutEasing(static_cast<float>(WinApp::GetInstance()->window_width), 0, static_cast<int>(sceneSwapCount_), static_cast<int>(MAX_SWAP_COUNT),easeStrength_);
 		sceneChangeLeft_->SetPozition({ -nowScrollVec ,0 });
 		sceneChangeRight_->SetPozition({ nowScrollVec ,0 });
 
@@ -129,7 +130,9 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 	}
 	else if (sceneSwapPhase_ == SceneSwapPhaseNum::DIRECTION1) {
 		sceneSwapCount_++;
-		float nowEaseTransVecX = Ease::LinearEaseOutEasing(static_cast<float>(-WinApp::GetInstance()->window_width), 0, static_cast<int>(sceneSwapCount_), static_cast<int>(MAX_BACK_SWAP_COUNT));
+
+		easeStrength_ = 3.f;
+		float nowEaseTransVecX = Ease::LinearEaseOutEasing(static_cast<float>(-WinApp::GetInstance()->window_width), 0, static_cast<int>(sceneSwapCount_), static_cast<int>(MAX_BACK_SWAP_COUNT),easeStrength_);
 		blackBackTitle_->SetPozition({ nowEaseTransVecX ,0 });
 		if (sceneSwapCount_ >= MAX_BACK_SWAP_COUNT) {
 			sceneSwapPhase_ = SceneSwapPhaseNum::DIRECTION2;
@@ -139,7 +142,9 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 	}
 	else if (sceneSwapPhase_ == SceneSwapPhaseNum::DIRECTION2) {
 		sceneSwapCount_++;
-		float nowEaseTransVecX = Ease::LinearEasing(0,static_cast<float>(WinApp::GetInstance()->window_width), static_cast<int>(sceneSwapCount_), static_cast<int>(MAX_BACK_SWAP_COUNT));
+
+		easeStrength_ = 3.f;
+		float nowEaseTransVecX = Ease::LinearEasing(0,static_cast<float>(WinApp::GetInstance()->window_width), static_cast<int>(sceneSwapCount_), static_cast<int>(MAX_BACK_SWAP_COUNT),easeStrength_);
 		blackBackTitle_->SetPozition({ nowEaseTransVecX ,0 });
 		if (sceneSwapCount_ >= MAX_BACK_SWAP_COUNT) {
 			sceneSwapPhase_ = SceneSwapPhaseNum::MOVE2;
@@ -149,7 +154,9 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 	}
 	else if (sceneSwapPhase_ == SceneSwapPhaseNum::MOVE2) {
 		sceneSwapCount_++;
-		float nowScrollVec = Ease::LinearEaseOutEasing(0, static_cast<float>(WinApp::GetInstance()->window_height), static_cast<int>(sceneSwapCount_), static_cast<int>(MAX_SWAP_COUNT));
+
+		easeStrength_ = 3.f;
+		float nowScrollVec = Ease::LinearEaseOutEasing(0, static_cast<float>(WinApp::GetInstance()->window_height), static_cast<int>(sceneSwapCount_), static_cast<int>(MAX_SWAP_COUNT),easeStrength_);
 		sceneChangeLeft_->SetPozition({ 0 ,-nowScrollVec });
 		sceneChangeRight_->SetPozition({ 0 ,nowScrollVec });
 
