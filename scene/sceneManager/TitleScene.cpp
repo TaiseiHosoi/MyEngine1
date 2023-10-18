@@ -47,10 +47,6 @@ void TitleScene::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	title_->SetPozition({ 200,100 });
 	title2_->SetPozition({ 200,100 });
 
-	mouse_->SetSize({ 80,80 });
-	mouse_->SetPozition({ 1100,600 });
-
-
 
 	//ゲームオブジェクトクラスに情報セット
 	_controller->gameObjectManager_->SetRailCamInfo(camera->GetRailCameraInfo());
@@ -89,7 +85,7 @@ void TitleScene::Draw(DirectXCommon* dxCommon) {
 	}
 	else {
 		title2_->Draw();
-		mouse_->Draw();
+		leftMouseButtonStr_->Draw();
 	}
 	sceneChangeLeft_->Draw();
 	sceneChangeRight_->Draw();

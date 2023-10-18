@@ -24,7 +24,7 @@ public:
 public:
 
 	// 球コライダーゲッタ
-	SphereCollider* GetSphereCollider() { return sphere; };
+	SphereCollider* GetSphereCollider() { return sphere.get(); };
 
 	// 死亡時フラグゲッタ
 	bool ReturnIsDead() { return isDead_; };
@@ -37,7 +37,7 @@ private:
 	Mesh* model_ = nullptr;
 	float bulletSpeed_ = 8.f;
 	CollisionManager* collider = nullptr;
-	SphereCollider* sphere = nullptr;
+	std::unique_ptr<SphereCollider> sphere;
 	Vector3 pos;
 	
 	bool isDead_ = false;

@@ -8,7 +8,7 @@
 #include"GameCamera.h"
 
 struct EnemyState {
-    bool isAlive_ = true;
+    bool isDead_ = true;
     bool isAtk_ = false;
     int hp_ = 1;
 };

@@ -81,6 +81,7 @@ private:// メンバ変数
 private:// 当たり判定
     CollisionManager* collider_ = nullptr;
     std::unique_ptr <SphereCollider> sphere_ = nullptr;
+    Vector3 colliderPos_ = { 0,0,0 };
 
 
     //phase関係

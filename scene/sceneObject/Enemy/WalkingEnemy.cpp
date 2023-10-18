@@ -7,7 +7,6 @@ WalkingEnemy::WalkingEnemy()
 
 WalkingEnemy::~WalkingEnemy()
 {
-	delete model_;
 }
 
 void WalkingEnemy::Initialize(Mesh* model)
@@ -17,7 +16,7 @@ void WalkingEnemy::Initialize(Mesh* model)
 	object3d_->Initialize(true);
 	object3d_->SetModel(model_);
 	object3d_->SetScale({ 3,3,3});
-	object3d_->SetPosition({ object3d_->GetPosition().x,4,object3d_->GetPosition().z });
+	object3d_->SetPosition({ object3d_->GetPosition().x,1.5f,object3d_->GetPosition().z });
 	nowPhase_ = 1;	//自機の挙動が何から始まるか
 	advancedValue_ = 0.0f;
 
@@ -25,7 +24,7 @@ void WalkingEnemy::Initialize(Mesh* model)
 	sphere_ = std::make_unique<SphereCollider>();
 	CollisionManager::GetInstance()->AddCollider(sphere_.get());
 	sphere_->SetAttribute(COLLISION_ATTR_ENEMIES);
-	sphere_->SetBasisPos(&object3d_->worldTransform.translation_);
+	sphere_->SetBasisPos(&colliderPos_);
 	sphere_->SetRadius(object3d_->worldTransform.scale_.x);
 	sphere_->Update();
 
@@ -33,7 +32,7 @@ void WalkingEnemy::Initialize(Mesh* model)
 	
 	//ステータス初期化
 	state_.hp_ = 1;
-	state_.isAlive_ = true;
+	state_.isDead_ = false;
 	state_.isAtk_ = false;
 
 }
@@ -71,17 +70,34 @@ void WalkingEnemy::Update()
 		nowOffset = MathFunc::RotateVecAngleY(nowOffset,dirAngle);
 		object3d_->worldTransform.translation_ += nowOffset;
 
+		object3d_->worldTransform.translation_.y = 1.5f;
+
 		//y軸回転で前を向く
 		object3d_->worldTransform.rotation_.y = dirAngle + 3.14f;
 
 
 	}
 
+	if (sphere_->GetIsHit() == true) {
+		if (sphere_->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ALLIESBULLETS) {
+			state_.hp_--;
+		}
+	}
 
-
+	if (state_.hp_ <= 0) {
+		state_.isDead_ = true;
+	}
+	
+	//object3d更新
 	object3d_->Update();
-	sphere_->Update();
 
+	//コライダー更新
+	colliderPos_ = object3d_->worldTransform.matWorld_.GetWorldPos();
+	sphere_->Update();
+	
+	ImGui::Begin("WalkingEnemy");
+	ImGui::InputFloat3("translation", &object3d_->worldTransform.translation_.x);
+	ImGui::End();
 
 
 }

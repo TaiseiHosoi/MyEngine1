@@ -2,6 +2,15 @@
 #include"MathFunc.h"
 
 
+GameObjManager::GameObjManager()
+{
+}
+
+GameObjManager::~GameObjManager()
+{
+	
+}
+
 void GameObjManager::StaticInit()
 {
 
@@ -67,7 +76,7 @@ void GameObjManager::StaticInit()
 			moaiObjs.back().SetScale({3,3,3});
 			EnemyState newState;
 			newState.hp_ = 1;
-			newState.isAlive_ = true;
+			newState.isDead_ = false;
 			newState.isAtk_ = false;
 			moaiState.push_back(newState);
 
@@ -101,7 +110,9 @@ void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
 
 	if (enemyNum == ENEMY_NUM::WALKING_ENEMY) {
 		//オブジェクト処理
-		walkingEnemies.push_back(new WalkingEnemy);	
+		std::unique_ptr<WalkingEnemy> newWalkingEnemy;
+		newWalkingEnemy = std::make_unique<WalkingEnemy>();
+		walkingEnemies.push_back(std::move(newWalkingEnemy));
 		walkingEnemies.back()->Initialize(modelWalkRobo.get());
 		walkingEnemies.back()->SetOffsetVec3(offsetPos);
 		walkingEnemies.back()->SetRailCameraInfo(railCameraInfo_);
@@ -116,7 +127,11 @@ void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
 
 void GameObjManager::UpdateAllObjects()
 {
-	
+	// Listのremove
+	walkingEnemies.remove_if([](std::unique_ptr<WalkingEnemy>& enemy) {
+		return enemy->GetState()->isDead_;
+		});
+
 	UpdateWalkingEnemyPopCommands();
 
 	for (int i = 0; i < objects.size();i++) {
@@ -150,12 +165,12 @@ void GameObjManager::UpdateAllObjects()
 			}
 		}
 		if (moaiState[i].hp_ <= 0) {
-			moaiState[i].isAlive_ = false;
+			moaiState[i].isDead_ = true;
 			moaiSpCollider[i]->RemoveAttribute(8);
 			
 		}
 
-		if (moaiState[i].isAlive_ == false) {	//死去
+		if (moaiState[i].isDead_ == true) {	//死去
 			//moaiObjs.erase(std::remove_if(moaiObjs.begin(), moaiObjs.end(),
 			//	[](const EnemyState& state) {
 			//		return state.isDead_;
@@ -168,24 +183,11 @@ void GameObjManager::UpdateAllObjects()
 		
 	}
 
-
-	for (int i = 0; i < walkingEnemies.size(); i++) {
-		walkingEnemies[i]->Update();
-
-		if (walkingEnemies[i]->GetSphereCollider()->GetIsHit() == true) {
-			if (walkingEnemies[i]->GetSphereCollider()->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ALLIES) {
-				walkingEnemies[i]->GetState()->hp_--;
-			}
-		}
-		if (walkingEnemies[i]->GetState()->hp_ <= 0) {
-			walkingEnemies[i]->GetState()->isAlive_ = false;
-			walkingEnemies[i]->GetSphereCollider()->RemoveAttribute(8);
-
-		}
-
-		
-		
+	//歩兵更新
+	for (const unique_ptr<WalkingEnemy>& enemy : walkingEnemies) {
+		enemy->Update();
 	}
+
 
 	/*ImGui::Begin("objects");
 	for (int i = 0; i < objects.size(); i++) {
@@ -205,9 +207,11 @@ void GameObjManager::UpdateAllObjects()
 void GameObjManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
 {
 
-	for (int i = 0; i < walkingEnemies.size(); i++) {
-		walkingEnemies[i]->Draw(cmdList);
+	for (const unique_ptr<WalkingEnemy>& enemy : walkingEnemies) {
+		enemy->Draw(cmdList);
 	}
+
+
 	for (int i = 0; i < objects.size(); i++) {
 		objects[i].Draw(cmdList);
 	}

@@ -16,6 +16,7 @@
 #include <cassert>
 #include<fstream>
 #include<string>
+#include<list>
 
 struct LevelData;
 
@@ -27,11 +28,13 @@ enum ENEMY_NUM {
 
 class GameObjManager
 {
-
+public:
+    GameObjManager();
+    ~GameObjManager();
 
 private:
-    std::vector<Enemy*> enemies;
-    std::vector<WalkingEnemy*> walkingEnemies;
+    //std::vector<std::unique_ptr<Enemy>> enemies;
+    std::list<std::unique_ptr<WalkingEnemy>> walkingEnemies;
 
     LevelData* levelData;
 
@@ -123,10 +126,10 @@ public:
     std::vector<Object3d>* GetCamObjsPtr() { return &camObjs; };
 
     // enemiesのゲッタ
-    std::vector<Enemy*>GetEnemies() { return enemies; }
+    //std::vector<std::unique_ptr<Enemy>>*GetEnemies() { return &enemies; }
 
     // 歩兵敵のゲッタ
-    std::vector<WalkingEnemy*>GetWalkingEnemies() { return walkingEnemies; }
+    std::list<std::unique_ptr<WalkingEnemy>>*GetWalkingEnemies() { return &walkingEnemies; }
 
     
 

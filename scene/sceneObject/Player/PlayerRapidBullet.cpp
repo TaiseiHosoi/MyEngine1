@@ -15,10 +15,10 @@ void PlayerRapidBullet::Initialize(Mesh* model, Vector3 setPos, Vector3 setRot)
 	object_->SetScale({ 1,1,1 });
 	object_->Update();
 
-	sphere = new SphereCollider;
-	CollisionManager::GetInstance()->AddCollider(sphere);
+	sphere = std::make_unique<SphereCollider>();
+	CollisionManager::GetInstance()->AddCollider(sphere.get());
 	pos = object_->worldTransform.matWorld_.GetWorldPos();
-	sphere->SetAttribute(COLLISION_ATTR_ALLIES);
+	sphere->SetAttribute(COLLISION_ATTR_ALLIESBULLETS);
 	sphere->SetBasisPos(&pos);
 	sphere->SetRadius(1.0f);
 	sphere->Update();

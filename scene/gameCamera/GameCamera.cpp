@@ -61,7 +61,7 @@ void GameCamera::Update()
 	//マウス処理
 	if (GetActiveWindow() == WinApp::GetInstance()->GetHwnd())
 	{
-		ShowCursor(false);
+		//ShowCursor(false);
 		//ViewPointMovement();
 		CulDirection();
 	}
