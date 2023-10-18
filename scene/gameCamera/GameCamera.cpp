@@ -96,8 +96,7 @@ void GameCamera::Update()
 		//ワールド上の自機の回転量yを求める
 		Vector3 nowOffset;
 		float dirAngle = atan2(directionLoot_.x, directionLoot_.z);
-		nowOffset = titleScOffsetPos_;
-		nowOffset = MathFunc::RotateVecAngleY(nowOffset, dirAngle);
+		nowOffset = MathFunc::RotateVecAngleY(titleScOffsetPos_, dirAngle);
 
 		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
 		
@@ -109,6 +108,7 @@ void GameCamera::Update()
 		minusVec *= 10.0f;	
 
 		basePos_ += minusVec;
+		basePos_.y = gamepartCamPosY;
 
 		Vector3 e = GetEye();
 		Vector3 targ = GetTarget();
@@ -127,37 +127,59 @@ void GameCamera::Update()
 
 		Vector3 minusVec = railTargetPos_ - basePos_;
 		minusVec.nomalize();
-		minusVec *= 15.0f;	//引きカメラ
+		float minusVal = 15.f;
+		minusVec *= minusVal;	//引きカメラ
 
 		basePos_ += minusVec;
+		basePos_.y = gamepartCamPosY;
 
-		Vector3 e = GetEye();
-		Vector3 targ = GetTarget();
 		FollowPlayer();
 	}
-	else if (camMode_ == CAM_MODE::battle) {
-		//進行上の向いている方向
-		directionLoot_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + 0.005f)
-			- MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);
-		directionLoot_.nomalize();
+	else if (camMode_ == CAM_MODE::startDirection) {
+		if (isCountInc_ == true) {
+			startDirectionNowCount_++;
+		}
 
-		//ワールド上の自機の回転量yを求める
-		Vector3 nowOffset;
-		float dirAngle = atan2(directionLoot_.x, directionLoot_.z);
-		nowOffset = titleScOffsetPos_;
-		nowOffset = MathFunc::RotateVecAngleY(nowOffset, dirAngle);
-
+		// カメラpos処理
 		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
 
 		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
 		railTargetPos_ = target;	//ローカル変数に保存
 
-		Vector3 minusVec = nowOffset;
-		minusVec.nomalize();
-		minusVec *= 10.0f;
 
-		basePos_ += minusVec;
+		Vector3 minusVec = railTargetPos_ - basePos_;
+		minusVec.nomalize();
+		float minusVal = 15.f;
+		Vector3 gamepartCamPos = basePos_ + minusVec * minusVal;	//引きカメラ
+		gamepartCamPos.y = gamepartCamPosY;
+		
+
+		float directionMagnification = 50.f;
+		float directionShiftY = 20.f;
+		Vector3 directionPos = basePos_ - minusVec * directionMagnification;
+		directionPos.y += directionShiftY;
+
+		//basePos_ = directionPos;
+
+		basePos_ = { Ease::LinearEaseOutEasing(directionPos.x,gamepartCamPos.x,startDirectionNowCount_,maxStartDirectionNowCount_,startDirectionSAFStrength_),
+			Ease::LinearEaseOutEasing(directionPos.y,gamepartCamPos.y,startDirectionNowCount_,maxStartDirectionNowCount_,startDirectionSAFStrength_),
+			Ease::LinearEaseOutEasing(directionPos.z,gamepartCamPos.z,startDirectionNowCount_,maxStartDirectionNowCount_,startDirectionSAFStrength_)
+		};
+
 		FollowPlayer();
+
+		// fovY演出処理
+		startDirectionFOV_ = Ease::LinearEaseOutEasing(offsetStartDirectionFOV_, GetOffsetFovAngleY(), startDirectionNowCount_, maxStartDirectionNowCount_, startDirectionSAFStrength_);
+		SetFovAngleY(startDirectionFOV_);
+
+		// 演出終了時処理
+		if (startDirectionNowCount_ >= maxStartDirectionNowCount_) {
+			camMode_ = CAM_MODE::battle;
+			startDirectionNowCount_ = 0;
+			SetIsCountInc(false);
+			SetFovAngleY(GetOffsetFovAngleY());
+		}
+
 	}
 
 
@@ -381,7 +403,7 @@ float GameCamera::CalculateTValueBasedOnElapsedTime(float maxTimeArg)
 void GameCamera::FollowPlayer()
 {
 
-		Vector3 tempEye = { basePos_.x,6.0f,basePos_.z };
+		Vector3 tempEye = { basePos_.x,basePos_.y,basePos_.z };
 
 
 		SetEye(tempEye);
@@ -403,6 +425,16 @@ RailCameraInfo* GameCamera::GetRailCameraInfo()
 	return railCameraInfo_.get();
 }
 
+
+bool GameCamera::GetIsCountInc()
+{
+	return isCountInc_;
+}
+
+void GameCamera::SetIsCountInc(bool setArg)
+{
+	isCountInc_ = setArg;
+}
 
 Vector3 GameCamera::splinePosition(const std::vector<Vector3>& pointsArg, size_t startIndex, float t)
 {

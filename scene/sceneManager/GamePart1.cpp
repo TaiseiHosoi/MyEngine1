@@ -25,51 +25,7 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	//audio_->Initialize();
 	//audio_->LoadWave("newspaper.wav");
 
-	//attack_ = std::make_unique<Sprite>();
-	//attack_->Initialize(_controller->spriteCommon_.get(), 6);
-	//attack_->SetSize({ 128,112 });
-	//attack_->SetPozition({ 900,550 });
 
-	//attack2_ = std::make_unique<Sprite>();
-	//attack2_->Initialize(_controller->spriteCommon_.get(), 7);
-	//attack2_->SetSize({ 128,112 });
-	//attack2_->SetPozition({ 900,550 });
-
-	//guard_ = std::make_unique<Sprite>();
-	//guard_->Initialize(_controller->spriteCommon_.get(), 8);
-	//guard_->SetSize({ 160,256 });
-	//guard_->SetPozition({ 1100,450 });
-
-	//guard2_ = std::make_unique<Sprite>();
-	//guard2_->Initialize(_controller->spriteCommon_.get(), 9);
-	//guard2_->SetSize({ 160,256 });
-	//guard2_->SetPozition({ 1100,450 });
-
-
-
-	//enemyHp_ = std::make_unique<Sprite>();
-	//enemyHp_->Initialize(_controller->spriteCommon_.get(), 12);
-	//enemyHp_->SetAnchorPoint({ 0 , 0 });
-	//enemyHp_->SetSize({ 1280 , 32 });
-	//enemyHp_->SetPozition({ 0 , 10 });
-
-	//enemyHpRed_ = std::make_unique<Sprite>();
-	//enemyHpRed_->Initialize(_controller->spriteCommon_.get(), 13);
-	//enemyHpRed_->SetAnchorPoint({ 0 , 0 });
-	//enemyHpRed_->SetSize({ 1280 , 32 });
-	//enemyHpRed_->SetPozition({ 0 , 10 });
-
-	//playerHp_ = std::make_unique<Sprite>();
-	//playerHp_->Initialize(_controller->spriteCommon_.get(), 14);
-	//playerHp_->SetAnchorPoint({ 0 , 0 });
-	//playerHp_->SetSize({ 300 , 32 });
-	//playerHp_->SetPozition({ 50 , 650 });
-
-	//playerHpRed_ = std::make_unique<Sprite>();
-	//playerHpRed_->Initialize(_controller->spriteCommon_.get(), 13);
-	//playerHpRed_->SetAnchorPoint({ 0 , 0 });
-	//playerHpRed_->SetSize({ 300 , 32 });
-	//playerHpRed_->SetPozition({ 50 , 650 });
 
 	isPause_ = false;
 	pauseMenuOptions_ = 0;
@@ -126,14 +82,7 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 	//playerHp_->SetSize({ 300 * _controller->fbxPlayer_->GetHp() / 100.0f, 32 });
 	//enemyHp_->SetSize({1280.0f * _controller->boss_->GetHp() / 100.0f , 32});
 
-	/*if (_controller->boss_->GetHp() <= 0) {
-		_controller->ChangeScene(new EndScene(_controller));
-	}else if (_controller->fbxPlayer_->GetHp() <= 0) {
-		_controller->ChangeScene(new GamePart2(_controller));
-	}
-	else if (backToTitle_ == true) {
-		_controller->ChangeScene(new TitleScene(_controller));
-	}*/
+
 	// ここから下にコード書くとメモリ君がエラー吐く
 }
 

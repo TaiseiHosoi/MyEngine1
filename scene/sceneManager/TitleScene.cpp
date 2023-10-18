@@ -122,7 +122,7 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 			sceneSwapPhase_ = SceneSwapPhaseNum::DIRECTION1;
 			sceneSwapCount_ = 0;
 			isSwapCamera = true;
-			camera->SetCamMode(1);
+			camera->SetCamMode(CAM_MODE::startDirection);
 			camera->ResetGameCam();
 			
 		}
@@ -149,6 +149,7 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 		if (sceneSwapCount_ >= MAX_BACK_SWAP_COUNT) {
 			sceneSwapPhase_ = SceneSwapPhaseNum::MOVE2;
 			sceneSwapCount_ = 0;
+			camera->SetIsCountInc(true);
 		}
 
 	}
@@ -168,6 +169,7 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 	}else if (sceneSwapPhase_ == SceneSwapPhaseNum::END) {
 		isSwapCamera = true;
 		isChangeScene = true;
+		
 
 	}
 

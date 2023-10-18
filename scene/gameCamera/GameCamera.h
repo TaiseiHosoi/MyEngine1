@@ -121,6 +121,12 @@ public:	// アクセッサ
 	// レールカメラ情報ゲッタ
 	RailCameraInfo* GetRailCameraInfo();	//レールカメラの進行状況とレール情報を渡す
 
+	// isCountIncゲッㇳ
+	bool GetIsCountInc();
+
+	// isCountIncセット
+	void SetIsCountInc(bool setArg);
+
 
 	// 1-> target ,0-> eye
 	WorldTransform swap_[2];
@@ -160,9 +166,17 @@ private:
 	//レールカメラ用
 	Vector3 basePos_ = {};
 	Vector3 railTargetPos_ = {};
-	//シーン0用
+	//シーンタイトル用
 	Vector3 directionLoot_ = {};
 	Vector3 titleScOffsetPos_ = {10.f,0,20.f};
+	const float gamepartCamPosY = 6.f;
+	//シーンスタート演出用
+	int startDirectionNowCount_ = 0;
+	const int maxStartDirectionNowCount_ = 120;
+	const float startDirectionSAFStrength_ = 6.f;
+	float startDirectionFOV_ = 0.5f;
+	const float offsetStartDirectionFOV_ = 0.5f;
+	bool isCountInc_ = false;
 	
 	//制御店の集合(vectorコンテナ),補完する区間の添字、時間経過率
 	Vector3 splinePosition(const std::vector<Vector3>& points, size_t startIndex, float t);
@@ -176,7 +190,7 @@ private:
 	std::vector<Vector3>points{};
 	std::vector<Object3d>* jsonObjsPtr = nullptr;
 	
-
+	//　レールカメラ変数	
 	float maxTime = 1.2f;				//全体時間[s]
 	float timeRate_;			//何％時間が進んだか
 	float oldTimeRate_;
@@ -193,7 +207,6 @@ private:
 	std::unique_ptr<RailCameraInfo> railCameraInfo_;
 
 	//camMode
-
 	int camMode_ = 0;
 
 };

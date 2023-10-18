@@ -146,7 +146,7 @@ void Camera::UpdateProjectionMatrix()
 {
 	// 透視投影による射影行列の生成
 	MakePerspectiveL(
-		1.0f ,
+		fovAngleY_ ,
 		aspectRatio ,
 		0.1f , 150000.0f ,
 		matProjection
@@ -234,4 +234,19 @@ void Camera::MakeLookL(const Vector3& eye , const Vector3& target , const Vector
 	mat.m[3][0] = eye.x;
 	mat.m[3][1] = eye.y;
 	mat.m[3][2] = eye.z;
+}
+
+void Camera::SetFovAngleY(float angleY)
+{
+	fovAngleY_ = angleY;
+}
+
+float Camera::GetFovAngleY()
+{
+	return fovAngleY_;
+}
+
+float Camera::GetOffsetFovAngleY()
+{
+	return offsetFovAngleY;
 }

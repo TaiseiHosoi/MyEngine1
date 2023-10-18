@@ -128,17 +128,19 @@ public: // メンバ関数
 		this->up = upVec; viewDirty = true;
 	}
 
-	// sensor
+	// センサーゲット
 	inline const float& GetSensor() {
 		return sensor;
 	}
+	// センサーセット
 	inline void SetSensor(float sensorVec) {
 		this->sensor = sensorVec; viewDirty = true;
 	}
-	// FL
+	// FLゲット
 	inline const float& GetForcalLengs() {
 		return focalLengs;
 	}
+	// FLセット
 	inline void SetFocalLengs(float focalLengsVal) {
 		this->focalLengs = focalLengsVal; viewDirty = true;
 	}
@@ -156,13 +158,23 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="move">移動量</param>
 	void MoveVector(const Vector3& move);
-	//void MoveVector(const Vector3& move);
 
+	// FOVY
 	float FieldOfViewY();
 
 	static void MakePerspectiveL(float fovAngleY, float aspect, float near_, float far_, Matrix4& matrix);
 
 	static void MakeLookL(const Vector3& eye, const Vector3& target, const Vector3& up, Matrix4& mat);
+
+	// fovAngleYセット
+	void SetFovAngleY(float angleY);
+
+	// fovAngleYゲット
+	float GetFovAngleY();
+
+	//FOVYのオフセット値
+	float GetOffsetFovAngleY();
+
 
 protected: // メンバ変数
 	
@@ -191,5 +203,7 @@ protected: // メンバ変数
 
 	float focalLengs = 50;
 	float sensor = 50;
+	float fovAngleY_ = 1.0f;
+	const float offsetFovAngleY = 1.0f;
 };
 
