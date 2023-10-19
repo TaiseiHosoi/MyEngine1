@@ -36,7 +36,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	
 
 
-	while (engine_->isRunningGame) {
+	while (engine_->isRunningGame_) {
 		engine_->Update();
 		
 		//描画

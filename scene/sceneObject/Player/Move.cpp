@@ -16,8 +16,8 @@ void Move::Initialize(FBXObject3d* gameObject)
 	gameObject_ = gameObject;
 	isRun_ = false;
 
-	faceAngle_ = gameObject_->wtf.rotation_;
-	nowPos = {};
+	faceAngle_ = gameObject_->wtf_.rotation_;
+	nowPos_ = {};
 }
 
 void Move::Update(Input* input)

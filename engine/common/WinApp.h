@@ -21,18 +21,18 @@ public:
 
 	// getter
 	// hwndゲッタ
-	HWND GetHwnd()const { return hwnd; }
+	HWND GetHwnd()const { return hwnd_; }
 	// hInstanceゲッタ
-	HINSTANCE GetHInstance() const { return w.hInstance; }
+	HINSTANCE GetHInstance() const { return w_.hInstance; }
 
 	// シングルトンインスタンスの取得
 	static WinApp* GetInstance();
 
 private:
 	// ウィンドウハンドル
-	HWND hwnd = nullptr;
+	HWND hwnd_ = nullptr;
 	//ウィンドウクラス
-	WNDCLASSEX w{};
+	WNDCLASSEX w_{};
 
 	
 public:

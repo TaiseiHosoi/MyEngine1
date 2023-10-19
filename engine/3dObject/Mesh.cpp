@@ -47,32 +47,32 @@ void Mesh::LoadMaterial(const std::string& directoryPath, const std::string& fil
 		//先頭文字がnewmtlならマテリアル名
 		if (key == "newmtl") {
 			//マテリアル名読み込み
-			line_stream >> material.name;
+			line_stream >> material_.name;
 		}
 		//先頭文字がKaならアンビエント色
 		if (key == "Ka") {
-			line_stream >> material.ambient.x;
-			line_stream >> material.ambient.y;
-			line_stream >> material.ambient.z;
+			line_stream >> material_.ambient.x;
+			line_stream >> material_.ambient.y;
+			line_stream >> material_.ambient.z;
 		}
 		//先頭文字がKdならディフューズ色
 		if (key == "Kd") {
-			line_stream >> material.diffuse.x;
-			line_stream >> material.diffuse.y;
-			line_stream >> material.diffuse.z;
+			line_stream >> material_.diffuse.x;
+			line_stream >> material_.diffuse.y;
+			line_stream >> material_.diffuse.z;
 		}
 		//先頭文字列がKsならスペキュラー色
 		if (key == "Ks") {
-			line_stream >> material.specular.x;
-			line_stream >> material.specular.y;
-			line_stream >> material.specular.z;
+			line_stream >> material_.specular.x;
+			line_stream >> material_.specular.y;
+			line_stream >> material_.specular.z;
 		}
 		//先頭文字列がmap_Kdならテクスチャファイル名
 		if (key == "map_Kd") {
 			//テクスチャのファイル名読み込み
-			line_stream >> material.textureFilename;
+			line_stream >> material_.textureFilename;
 			//テクスチャ読み込み
-			LoadTexture(directoryPath, material.textureFilename);
+			LoadTexture(directoryPath, material_.textureFilename);
 		}
 	}
 	//ファイルを閉じる
@@ -124,13 +124,13 @@ bool Mesh::LoadTexture(const std::string& directoryPath, const std::string& file
 	result = device->CreateCommittedResource(
 		&heapProps, D3D12_HEAP_FLAG_NONE, &texresDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ, // テクスチャ用指定
-		nullptr, IID_PPV_ARGS(&texbuff));
+		nullptr, IID_PPV_ARGS(&texbuff_));
 	assert(SUCCEEDED(result));
 
 	// テクスチャバッファにデータ転送
 	for (size_t i = 0; i < metadata.mipLevels; i++) {
 		const Image* img = scratchImg.GetImage(i, 0, 0); // 生データ抽出
-		result = texbuff->WriteToSubresource(
+		result = texbuff_->WriteToSubresource(
 			(UINT)i,
 			nullptr,              // 全領域へコピー
 			img->pixels,          // 元データアドレス
@@ -141,20 +141,20 @@ bool Mesh::LoadTexture(const std::string& directoryPath, const std::string& file
 	}
 
 	// シェーダリソースビュー作成
-	cpuDescHandleSRV = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeap->GetCPUDescriptorHandleForHeapStart(), 0, descriptorHandleIncrementSize);
-	gpuDescHandleSRV = CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeap->GetGPUDescriptorHandleForHeapStart(), 0, descriptorHandleIncrementSize);
+	cpuDescHandleSRV_ = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeap_->GetCPUDescriptorHandleForHeapStart(), 0, descriptorHandleIncrementSize_);
+	gpuDescHandleSRV_ = CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeap_->GetGPUDescriptorHandleForHeapStart(), 0, descriptorHandleIncrementSize_);
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{}; // 設定構造体
-	D3D12_RESOURCE_DESC resDesc = texbuff->GetDesc();
+	D3D12_RESOURCE_DESC resDesc = texbuff_->GetDesc();
 
 	srvDesc.Format = resDesc.Format;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
 	srvDesc.Texture2D.MipLevels = 1;
 
-	device->CreateShaderResourceView(texbuff.Get(), //ビューと関連付けるバッファ
+	device->CreateShaderResourceView(texbuff_.Get(), //ビューと関連付けるバッファ
 		&srvDesc, //テクスチャ設定情報
-		cpuDescHandleSRV
+		cpuDescHandleSRV_
 	);
 	if (result == NULL) {
 		return false;
@@ -172,14 +172,14 @@ void Mesh::InitializeDescriptorHeap()
 	descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//シェーダから見えるように
 	descHeapDesc.NumDescriptors = 1; // シェーダーリソースビュー1つ
-	result = device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&descHeap));//生成
+	result = device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&descHeap_));//生成
 	if (FAILED(result)) {
 		assert(0);
 	}
-	descHeap->SetName(L"MeshDescriptorHeap");
+	descHeap_->SetName(L"MeshDescriptorHeap");
 
 	// デスクリプタサイズを取得
-	descriptorHandleIncrementSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	descriptorHandleIncrementSize_ = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 }
 
 void Mesh::CreateBuffers()
@@ -188,7 +188,7 @@ void Mesh::CreateBuffers()
 
 	std::vector<VertexPosNormalUv> realVertices;
 
-	UINT sizeVB = static_cast<UINT>(sizeof(VertexPosNormalUv) * vertices.size());
+	UINT sizeVB = static_cast<UINT>(sizeof(VertexPosNormalUv) * vertices_.size());
 
 	// ヒーププロパティ
 	CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
@@ -198,50 +198,50 @@ void Mesh::CreateBuffers()
 	// 頂点バッファ生成
 	result = device->CreateCommittedResource(
 		&heapProps, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&vertBuff));
+		IID_PPV_ARGS(&vertBuff_));
 	assert(SUCCEEDED(result));
 
 	// 頂点バッファへのデータ転送
 	VertexPosNormalUv* vertMap = nullptr;
-	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+	result = vertBuff_->Map(0, nullptr, (void**)&vertMap);
 	if (SUCCEEDED(result)) {
 		/*memcpy(vertMap, vertices, sizeof(vertices));*/
-		std::copy(vertices.begin(), vertices.end(), vertMap);
-		vertBuff->Unmap(0, nullptr);
+		std::copy(vertices_.begin(), vertices_.end(), vertMap);
+		vertBuff_->Unmap(0, nullptr);
 	}
 
 	// 頂点バッファビューの作成
-	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
+	vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
 
-	vbView.SizeInBytes = sizeVB;
-	vbView.StrideInBytes = sizeof(vertices[0]);
+	vbView_.SizeInBytes = sizeVB;
+	vbView_.StrideInBytes = sizeof(vertices_[0]);
 
 
-	UINT sizeIB = static_cast<UINT>(sizeof(unsigned short) * indices.size());
+	UINT sizeIB = static_cast<UINT>(sizeof(unsigned short) * indices_.size());
 	// リソース設定
 	resourceDesc.Width = sizeIB;
 
 	// インデックスバッファ生成
 	result = device->CreateCommittedResource(
 		&heapProps, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&indexBuff));
+		IID_PPV_ARGS(&indexBuff_));
 
 	// インデックスバッファへのデータ転送
 	unsigned short* indexMap = nullptr;
-	result = indexBuff->Map(0, nullptr, (void**)&indexMap);
+	result = indexBuff_->Map(0, nullptr, (void**)&indexMap);
 	if (SUCCEEDED(result)) {
 
 
-		std::copy(indices.begin(), indices.end(), indexMap);
+		std::copy(indices_.begin(), indices_.end(), indexMap);
 
-		indexBuff->Unmap(0, nullptr);
+		indexBuff_->Unmap(0, nullptr);
 	}
 
 	// インデックスバッファビューの作成
-	ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
-	ibView.Format = DXGI_FORMAT_R16_UINT;
+	ibView_.BufferLocation = indexBuff_->GetGPUVirtualAddress();
+	ibView_.Format = DXGI_FORMAT_R16_UINT;
 	/*ibView.SizeInBytes = sizeof(indices);*/
-	ibView.SizeInBytes = sizeIB;
+	ibView_.SizeInBytes = sizeIB;
 
 	// ヒーププロパティ
 	CD3DX12_HEAP_PROPERTIES heapPropsB1 = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
@@ -255,59 +255,59 @@ void Mesh::CreateBuffers()
 		&resourceDescB1,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&constBuffB1));
+		IID_PPV_ARGS(&constBuffB1_));
 	// 定数バッファへデータ転送
 	ConstBufferDataB1* constMap1 = nullptr;
-	result = constBuffB1->Map(0, nullptr, (void**)&constMap1);
+	result = constBuffB1_->Map(0, nullptr, (void**)&constMap1);
 	if (SUCCEEDED(result)) {
-		constMap1->ambient = material.ambient;
-		constMap1->diffuse = material.diffuse;
-		constMap1->specular = material.specular;
-		constMap1->alpha = material.alpha;
-		constBuffB1->Unmap(0, nullptr);
+		constMap1->ambient = material_.ambient;
+		constMap1->diffuse = material_.diffuse;
+		constMap1->specular = material_.specular;
+		constMap1->alpha = material_.alpha;
+		constBuffB1_->Unmap(0, nullptr);
 	}
 }
 
 void Mesh::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial)
 {
 	// 頂点バッファの設定
-	cmdList->IASetVertexBuffers(0, 1, &vbView);
+	cmdList->IASetVertexBuffers(0, 1, &vbView_);
 	// インデックスバッファの設定
-	cmdList->IASetIndexBuffer(&ibView);
+	cmdList->IASetIndexBuffer(&ibView_);
 
 	// デスクリプタヒープの配列
-	ID3D12DescriptorHeap* ppHeaps[] = { descHeap.Get() };
+	ID3D12DescriptorHeap* ppHeaps[] = { descHeap_.Get() };
 	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 
 	// 定数バッファビューをセット
-	cmdList->SetGraphicsRootConstantBufferView(rootParamIndexMaterial, constBuffB1->GetGPUVirtualAddress());
-	if (material.textureFilename.size() > 0) {
+	cmdList->SetGraphicsRootConstantBufferView(rootParamIndexMaterial, constBuffB1_->GetGPUVirtualAddress());
+	if (material_.textureFilename.size() > 0) {
 		// シェーダリソースビューをセット
-		cmdList->SetGraphicsRootDescriptorTable(2, gpuDescHandleSRV);
+		cmdList->SetGraphicsRootDescriptorTable(2, gpuDescHandleSRV_);
 	}
 	// 描画コマンド
-	cmdList->DrawIndexedInstanced((UINT)indices.size(), 1, 0, 0, 0);
+	cmdList->DrawIndexedInstanced((UINT)indices_.size(), 1, 0, 0, 0);
 }
 
 void Mesh::RimDraw(ID3D12GraphicsCommandList* cmdList)
 {
 	// 頂点バッファの設定
-	cmdList->IASetVertexBuffers(0, 1, &vbView);
+	cmdList->IASetVertexBuffers(0, 1, &vbView_);
 	// インデックスバッファの設定
-	cmdList->IASetIndexBuffer(&ibView);
+	cmdList->IASetIndexBuffer(&ibView_);
 
 	// デスクリプタヒープの配列
-	ID3D12DescriptorHeap* ppHeaps[] = { descHeap.Get() };
+	ID3D12DescriptorHeap* ppHeaps[] = { descHeap_.Get() };
 	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 
 	// 定数バッファビューをセット
 
-	if (material.textureFilename.size() > 0) {
+	if (material_.textureFilename.size() > 0) {
 		// シェーダリソースビューをセット
-		cmdList->SetGraphicsRootDescriptorTable(3, gpuDescHandleSRV);
+		cmdList->SetGraphicsRootDescriptorTable(3, gpuDescHandleSRV_);
 	}
 	// 描画コマンド
-	cmdList->DrawIndexedInstanced((UINT)indices.size(), 1, 0, 0, 0);
+	cmdList->DrawIndexedInstanced((UINT)indices_.size(), 1, 0, 0, 0);
 }
 
 void Mesh::LoadFromOBJInternal(const std::string& modelname, bool smoothing)
@@ -396,10 +396,10 @@ void Mesh::LoadFromOBJInternal(const std::string& modelname, bool smoothing)
 				vertex.pos = positions[indexPosition - 1];
 				vertex.normal = normals[indexNormal - 1];
 				vertex.uv = texcodes[indexTexcord - 1];
-				vertices.emplace_back(vertex);
-				smoothDate[indexPosition].emplace_back(vertices.size() - 1);
+				vertices_.emplace_back(vertex);
+				smoothDate_[indexPosition].emplace_back(vertices_.size() - 1);
 				//インデックスデータの追加
-				indices.emplace_back((unsigned short)indices.size());
+				indices_.emplace_back((unsigned short)indices_.size());
 
 			}
 		}
@@ -408,19 +408,19 @@ void Mesh::LoadFromOBJInternal(const std::string& modelname, bool smoothing)
 	file.close();
 	if (smoothing == true)
 	{
-		auto itr = smoothDate.begin();
-		for (; itr != smoothDate.end(); ++itr) {
+		auto itr = smoothDate_.begin();
+		for (; itr != smoothDate_.end(); ++itr) {
 			//各面用の共通頂点コレクション
 			std::vector<unsigned short>& v = itr->second;
 			//全頂点の法線を平均する
 			XMVECTOR normal = {};
 			for (unsigned short index : v) {
-				normal += XMVectorSet(vertices[index].normal.x, vertices[index].normal.y, vertices[index].normal.z, 0);
+				normal += XMVectorSet(vertices_[index].normal.x, vertices_[index].normal.y, vertices_[index].normal.z, 0);
 			}
 			normal = XMVector3Normalize(normal / (float)v.size());
 			//共通法線を使用する全ての頂点データに書き込む
 			for (unsigned short index : v) {
-				vertices[index].normal = { normal.m128_f32[0],normal.m128_f32[1],normal.m128_f32[2] };
+				vertices_[index].normal = { normal.m128_f32[0],normal.m128_f32[1],normal.m128_f32[2] };
 			}
 		}
 	}

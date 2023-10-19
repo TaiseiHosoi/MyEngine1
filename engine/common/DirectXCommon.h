@@ -43,7 +43,7 @@ public:
 	// コマンドリストヘッダ
 	ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
 	//バックバッハの数をw取得
-	size_t GetBackBufferCount() const { return backBuffers.size(); }
+	size_t GetBackBufferCount() const { return backBuffers_.size(); }
 private:
 	void InitializeFixFPS();	//初期化
 	void UpdateFixFPS();	//FPS固定更新
@@ -63,11 +63,11 @@ private:
 	Microsoft::WRL::ComPtr <ID3D12Resource> depthBuff_;
 	Microsoft::WRL::ComPtr <ID3D12DescriptorHeap> dsvHeap_;
 	Microsoft::WRL::ComPtr <ID3D12Fence> fence_;
-	UINT64 fenceVal = 0;
-	D3D12_RESOURCE_BARRIER barrierDesc{};
+	UINT64 fenceVal_ = 0;
+	D3D12_RESOURCE_BARRIER barrierDesc_{};
 
 
-	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffers;
+	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffers_;
 
 
 	WinApp* winApp_ = nullptr;

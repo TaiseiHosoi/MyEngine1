@@ -185,12 +185,12 @@ void DirectXCommon::InitializeRenderTargetView() {
 	device_->CreateDescriptorHeap(&rtvHeapDesc_, IID_PPV_ARGS(&rtvHeap_));
 
 	// バックバッファ
-	backBuffers.resize(swapChainDesc_.BufferCount);
+	backBuffers_.resize(swapChainDesc_.BufferCount);
 
 	// スワップチェーンの全てのバッファについて処理する
-	for (size_t i = 0; i < backBuffers.size(); i++) {
+	for (size_t i = 0; i < backBuffers_.size(); i++) {
 		// スワップチェーンからバッファを取得
-		swapChain_->GetBuffer((UINT)i, IID_PPV_ARGS(&backBuffers[i]));
+		swapChain_->GetBuffer((UINT)i, IID_PPV_ARGS(&backBuffers_[i]));
 		// デスクリプタヒープのハンドルを取得
 		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = rtvHeap_->GetCPUDescriptorHandleForHeapStart();
 		// 裏か表かでアドレスがずれる
@@ -201,7 +201,7 @@ void DirectXCommon::InitializeRenderTargetView() {
 		rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 		rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 		// レンダーターゲットビューの生成
-		device_->CreateRenderTargetView(backBuffers[i].Get(), &rtvDesc, rtvHandle);
+		device_->CreateRenderTargetView(backBuffers_[i].Get(), &rtvDesc, rtvHandle);
 	}
 }
 
@@ -268,7 +268,7 @@ void DirectXCommon::InitializeFence() {
 
 	// フェンスの生成
 
-	result = device_->CreateFence(fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence_));
+	result = device_->CreateFence(fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence_));
 }
 
 
@@ -280,10 +280,10 @@ void DirectXCommon::PreDraw() {
 
 	// 1.リソースバリアで書き込み可能に変更
 
-	barrierDesc.Transition.pResource = backBuffers[bbIndex].Get();				// バックバッファを指定
-	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;		// 表示状態から
-	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画状態へ
-	commandList_->ResourceBarrier(1, &barrierDesc);
+	barrierDesc_.Transition.pResource = backBuffers_[bbIndex].Get();				// バックバッファを指定
+	barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;		// 表示状態から
+	barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画状態へ
+	commandList_->ResourceBarrier(1, &barrierDesc_);
 
 	// 2.描画先の変更
 
@@ -336,9 +336,9 @@ void DirectXCommon::PostDraw() {
 	//UINT bbIndex = swapChain_->GetCurrentBackBufferIndex();
 
 	// 5.リソースバリアを戻す
-	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;		// 描画状態から
-	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;				// 表示状態へ
-	commandList_->ResourceBarrier(1, &barrierDesc);
+	barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;		// 描画状態から
+	barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;				// 表示状態へ
+	commandList_->ResourceBarrier(1, &barrierDesc_);
 
 	// 命令のクローズ
 	result = commandList_->Close();
@@ -351,10 +351,10 @@ void DirectXCommon::PostDraw() {
 	assert(SUCCEEDED(result));
 
 	// コマンドの実行完了を待つ
-	commandQueue_->Signal(fence_.Get(), ++fenceVal);
-	if (fence_->GetCompletedValue() != fenceVal) {
+	commandQueue_->Signal(fence_.Get(), ++fenceVal_);
+	if (fence_->GetCompletedValue() != fenceVal_) {
 		HANDLE event = CreateEvent(nullptr, false, false, nullptr);
-		fence_->SetEventOnCompletion(fenceVal, event);
+		fence_->SetEventOnCompletion(fenceVal_, event);
 		if (event != 0) {
 			WaitForSingleObject(event, INFINITE);
 			CloseHandle(event);

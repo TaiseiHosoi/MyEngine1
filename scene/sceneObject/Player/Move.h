@@ -28,8 +28,8 @@ private:
 
     Input* input_ = Input::GetInstance();
 private:   //どの行動でも必要
-    int animNum;
-    int animFlameCT;
+    int animNum_;
+    int animFlameCT_;
     FBXObject3d* gameObject_;
 
 private:    //固有で必要なもの
@@ -43,10 +43,10 @@ private:    //固有で必要なもの
     //自機回転の最大
     const float faceMaxAngle_ = 0.4f;
     float faceRotSpeed_ = 0.05f;
-    float returnRotSpeed = 0.03f;
+    float returnRotSpeed_ = 0.03f;
     //自機の移動用Matrix
-    Matrix4 pAngleMat = {};
-    Vector3 nowPos = {};
+    Matrix4 pAngleMat_ = {};
+    Vector3 nowPos_ = {};
     
 };
 

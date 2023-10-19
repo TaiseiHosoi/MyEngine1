@@ -51,31 +51,31 @@ public:
 	void SetPozition(const XMFLOAT2& position_);
 
 	// 描画位置ゲッタ
-	const XMFLOAT2& GetPosition() const { return position; }
+	const XMFLOAT2& GetPosition() const { return position_; }
 
 	// 回転角セット
 	void SetRotation(float rotation_);
 
 	// 回転角ゲット
-	float GetRotation() { return rotation; }
+	float GetRotation() { return rotation_; }
 
 	// カラーセット
-	void SetColor(const XMFLOAT4& color_) { color = color_; }
+	void SetColor(const XMFLOAT4& color_) { color_ = color_; }
 
 	// カラーゲット
-	XMFLOAT4 GetColor() { return color; }
+	XMFLOAT4 GetColor() { return color_; }
 
 	// スケールをセット
-	void SetScale(const XMFLOAT3& scale_) { scale = scale_; }
+	void SetScale(const XMFLOAT3& scale_) { scale_ = scale_; }
 
 	// スケールをゲット
-	XMFLOAT3 GetScale() { return scale; }
+	XMFLOAT3 GetScale() { return scale_; }
 
 	//  アンカーポイントをセット
-	void SetAnchorPoint(const XMFLOAT2& anchorPoint_) { anchorPoint = anchorPoint_; }
+	void SetAnchorPoint(const XMFLOAT2& anchorPoint_) { anchorPoint_ = anchorPoint_; }
 
 	// アンカーポイントをゲット
-	XMFLOAT2 GetAnchorPoint() { return anchorPoint; }
+	XMFLOAT2 GetAnchorPoint() { return anchorPoint_; }
 
 	// テクスチャ番号セット
 	void SetTextureIndex(uint32_t texNmb) { textureIndex_ = texNmb; }
@@ -84,10 +84,10 @@ public:
 	uint32_t GetTextureIndex() { return textureIndex_; }
 
 	// テクスチャサイズセット
-	void SetTexSize(XMFLOAT2 texSize) { textureSize = texSize; }
+	void SetTexSize(XMFLOAT2 texSize) { textureSize_ = texSize; }
 
 	// テクスチャサイズゲット
-	XMFLOAT2 GetTexSize() { return textureSize; }
+	XMFLOAT2 GetTexSize() { return textureSize_; }
 
 	// サイズのゲッタ
 	XMFLOAT2 GetSize() { return size_; }
@@ -96,7 +96,7 @@ public:
 	void SetSize(XMFLOAT2 size);
 
 	// アンカーポイントゲッタ
-	XMFLOAT2 GetAnchorPonit() { return anchorpoint; }
+	XMFLOAT2 GetAnchorPonit() { return anchorpoint_; }
 
 	/// 上下反転の設定
 	void SetIsFlipY(bool isFlipY);
@@ -108,71 +108,67 @@ public:
 	void AdjustTextureSize();
 
 private:
-	SpriteCommon* spritecommon;
-	HRESULT result;
+	SpriteCommon* spritecommon_;
+	HRESULT result_;
 	// 頂点データ
-	Vertex2 vertices[4] = {
+	Vertex2 vertices_[4] = {
 		// x      y     z       u     v
 		{{-0.4f, -0.7f, 0.0f}, {0.0f, 1.0f}}, // 左下
 		{{-0.4f, +0.7f, 0.0f}, {0.0f, 0.0f}}, // 左上
 		{{+0.4f, -0.7f, 0.0f}, {1.0f, 1.0f}}, // 右下
 		{{+0.4f, +0.7f, 0.0f}, {1.0f, 0.0f}}, // 右上
 	};
-	//XMFLOAT3 vertices[] = {
-	//{ -0.5f, -0.5f, 0.0f }, // 左下
-	//{ -0.5f, +0.5f, 0.0f }, // 左上
-	//{ +0.5f, -0.5f, 0.0f }, // 右下
-	//};
-	// 頂点バッファビューの作成
-	D3D12_VERTEX_BUFFER_VIEW vbView{};
 
-	XMMATRIX matScale;//スケーリング行列
-	XMMATRIX matWorld;
-	XMMATRIX matRot;//回転行列
-	XMMATRIX  matTrans;//平行移動行列
+	// 頂点バッファビューの作成
+	D3D12_VERTEX_BUFFER_VIEW vbView_{};
+
+	XMMATRIX matScale_;//スケーリング行列
+	XMMATRIX matWorld_;
+	XMMATRIX matRot_;//回転行列
+	XMMATRIX matTrans_;//平行移動行列
 
 	//座標
 
-	XMFLOAT3 scale{ 0.5f, 0.5f, 1.0f };
+	XMFLOAT3 scale_ = { 0.5f, 0.5f, 1.0f };
 
 	XMFLOAT2 size_ = { 100.0f,100.0f };
 
-	float rotation = 0.0f;
-	XMFLOAT2 position = { 0.0f, 0.0f };
+	float rotation_ = 0.0f;
+	XMFLOAT2 position_ = { 0.0f, 0.0f };
 
-	XMFLOAT4 color = { 1,1,1,1 };
+	XMFLOAT4 color_ = { 1,1,1,1 };
 
-	XMFLOAT2 anchorPoint = { 0.0f,0.0f };
+	XMFLOAT2 anchorPoint_ = { 0.0f,0.0f };
 
-	ComPtr<ID3D12Resource> constBuffTransform;
-	ConstBufferDataTransform* constMapTransform = nullptr;
+	ComPtr<ID3D12Resource> constBuffTransform_;
+	ConstBufferDataTransform* constMapTransform_ = nullptr;
 
-	ConstBufferDataMaterial* constMapMaterial = nullptr;
+	ConstBufferDataMaterial* constMapMaterial_ = nullptr;
 
-	ComPtr <ID3D12Resource> constBuffMaterial;
+	ComPtr <ID3D12Resource> constBuffMaterial_;
 
 	Vertex2 vertices_[4];
 
-	Vertex2* vertMap = nullptr;
+	Vertex2* vertMap_ = nullptr;
 
 	//テクスチャ番号
 	uint32_t textureIndex_ = 0;
 
 	//テクスチャ左上座標
-	XMFLOAT2 textureLeftTop = { 0.0f,0.0f };
+	XMFLOAT2 textureLeftTop_ = { 0.0f,0.0f };
 	//テクスチャ切り出しサイズ
-	XMFLOAT2 textureSize = { 100.0f,100.0f };
+	XMFLOAT2 textureSize_ = { 100.0f,100.0f };
 
-	XMMATRIX matProjection;
+	XMMATRIX matProjection_;
 
 	// アンカーポイント
-	XMFLOAT2 anchorpoint = { 0, 0 };
+	XMFLOAT2 anchorpoint_ = { 0, 0 };
 
 	// 頂点バッファの生成
-	ComPtr<ID3D12Resource> vertBuff;
+	ComPtr<ID3D12Resource> vertBuff_;
 
 	// 左右反転
-	bool isFlipX = false;
+	bool isFlipX_ = false;
 	// 上下反転
-	bool isFlipY = false;
+	bool isFlipY_ = false;
 };

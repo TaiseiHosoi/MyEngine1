@@ -22,6 +22,6 @@ public:
     void DrawEnemies(ID3D12GraphicsCommandList* cmdList);
 
 private:
-    int maxEnemies;
-    std::vector<Enemy*> enemies;
+    int maxEnemies_;
+    std::vector<Enemy*> enemies_;
 };

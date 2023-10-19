@@ -99,35 +99,35 @@ public: // メンバ関数
 	/// 大きさの設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	void SetScale(const Vector3& scale) { this->wtf.scale_ = scale; }
+	void SetScale(const Vector3& scale) { this->wtf_.scale_ = scale; }
 
 
 	/// <summary>
 	/// 回転の設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	void SetRotate(const Vector3& rotation) { this->wtf.rotation_ = rotation; }
+	void SetRotate(const Vector3& rotation) { this->wtf_.rotation_ = rotation; }
 
 	/// <summary>
 	/// 座標の設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	void SetPosition(const Vector3& position) { this->wtf.translation_ = position; }
+	void SetPosition(const Vector3& position) { this->wtf_.translation_ = position; }
 
 	/// <summary>
 
 	/// 座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	const Vector3& GetPosition() const { return wtf.translation_; }
-	const Vector3& GetRotate() const { return wtf.rotation_; }
-	const Vector3& GetScale() const { return wtf.scale_; }
+	const Vector3& GetPosition() const { return wtf_.translation_; }
+	const Vector3& GetRotate() const { return wtf_.rotation_; }
+	const Vector3& GetScale() const { return wtf_.scale_; }
 
 	/// <summary>
 	/// モデルをセット
 	/// </summary>
 	/// <param name="fbxmodel"></param>
-	void SetModel(FBXModel* fbxmodelArg) { this->fbxmodel = fbxmodelArg; }
+	void SetModel(FBXModel* fbxmodelArg) { this->fbxmodel_ = fbxmodelArg; }
 
 	/// <summary>
 	/// フレームカウント指定
@@ -162,7 +162,7 @@ public: // メンバ関数
 	// animNumのリセットとアニメーション処理
 	void ResetCurrentTime(int animNum);
 	// 定数バッファゲッタ
-	ID3D12Resource* GetConstBuff() { return constBuffTransform.Get(); };
+	ID3D12Resource* GetConstBuff() { return constBuffTransform_.Get(); };
 
 	/// <summary>
 	/// ワールドトランスフォーム取得
@@ -178,9 +178,9 @@ public: // メンバ関数
 	/// <summary>
 	/// ボーン用
 	/// </summary>
-	std::vector<Matrix4> bonesMat;
+	std::vector<Matrix4> bonesMat_;
 	void ResizeBonesMat(std::vector<FBXModel::Bone> bones);	//ボーンのサイズをクラスターボーンに合わせる
-	bool isBonesWorldMatCalc = false;	//ボーンのワールド座標上での計算をするかどうか
+	bool isBonesWorldMatCalc_ = false;	//ボーンのワールド座標上での計算をするかどうか
 
 	std::vector<Matrix4>* GetBonesMatPtr();	//ボーンのワールド行列ポインタを渡す
 	void SetIsBonesWorldMatCalc(bool isCalc);	//ボーン計算フラグのセッター
@@ -193,13 +193,13 @@ public: // メンバ関数
 	//補間アニメーションカウント
 	void AnimFlameInter(FbxTime nowCount, FbxTime maxCount);
 
-	WorldTransform wtf;
+	WorldTransform wtf_;
 
 protected: // メンバ変数
 	// 定数バッファ
-	ComPtr<ID3D12Resource> constBuffTransform;
+	ComPtr<ID3D12Resource> constBuffTransform_;
 	// 定数バッファ(スキン)
-	ComPtr<ID3D12Resource> constBuffSkin;
+	ComPtr<ID3D12Resource> constBuffSkin_;
 	//// ローカルスケール
 	//XMFLOAT3 scale = { 1,1,1 };
 	//// X,Y,Z軸回りのローカル回転角
@@ -209,23 +209,23 @@ protected: // メンバ変数
 	//// ローカルワールド変換行列
 	//XMMATRIX matWorld;
 	// モデル
-	FBXModel* fbxmodel = nullptr;
+	FBXModel* fbxmodel_ = nullptr;
 
 	//1フレームの時間
-	FbxTime frameTime;
+	FbxTime frameTime_;
 	//アニメーション開始時間
-	FbxTime startTime;
+	FbxTime startTime_;
 	//アニメーション終了時間
-	FbxTime endTime;
+	FbxTime endTime_;
 	//現在時間(アニメーション)
-	FbxTime currentTime;
+	FbxTime currentTime_;
 	//アニメーション再生中
-	bool isPlay = false;
+	bool isPlay_ = false;
 	//アニメーションフレーム指定時フラグ
-	bool isChangeFlame = false;
+	bool isChangeFlame_ = false;
 	//アニメーションフラグ
-	bool isAnim = true;
+	bool isAnim_ = true;
 	//アニメーション繰り返すか
-	bool animRot = true;
+	bool animRot_ = true;
 	
 };

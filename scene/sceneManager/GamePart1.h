@@ -50,7 +50,7 @@ private:
 	std::unique_ptr <Sprite> playerHp_;
 	std::unique_ptr <Sprite> playerHpRed_;
 
-	bool isClickL, isClickR;
+	bool isClickL_, isClickR_;
 
 	//ポーズメニュー用変数
 	int isPause_;
@@ -58,7 +58,7 @@ private:
 	bool backToTitle_;
 
 	//音用変数
-	bool isSounds = false;
+	bool isSounds_ = false;
 	std::unique_ptr<Audio> audio_;
 
 	

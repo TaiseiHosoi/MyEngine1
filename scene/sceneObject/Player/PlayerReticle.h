@@ -46,8 +46,8 @@ private:
 
 
 	
-	float offsetNier = 10.f;
-	float offsetFar = 30.f;
+	float offsetNier_ = 10.f;
+	float offsetFar_ = 30.f;
 
 	//CollisionManager* collider_ = nullptr;
 	//std::unique_ptr<RaycastHit> raycastHit;

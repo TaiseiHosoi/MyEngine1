@@ -30,8 +30,8 @@ private:
 
 	std::unique_ptr<Audio>audio_;
 
-	bool isChangeScene = false;
-	bool isSwapCamera = false;
+	bool isChangeScene_ = false;
+	bool isSwapCamera_ = false;
 
 public:
 

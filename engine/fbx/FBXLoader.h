@@ -21,9 +21,9 @@ private: // エイリアス
 
 public: // 定数
 	// モデル格納ルートパス
-	static const string baseDirectory;
+	static const string baseDirectory_;
 	// テクスチャがない場合の標準テクスチャファイル名
-	static const string defaultTextureFileName;
+	static const string defaultTextureFileName_;
 
 public:
 	/// <summary>
@@ -84,11 +84,11 @@ public:
 
 private:
 	// D3D12デバイス
-	ID3D12Device* device = nullptr;
+	ID3D12Device* device_ = nullptr;
 	// FBXマネージャ
-	FbxManager* fbxManager = nullptr;
+	FbxManager* fbxManager_ = nullptr;
 	// FBXインポータ
-	FbxImporter* fbxImporter = nullptr;
+	FbxImporter* fbxImporter_ = nullptr;
 
 private:
 	// privateなコンストラクタ（シングルトンパターン）
@@ -131,8 +131,8 @@ private:
 	std::string ExtractFileName(const std::string& path);
 
 	//頂点法線スムージング用データ
-	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothDate;
-	bool smoothing = false;
+	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothDate_;
+	bool smoothing_ = false;
 
 
 };

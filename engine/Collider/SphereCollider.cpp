@@ -2,22 +2,22 @@
 
 void SphereCollider::Update()
 {
-	if (object3d)
+	if (object3d_)
 	{
 		//ワールド行列から座標を抽出
-		const Matrix4& matWorld = object3d->GetMatWorld();
+		const Matrix4& matWorld = object3d_->GetMatWorld();
 
 		//球のメンバ変数を更新
 		Sphere::center =
 		{
-			matWorld.m[3][0] + offset.x ,
-			matWorld.m[3][1] + offset.y ,
-			matWorld.m[3][2] + offset.z
+			matWorld.m[3][0] + offset_.x ,
+			matWorld.m[3][1] + offset_.y ,
+			matWorld.m[3][2] + offset_.z
 		};
 	}
-	else if (basisPos)
+	else if (basisPos_)
 	{
-		Sphere::center = *basisPos + offset;
+		Sphere::center = *basisPos_ + offset_;
 	}
 	else
 	{
@@ -25,7 +25,7 @@ void SphereCollider::Update()
 	}
 
 
-	Sphere::radius = radius;
+	Sphere::radius = radius_;
 
-	isHit = false;
+	isHit_ = false;
 }

@@ -28,8 +28,8 @@ void GamePart2::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	title2_->SetSize({ 256,128 });
 	title_->SetPozition({ 200,100 });
 	title2_->SetPozition({ 200,100 });
-	isChangeScene = false;
-	isSwapCamera = false;
+	isChangeScene_ = false;
+	isSwapCamera_ = false;
 
 }
 
@@ -46,7 +46,7 @@ void GamePart2::Draw(DirectXCommon* dxCommon) {
 	static_cast<void>(dxCommon);
 
 	_controller->spriteCommon_->SpritePreDraw();
-	if (isSwapCamera == true) {
+	if (isSwapCamera_ == true) {
 		title2_->Draw();
 	}
 	else {

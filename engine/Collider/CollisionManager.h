@@ -20,13 +20,13 @@ public:
 	//コライダーの追加
 	inline void AddCollider(BaseCollider* collider)
 	{
-		colliders.push_front(collider);
+		colliders_.push_front(collider);
 	}
 
 	//コライダーの削除
 	inline void RemoveCollider(BaseCollider* collider)
 	{
-		colliders.remove(collider);
+		colliders_.remove(collider);
 	}
 	
 	// すべての当たり判定処理
@@ -50,6 +50,6 @@ private:
 	CollisionManager& operator= (const CollisionManager&) = delete;
 
 	//コライダーのリスト
-	std::forward_list<BaseCollider*> colliders;
+	std::forward_list<BaseCollider*> colliders_;
 
 };

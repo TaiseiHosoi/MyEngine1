@@ -23,13 +23,13 @@ public:
 	// オブジェクトセット
 	inline void SetObject3d(Object3d* object)
 	{
-		this->object3d = object;
+		this->object3d_ = object;
 	}
 
 	// オブジェクトゲット
 	inline Object3d* GetObject3d()
 	{
-		return object3d;
+		return object3d_;
 	}
 
 	//更新
@@ -37,43 +37,43 @@ public:
 	//形状タイプ取得
 	inline CollisionShapeType GetShapeType()
 	{
-		return shapeType;
+		return shapeType_;
 	}
 
 	// ヒット時情報セット
 	inline void OnCllision(const CollisionInfo& infoArg)
 	{
-		isHit = true;
+		isHit_ = true;
 		this->info = infoArg;
 	}
 
 	// 属性セット
 	inline void SetAttribute(unsigned short attributeArg)
 	{
-		this->attribute = attributeArg;
+		this->attribute_ = attributeArg;
 	}
 
 	// 属性ゲット
 	unsigned short GetAttribute() {
-		return this->attribute;
+		return this->attribute_;
 	}
 
 	// 属性追加
 	inline void AddAttribute(unsigned short attributeArg)
 	{
-		this->attribute |= attributeArg;
+		this->attribute_ |= attributeArg;
 	}
 
 	// 属性削除
 	inline void RemoveAttribute(unsigned short attributeArg)
 	{
-		this->attribute &= !attributeArg;
+		this->attribute_ &= !attributeArg;
 	}
 
 	// isHitゲッタ
 	inline bool GetIsHit()
 	{
-		return isHit;
+		return isHit_;
 	}
 
 	// 衝突相手の情報ゲッタ
@@ -83,9 +83,9 @@ public:
 	}
 
 protected:
-	Object3d* object3d = nullptr;
+	Object3d* object3d_ = nullptr;
 	
-	bool isHit = false;
+	bool isHit_ = false;
 
 	CollisionInfo info = {
 		nullptr ,
@@ -94,7 +94,7 @@ protected:
 	};
 	
 	//形状タイプ
-	CollisionShapeType shapeType = SHAPE_UNKNOWN;
+	CollisionShapeType shapeType_ = SHAPE_UNKNOWN;
 	//当たり判定属性
-	unsigned short attribute = 0b1111111111111111;
+	unsigned short attribute_ = 0b1111111111111111;
 };

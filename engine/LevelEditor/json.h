@@ -24,7 +24,7 @@ struct LevelData {
 	};
 
 	// オブジェクト配列
-	std::vector<ObjectData> objects;
+	std::vector<ObjectData> objects_;
 };
 class JsonLoader {
 public:// 定数

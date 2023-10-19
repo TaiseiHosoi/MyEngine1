@@ -71,7 +71,7 @@ public: // サブクラス
 
 private: // 定数
 
-	const int vertexCount = _countof(vertices);
+	const int vertexCount = _countof(vertices_);
 
 public: // 静的メンバ関数
 	/// <summary>
@@ -91,39 +91,39 @@ public: // 静的メンバ関数
 private: // 静的メンバ変数
 	
 	// デバイス
-	static Microsoft::WRL::ComPtr<ID3D12Device> device;
+	static Microsoft::WRL::ComPtr<ID3D12Device> device_;
 	// コマンドリスト
 	//static Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> cmdList;
 	// ルートシグネチャ
-	static ComPtr<ID3D12RootSignature> rootsignature;
+	static ComPtr<ID3D12RootSignature> rootsignature_;
 	// パイプラインステートオブジェクト
-	static ComPtr<ID3D12PipelineState> pipelinestate;
+	static ComPtr<ID3D12PipelineState> pipelinestate_;
 
 private: // メンバ変数
 	// デスクリプタサイズ
-	UINT descriptorHandleIncrementSize;
+	UINT descriptorHandleIncrementSize_;
 	// デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> descHeap;
+	ComPtr<ID3D12DescriptorHeap> descHeap_;
 	// 頂点バッファ
-	ComPtr<ID3D12Resource> vertBuff;
+	ComPtr<ID3D12Resource> vertBuff_;
 	// テクスチャバッファ
-	ComPtr<ID3D12Resource>texbuff;
+	ComPtr<ID3D12Resource>texbuff_;
 	// シェーダリソースビューのハンドル(CPU)
-	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
+	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV_;
 	// シェーダリソースビューのハンドル(CPU)
-	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
+	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV_;
 	
 	// 頂点バッファビュー
-	D3D12_VERTEX_BUFFER_VIEW vbView;
+	D3D12_VERTEX_BUFFER_VIEW vbView_;
 	// 頂点データ配列
-	VertexPos vertices[2024];
+	VertexPos vertices_[2024];
 	// 定数バッファ
-	ComPtr<ID3D12Resource> constBuff; 
+	ComPtr<ID3D12Resource> constBuff_; 
 
 	//パーティクル配列
-	std::forward_list<Particle>particles;
+	std::forward_list<Particle>particles_;
 
-	ConstBufferDataMaterial* constMapMaterial = nullptr;
+	ConstBufferDataMaterial* constMapMaterial_ = nullptr;
 private:// メンバ関数
 
 	/// <summary>
@@ -179,7 +179,7 @@ public: // メンバ関数
 	///	<param name="accel">加速度</param>
 	void Add(int life, Vector3 position, Vector3 velociy, Vector3 accel);
 
-	static void SetCamera(Camera* cameraArg) { ParticleManager::camera = cameraArg; }
+	static void SetCamera(Camera* cameraArg) { ParticleManager::camera_ = cameraArg; }
 
 	// ワールドトランスフォームの設定
 	void SetWorldTransform(WorldTransform wtf) { wtf_ = wtf; };
@@ -188,7 +188,7 @@ public: // メンバ関数
 	// マット行列セット
 	void SetMatWorld(Matrix4 mat) { wtf_.matWorld_ = mat; };
 	// ビルボード行列をセット
-	void SetBillboardMatWorld(Matrix4 mat) { bill = mat; };
+	void SetBillboardMatWorld(Matrix4 mat) { bill_ = mat; };
 
 	// ワールドトランスフォームゲッタ
 	WorldTransform GetWorldTransform()
@@ -197,9 +197,9 @@ public: // メンバ関数
 	};
 
 private: // メンバ変数
-	static Camera* camera;
+	static Camera* camera_;
 	// ローカルスケール
 	WorldTransform wtf_;
-	Matrix4 bill;
+	Matrix4 bill_;
 
 };

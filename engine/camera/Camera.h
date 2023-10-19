@@ -130,19 +130,19 @@ public: // メンバ関数
 
 	// センサーゲット
 	inline const float& GetSensor() {
-		return sensor;
+		return sensor_;
 	}
 	// センサーセット
 	inline void SetSensor(float sensorVec) {
-		this->sensor = sensorVec; viewDirty = true;
+		this->sensor_ = sensorVec; viewDirty = true;
 	}
 	// FLゲット
 	inline const float& GetForcalLengs() {
-		return focalLengs;
+		return focalLengs_;
 	}
 	// FLセット
 	inline void SetFocalLengs(float focalLengsVal) {
-		this->focalLengs = focalLengsVal; viewDirty = true;
+		this->focalLengs_ = focalLengsVal; viewDirty = true;
 	}
 
 
@@ -199,11 +199,11 @@ protected: // メンバ変数
 	// 上方向ベクトル
 	Vector3 up = { 0, 1, 0 };
 	// アスペクト比
-	float aspectRatio = 1.0f;
+	float aspectRatio_ = 1.0f;
 
-	float focalLengs = 50;
-	float sensor = 50;
+	float focalLengs_ = 50;
+	float sensor_ = 50;
 	float fovAngleY_ = 1.0f;
-	const float offsetFovAngleY = 1.0f;
+	const float offsetFovAngleY_ = 1.0f;
 };
 

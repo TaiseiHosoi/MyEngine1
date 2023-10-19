@@ -7,7 +7,7 @@ Matrix4 Camera::matBillboardY = MathFunc::ConvertXMMATtoMat4(DirectX::XMMatrixId
 
 Camera::Camera(int window_width , int window_height)
 {
-	aspectRatio = (float)window_width / window_height;
+	aspectRatio_ = (float)window_width / window_height;
 
 	//ビュー行列の計算
 	UpdateViewMatrix();
@@ -147,7 +147,7 @@ void Camera::UpdateProjectionMatrix()
 	// 透視投影による射影行列の生成
 	MakePerspectiveL(
 		fovAngleY_ ,
-		aspectRatio ,
+		aspectRatio_ ,
 		0.1f , 150000.0f ,
 		matProjection
 	);
@@ -191,7 +191,7 @@ void Camera::MoveVector(const Vector3& move)
 float Camera::FieldOfViewY()
 {
 
-	return 2 * atanf(sensor / (2 * focalLengs));
+	return 2 * atanf(sensor_ / (2 * focalLengs_));
 
 }
 
@@ -248,5 +248,5 @@ float Camera::GetFovAngleY()
 
 float Camera::GetOffsetFovAngleY()
 {
-	return offsetFovAngleY;
+	return offsetFovAngleY_;
 }

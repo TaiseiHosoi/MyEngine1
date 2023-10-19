@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 
-EnemyManager::EnemyManager(int maxEnemies) : maxEnemies(maxEnemies) {
+EnemyManager::EnemyManager(int maxEnemies) : maxEnemies_(maxEnemies) {
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 }
 
@@ -24,13 +24,13 @@ void EnemyManager::InitializeEnemies() {
 }
 
 void EnemyManager::UpdateEnemies() {
-    for (Enemy* enemy : enemies) {
+    for (Enemy* enemy : enemies_) {
         enemy->Update();
     }
 }
 
 void EnemyManager::DrawEnemies(ID3D12GraphicsCommandList* cmdList) {
-    for (Enemy* enemy : enemies) {
+    for (Enemy* enemy : enemies_) {
         enemy->Draw(cmdList);
     }
 }

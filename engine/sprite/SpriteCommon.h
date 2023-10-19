@@ -35,17 +35,17 @@ public:
 
 	DirectXCommon* GetDxCommon() { return dxcommon_; }
 
-	ComPtr<ID3D12RootSignature> GetRootSignature() { return rootSignature.Get(); }
+	ComPtr<ID3D12RootSignature> GetRootSignature() { return rootSignature_.Get(); }
 
-	ComPtr<ID3D12PipelineState> GetPipelineState() { return pipelineState.Get(); }
+	ComPtr<ID3D12PipelineState> GetPipelineState() { return pipelineState_.Get(); }
 
 	ID3D12DescriptorHeap* GetSrvHeap() { return srvHeap.Get(); }
 
-	D3D12_CPU_DESCRIPTOR_HANDLE GetSrvHandle() { return srvHandle; }
+	D3D12_CPU_DESCRIPTOR_HANDLE GetSrvHandle() { return srvHandle_; }
 
-	UINT GetSizeVB() { return sizeVB; }
+	UINT GetSizeVB() { return sizeVB_; }
 
-	D3D12_RESOURCE_DESC& GetResourceDesc() { return resDesc; }
+	D3D12_RESOURCE_DESC& GetResourceDesc() { return resDesc_; }
 
 	// テクスチャをロード
 	void LoadTexture(uint32_t index, const std::string& fileName);
@@ -69,7 +69,7 @@ public:
 	ComPtr<ID3D12DescriptorHeap> srvHeap;
 private:
 	// 頂点データ
-	Vertex vertices[4] = {
+	Vertex vertices_[4] = {
 		// x      y     z       u     v
 		{{-0.4f, -0.7f, 0.0f}, {0.0f, 1.0f}}, // 左下
 		{{-0.4f, +0.7f, 0.0f}, {0.0f, 0.0f}}, // 左上
@@ -77,53 +77,53 @@ private:
 		{{+0.4f, +0.7f, 0.0f}, {1.0f, 0.0f}}, // 右上
 	};
 	// SRVの最大個数
-	static const size_t kMaxSRVCount = 2056;
+	static const size_t kMaxSRVCount_ = 2056;
 
 	DirectXCommon* dxcommon_ = nullptr;
-	ID3DBlob* vsBlob = nullptr; // 頂点シェーダオブジェクト
-	ID3DBlob* psBlob = nullptr; // ピクセルシェーダオブジェクト
-	ID3DBlob* errorBlob = nullptr; // エラーオブジェクト
-	HRESULT result;
+	ID3DBlob* vsBlob_ = nullptr; // 頂点シェーダオブジェクト
+	ID3DBlob* psBlob_ = nullptr; // ピクセルシェーダオブジェクト
+	ID3DBlob* errorBlob_ = nullptr; // エラーオブジェクト
+	HRESULT result_;
 
 
 	// ルートシグネチャ
-	ComPtr<ID3D12RootSignature> rootSignature;
+	ComPtr<ID3D12RootSignature> rootSignature_;
 
 
 	// パイプランステートの生成
-	ComPtr<ID3D12PipelineState> pipelineState = nullptr;
+	ComPtr<ID3D12PipelineState> pipelineState_ = nullptr;
 
-	std::array<Microsoft::WRL::ComPtr<ID3D12Resource>, kMaxSRVCount>texBuff;
+	std::array<Microsoft::WRL::ComPtr<ID3D12Resource>, kMaxSRVCount_>texBuff;
 
 	//横方向ピクセル数
-	const size_t textureWidth = 256;
+	const size_t textureWidth_ = 256;
 	//縦方向ピクセル数
-	const size_t textureHeight = 256;
+	const size_t textureHeight_ = 256;
 	//配列の要素数
-	const size_t imageDataCount = textureWidth * textureHeight;
+	const size_t imageDataCount_ = textureWidth_ * textureHeight_;
 
 	//SRVヒープの先頭ハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE srvHandle;
+	D3D12_CPU_DESCRIPTOR_HANDLE srvHandle_;
 
-	TexMetadata metadata{};
-	ScratchImage scratchImg{};
-	D3D12_HEAP_PROPERTIES textureHeapProp{};
-	D3D12_RESOURCE_DESC textureResourceDesc{};
+	TexMetadata metadata_{};
+	ScratchImage scratchImg_{};
+	D3D12_HEAP_PROPERTIES textureHeapProp_{};
+	D3D12_RESOURCE_DESC textureResourceDesc_{};
 
-	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
+	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc_{};
 	// グラフィックスパイプライン設定
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc_{};
 	// デスクリプタヒープの設定
-	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
+	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc_ = {};
 
-	UINT sizeVB;
+	UINT sizeVB_;
 
-	D3D12_RESOURCE_DESC resDesc{};
+	D3D12_RESOURCE_DESC resDesc_{};
 
 	//デフォルトテクスチャ格納ディレクトリ
-	static std::string kDefaultTextureDirectoryPath;
+	static std::string kDefaultTextureDirectoryPath_;
 
-	UINT incrementSize;
+	UINT incrementSize_;
 
 
 };

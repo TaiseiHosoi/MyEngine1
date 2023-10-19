@@ -16,19 +16,19 @@ void CollisionManager::CheckAllCollisions()
 	std::forward_list<BaseCollider*>::iterator itA;
 	std::forward_list<BaseCollider*>::iterator itB;
 
-	itA = colliders.begin();
-	for (; itA != colliders.end(); ++itA)
+	itA = colliders_.begin();
+	for (; itA != colliders_.end(); ++itA)
 	{
 
 		itB = itA;
 		++itB;
 
-		for (; itB != colliders.end(); ++itB)
+		for (; itB != colliders_.end(); ++itB)
 		{
 			BaseCollider* colA = *itA;
 			BaseCollider* colB = *itB;
 
-			if (colA->attribute == colB->attribute)
+			if (colA->attribute_ == colB->attribute_)
 			{
 				continue;
 			}
@@ -95,8 +95,8 @@ bool CollisionManager::Raycast(const Ray& ray , unsigned short attribute , Rayca
 	//今までで最も近いコライダーとの交点を記録する変数
 	Vector3 inter;
 
-	it = colliders.begin();
-	for (; it != colliders.end(); ++it)
+	it = colliders_.begin();
+	for (; it != colliders_.end(); ++it)
 	{
 		BaseCollider* colA = *it;
 		//球の場合
@@ -115,7 +115,7 @@ bool CollisionManager::Raycast(const Ray& ray , unsigned short attribute , Rayca
 			{
 				continue;
 			}
-			if (!(colA->attribute & attribute))
+			if (!(colA->attribute_ & attribute))
 			{
 				continue;
 			}
@@ -139,7 +139,7 @@ bool CollisionManager::Raycast(const Ray& ray , unsigned short attribute , Rayca
 			{
 				continue;
 			}
-			if (!(colA->attribute & attribute))
+			if (!(colA->attribute_ & attribute))
 			{
 				continue;
 			}
@@ -151,10 +151,10 @@ bool CollisionManager::Raycast(const Ray& ray , unsigned short attribute , Rayca
 	}
 	if (result && hitInfo)
 	{
-		hitInfo->distance = distance;
-		hitInfo->inter = inter;
-		hitInfo->collider = *it_hit;
-		hitInfo->object = hitInfo->collider->GetObject3d();
+		hitInfo->distance_ = distance;
+		hitInfo->inter_ = inter;
+		hitInfo->collider_ = *it_hit;
+		hitInfo->object_ = hitInfo->collider_->GetObject3d();
 	}
 	return result;
 }

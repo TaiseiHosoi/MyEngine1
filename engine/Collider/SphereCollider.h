@@ -12,11 +12,11 @@ class SphereCollider : public BaseCollider , public Sphere
 {
 public:
 	SphereCollider(Vector3 offset = {0 , 0 , 0} , float radius = 1.0f) :
-		offset(offset) ,
-		radius(radius)
+		offset_(offset) ,
+		radius_(radius)
 	{
 		//球形状をセット
-		shapeType = COLLISIONSHAPE_SPHERE;
+		shapeType_ = COLLISIONSHAPE_SPHERE;
 	}
 
 	// 更新
@@ -25,36 +25,36 @@ public:
 	// 半径セット
 	inline void SetRadius(float radiusArg)
 	{
-		this->radius = radiusArg; 
+		this->radius_ = radiusArg; 
 	}
 	
 	// 半径ゲット
 	float GetRadius()
 	{
-		return radius; 
+		return radius_; 
 	}
 	
 	// 中心位置セット
 	inline void SetBasisPos(Vector3* pos)
 	{
-		basisPos = pos;
+		basisPos_ = pos;
 	}
 
 	// 中心位置ゲット
 	Vector3 GetBasisPos()
 	{
-		return *basisPos;
+		return *basisPos_;
 	}
 
 private:
 	//オブジェクト中心からのオフセット
-	Vector3 offset;
+	Vector3 offset_;
 
 	//モデルがない場合の基準となるベクトル
-	Vector3* basisPos = nullptr;
+	Vector3* basisPos_ = nullptr;
 
 	//半径
-	float radius;
+	float radius_;
 
 };
 

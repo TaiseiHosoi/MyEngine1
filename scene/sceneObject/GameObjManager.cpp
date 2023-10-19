@@ -16,29 +16,29 @@ void GameObjManager::StaticInit()
 
 	//モデルインクルード
 	// モデル読み込み
-	modelMoai = Mesh::LoadFormOBJ("moai", true);
-	modelCube = Mesh::LoadFormOBJ("cube", true);
-	modelRoad1 = Mesh::LoadFormOBJ("alphaVerLoad", true);
-	modelCam = Mesh::LoadFormOBJ("cube", true); 
-	modelWalkRobo = Mesh::LoadFormOBJ("walkEnemy",true);
-	modelBill1 = Mesh::LoadFormOBJ("bill1", true);
-	modelTower1 = Mesh::LoadFormOBJ("tower1", true);
+	modelMoai_ = Mesh::LoadFormOBJ("moai", true);
+	modelCube_ = Mesh::LoadFormOBJ("cube", true);
+	modelRoad1_ = Mesh::LoadFormOBJ("alphaVerLoad", true);
+	modelCam_ = Mesh::LoadFormOBJ("cube", true); 
+	modelWalkRobo_ = Mesh::LoadFormOBJ("walkEnemy",true);
+	modelBill1_ = Mesh::LoadFormOBJ("bill1", true);
+	modelTower1_ = Mesh::LoadFormOBJ("tower1", true);
 	//モデルインサート
-	models.insert(std::make_pair("moai", modelMoai.get()));
-	models.insert(std::make_pair("Cube", modelCube.get()));
-	models.insert(std::make_pair("road1", modelRoad1.get()));
-	models.insert(std::make_pair("cam", modelCam.get()));
-	models.insert(std::make_pair("bill1", modelBill1.get()));
-	models.insert(std::make_pair("tower1", modelTower1.get()));
+	models_.insert(std::make_pair("moai", modelMoai_.get()));
+	models_.insert(std::make_pair("Cube", modelCube_.get()));
+	models_.insert(std::make_pair("road1", modelRoad1_.get()));
+	models_.insert(std::make_pair("cam", modelCam_.get()));
+	models_.insert(std::make_pair("bill1", modelBill1_.get()));
+	models_.insert(std::make_pair("tower1", modelTower1_.get()));
 	
 	levelData = JsonLoader::LoadFile("testScene");
 
 	// レベルデータからオブジェクトを生成、配置
-	for (auto& objectData : levelData->objects) {
+	for (auto& objectData : levelData->objects_) {
 		// ファイル名から登録済みモデルを検索
 		Mesh* model = nullptr;
-		decltype(models)::iterator it = models.find(objectData.fileName);
-		if (it != models.end()) {
+		decltype(models_)::iterator it = models_.find(objectData.fileName);
+		if (it != models_.end()) {
 			model = it->second;
 		}
 		
@@ -68,30 +68,30 @@ void GameObjManager::StaticInit()
 		newObject.SetScale(Vector3(scale.x,scale.y,scale.z));
 
 		if (objectData.fileName == "camera") {
-			camObjs.push_back(newObject);
+			camObjs_.push_back(newObject);
 			continue;
 		}
 		else if (objectData.fileName == "moai") {
-			moaiObjs.push_back(newObject);
-			moaiObjs.back().SetScale({3,3,3});
+			moaiObjs_.push_back(newObject);
+			moaiObjs_.back().SetScale({3,3,3});
 			EnemyState newState;
 			newState.hp_ = 1;
 			newState.isDead_ = false;
 			newState.isAtk_ = false;
-			moaiState.push_back(newState);
+			moaiState_.push_back(newState);
 
-			moaiSpCollider.push_back(new SphereCollider);
-			int nowSphereNum = static_cast<int>(moaiSpCollider.size()-1);
-			CollisionManager::GetInstance()->AddCollider(moaiSpCollider[nowSphereNum]);
-			moaiSpCollider[nowSphereNum]->SetBasisPos(&moaiObjs[moaiObjs.size()-1].worldTransform.translation_);
-			moaiSpCollider[nowSphereNum]->center = moaiObjs[moaiObjs.size() - 1].worldTransform.translation_;
-			moaiSpCollider[nowSphereNum]->SetRadius(scale.x);
-			moaiSpCollider[nowSphereNum]->SetAttribute(COLLISION_ATTR_ENEMIES);
-			moaiSpCollider[nowSphereNum]->Update();
+			moaiSpCollider_.push_back(new SphereCollider);
+			int nowSphereNum = static_cast<int>(moaiSpCollider_.size()-1);
+			CollisionManager::GetInstance()->AddCollider(moaiSpCollider_[nowSphereNum]);
+			moaiSpCollider_[nowSphereNum]->SetBasisPos(&moaiObjs_[moaiObjs_.size()-1].worldTransform.translation_);
+			moaiSpCollider_[nowSphereNum]->center = moaiObjs_[moaiObjs_.size() - 1].worldTransform.translation_;
+			moaiSpCollider_[nowSphereNum]->SetRadius(scale.x);
+			moaiSpCollider_[nowSphereNum]->SetAttribute(COLLISION_ATTR_ENEMIES);
+			moaiSpCollider_[nowSphereNum]->Update();
 			continue;
 		}
 		// 配列に登録
-		objects.push_back(newObject);
+		objects_.push_back(newObject);
 	}
 
 #pragma region ポップデータ読み込み
@@ -113,7 +113,7 @@ void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
 		std::unique_ptr<WalkingEnemy> newWalkingEnemy;
 		newWalkingEnemy = std::make_unique<WalkingEnemy>();
 		walkingEnemies.push_back(std::move(newWalkingEnemy));
-		walkingEnemies.back()->Initialize(modelWalkRobo.get());
+		walkingEnemies.back()->Initialize(modelWalkRobo_.get());
 		walkingEnemies.back()->SetOffsetVec3(offsetPos);
 		walkingEnemies.back()->SetRailCameraInfo(railCameraInfo_);
 		walkingEnemies.back()->SetPlayerWorldTransform(playerWorldTF_);
@@ -134,43 +134,43 @@ void GameObjManager::UpdateAllObjects()
 
 	UpdateWalkingEnemyPopCommands();
 
-	for (int i = 0; i < objects.size();i++) {
-		objects[i].Update();
+	for (int i = 0; i < objects_.size();i++) {
+		objects_[i].Update();
 	}
-	for (int i = 0; i < camObjs.size(); i++) {
-		camObjs[i].Update();
+	for (int i = 0; i < camObjs_.size(); i++) {
+		camObjs_[i].Update();
 
 	}
 
 
-	moaiDigRot++;
-	if (moaiDigRot >= 360) {
-		moaiDigRot = 0;
+	moaiDigRot_++;
+	if (moaiDigRot_ >= 360) {
+		moaiDigRot_ = 0;
 	}
-	for (int i = 0; i < moaiObjs.size(); i++) {
+	for (int i = 0; i < moaiObjs_.size(); i++) {
 		float moveSpeed = 0.1f;
 
 		
-		moaiObjs[i].worldTransform.translation_.x += cosf(moaiDigRot * 3.14f/180.f) * moveSpeed;
-		moaiObjs[i].worldTransform.translation_.y += sinf(moaiDigRot * 3.14f / 180.f) * moveSpeed;
+		moaiObjs_[i].worldTransform.translation_.x += cosf(moaiDigRot_ * 3.14f/180.f) * moveSpeed;
+		moaiObjs_[i].worldTransform.translation_.y += sinf(moaiDigRot_ * 3.14f / 180.f) * moveSpeed;
 
-		moaiObjs[i].Update();
+		moaiObjs_[i].Update();
 
-		moaiSpCollider[i]->SetBasisPos(&moaiObjs[i].worldTransform.translation_);
+		moaiSpCollider_[i]->SetBasisPos(&moaiObjs_[i].worldTransform.translation_);
 
 		
-		if (moaiSpCollider[i]->GetIsHit() == true) {
-			if (moaiSpCollider[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ALLIES) {
-				moaiState[i].hp_--;
+		if (moaiSpCollider_[i]->GetIsHit() == true) {
+			if (moaiSpCollider_[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ALLIES) {
+				moaiState_[i].hp_--;
 			}
 		}
-		if (moaiState[i].hp_ <= 0) {
-			moaiState[i].isDead_ = true;
-			moaiSpCollider[i]->RemoveAttribute(8);
+		if (moaiState_[i].hp_ <= 0) {
+			moaiState_[i].isDead_ = true;
+			moaiSpCollider_[i]->RemoveAttribute(8);
 			
 		}
 
-		if (moaiState[i].isDead_ == true) {	//死去
+		if (moaiState_[i].isDead_ == true) {	//死去
 			//moaiObjs.erase(std::remove_if(moaiObjs.begin(), moaiObjs.end(),
 			//	[](const EnemyState& state) {
 			//		return state.isDead_;
@@ -179,7 +179,7 @@ void GameObjManager::UpdateAllObjects()
 			////moaiSpCollider.erase(std::cbegin(moaiSpCollider) + i);
 			//moaiState.erase(std::cbegin(moaiState) + i);
 		}
-		moaiSpCollider[i]->Update();
+		moaiSpCollider_[i]->Update();
 		
 	}
 
@@ -212,13 +212,13 @@ void GameObjManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
 	}
 
 
-	for (int i = 0; i < objects.size(); i++) {
-		objects[i].Draw(cmdList);
+	for (int i = 0; i < objects_.size(); i++) {
+		objects_[i].Draw(cmdList);
 	}
 	
-	for (int i = 0; i < moaiObjs.size(); i++) {
-		if (moaiState[i].hp_ > 0) {
-			moaiObjs[i].Draw(cmdList);
+	for (int i = 0; i < moaiObjs_.size(); i++) {
+		if (moaiState_[i].hp_ > 0) {
+			moaiObjs_[i].Draw(cmdList);
 		}
 	}
 

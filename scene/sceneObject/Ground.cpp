@@ -12,12 +12,12 @@ Field::~Field()
 
 void Field::Initialize()
 {
-	fieldM = std::make_unique<Mesh>();
-	fieldM = Mesh::LoadFormOBJ("alphaVerLoad", false);
+	fieldM_ = std::make_unique<Mesh>();
+	fieldM_ = Mesh::LoadFormOBJ("alphaVerLoad", false);
 
 	groundObj1_ = std::make_unique<Object3d>();
 	groundObj1_.get()->Initialize(true);
-	groundObj1_.get()->SetModel(fieldM.get());
+	groundObj1_.get()->SetModel(fieldM_.get());
 	groundObj1_->worldTransform.translation_ = { 0,0,0 };
 	groundObj1_->worldTransform.rotation_ = { 0,0,0 };
 	groundObj1_->worldTransform.scale_ = { 1,1,1 };

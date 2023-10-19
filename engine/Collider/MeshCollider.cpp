@@ -6,7 +6,7 @@
 void MeshCollider::ConstructTriangles(Mesh* model)
 {
 	//三角形リストをクリア
-	triangles.clear();
+	triangles_.clear();
 
 	//インデックス配列を取得
 	const std::vector<unsigned short>& indices = model->GetInidices();
@@ -20,11 +20,11 @@ void MeshCollider::ConstructTriangles(Mesh* model)
 	{
 		size_t triangleNum = indices.size() / 3;
 
-		triangles.resize(triangles.size() + triangleNum);
+		triangles_.resize(triangles_.size() + triangleNum);
 
 		for (int i = 0; i < triangleNum; i++)
 		{
-			Triangle& tri = triangles[start + i];
+			Triangle& tri = triangles_[start + i];
 			int idx0 = indices[i * 3 + 0];
 			int idx1 = indices[i * 3 + 1];
 			int idx2 = indices[i * 3 + 2];
@@ -44,7 +44,7 @@ void MeshCollider::ConstructTriangles(Mesh* model)
 //更新処理
 void MeshCollider::Update()
 {
-	objectMatWorld = GetObject3d()->GetMatWorld();
+	objectMatWorld_ = GetObject3d()->GetMatWorld();
 }
 
 //球との当たり判定
@@ -53,13 +53,13 @@ bool MeshCollider::CheckCollisionSphere(const Sphere& sphere , Vector3* inter)
 	Sphere localSphere;
 
 	localSphere.center = {
-		sphere.center.x - objectMatWorld.m[3][0] ,
-		sphere.center.y - objectMatWorld.m[3][1] ,
-		sphere.center.z - objectMatWorld.m[3][2]};
+		sphere.center.x - objectMatWorld_.m[3][0] ,
+		sphere.center.y - objectMatWorld_.m[3][1] ,
+		sphere.center.z - objectMatWorld_.m[3][2]};
 
 	localSphere.radius *= sphere.radius;
 
-	std::vector<Triangle>::const_iterator it = triangles.cbegin();
+	std::vector<Triangle>::const_iterator it = triangles_.cbegin();
 
 	if (localSphere.radius < 1.0f)
 	{
@@ -67,7 +67,7 @@ bool MeshCollider::CheckCollisionSphere(const Sphere& sphere , Vector3* inter)
 		a++;
 	}
 
-	for (; it != triangles.cend(); ++it)
+	for (; it != triangles_.cend(); ++it)
 	{
 		const Triangle& triangle = *it;
 		if (Collision::CheckSphere2Triangle(localSphere , triangle , inter))
@@ -100,16 +100,16 @@ bool MeshCollider::CheckCollisionRay(const Ray& ray , float* distance , Vector3*
 {
 	Ray localRay;
 
-	localRay.start.x = ray.start.x - objectMatWorld.m[3][0];
-	localRay.start.y = ray.start.y - objectMatWorld.m[3][1];
-	localRay.start.z = ray.start.z - objectMatWorld.m[3][2];
+	localRay.start.x = ray.start.x - objectMatWorld_.m[3][0];
+	localRay.start.y = ray.start.y - objectMatWorld_.m[3][1];
+	localRay.start.z = ray.start.z - objectMatWorld_.m[3][2];
 
 	localRay.dir = ray.dir;
 
-	std::vector<Triangle>::const_iterator it = triangles.cbegin();
+	std::vector<Triangle>::const_iterator it = triangles_.cbegin();
 
 
-	for (; it != triangles.cend(); ++it)
+	for (; it != triangles_.cend(); ++it)
 	{
 		const Triangle& triangle = *it;
 

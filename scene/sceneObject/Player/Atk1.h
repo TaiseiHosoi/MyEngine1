@@ -28,14 +28,14 @@ private:
     Input* input_ = Input::GetInstance();
 
 private:   //どの行動でも必要
-    int animNum;    //何番アニメーションか
-    int animFlameCT;    //フレーム数カウント(アニメーションのインターフェース用)
+    int animNum_;    //何番アニメーションか
+    int animFlameCT_;    //フレーム数カウント(アニメーションのインターフェース用)
     FBXObject3d* gameObject_;
 
 private:    //固有で必要なもの
-    bool isAtk = false; //攻撃行動自体のフラグ
-    bool isNextAtk = false; //次の攻撃コンボに遷移するか
-    bool isCombo1 = false;  //爪ひっかき攻撃
-    bool isCombo2 = false;  //回転突進
-    int atkMovePhase = 0;   //その行動の中で行動の順番を管理する(例:1.ブレスをためる→2.ブレスを放つ)
+    bool isAtk_ = false; //攻撃行動自体のフラグ
+    bool isNextAtk_ = false; //次の攻撃コンボに遷移するか
+    bool isCombo1_ = false;  //爪ひっかき攻撃
+    bool isCombo2_ = false;  //回転突進
+    int atkMovePhase_ = 0;   //その行動の中で行動の順番を管理する(例:1.ブレスをためる→2.ブレスを放つ)
 };

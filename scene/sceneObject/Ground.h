@@ -36,7 +36,7 @@ public:
 	//メンバ変数
 private:
 
-	std::unique_ptr<Mesh> fieldM;
+	std::unique_ptr<Mesh> fieldM_;
 	const float groundSpeed_ = 0.2f;
 	std::unique_ptr<Object3d> groundObj1_;	//地面1
 	std::unique_ptr<Object3d> groundObj2_;	//地面2
@@ -45,7 +45,7 @@ private:
 	std::unique_ptr<Object3d> skydomeObj_;
 	std::unique_ptr<Mesh> skydomeModel_;
 
-	Mesh* fenceM = nullptr;
+	Mesh* fenceM_ = nullptr;
 
 	static const int fieldR_ = 415;
 	static const int R = fieldR_;

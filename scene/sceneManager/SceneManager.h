@@ -60,7 +60,7 @@ public:
 
 public:
 	
-	std::unique_ptr <Audio> audio;
+	std::unique_ptr <Audio> audio_;
 	std::unique_ptr <SpriteCommon> spriteCommon_;
 
 	std::unique_ptr<ParticleManager> particleManager_;

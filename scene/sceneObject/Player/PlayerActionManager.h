@@ -67,15 +67,15 @@ public:
 	int GetSphereColNum() { return SPHERE_COLISSION_NUM; }
 
 	//現在のアクしょん取得
-	int GetNowActNum() { return nowActNum; };
-	void SetNowActNum(const int num) { nowActNum = num; };
+	int GetNowActNum() { return nowActNum_; };
+	void SetNowActNum(const int num) { nowActNum_ = num; };
 
 private: // メンバ変数
 	FBXObject3d* gameObject_;
 	
 	std::vector<SphereCollider*>* sphere_;
-	std::vector<Vector3> spherePos = {};
-	int nowActNum = 1;
+	std::vector<Vector3> spherePos_ = {};
+	int nowActNum_ = 1;
 	int SPHERE_COLISSION_NUM = 0;
 
 };

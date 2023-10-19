@@ -36,9 +36,9 @@ private:
 	std::unique_ptr<Object3d> object_;
 	Mesh* model_ = nullptr;
 	float bulletSpeed_ = 8.f;
-	CollisionManager* collider = nullptr;
+	CollisionManager* collider_ = nullptr;
 	std::unique_ptr<SphereCollider> sphere;
-	Vector3 pos;
+	Vector3 pos_;
 	
 	bool isDead_ = false;
 	std::unique_ptr<Object3d> testObject_;

@@ -45,8 +45,8 @@ void SceneManager::ObjectInitialize() {
 	spriteCommon_->LoadTexture(17, "sceneCRight.png");
 	spriteCommon_->LoadTexture(18, "LeftMouseButton.png");
 
-	audio = std::make_unique<Audio>();
-	audio->Initialize();
+	audio_ = std::make_unique<Audio>();
+	audio_->Initialize();
 
 
 	// fbx テスト
@@ -55,7 +55,7 @@ void SceneManager::ObjectInitialize() {
 		//Player
 		fbxPlayer_ = std::make_unique<FbxPlayer>();
 		fbxPlayer_.get()->Initialize(hitokunFbxM_.get());
-		fbxPlayer_->GetObject3d()->wtf.translation_.z = 0;
+		fbxPlayer_->GetObject3d()->wtf_.translation_.z = 0;
 		fbxPlayer_->SetRailCameraInfo(_camera->GetRailCameraInfo());
 		_camera->SetFollowerPos(fbxPlayer_.get()->GetObject3d()->GetWorldTransformPtr());
 		
@@ -118,6 +118,6 @@ void SceneManager::ResetParameters() {
 	/*boss_->Reset();
 	boss_->GetObject3d()->wtf.translation_ = { 0,0,0 };
 	boss_->Update();*/
-	fbxPlayer_->GetObject3d()->wtf.translation_ = { 0,10,0 };
+	fbxPlayer_->GetObject3d()->wtf_.translation_ = { 0,10,0 };
 	fbxPlayer_->GetObject3d()->Update();
 }

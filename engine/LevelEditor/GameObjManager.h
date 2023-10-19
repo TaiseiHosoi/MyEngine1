@@ -39,37 +39,36 @@ private:
     LevelData* levelData;
 
     //モデルデータ
-    std::map<std::string, Mesh*> models;    //モデルの格納
-    std::unique_ptr <Mesh> modelSkydome;
-    std::unique_ptr <Mesh> modelMoai;
-    std::unique_ptr <Mesh> modelCube;
-    std::unique_ptr <Mesh> modelRoad1;
-    std::unique_ptr <Mesh> modelCam;
-    std::unique_ptr<Mesh> modelWalkRobo;
-    std::unique_ptr<Mesh> modelTower1;
-    std::unique_ptr<Mesh> modelBill1;
+    std::map<std::string, Mesh*> models_;    //モデルの格納
+    std::unique_ptr <Mesh> modelSkydome_;
+    std::unique_ptr <Mesh> modelMoai_;
+    std::unique_ptr <Mesh> modelCube_;
+    std::unique_ptr <Mesh> modelRoad1_;
+    std::unique_ptr <Mesh> modelCam_;
+    std::unique_ptr<Mesh> modelWalkRobo_;
+    std::unique_ptr<Mesh> modelTower1_;
+    std::unique_ptr<Mesh> modelBill1_;
 
     //オブジェクトの配列
-    std::vector<Object3d> objects;
-    std::vector<Object3d> camObjs;
-    std::vector<Object3d> moaiObjs;
-    std::vector<EnemyState> moaiState;
-\
+    std::vector<Object3d> objects_;
+    std::vector<Object3d> camObjs_;
+    std::vector<Object3d> moaiObjs_;
+    std::vector<EnemyState> moaiState_;
 
     //オブジェクト
-    Object3d* objSkydome = nullptr;
-    Object3d* objGround = nullptr;
-    Object3d* objFighter = nullptr;
-    Object3d* objSphere = nullptr;
-    Object3d* objRoad = nullptr;
+    Object3d* objSkydome_ = nullptr;
+    Object3d* objGround_ = nullptr;
+    Object3d* objFighter_ = nullptr;
+    Object3d* objSphere_ = nullptr;
+    Object3d* objRoad_ = nullptr;
 
     //当たり判定
-    std::vector<SphereCollider*> moaiSpCollider;
-    std::vector<Vector3> moaiSpherePos = {};
+    std::vector<SphereCollider*> moaiSpCollider_;
+    std::vector<Vector3> moaiSpherePos_ = {};
 
 
     //その他
-    int moaiDigRot = 0; //自機の回転用クロック変数
+    int moaiDigRot_ = 0; //自機の回転用クロック変数
     bool isStand_ = false;  //待機フラグ
     int standTime_ = 0; //ポップデータの待機時間
     int gameTime_ = 0;
@@ -123,7 +122,7 @@ public:
 
 public:
     // camObjsのゲッタ
-    std::vector<Object3d>* GetCamObjsPtr() { return &camObjs; };
+    std::vector<Object3d>* GetCamObjsPtr() { return &camObjs_; };
 
     // enemiesのゲッタ
     //std::vector<std::unique_ptr<Enemy>>*GetEnemies() { return &enemies; }

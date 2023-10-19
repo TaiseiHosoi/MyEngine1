@@ -11,9 +11,9 @@
 
 
 
-int FbxPlayer::hp = 100;
-bool FbxPlayer::isAtkCollide = false;
-bool FbxPlayer::isGuardCollide = false;
+int FbxPlayer::hp_ = 100;
+bool FbxPlayer::isAtkCollide_ = false;
+bool FbxPlayer::isGuardCollide_ = false;
 
 FbxPlayer::FbxPlayer()
 {
@@ -50,38 +50,38 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 
 
 	SPHERE_COLISSION_NUM = static_cast<int>(gameObject_->GetBonesMatPtr()->size());
-	sphere.resize(SPHERE_COLISSION_NUM);
-	spherePos.resize(SPHERE_COLISSION_NUM);
-	gameObject_.get()->isBonesWorldMatCalc = true;
+	sphere_.resize(SPHERE_COLISSION_NUM);
+	spherePos_.resize(SPHERE_COLISSION_NUM);
+	gameObject_.get()->isBonesWorldMatCalc_ = true;
 	coliderPosTest_.resize(SPHERE_COLISSION_NUM);
 	hpModel_ = Mesh::LoadFormOBJ("cube", false);
 
 	//当たり判定初期化
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++)
 	{
-		sphere[i] = new SphereCollider;
-		CollisionManager::GetInstance()->AddCollider(sphere[i]);
-		spherePos[i] = gameObject_.get()->bonesMat[i].GetWorldPos();
-		sphere[i]->SetBasisPos(&spherePos[i]);
-		sphere[i]->SetRadius(1.0f);
-		sphere[i]->SetAttribute(COLLISION_ATTR_ALLIES);
-		sphere[i]->Update();
+		sphere_[i] = new SphereCollider;
+		CollisionManager::GetInstance()->AddCollider(sphere_[i]);
+		spherePos_[i] = gameObject_.get()->bonesMat_[i].GetWorldPos();
+		sphere_[i]->SetBasisPos(&spherePos_[i]);
+		sphere_[i]->SetRadius(1.0f);
+		sphere_[i]->SetAttribute(COLLISION_ATTR_ALLIES);
+		sphere_[i]->Update();
 		//test
 		coliderPosTest_[i] = Object3d::Create();
 		coliderPosTest_[i]->SetModel(hpModel_.get());
-		coliderPosTest_[i]->SetPosition(sphere[i]->center);
-		coliderPosTest_[i]->SetScale({ sphere[i]->GetRadius(),sphere[i]->GetRadius() ,sphere[i]->GetRadius() });
+		coliderPosTest_[i]->SetPosition(sphere_[i]->center);
+		coliderPosTest_[i]->SetScale({ sphere_[i]->GetRadius(),sphere_[i]->GetRadius() ,sphere_[i]->GetRadius() });
 		coliderPosTest_[i]->SetRotate({ 0,0,0 });
 		coliderPosTest_[i]->Update();
 
 	}
 
 	//ヒットポイント
-	hp = 100;
+	hp_ = 100;
 
 	hpObject_ = Object3d::Create();
 	hpObject_->SetModel(hpModel_.get());
-	hpObject_->SetScale({ static_cast<float>(hp) * 0.04f,0.1f,0.02f });
+	hpObject_->SetScale({ static_cast<float>(hp_) * 0.04f,0.1f,0.02f });
 	hpObject_->SetPosition({ gameObject_.get()->GetWorldTransform().translation_.x,
 		gameObject_.get()->GetWorldTransform().translation_.y + 4.0f,
 		gameObject_.get()->GetWorldTransform().translation_.z });
@@ -100,8 +100,8 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	std::srand(static_cast<int>(std::time(nullptr)));
 
 	//初期化
-	FbxPlayer::isAtkCollide = false;
-	isGuardCollide = false;
+	FbxPlayer::isAtkCollide_ = false;
+	isGuardCollide_ = false;
 	
 	
 	reticle_.Initialize(gameObject_->GetWorldTransformPtr());
@@ -124,7 +124,7 @@ void FbxPlayer::Update()
 			});
 	
 
-	if (isHitStop == false)
+	if (isHitStop_ == false)
 	{
 		//ワールド上の自機の回転量yを求める
 		cameraAngle_.y =
@@ -144,20 +144,20 @@ void FbxPlayer::Update()
 		// レイキャストによるロックオン登録
 		if (CollisionManager::GetInstance()->Raycast(ray, &raycast, 120.f)) {
 
-			if (raycast.collider->GetAttribute() == COLLISION_ATTR_ENEMIES && raycast.object != nullptr) {
+			if (raycast.collider_->GetAttribute() == COLLISION_ATTR_ENEMIES && raycast.object_ != nullptr) {
 				// ロックオン処理
 				PRockTarget newRockTarget;
 				rockTargets_.push_back(newRockTarget);
 				int nowRockNum = static_cast<int>(rockTargets_.size()) - 1;
 				
-				rockTargets_[nowRockNum].targetWtfPtr = raycast.collider->GetObject3d()->GetWorldTransformPtr();
-				rockTargets_[nowRockNum].isRockOn = true;
+				rockTargets_[nowRockNum].targetWtfPtr_ = raycast.collider_->GetObject3d()->GetWorldTransformPtr();
+				rockTargets_[nowRockNum].isRockOn_ = true;
 				
 				// そのロックオンによって弾発射
 				std::unique_ptr<PlayerHomingBullet> newHomingBullet;
 				newHomingBullet = std::make_unique<PlayerHomingBullet>();
 				newHomingBullet->Initialize(bulletModel_.get(), gameObject_->GetPosition(), gameObject_->GetRotate());
-				newHomingBullet->SetTargerPtr(rockTargets_[nowRockNum].targetWtfPtr);
+				newHomingBullet->SetTargerPtr(rockTargets_[nowRockNum].targetWtfPtr_);
 				homingBullets_.push_back(std::move(newHomingBullet));
 				
 				
@@ -175,9 +175,9 @@ void FbxPlayer::Update()
 		for (std::unique_ptr<PlayerRapidBullet>& rapidBullet : rapidBullets_) {
 			
 			if (rapidBullet->GetSphereCollider()->GetIsHit() == true) {
-				if (rapidBullet->GetSphereCollider()->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIES) {
+				if (rapidBullet->GetSphereCollider()->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIES) {
 					rapidBullet->SetIsDead(true);
-					particle_->RandParticle(rapidBullet->GetSphereCollider()->GetCollisionInfo().inter);
+					particle_->RandParticle(rapidBullet->GetSphereCollider()->GetCollisionInfo().inter_);
 				}
 			}
 		}
@@ -201,7 +201,7 @@ void FbxPlayer::Update()
 		//y固定
 		float yPos = 2.0f;
 		hoverCarObject_->worldTransform.translation_.y = yPos;
-		gameObject_->wtf.translation_.y = yPos;
+		gameObject_->wtf_.translation_.y = yPos;
 		
 		//更新
 		PColliderUpdate();
@@ -210,11 +210,11 @@ void FbxPlayer::Update()
 		gameObject_->Update();
 		hoverCarObject_->Update();
 
-		count++;
+		count_++;
 		
 
 #pragma region hp
-		hpObject_->SetScale({ static_cast<float>(hp) * 0.04f,0.1f,0.02f });
+		hpObject_->SetScale({ static_cast<float>(hp_) * 0.04f,0.1f,0.02f });
 		hpObject_->SetPosition({ gameObject_.get()->GetWorldTransform().translation_.x,
 			gameObject_.get()->GetWorldTransform().translation_.y + 4.0f,
 			gameObject_.get()->GetWorldTransform().translation_.z });
@@ -224,9 +224,9 @@ void FbxPlayer::Update()
 		hpObject_->Update();
 #pragma endregion hp
 
-		if (oldAnimCT != animCT)
+		if (oldAnimCT_ != animCT_)
 		{
-			gameObject_.get()->PlayAnimation(animCT);
+			gameObject_.get()->PlayAnimation(animCT_);
 		}
 
 
@@ -291,7 +291,7 @@ void FbxPlayer::CreateParticle()
 
 void FbxPlayer::minusHp(int damage)
 {
-	hp -= damage;
+	hp_ -= damage;
 }
 
 void FbxPlayer::Move()
@@ -324,7 +324,7 @@ void FbxPlayer::Move()
 		//W,Dを押していたら
 		if (input_->PushKey(DIK_W) && input_->PushKey(DIK_D))
 		{
-			nowPos.x += kDiagonalSpeed;
+			nowPos_.x += kDiagonalSpeed;
 			//nowPos.y += kDiagonalSpeed;
 
 			if (faceAngle_.x >= -faceMaxAngle_) {
@@ -343,7 +343,7 @@ void FbxPlayer::Move()
 		else if (input_->PushKey(DIK_W) && input_->PushKey(DIK_A))
 		{
 
-			nowPos.x -= kDiagonalSpeed;
+			nowPos_.x -= kDiagonalSpeed;
 			//nowPos.y += kDiagonalSpeed;
 			if (faceAngle_.x >= -faceMaxAngle_) {
 				faceAngle_.x -= faceRotSpeed_;
@@ -360,7 +360,7 @@ void FbxPlayer::Move()
 		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_D))
 		{
 
-			nowPos.x += kDiagonalSpeed;
+			nowPos_.x += kDiagonalSpeed;
 
 
 			if (faceAngle_.x <= faceMaxAngle_) {
@@ -377,7 +377,7 @@ void FbxPlayer::Move()
 		//S,Aを押していたら
 		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_A))
 		{
-			nowPos.x -= kDiagonalSpeed;
+			nowPos_.x -= kDiagonalSpeed;
 
 			if (faceAngle_.x <= faceMaxAngle_) {
 				faceAngle_.x += faceRotSpeed_;
@@ -413,7 +413,7 @@ void FbxPlayer::Move()
 		//Dを押していたら
 		else if (input_->PushKey(DIK_D))
 		{
-			nowPos.x += kMoveSpeed_;
+			nowPos_.x += kMoveSpeed_;
 			
 
 			if (faceAngle_.y <= faceMaxAngle_) {
@@ -428,7 +428,7 @@ void FbxPlayer::Move()
 		//Aを押していたら
 		else if (input_->PushKey(DIK_A))
 		{
-			nowPos.x -= kMoveSpeed_;
+			nowPos_.x -= kMoveSpeed_;
 			if (faceAngle_.y >= -faceMaxAngle_) {
 				faceAngle_.y -= faceRotSpeed_;
 
@@ -441,11 +441,11 @@ void FbxPlayer::Move()
 		if (input_->PushKey(DIK_A) != 1 && input_->PushKey(DIK_D) != 1) {
 			if (faceAngle_.y > 0.02f) {
 
-				faceAngle_.y -= returnRotSpeed;
+				faceAngle_.y -= returnRotSpeed_;
 
 			}
 			else if (faceAngle_.y < -0.02f) {
-				faceAngle_.y += returnRotSpeed;
+				faceAngle_.y += returnRotSpeed_;
 
 			}
 
@@ -453,10 +453,10 @@ void FbxPlayer::Move()
 
 		if (input_->PushKey(DIK_W) != 1 && input_->PushKey(DIK_S) != 1) {
 			if (faceAngle_.x > 0.02f) {
-				faceAngle_.x -= returnRotSpeed;
+				faceAngle_.x -= returnRotSpeed_;
 			}
 			else if (faceAngle_.x < -0.02f) {
-				faceAngle_.x += returnRotSpeed;
+				faceAngle_.x += returnRotSpeed_;
 			}
 
 		}
@@ -467,28 +467,28 @@ void FbxPlayer::Move()
 
 		//押されていないときの処理
 		if (faceAngle_.x > 0.02f) {
-			faceAngle_.x -= returnRotSpeed;
+			faceAngle_.x -= returnRotSpeed_;
 		}
 		else if (faceAngle_.x < -0.02f) {
-			faceAngle_.x += returnRotSpeed;
+			faceAngle_.x += returnRotSpeed_;
 		}
 
 		if (faceAngle_.y > 0.02f) {
-			faceAngle_.y -= returnRotSpeed;
+			faceAngle_.y -= returnRotSpeed_;
 
 		}
 		else if (faceAngle_.y < -0.02f) {
-			faceAngle_.y += returnRotSpeed;
+			faceAngle_.y += returnRotSpeed_;
 
 		}
 	}
 
-	gameObject_->wtf.rotation_ = { faceAngle_.x, faceAngle_.y + pAngle ,faceAngle_.z };
+	gameObject_->wtf_.rotation_ = { faceAngle_.x, faceAngle_.y + pAngle ,faceAngle_.z };
 
 	//画面上で自機が動くためのmatrix
-	pAngleMat.identity();
-	pAngleMat.rotateY(pAngle);
-	Vector3 viewPos = MathFunc::bVelocity(nowPos, pAngleMat);
+	pAngleMat_.identity();
+	pAngleMat_.rotateY(pAngle);
+	Vector3 viewPos = MathFunc::bVelocity(nowPos_, pAngleMat_);
 
 	Vector3 playerPos = primaryPos + viewPos;
 	playerPos.y = 0.3f;
@@ -509,71 +509,71 @@ FBXObject3d* FbxPlayer::GetObject3d()
 
 bool FbxPlayer::GetIsAtkCollide()
 {
-	return FbxPlayer::isAtkCollide;
+	return FbxPlayer::isAtkCollide_;
 }
 
 void FbxPlayer::SetIsAtkCollide(bool isAtkCollideArg)
 {
-	FbxPlayer::isAtkCollide = isAtkCollideArg;
+	FbxPlayer::isAtkCollide_ = isAtkCollideArg;
 }
 
 bool FbxPlayer::GetIsGuardCollide()
 {
-	return isGuardCollide;
+	return isGuardCollide_;
 }
 
 void FbxPlayer::SetIsGuardCollide(bool isGuardCollideArg)
 {
-	FbxPlayer::isGuardCollide = isGuardCollideArg;
+	FbxPlayer::isGuardCollide_ = isGuardCollideArg;
 }
 
 int FbxPlayer::GetHp()
 {
-	return FbxPlayer::hp;
+	return FbxPlayer::hp_;
 }
 
 void FbxPlayer::SetHp(int hpArg)
 {
-	FbxPlayer::hp = hpArg;
+	FbxPlayer::hp_ = hpArg;
 }
 
 void FbxPlayer::PColliderUpdate()
 {
-	if (hitDeley > 0) {	//毎フレームヒットを防止
-		hitDeley--;
+	if (hitDeley_ > 0) {	//毎フレームヒットを防止
+		hitDeley_--;
 	}
 
 
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++)
 	{
-		if (isAtkCollide == true && hitDeley <= 0 && sphere[i]->GetIsHit() == true) {
+		if (isAtkCollide_ == true && hitDeley_ <= 0 && sphere_[i]->GetIsHit() == true) {
 
-			if (sphere[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIES) {
+			if (sphere_[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIES) {
 
 				audio_->PlayWave("kuri.wav");
 				//Boss::minusHp(1);
-				hitDeley = 4;
-				particle_->RandParticle(sphere[i]->GetCollisionInfo().inter);
-				HitStopManager::GetInstance()->SetHitStop(&isHitStop, 2);
+				hitDeley_ = 4;
+				particle_->RandParticle(sphere_[i]->GetCollisionInfo().inter_);
+				HitStopManager::GetInstance()->SetHitStop(&isHitStop_, 2);
 				break;
 			}
 
 		}
-		if (sphere[i]->GetIsHit() == true &&
-			sphere[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIEBULLETS
-			&& hitDeley <= 0) {
+		if (sphere_[i]->GetIsHit() == true &&
+			sphere_[i]->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ENEMIEBULLETS
+			&& hitDeley_ <= 0) {
 			audio_->PlayWave("kuri.wav");
-			hitDeley = 6;
-			this->hp -= 2;
-			HitStopManager::GetInstance()->SetHitStop(&isHitStop, 2);
+			hitDeley_ = 6;
+			this->hp_ -= 2;
+			HitStopManager::GetInstance()->SetHitStop(&isHitStop_, 2);
 			break;
 		}
 	}
 
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		spherePos[i] = gameObject_.get()->bonesMat[i].GetWorldPos();
-		sphere[i]->Update();
-		coliderPosTest_[i]->SetPosition(sphere[i]->center);
+		spherePos_[i] = gameObject_.get()->bonesMat_[i].GetWorldPos();
+		sphere_[i]->Update();
+		coliderPosTest_[i]->SetPosition(sphere_[i]->center);
 		coliderPosTest_[i]->Update();
 	}
 
@@ -585,7 +585,7 @@ void FbxPlayer::PColliderUpdate()
 Vector3 FbxPlayer::GetNowFaceAngle()
 {
 
-	Vector3 nowVelocity_ = MathFunc::MatVector(velocity_, gameObject_->wtf.matWorld_);
+	Vector3 nowVelocity_ = MathFunc::MatVector(velocity_, gameObject_->wtf_.matWorld_);
 	return nowVelocity_;
 }
 

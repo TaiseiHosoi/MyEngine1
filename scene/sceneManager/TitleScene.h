@@ -52,18 +52,18 @@ private:
 		END
 	};
 
-	WorldTransform target;
-	WorldTransform eye;
+	WorldTransform target_;
+	WorldTransform eye_;
 
 	int fbxTimer_ = 0;
 
-	bool isChangeScene = false;
-	bool isSwapCamera = false;
+	bool isChangeScene_ = false;
+	bool isSwapCamera_ = false;
 	// 時間計測に必要なデータ
-	size_t startCount = 0;
-	size_t nowCount = 0;
-	float maxTime = 5.0f;
-	float timeRate;
+	size_t startCount_ = 0;
+	size_t nowCount_ = 0;
+	float maxTime_ = 5.0f;
+	float timeRate_;
 
 	// シーン切り替え演出用
 	size_t sceneSwapCount_ = 0;

@@ -79,7 +79,7 @@ void WalkingEnemy::Update()
 	}
 
 	if (sphere_->GetIsHit() == true) {
-		if (sphere_->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ALLIESBULLETS) {
+		if (sphere_->GetCollisionInfo().collider_->GetAttribute() == COLLISION_ATTR_ALLIESBULLETS) {
 			state_.hp_--;
 		}
 	}

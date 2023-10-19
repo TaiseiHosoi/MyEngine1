@@ -10,9 +10,9 @@
 #include"WinApp.h"
 #include <WinUser.h>
 
-float GameCamera::magnitude = 0.0f;
-float GameCamera::duration = 0.0f;
-bool GameCamera::isShake = 0.0f;
+float GameCamera::magnitude_ = 0.0f;
+float GameCamera::duration_ = 0.0f;
+bool GameCamera::isShake_ = 0.0f;
 
 GameCamera::GameCamera(int window_width , int window_height , Input* input)
 	: Camera(window_width , window_height)
@@ -77,9 +77,9 @@ void GameCamera::Update()
 	float maxTimeVal = 90.0f; // 移動にかかる最大時間
 	timeRate_ = CalculateTValueBasedOnElapsedTime(maxTimeVal); // maxTimeに基づいてt値を計算
 
-	targetTimeRate = timeRate_ + 0.003f;	//ターゲット位置は少し進んだ場所
-	if (targetTimeRate >= 1.0f) {
-		targetTimeRate -= 1.0f;	//もし1を超えてたら-1
+	targetTimeRate_ = timeRate_ + 0.003f;	//ターゲット位置は少し進んだ場所
+	if (targetTimeRate_ >= 1.0f) {
+		targetTimeRate_ -= 1.0f;	//もし1を超えてたら-1
 	}
 	if (input_->TriggerKey(DIK_G)) {
 		timeRate_ = 0.95f;
@@ -100,7 +100,7 @@ void GameCamera::Update()
 
 		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
 		
-		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
+		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate_);
 		railTargetPos_ = target;	//ローカル変数に保存
 		
 		Vector3 minusVec =  nowOffset;
@@ -108,7 +108,7 @@ void GameCamera::Update()
 		minusVec *= 10.0f;	
 
 		basePos_ += minusVec;
-		basePos_.y = gamepartCamPosY;
+		basePos_.y = gamepartCamPosY_;
 
 		Vector3 e = GetEye();
 		Vector3 targ = GetTarget();
@@ -121,7 +121,7 @@ void GameCamera::Update()
 		//値を入力
 		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
 
-		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
+		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate_);
 		railTargetPos_ = target;	//ローカル変数に保存
 
 
@@ -131,7 +131,7 @@ void GameCamera::Update()
 		minusVec *= minusVal;	//引きカメラ
 
 		basePos_ += minusVec;
-		basePos_.y = gamepartCamPosY;
+		basePos_.y = gamepartCamPosY_;
 
 		FollowPlayer();
 	}
@@ -143,7 +143,7 @@ void GameCamera::Update()
 		// カメラpos処理
 		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
 
-		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
+		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate_);
 		railTargetPos_ = target;	//ローカル変数に保存
 
 
@@ -151,7 +151,7 @@ void GameCamera::Update()
 		minusVec.nomalize();
 		float minusVal = 15.f;
 		Vector3 gamepartCamPos = basePos_ + minusVec * minusVal;	//引きカメラ
-		gamepartCamPos.y = gamepartCamPosY;
+		gamepartCamPos.y = gamepartCamPosY_;
 		
 
 		float directionMagnification = 50.f;
@@ -264,13 +264,13 @@ void GameCamera::ViewPointMovement()
 	SetCursorPos(xPos_absolute , yPos_absolute);//移動させる
 
 	//マウスの移動量を取得
-	mouseMove = Vector2(0 , 0);
-	mouseMove = (Vector2(static_cast<float>(mousePosition.y) , static_cast<float>(mousePosition.x)) - Vector2(windowWH.y , windowWH.x));//座標軸で回転している関係でこうなる(XとYが入れ替え)
+	mouseMove_ = Vector2(0 , 0);
+	mouseMove_ = (Vector2(static_cast<float>(mousePosition.y) , static_cast<float>(mousePosition.x)) - Vector2(windowWH.y , windowWH.x));//座標軸で回転している関係でこうなる(XとYが入れ替え)
 
 	if (isPause_ == false) {
 
 		//マウスの移動量をカメラの回転を反映
-		rotation_.y -= MathFunc::Dig2Rad(mouseMove.y * mouseSensitivity_);
+		rotation_.y -= MathFunc::Dig2Rad(mouseMove_.y * mouseSensitivity_);
 		if (2 * MathFunc::PI <= rotation_.y)
 		{
 			rotation_.y -= 2 * MathFunc::PI;
@@ -280,7 +280,7 @@ void GameCamera::ViewPointMovement()
 			rotation_.y += 2 * MathFunc::PI;
 		}
 
-		rotation_.x -= MathFunc::Dig2Rad(mouseMove.x * mouseSensitivity_);
+		rotation_.x -= MathFunc::Dig2Rad(mouseMove_.x * mouseSensitivity_);
 		if (MathFunc::Dig2Rad(60) <= rotation_.x)
 		{
 			rotation_.x = MathFunc::Dig2Rad(60);
@@ -302,24 +302,24 @@ float GameCamera::randomFloat(float min , float max)
 
 void GameCamera::ShakePrim()
 {
-	if (isShake == true)
+	if (isShake_ == true)
 	{
 
-		if (elapsedTime < duration)
+		if (elapsedTime_ < duration_)
 		{
-			float offsetX = randomFloat(-1.0f , 1.0f) * magnitude;
-			float offsetY = randomFloat(-1.0f , 1.0f) * magnitude;
-			float offsetZ = randomFloat(-1.0f , 1.0f) * magnitude;
+			float offsetX = randomFloat(-1.0f , 1.0f) * magnitude_;
+			float offsetY = randomFloat(-1.0f , 1.0f) * magnitude_;
+			float offsetZ = randomFloat(-1.0f , 1.0f) * magnitude_;
 
-			loolAtPos = {offsetX , offsetY , offsetZ};
+			loolAtPos_ = {offsetX , offsetY , offsetZ};
 
-			elapsedTime += deltaTime;
+			elapsedTime_ += deltaTime_;
 		}
 		else
 		{
-			elapsedTime = 0.0f;
+			elapsedTime_ = 0.0f;
 
-			isShake = false;
+			isShake_ = false;
 		}
 
 	}
@@ -328,9 +328,9 @@ void GameCamera::ShakePrim()
 
 void GameCamera::SetShakePrimST(float dura , float mag , bool isShakePrim)
 {
-	duration = dura;
-	magnitude = mag;
-	isShake = isShakePrim;
+	duration_ = dura;
+	magnitude_ = mag;
+	isShake_ = isShakePrim;
 }
 
 void GameCamera::SetShakeVec(Vector3 shakeVec)

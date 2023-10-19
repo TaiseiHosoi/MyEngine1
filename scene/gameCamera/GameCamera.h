@@ -148,18 +148,18 @@ private:
 	float cameraHeight_ = 6;
 	
 	//ShakePrim用変数
-	static float magnitude;	//シェイクの強さ
-	static float duration;//シェイクを起こす時間
-	static bool isShake;
-	float elapsedTime = 0.0f;
-	const float deltaTime = 0.016f;	//1.0fを1秒(60FPS)と考えた際の1F
-	Vector3 loolAtPos = {};
+	static float magnitude_;	//シェイクの強さ
+	static float duration_;//シェイクを起こす時間
+	static bool isShake_;
+	float elapsedTime_ = 0.0f;
+	const float deltaTime_ = 0.016f;	//1.0fを1秒(60FPS)と考えた際の1F
+	Vector3 loolAtPos_ = {};
 	Vector3 shakeVec_ = {0 , 0 , 0};
 
 	//マウスカメラ用
 	Vector3 rotation_ = {0 , 0 , 0};
 	Vector3 dir_ = {0 , 0 , 1.f};
-	Vector2 mouseMove;
+	Vector2 mouseMove_;
 	float mouseSensitivity_ = 0.05f;	//マウス感度
 	bool isPause_;
 
@@ -169,7 +169,7 @@ private:
 	//シーンタイトル用
 	Vector3 directionLoot_ = {};
 	Vector3 titleScOffsetPos_ = {10.f,0,20.f};
-	const float gamepartCamPosY = 6.f;
+	const float gamepartCamPosY_ = 6.f;
 	//シーンスタート演出用
 	int startDirectionNowCount_ = 0;
 	const int maxStartDirectionNowCount_ = 120;
@@ -191,10 +191,10 @@ private:
 	std::vector<Object3d>* jsonObjsPtr = nullptr;
 	
 	//　レールカメラ変数	
-	float maxTime = 1.2f;				//全体時間[s]
+	float maxTime_ = 1.2f;				//全体時間[s]
 	float timeRate_;			//何％時間が進んだか
 	float oldTimeRate_;
-	float targetTimeRate;	//ターゲット用
+	float targetTimeRate_;	//ターゲット用
 	int startIndex_ = 1;
 	size_t targetStartIndex_ = 1;
 	uint32_t startCount_ = 0;

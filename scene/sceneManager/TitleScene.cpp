@@ -64,7 +64,7 @@ void TitleScene::Update(Input* input, GameCamera* camera) {
 
 
 
-	if (isChangeScene == true) {
+	if (isChangeScene_ == true) {
 		camera->SetFollowerPos(_controller->fbxPlayer_.get()->GetObject3d()->GetWorldTransformPtr());
 		//camera->SetTargetPos(_controller->boss_.get()->GetObject3d()->GetWorldTransformPtr());
 		// UPDATE の一番下に
@@ -80,7 +80,7 @@ void TitleScene::Draw(DirectXCommon* dxCommon) {
 	_controller->field_->Draw(dxCommon);
 
 	_controller->spriteCommon_->SpritePreDraw();
-	if (isSwapCamera == true) {
+	if (isSwapCamera_ == true) {
 
 	}
 	else {
@@ -121,7 +121,7 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 		if (sceneSwapCount_ >= MAX_SWAP_COUNT) {
 			sceneSwapPhase_ = SceneSwapPhaseNum::DIRECTION1;
 			sceneSwapCount_ = 0;
-			isSwapCamera = true;
+			isSwapCamera_ = true;
 			camera->SetCamMode(CAM_MODE::startDirection);
 			camera->ResetGameCam();
 			
@@ -167,13 +167,13 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 		}
 
 	}else if (sceneSwapPhase_ == SceneSwapPhaseNum::END) {
-		isSwapCamera = true;
-		isChangeScene = true;
+		isSwapCamera_ = true;
+		isChangeScene_ = true;
 		
 
 	}
 
-	nowCount++; // 1フレーム当たりに増えるcount
+	nowCount_++; // 1フレーム当たりに増えるcount
 
 
 }

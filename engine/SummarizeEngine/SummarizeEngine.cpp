@@ -30,12 +30,12 @@ void SummarizeEngine::Initialize() {
 	imGuiManager_ = new ImGuiManager;
 	imGuiManager_->Initialize(winApp_, dxCommon_);
 
-	isRunningGame = true;
+	isRunningGame_ = true;
 };
 
 void SummarizeEngine::Update() {
 	if (winApp_->ProcessMessage()) {
-		isRunningGame = false;
+		isRunningGame_ = false;
 	}
 
 	//更新

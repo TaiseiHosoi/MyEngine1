@@ -159,9 +159,9 @@ void GamePart1::Pause(Input* input, GameCamera* camera)
 
 void GamePart1::PlaySounds()
 {
-	if (isSounds == false)
+	if (isSounds_ == false)
 	{
-		isSounds = true;
+		isSounds_ = true;
 		audio_->PlayWave("newspaper.wav"); //ループ再生はしない
 	}
 }

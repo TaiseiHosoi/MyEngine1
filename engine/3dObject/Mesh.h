@@ -106,7 +106,7 @@ public:
 	/// <returns>頂点配列</returns>
 	inline const std::vector<VertexPosNormalUv>& GetVertices()
 	{
-		return vertices;
+		return vertices_;
 	}
 
 	/// <summary>
@@ -115,7 +115,7 @@ public:
 	/// <returns>インデックス配列</returns>
 	inline const std::vector<unsigned short>& GetInidices()
 	{
-		return indices;
+		return indices_;
 	}
 
 private://非公開のメンバ関数
@@ -128,33 +128,33 @@ private:
 	//デバイス
 	static ID3D12Device* device;
 	// 頂点バッファ
-	ComPtr<ID3D12Resource> vertBuff;
+	ComPtr<ID3D12Resource> vertBuff_;
 	// 頂点バッファビュー
-	D3D12_VERTEX_BUFFER_VIEW vbView;
+	D3D12_VERTEX_BUFFER_VIEW vbView_;
 	// インデックスバッファ
-	ComPtr<ID3D12Resource> indexBuff;
+	ComPtr<ID3D12Resource> indexBuff_;
 	// インデックスバッファビュー
-	D3D12_INDEX_BUFFER_VIEW ibView;
+	D3D12_INDEX_BUFFER_VIEW ibView_;
 	// 頂点データ配列
-	std::vector<VertexPosNormalUv> vertices;
+	std::vector<VertexPosNormalUv> vertices_;
 	// 頂点インデックス配列
-	std::vector<unsigned short>indices;
+	std::vector<unsigned short>indices_;
 	//マテリアル
-	Material material;
+	Material material_;
 	// シェーダリソースビューのハンドル(CPU)
-	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
-	// シェーダリソースビューのハンドル(CPU)
-	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
+	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV_;
+	// シェーダリソースビューのハンドル(GPU)
+	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV_;
 	// デスクリプタサイズ
-	UINT descriptorHandleIncrementSize;
+	UINT descriptorHandleIncrementSize_;
 	// デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> descHeap;
+	ComPtr<ID3D12DescriptorHeap> descHeap_;
 	
 	// テクスチャバッファ
-	ComPtr<ID3D12Resource> texbuff;
+	ComPtr<ID3D12Resource> texbuff_;
 	// 定数バッファ(マテリアル)
-	ComPtr<ID3D12Resource> constBuffB1;
+	ComPtr<ID3D12Resource> constBuffB1_;
 
 	//頂点法線スムージング用データ
-	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothDate;
+	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothDate_;
 };

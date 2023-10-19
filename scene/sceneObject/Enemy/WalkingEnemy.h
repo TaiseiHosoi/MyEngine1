@@ -29,7 +29,7 @@ public: // アクセッサ
     void SetRailCameraInfo(RailCameraInfo* info) override{ railCameraInfo_ = info; };
     
     // playerWorldTransformセット
-    void SetPlayerWorldTransform(WorldTransform* worldTransform) { playerWorldTransform = worldTransform; };
+    void SetPlayerWorldTransform(WorldTransform* worldTransform) { playerWorldTransform_ = worldTransform; };
     
     // offsetPos_セッタ
     void SetOffsetVec3(const Vector3 v) { offsetPos_ = v; };
@@ -74,7 +74,7 @@ private:// メンバ変数
     EnemyState state_ = {};
     Vector3 primaryPos_;    //ゲームの進行度から求める進行点
     Vector3 battleLinePos_; //敵が居座って戦闘するライン
-    WorldTransform* playerWorldTransform = nullptr;
+    WorldTransform* playerWorldTransform_ = nullptr;
     Vector3 directionLoot_ = {};
     Vector3 offsetPos_ = {};
 

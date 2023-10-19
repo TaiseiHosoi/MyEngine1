@@ -11,7 +11,7 @@ class MeshCollider:public BaseCollider
 public:
 	MeshCollider()
 	{
-		shapeType = COLLISIONSHAPE_MESH;
+		shapeType_ = COLLISIONSHAPE_MESH;
 	}
 
 	//三角形の配列を構築する
@@ -27,10 +27,10 @@ public:
 	bool CheckCollisionRay(const Ray& ray , float* distance = nullptr , Vector3* inter = nullptr);
 
 private:
-	std::vector<Triangle> triangles;
+	std::vector<Triangle> triangles_;
 
 	//ワールド行列の逆行列
-	Matrix4 objectMatWorld;
+	Matrix4 objectMatWorld_;
 
 };
 

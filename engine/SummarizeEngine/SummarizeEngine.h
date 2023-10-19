@@ -43,5 +43,5 @@ private:
 	ImGuiManager* imGuiManager_ = nullptr;
 
 public:
-	bool isRunningGame = true;
+	bool isRunningGame_ = true;
 };

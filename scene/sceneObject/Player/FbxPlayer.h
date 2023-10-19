@@ -87,7 +87,7 @@ private:
 	void PColliderUpdate();
 
 	//ガード成功時
-	bool GetGuardExcute() { return isGuard; }
+	bool GetGuardExcute() { return isGuard_; }
 
 
 public:
@@ -111,9 +111,9 @@ private:
 	std::unique_ptr<Mesh> hoverCarModel_;
 
 	int SPHERE_COLISSION_NUM;	//コライダー（スフィア）の数
-	std::vector<Matrix4>* collisionBonesMat;	//当たり判定用のボーンのワールド行列
-	std::vector<SphereCollider*> sphere;
-	std::vector<Vector3> spherePos = {};
+	std::vector<Matrix4>* collisionBonesMat_;	//当たり判定用のボーンのワールド行列
+	std::vector<SphereCollider*> sphere_;
+	std::vector<Vector3> spherePos_ = {};
 
 	PlayerReticle reticle_;
 
@@ -135,9 +135,9 @@ private:
 	Vector3 faceAngle_ = {};
 	const float faceMaxAngle_ = 0.4f; //自機回転の最大
 	float faceRotSpeed_ = 0.05f;
-	float returnRotSpeed = 0.03f;
-	Matrix4 pAngleMat = {};//自機の移動用Matrix
-	Vector3 nowPos = {};
+	float returnRotSpeed_ = 0.03f;
+	Matrix4 pAngleMat_ = {};//自機の移動用Matrix
+	Vector3 nowPos_ = {};
 #pragma endregion 移動処理で使う変数
 
 #pragma region 射撃処理変数
@@ -147,8 +147,8 @@ private:
 	std::unique_ptr<Mesh> bulletModel_;
 
 	struct PRockTarget {	// ターゲット構造体
-		WorldTransform* targetWtfPtr;
-		bool isRockOn;
+		WorldTransform* targetWtfPtr_;
+		bool isRockOn_;
 	};
 	std::vector<PRockTarget> rockTargets_;
 
@@ -163,33 +163,33 @@ private:
 	Vector3 cameraAngle_ = {0 , 0 , 0};
 	RailCameraInfo* railCameraInfo_ = nullptr;
 	//ブレーキアニメーション用フラグ
-	bool isbrake = false;
-	int brakeFlameCount = 0;
+	bool isBrake_ = false;
+	int brakeFlameCount_ = 0;
 	//アニメーション何番目か
-	int animCT = 0;
-	int oldAnimCT = 0;
+	int animCT_ = 0;
+	int oldAnimCT_ = 0;
 	//攻撃フラグ
-	bool isAtk = false;
+	bool isAtk_ = false;
 
 	//当たり判定外部参照用
-	static bool isAtkCollide;
-	static bool isGuardCollide;
+	static bool isAtkCollide_;
+	static bool isGuardCollide_;
 
 	//防御時行動
-	bool isGuard = false;	//ガードをするかしないか
-	bool isGuardExcute = false;	//ガード成功時用
+	bool isGuard_ = false;	//ガードをするかしないか
+	bool isGuardExcute_ = false;	//ガード成功時用
 
 	//反撃フラグオン→反撃遷移モーション→反撃→反撃フラグオフ
-	bool isCounter = false;	//反撃フラグ
+	bool isCounter_ = false;	//反撃フラグ
 
 	
 
 	//ヒットポイント
-	int hitDeley = 0;	//何フレーム連続で当たるか
-	static int hp;
-	bool isHitStop = false;
+	int hitDeley_ = 0;	//何フレーム連続で当たるか
+	static int hp_;
+	bool isHitStop_ = false;
 	bool isDead_ = false;
 	//アニメーション
 	int oldPActNum_ = 0;	//アクション前フレーム保存変数
-	int count = 0;
+	int count_ = 0;
 };
