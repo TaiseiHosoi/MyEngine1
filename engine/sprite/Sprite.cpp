@@ -1,9 +1,9 @@
 #include"Sprite.h"
 
-void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t textureIndex)
+void Sprite::Initialize(SpriteCommon* spritecommon, uint32_t textureIndex)
 {
 
-	spritecommon_ = spritecommon_;
+	spritecommon_ = spritecommon;
 
 
 	// 頂点バッファの設定
@@ -211,15 +211,15 @@ void Sprite::Update()
 
 }
 
-void Sprite::SetPozition(const XMFLOAT2& position_)
+void Sprite::SetPozition(const XMFLOAT2& position)
 {
-	position_ = position_;
+	position_ = position;
 	Update();
 }
 
-void Sprite::SetRotation(float rotation_)
+void Sprite::SetRotation(float rotation)
 {
-	rotation_ = rotation_;
+	rotation_ = rotation;
 	Update();
 }
 

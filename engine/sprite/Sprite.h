@@ -39,7 +39,7 @@ public:
 	};
 public:
 	// 初期化
-	void Initialize(SpriteCommon* spritecommon_, uint32_t texturerIndex = UINT32_MAX);
+	void Initialize(SpriteCommon* spritecommon, uint32_t texturerIndex = UINT32_MAX);
 
 	// 描画
 	void Draw();
@@ -60,19 +60,19 @@ public:
 	float GetRotation() { return rotation_; }
 
 	// カラーセット
-	void SetColor(const XMFLOAT4& color_) { color_ = color_; }
+	void SetColor(const XMFLOAT4& col) { color_ = col; }
 
 	// カラーゲット
 	XMFLOAT4 GetColor() { return color_; }
 
 	// スケールをセット
-	void SetScale(const XMFLOAT3& scale_) { scale_ = scale_; }
+	void SetScale(const XMFLOAT3& scale) { scale_ = scale; }
 
 	// スケールをゲット
 	XMFLOAT3 GetScale() { return scale_; }
 
 	//  アンカーポイントをセット
-	void SetAnchorPoint(const XMFLOAT2& anchorPoint_) { anchorPoint_ = anchorPoint_; }
+	void SetAnchorPoint(const XMFLOAT2& anchorPoint) { anchorPoint_ = anchorPoint; }
 
 	// アンカーポイントをゲット
 	XMFLOAT2 GetAnchorPoint() { return anchorPoint_; }
@@ -147,7 +147,6 @@ private:
 
 	ComPtr <ID3D12Resource> constBuffMaterial_;
 
-	Vertex2 vertices_[4];
 
 	Vertex2* vertMap_ = nullptr;
 

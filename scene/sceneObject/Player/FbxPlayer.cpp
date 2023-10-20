@@ -165,6 +165,7 @@ void FbxPlayer::Update()
 			}
 		}
 
+		// 速射弾生成
 		if (input_->TriggerMouseButton(0)) {
 			std::unique_ptr<PlayerRapidBullet> newRapidBullet;
 			newRapidBullet = std::make_unique<PlayerRapidBullet>();
@@ -182,14 +183,8 @@ void FbxPlayer::Update()
 			}
 		}
 
-		if (input_->TriggerKey(DIK_9)) {
-			int f = 0;
-			f = 1;
-		}
 
-		//更新
-		hoverCarObject_->SetPosition(gameObject_->GetPosition());
-		hoverCarObject_->SetRotate(gameObject_->GetRotate());
+		//弾更新
 		for (int i = 0; i < homingBullets_.size(); i++) {
 			homingBullets_[i]->Update();
 		}
