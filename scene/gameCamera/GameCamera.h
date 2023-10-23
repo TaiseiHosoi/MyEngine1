@@ -175,7 +175,7 @@ private:
 	const int maxStartDirectionNowCount_ = 120;
 	const float startDirectionSAFStrength_ = 6.f;
 	float startDirectionFOV_ = 0.5f;
-	const float offsetStartDirectionFOV_ = 0.5f;
+	const float offsetStartDirectionFOV_ = 1.4f;
 	bool isCountInc_ = false;
 	
 	//制御店の集合(vectorコンテナ),補完する区間の添字、時間経過率

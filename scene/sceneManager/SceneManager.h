@@ -74,7 +74,12 @@ public:
 	
 	std::unique_ptr<Field> field_;
 
-
+	//スプライト位置保存
+	//UI
+	const Vector2 toHpSpritePos_ = { -300.f,500.f };
+	const Vector2 offsetHpSpritePos_ = { 30.f,500.f };
+	const Vector2 toExpPos_ = { 1500.f,100.f };
+	const Vector2 offsetExpPos_ = { 1000.f,200.f };
 };
 
 //	参照元

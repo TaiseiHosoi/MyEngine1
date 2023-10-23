@@ -235,9 +235,7 @@ void FbxPlayer::Update()
 	
 	
 	reticle_.Update();
-	//ImGui::Begin("Player");
-	//ImGui::InputFloat3("PlayerPos", &gameObject_->wtf.matWorld_.m[3][0]);
-	//ImGui::End();
+
 }
 
 

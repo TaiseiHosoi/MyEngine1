@@ -50,6 +50,11 @@ private:
 	std::unique_ptr <Sprite> playerHp_;
 	std::unique_ptr <Sprite> playerHpRed_;
 
+	std::unique_ptr <Sprite> exp_;
+	std::unique_ptr <Sprite> hpBar_;
+	std::unique_ptr <Sprite> hpGage_;
+	
+
 	bool isClickL, isClickR;
 
 	//ポーズメニュー用変数

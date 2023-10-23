@@ -52,23 +52,7 @@ void PlayerRapidBullet::Update()
 
 	testObject_->Update();
 
-	/*ImGui::Begin("bullocalPos");
-	ImGui::InputFloat3("nowpos", &object_->worldTransform.translation_.x);
 
-
-	ImGui::End();
-	ImGui::Begin("bulWorldPos");
-	ImGui::InputFloat3("nowpos", &object_->worldTransform.matWorld_.m[3][0]);
-
-
-	ImGui::End();
-
-	
-	ImGui::Begin("CollPos");
-	ImGui::InputFloat3("nowpos", &sphere->center.x);
-
-
-	ImGui::End();*/
 }
 
 void PlayerRapidBullet::Draw(ID3D12GraphicsCommandList* cmdList)

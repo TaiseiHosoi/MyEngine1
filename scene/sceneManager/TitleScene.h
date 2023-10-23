@@ -40,6 +40,9 @@ private://リソース
 	std::unique_ptr <Sprite> sceneChangeLeft_;
 	std::unique_ptr <Sprite> sceneChangeRight_;
 	std::unique_ptr <Sprite> leftMouseButtonStr_;
+	std::unique_ptr <Sprite> exp_;
+	std::unique_ptr <Sprite> hpBar_;
+	std::unique_ptr <Sprite> hpGage_;
 private:
 
 	enum SceneSwapPhaseNum {
@@ -75,5 +78,7 @@ private:
 
 	//音用変数
 	std::unique_ptr<Audio> audio_;
+
+
 
 };

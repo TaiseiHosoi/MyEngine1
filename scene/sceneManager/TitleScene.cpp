@@ -41,6 +41,20 @@ void TitleScene::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	leftMouseButtonStr_->Initialize(_controller->spriteCommon_.get(), 18);
 	leftMouseButtonStr_->SetPozition({ 0,0 });
 
+	exp_ = std::make_unique<Sprite>();
+	exp_->Initialize(_controller->spriteCommon_.get(), 19);
+	exp_->SetPozition({_controller->toExpPos_.x ,_controller->toExpPos_.y });
+
+	hpBar_ = std::make_unique<Sprite>();
+	hpBar_->Initialize(_controller->spriteCommon_.get(), 20);
+	hpBar_->SetPozition({ _controller->toHpSpritePos_.x ,_controller->toHpSpritePos_.y });
+
+	hpGage_ = std::make_unique<Sprite>();
+	hpGage_->Initialize(_controller->spriteCommon_.get(), 21);
+	hpGage_->SetPozition({ _controller->toHpSpritePos_.x ,_controller->toHpSpritePos_.y });
+
+
+
 	title_->SetSize({ 256,128 });
 	title2_->SetSize({ 470,200 });
 
@@ -87,6 +101,11 @@ void TitleScene::Draw(DirectXCommon* dxCommon) {
 		title2_->Draw();
 		leftMouseButtonStr_->Draw();
 	}
+
+	exp_->Draw();
+	hpBar_->Draw();
+	hpGage_->Draw();
+
 	sceneChangeLeft_->Draw();
 	sceneChangeRight_->Draw();
 	blackBackTitle_->Draw();
@@ -158,8 +177,15 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 
 		easeStrength_ = 3.f;
 		float nowScrollVec = Ease::LinearEaseOutEasing(0, static_cast<float>(WinApp::GetInstance()->window_height), static_cast<int>(sceneSwapCount_), static_cast<int>(MAX_SWAP_COUNT),easeStrength_);
+		float hpSpPosX = Ease::LinearEaseOutEasing(_controller->toHpSpritePos_.x, _controller->offsetHpSpritePos_.x, static_cast<int>(sceneSwapCount_), static_cast<int>(MAX_SWAP_COUNT), easeStrength_);
+		float expSpPosX = Ease::LinearEaseOutEasing(_controller->toExpPos_.x, _controller->offsetExpPos_.x, static_cast<int>(sceneSwapCount_), static_cast<int>(MAX_SWAP_COUNT), easeStrength_);
+
 		sceneChangeLeft_->SetPozition({ 0 ,-nowScrollVec });
 		sceneChangeRight_->SetPozition({ 0 ,nowScrollVec });
+
+		hpBar_->SetPozition({ hpSpPosX ,_controller->offsetHpSpritePos_.y });
+		hpGage_->SetPozition({ hpSpPosX ,_controller->offsetHpSpritePos_.y });
+		exp_->SetPozition({ expSpPosX ,_controller->offsetExpPos_.y });
 
 		if (sceneSwapCount_ >= MAX_SWAP_COUNT) {
 			sceneSwapPhase_ = SceneSwapPhaseNum::END;

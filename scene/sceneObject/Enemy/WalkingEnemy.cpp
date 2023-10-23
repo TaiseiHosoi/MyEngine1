@@ -95,9 +95,9 @@ void WalkingEnemy::Update()
 	colliderPos_ = object3d_->worldTransform.matWorld_.GetWorldPos();
 	sphere_->Update();
 	
-	ImGui::Begin("WalkingEnemy");
-	ImGui::InputFloat3("translation", &object3d_->worldTransform.translation_.x);
-	ImGui::End();
+	//ImGui::Begin("WalkingEnemy");
+	//ImGui::InputFloat3("translation", &object3d_->worldTransform.translation_.x);
+	//ImGui::End();
 
 
 }

@@ -44,6 +44,9 @@ void SceneManager::ObjectInitialize() {
 	spriteCommon_->LoadTexture(16, "sceneCLeft.png");
 	spriteCommon_->LoadTexture(17, "sceneCRight.png");
 	spriteCommon_->LoadTexture(18, "LeftMouseButton.png");
+	spriteCommon_->LoadTexture(19, "exp.png");
+	spriteCommon_->LoadTexture(20, "HpBar-sheet.png");
+	spriteCommon_->LoadTexture(21, "HpGage-sheet.png");
 
 	audio = std::make_unique<Audio>();
 	audio->Initialize();
