@@ -75,7 +75,7 @@ void GameObjManager::StaticInit()
 			moaiObjs.push_back(newObject);
 			moaiObjs.back().SetScale({3,3,3});
 			EnemyState newState;
-			newState.hp_ = 1;
+			newState.hp_ = offsetHp_;
 			newState.isDead_ = false;
 			newState.isAtk_ = false;
 			moaiState.push_back(newState);
@@ -289,17 +289,17 @@ void GameObjManager::UpdateWalkingEnemyPopCommands()
 			
 
 			
-			if (lane == 1) {
+			if (lane == SPOWN_OFFSET_POS::LEFT) {
 				//offset
 				Vector3 offset = { -10,0,0 };
 				AddEnemy(0,0,offset);
 			}
-			else if (lane == 2) {
+			else if (lane == SPOWN_OFFSET_POS::CENTER) {
 				//offset
 				Vector3 offset = { 0,0,0 };
 				AddEnemy(0, 0, offset);
 			}
-			else if (lane == 3) {
+			else if (lane == SPOWN_OFFSET_POS::RIGHT) {
 				//offset
 				Vector3 offset = { 10,0,0 };
 				AddEnemy(0, 0, offset);

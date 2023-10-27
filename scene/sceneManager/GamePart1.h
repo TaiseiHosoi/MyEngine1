@@ -58,7 +58,7 @@ private:
 	bool isClickL, isClickR;
 
 	//ポーズメニュー用変数
-	int isPause_;
+	bool isPause_;
 	int pauseMenuOptions_;
 	bool backToTitle_;
 

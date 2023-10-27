@@ -75,6 +75,7 @@ private:
 	size_t oldSSCount_ = 0;
 	size_t sceneSwapPhase_ = 0;
 	float easeStrength_ = 0;
+	const float offsetEaseStrength_ = 3.0f;
 
 	//音用変数
 	std::unique_ptr<Audio> audio_;

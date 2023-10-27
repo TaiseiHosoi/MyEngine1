@@ -24,6 +24,12 @@ enum ENEMY_NUM {
     WALKING_ENEMY,
 };
 
+enum SPOWN_OFFSET_POS{
+    RIGHT,
+    CENTER,
+    LEFT
+};
+
 
 
 class GameObjManager
@@ -73,6 +79,10 @@ private:
     bool isStand_ = false;  //待機フラグ
     int standTime_ = 0; //ポップデータの待機時間
     int gameTime_ = 0;
+
+    //固定値
+    const int offsetHp_ = 3;
+
 
     //csv
     std::stringstream walkingEnemyPopCommands_;

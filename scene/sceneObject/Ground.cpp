@@ -31,13 +31,12 @@ void Field::Initialize()
 	skydomeObj_ = std::make_unique<Object3d>();
 	skydomeObj_.get()->Initialize(false);
 	skydomeObj_.get()->SetModel(skydomeModel_.get());
-	skydomeObj_->worldTransform.translation_ = { 1,-5000,1 };
-	skydomeObj_->worldTransform.scale_ = { 100,100,100 };
+	skydomeObj_->worldTransform.translation_ = { 0,groundAdjustPosY_,0 };
+	skydomeObj_->worldTransform.scale_ = { groundAdjustScale_,groundAdjustScale_,groundAdjustScale_ };
 	skydomeObj_->Update();
 
 
 }
-
 void Field::Update()
 {
 

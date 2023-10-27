@@ -1,4 +1,5 @@
 ﻿#include "WalkingEnemy.h"
+
 #include "Ease.h"
 
 WalkingEnemy::WalkingEnemy()
@@ -50,10 +51,10 @@ void WalkingEnemy::Update()
 	}
 	oldFlamePhase_ = nowPhase_;
 
-	if (nowPhase_ == 0) {
+	if (nowPhase_ == MOVE_PHASE::none) {
 
 	}
-	else if (nowPhase_ == 1) {
+	else if (nowPhase_ == MOVE_PHASE::forward) {
 		Forward();
 		object3d_->worldTransform.translation_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + advancedValue_);
 	}
@@ -70,10 +71,10 @@ void WalkingEnemy::Update()
 		nowOffset = MathFunc::RotateVecAngleY(nowOffset,dirAngle);
 		object3d_->worldTransform.translation_ += nowOffset;
 
-		object3d_->worldTransform.translation_.y = 1.5f;
+		object3d_->worldTransform.translation_.y = offsetBattlePosY_;
 
 		//y軸回転で前を向く
-		object3d_->worldTransform.rotation_.y = dirAngle + 3.14f;
+		object3d_->worldTransform.rotation_.y = dirAngle + MathFunc::PI;
 
 
 	}
@@ -114,13 +115,13 @@ EnemyState* WalkingEnemy::GetState()
 
 void WalkingEnemy::Forward()
 {
-	int maxTime = 120;
+	int maxTime = maxFowardTime_;
 	if (moveCount_ < maxTime) {
 		moveCount_++;
 	}
 	
-	float easeStrength = 3.0f;
-	advancedValue_ = Ease::LinearEaseOutEasing(-0.002f,0.006f,moveCount_,maxTime, easeStrength);
+	
+	advancedValue_ = Ease::LinearEaseOutEasing(-0.002f,0.006f,moveCount_,maxTime, forwardEaseStrength);
 
 	
 

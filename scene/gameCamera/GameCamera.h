@@ -191,7 +191,6 @@ private:
 	std::vector<Object3d>* jsonObjsPtr = nullptr;
 	
 	//　レールカメラ変数	
-	float maxTime = 1.2f;				//全体時間[s]
 	float timeRate_;			//何％時間が進んだか
 	float oldTimeRate_;
 	float targetTimeRate;	//ターゲット用
@@ -203,6 +202,13 @@ private:
 	uint32_t elapsedCount_ = 0;
 	Vector3 oldPos_ = {};
 	int oldStartIndex_ = 0;
+	const float maxTimeVal = 90.0f; // 移動にかかる最大時間
+	const float targetTimeRateAdvancedVal_ = 0.003f;
+	const float maxTimeRate_ = 1.0f;
+	const float titleMinusVecLen_ = 10.f;
+	const float battleSCMinusVal_ = 15.f;
+	const float directionMagnification = 50.f;
+	const float directionShiftY = 20.f;
 
 	std::unique_ptr<RailCameraInfo> railCameraInfo_;
 

@@ -78,7 +78,7 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 
 		if (input->TriggerKey(DIK_ESCAPE)) {
 			isPause_ = true;
-			pauseMenuOptions_ = 0;
+			pauseMenuOptions_ = PauseMenu::RESUME;
 		}
 		/*ImGui::Begin("Pause");
 		ImGui::SetWindowPos({200 , 200});
@@ -88,11 +88,6 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 	else {
 		Pause(input, camera);
 	}
-
-
-
-	//playerHp_->SetSize({ 300 * _controller->fbxPlayer_->GetHp() / 100.0f, 32 });
-	//enemyHp_->SetSize({1280.0f * _controller->boss_->GetHp() / 100.0f , 32});
 
 
 	// ここから下にコード書くとメモリ君がエラー吐く

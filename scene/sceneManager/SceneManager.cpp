@@ -58,17 +58,9 @@ void SceneManager::ObjectInitialize() {
 		//Player
 		fbxPlayer_ = std::make_unique<FbxPlayer>();
 		fbxPlayer_.get()->Initialize(hitokunFbxM_.get());
-		fbxPlayer_->GetObject3d()->wtf.translation_.z = 0;
 		fbxPlayer_->SetRailCameraInfo(_camera->GetRailCameraInfo());
 		_camera->SetFollowerPos(fbxPlayer_.get()->GetObject3d()->GetWorldTransformPtr());
-		
 
-		//boss
-		/*boss_ = std::make_unique<Boss>();
-		boss_.get()->Initialize(_dxCommon);
-		boss_.get()->SetPlayer(fbxPlayer_.get());
-		boss_->GetObject3d()->wtf.translation_.z = 50;
-		_camera->SetTargetPos(boss_.get()->GetObject3d()->GetWorldTransformPtr());*/
 	}
 
 	
@@ -118,9 +110,6 @@ void SceneManager::ChangeScene(IScene* scene) {
 void SceneManager::ResetParameters() {
 	//boss_->SetHp(100);
 	fbxPlayer_->SetHp(100);
-	/*boss_->Reset();
-	boss_->GetObject3d()->wtf.translation_ = { 0,0,0 };
-	boss_->Update();*/
-	fbxPlayer_->GetObject3d()->wtf.translation_ = { 0,10,0 };
+
 	fbxPlayer_->GetObject3d()->Update();
 }

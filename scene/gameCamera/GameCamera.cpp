@@ -74,17 +74,13 @@ void GameCamera::Update()
 	oldPos_ = basePos_;	//前フレームpos保存
 
 	// カメラの位置を更新
-	float maxTimeVal = 90.0f; // 移動にかかる最大時間
 	timeRate_ = CalculateTValueBasedOnElapsedTime(maxTimeVal); // maxTimeに基づいてt値を計算
 
-	targetTimeRate = timeRate_ + 0.003f;	//ターゲット位置は少し進んだ場所
-	if (targetTimeRate >= 1.0f) {
-		targetTimeRate -= 1.0f;	//もし1を超えてたら-1
+	targetTimeRate = timeRate_ + targetTimeRateAdvancedVal_;	//ターゲット位置は少し進んだ場所
+	if (targetTimeRate >= maxTimeRate_) {
+		targetTimeRate -= maxTimeRate_;	//もし1を超えてたら-1
 	}
-	if (input_->TriggerKey(DIK_G)) {
-		timeRate_ = 0.95f;
-		railCameraInfo_->timeRate = 0.95f;
-	}
+	
 
 	if (camMode_ == CAM_MODE::title) {
 
@@ -105,7 +101,7 @@ void GameCamera::Update()
 		
 		Vector3 minusVec =  nowOffset;
 		minusVec.nomalize();
-		minusVec *= 10.0f;	
+		minusVec *= titleMinusVecLen_;	
 
 		basePos_ += minusVec;
 		basePos_.y = gamepartCamPosY;
@@ -127,7 +123,7 @@ void GameCamera::Update()
 
 		Vector3 minusVec = railTargetPos_ - basePos_;
 		minusVec.nomalize();
-		float minusVal = 15.f;
+		float minusVal = battleSCMinusVal_;
 		minusVec *= minusVal;	//引きカメラ
 
 		basePos_ += minusVec;
@@ -149,13 +145,12 @@ void GameCamera::Update()
 
 		Vector3 minusVec = railTargetPos_ - basePos_;
 		minusVec.nomalize();
-		float minusVal = 15.f;
+		float minusVal = battleSCMinusVal_;
 		Vector3 gamepartCamPos = basePos_ + minusVec * minusVal;	//引きカメラ
 		gamepartCamPos.y = gamepartCamPosY;
 		
 
-		float directionMagnification = 50.f;
-		float directionShiftY = 20.f;
+		
 		Vector3 directionPos = basePos_ - minusVec * directionMagnification;
 		directionPos.y += directionShiftY;
 

@@ -187,6 +187,7 @@ private:
 	//ヒットポイント
 	int hitDeley = 0;	//何フレーム連続で当たるか
 	static int hp;
+	const int maxHp_ = 100;
 	bool isHitStop = false;
 	bool isDead_ = false;
 	//アニメーション

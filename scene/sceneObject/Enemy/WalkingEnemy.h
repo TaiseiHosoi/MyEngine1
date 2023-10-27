@@ -92,6 +92,11 @@ private:// 当たり判定
     //その他
     float advancedValue_ = 0.0f;    //進んだ値
     bool isDead_ = false;
+
+    //固定値
+    const float offsetBattlePosY_ = 1.5f;
+    const int maxFowardTime_ = 120;
+    const float forwardEaseStrength = 3.0f;
     
 };
 

@@ -40,7 +40,6 @@ void Application::Initialize(DirectXCommon* dxcomon)
 	gameCamera_->Initialize();
 	//カメラのポインタをセット
 	//カメラ位置セット
-	gameCamera_->SetEye({ 0 , 5 , -20 });
 	gameCamera_->SetTarget({ 0 , 0 , 0 });
 
 	Object3d::SetCamera(gameCamera_.get());

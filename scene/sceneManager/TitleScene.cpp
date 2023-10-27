@@ -119,7 +119,7 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 	oldSSCount_ = sceneSwapPhase_;	//前フレーム処理
 
 
-	if (input->TriggerMouseButton(0)) {
+	if (input->TriggerMouseButton(MOUSE_KEY::LEFT)) {
 		sceneSwapPhase_ = SceneSwapPhaseNum::START;
 	}
 
@@ -150,7 +150,7 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 	else if (sceneSwapPhase_ == SceneSwapPhaseNum::DIRECTION1) {
 		sceneSwapCount_++;
 
-		easeStrength_ = 3.f;
+		easeStrength_ = offsetEaseStrength_;
 		float nowEaseTransVecX = Ease::LinearEaseOutEasing(static_cast<float>(-WinApp::GetInstance()->window_width), 0, static_cast<int>(sceneSwapCount_), static_cast<int>(MAX_BACK_SWAP_COUNT),easeStrength_);
 		blackBackTitle_->SetPozition({ nowEaseTransVecX ,0 });
 		if (sceneSwapCount_ >= MAX_BACK_SWAP_COUNT) {
@@ -162,7 +162,7 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 	else if (sceneSwapPhase_ == SceneSwapPhaseNum::DIRECTION2) {
 		sceneSwapCount_++;
 
-		easeStrength_ = 3.f;
+		easeStrength_ = offsetEaseStrength_;
 		float nowEaseTransVecX = Ease::LinearEasing(0,static_cast<float>(WinApp::GetInstance()->window_width), static_cast<int>(sceneSwapCount_), static_cast<int>(MAX_BACK_SWAP_COUNT),easeStrength_);
 		blackBackTitle_->SetPozition({ nowEaseTransVecX ,0 });
 		if (sceneSwapCount_ >= MAX_BACK_SWAP_COUNT) {
@@ -175,7 +175,7 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 	else if (sceneSwapPhase_ == SceneSwapPhaseNum::MOVE2) {
 		sceneSwapCount_++;
 
-		easeStrength_ = 3.f;
+		easeStrength_ = offsetEaseStrength_;
 		float nowScrollVec = Ease::LinearEaseOutEasing(0, static_cast<float>(WinApp::GetInstance()->window_height), static_cast<int>(sceneSwapCount_), static_cast<int>(MAX_SWAP_COUNT),easeStrength_);
 		float hpSpPosX = Ease::LinearEaseOutEasing(_controller->toHpSpritePos_.x, _controller->offsetHpSpritePos_.x, static_cast<int>(sceneSwapCount_), static_cast<int>(MAX_SWAP_COUNT), easeStrength_);
 		float expSpPosX = Ease::LinearEaseOutEasing(_controller->toExpPos_.x, _controller->offsetExpPos_.x, static_cast<int>(sceneSwapCount_), static_cast<int>(MAX_SWAP_COUNT), easeStrength_);

@@ -77,18 +77,9 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	}
 
 	//ヒットポイント
-	hp = 100;
+	hp = maxHp_;
 
-	hpObject_ = Object3d::Create();
-	hpObject_->SetModel(hpModel_.get());
-	hpObject_->SetScale({ static_cast<float>(hp) * 0.04f,0.1f,0.02f });
-	hpObject_->SetPosition({ gameObject_.get()->GetWorldTransform().translation_.x,
-		gameObject_.get()->GetWorldTransform().translation_.y + 4.0f,
-		gameObject_.get()->GetWorldTransform().translation_.z });
-	Matrix4 invViewPro = MathFunc::MakeInverse(&hpObject_.get()->camera_->GetViewProjectionMatrix());
-	float yaw = atan2f(-invViewPro.m[2][0], sqrtf(invViewPro.m[2][1] * invViewPro.m[2][1] + invViewPro.m[2][2] * invViewPro.m[2][2]));
-	hpObject_->SetRotate({ 0,yaw * 3.14f,0 });
-	hpObject_->Update();
+
 
 	//パーティクル
 	particle_ = std::make_unique<ParticleManager>();
@@ -182,10 +173,7 @@ void FbxPlayer::Update()
 			}
 		}
 
-		if (input_->TriggerKey(DIK_9)) {
-			int f = 0;
-			f = 1;
-		}
+
 
 		//更新
 		hoverCarObject_->SetPosition(gameObject_->GetPosition());
@@ -295,7 +283,6 @@ void FbxPlayer::minusHp(int damage)
 void FbxPlayer::Move()
 {
 	
-
 	Vector3 primaryNorm = MathFunc::TangentSplinePosition( railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate+0.005f)
 		- MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);
 	primaryNorm.nomalize();

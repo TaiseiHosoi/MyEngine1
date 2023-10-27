@@ -9,7 +9,10 @@
 #include <dinput.h>
 #include "WinApp.h"
 
-
+enum MOUSE_KEY {
+	LEFT,
+	RIGHT
+};
 
 class Input
 {

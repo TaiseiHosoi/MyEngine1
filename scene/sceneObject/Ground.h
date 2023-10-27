@@ -38,6 +38,8 @@ private:
 
 	std::unique_ptr<Mesh> fieldM;
 	const float groundSpeed_ = 0.2f;
+	const float groundAdjustScale_ = 100.f;
+	const float groundAdjustPosY_ = -5000.f;
 	std::unique_ptr<Object3d> groundObj1_;	//地面1
 	std::unique_ptr<Object3d> groundObj2_;	//地面2
 	
@@ -49,6 +51,5 @@ private:
 
 	static const int fieldR_ = 415;
 	static const int R = fieldR_;
-
 	static const int BR = fieldR_ - 7;
 };
