@@ -25,9 +25,9 @@ enum ENEMY_NUM {
 };
 
 enum SPOWN_OFFSET_POS{
-    RIGHT,
-    CENTER,
-    LEFT
+    SP_RIGHT = 0,
+    SP_CENTER = 1,
+    SP_LEFT = 2
 };
 
 

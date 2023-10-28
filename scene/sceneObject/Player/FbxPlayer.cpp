@@ -202,14 +202,14 @@ void FbxPlayer::Update()
 		
 
 #pragma region hp
-		hpObject_->SetScale({ static_cast<float>(hp) * 0.04f,0.1f,0.02f });
+		/*hpObject_->SetScale({ static_cast<float>(hp) * 0.04f,0.1f,0.02f });
 		hpObject_->SetPosition({ gameObject_.get()->GetWorldTransform().translation_.x,
 			gameObject_.get()->GetWorldTransform().translation_.y + 4.0f,
 			gameObject_.get()->GetWorldTransform().translation_.z });
 		Matrix4 invViewPro = MathFunc::MakeInverse(&hpObject_.get()->camera_->GetViewMatrix());
 		float yaw = atan2f(-invViewPro.m[3][1], sqrtf(invViewPro.m[3][2] * invViewPro.m[3][2] + invViewPro.m[3][3] * invViewPro.m[3][3]));
 		hpObject_->SetRotate({ 0,yaw,0 });
-		hpObject_->Update();
+		hpObject_->Update();*/
 #pragma endregion hp
 
 		if (oldAnimCT != animCT)

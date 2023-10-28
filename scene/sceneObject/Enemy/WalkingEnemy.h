@@ -94,6 +94,7 @@ private:// 当たり判定
     bool isDead_ = false;
 
     //固定値
+    const float apparancePosY_ = 10.f;  // 登場時の
     const float offsetBattlePosY_ = 1.5f;
     const int maxFowardTime_ = 120;
     const float forwardEaseStrength = 3.0f;

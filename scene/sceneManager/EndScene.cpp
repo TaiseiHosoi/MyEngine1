@@ -20,7 +20,7 @@ void EndScene::Initialize( DirectXCommon* dxCommon,GameCamera* camera) {
 	
 	end_ = std::make_unique<Sprite>();
 	end_->Initialize(_controller->spriteCommon_.get(), 3);
-	end_->SetSize({ WinApp::GetInstance()->window_width ,WinApp::GetInstance()->window_height });
+	end_->SetSize({ static_cast<float>(WinApp::GetInstance()->window_width) ,static_cast<float>(WinApp::GetInstance()->window_height) });
 	end_->SetPozition({ 0,0 });
 
 	
