@@ -82,10 +82,15 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 
 
 	//パーティクル
-	particle_ = std::make_unique<ParticleManager>();
-	particle_->Initialize();
-	particle_->LoadTexture("effect.png");
-	particle_->Update();
+	hitParticle_ = std::make_unique<ParticleManager>();
+	hitParticle_->Initialize();
+	hitParticle_->LoadTexture("effect.png");
+	hitParticle_->Update();
+
+	bombParticle_ = std::make_unique<ParticleManager>();
+	bombParticle_->Initialize();
+	bombParticle_->LoadTexture("bombBlack.png");
+	bombParticle_->Update();
 
 	// 現在時刻を取得してシード値とする
 	std::srand(static_cast<int>(std::time(nullptr)));
@@ -168,10 +173,27 @@ void FbxPlayer::Update()
 			if (rapidBullet->GetSphereCollider()->GetIsHit() == true) {
 				if (rapidBullet->GetSphereCollider()->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIES) {
 					rapidBullet->SetIsDead(true);
-					particle_->RandParticle(rapidBullet->GetSphereCollider()->GetCollisionInfo().inter);
+					hitParticle_->RandParticle(rapidBullet->GetSphereCollider()->GetCollisionInfo().inter);
 				}
 			}
 		}
+
+		if (input_->TriggerKey(DIK_M)) {
+			isDead_ = true;
+			deadActNum_ = DEAD_ACT_NUM::crash;
+		}
+
+		if (isDead_ == true) {
+			if (deadActNum_ == DEAD_ACT_NUM::crash) {
+				CrashAction();
+			}
+			else if (deadActNum_ == DEAD_ACT_NUM::bomb) {
+				BombAction();
+			}
+
+		}
+
+
 
 
 
@@ -194,23 +216,15 @@ void FbxPlayer::Update()
 		//更新
 		PColliderUpdate();
 
-		particle_->Update();
+		hitParticle_->Update();
+		bombParticle_->Update();
 		gameObject_->Update();
 		hoverCarObject_->Update();
 
 		count++;
 		
 
-#pragma region hp
-		/*hpObject_->SetScale({ static_cast<float>(hp) * 0.04f,0.1f,0.02f });
-		hpObject_->SetPosition({ gameObject_.get()->GetWorldTransform().translation_.x,
-			gameObject_.get()->GetWorldTransform().translation_.y + 4.0f,
-			gameObject_.get()->GetWorldTransform().translation_.z });
-		Matrix4 invViewPro = MathFunc::MakeInverse(&hpObject_.get()->camera_->GetViewMatrix());
-		float yaw = atan2f(-invViewPro.m[3][1], sqrtf(invViewPro.m[3][2] * invViewPro.m[3][2] + invViewPro.m[3][3] * invViewPro.m[3][3]));
-		hpObject_->SetRotate({ 0,yaw,0 });
-		hpObject_->Update();*/
-#pragma endregion hp
+
 
 		if (oldAnimCT != animCT)
 		{
@@ -235,9 +249,12 @@ void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 
 	hoverCarObject_->Draw(cmdList);
 
-	particle_->Draw(cmdList);
+	hitParticle_->Draw(cmdList);
+	bombParticle_->Draw(cmdList);
 	
-	reticle_.Draw(cmdList);
+	if (isDead_ == false) {
+		reticle_.Draw(cmdList);
+	}
 
 	for (int i = 0; i < homingBullets_.size(); i++) {
 		homingBullets_[i]->Draw(cmdList);
@@ -270,7 +287,7 @@ void FbxPlayer::CreateParticle()
 			acc.y = -(float)rand() / RAND_MAX * rnd_acc;
 
 			//追加
-			particle_->Add(60, pos, vel, acc);
+			hitParticle_->Add(60, pos, vel, acc);
 		}
 	
 }
@@ -297,20 +314,20 @@ void FbxPlayer::Move()
 	if (input_->PushKey(DIK_W) ||
 		input_->PushKey(DIK_A) ||
 		input_->PushKey(DIK_S) ||
-		input_->PushKey(DIK_D))
+		input_->PushKey(DIK_D) && isDead_ == false)
 	{
 
 
 		//Z軸方向にの速度を入れる
 		velocity_ = { 0 , 0 , 0.1f };
 
-		float kDiagonalSpeed = kMoveSpeed_ * 0.707f;
+		float kDiagonalSpeed = kMoveSpeed_ * 0.707f;	// √2をかける
 
 		//W,Dを押していたら
 		if (input_->PushKey(DIK_W) && input_->PushKey(DIK_D))
 		{
 			nowPos.x += kDiagonalSpeed;
-			//nowPos.y += kDiagonalSpeed;
+			
 
 			if (faceAngle_.x >= -faceMaxAngle_) {
 				faceAngle_.x -= faceRotSpeed_;
@@ -329,7 +346,7 @@ void FbxPlayer::Move()
 		{
 
 			nowPos.x -= kDiagonalSpeed;
-			//nowPos.y += kDiagonalSpeed;
+			
 			if (faceAngle_.x >= -faceMaxAngle_) {
 				faceAngle_.x -= faceRotSpeed_;
 			}
@@ -487,6 +504,39 @@ void FbxPlayer::BulletShot()
 {
 }
 
+void FbxPlayer::CrashAction()
+{
+	if (deadActCount_ < maxDeadActCount_) {
+		deadActCount_++;
+	}
+	else {
+		deadActCount_ = 0;
+		deadActNum_ = DEAD_ACT_NUM::bomb;
+	}
+
+	
+		bombParticle_->Add(40, hoverCarObject_->GetPosition(), Vector3(0, 0, 0), Vector3(0, 0, 0));
+	
+
+	
+	
+
+}
+
+void FbxPlayer::BombAction()
+{
+	if (deadActCount_ < maxDeadActCount_) {
+		deadActCount_++;
+	}
+	else {
+		deadActCount_ = 0;
+		deadActNum_ = DEAD_ACT_NUM::disappear;
+	}
+
+	
+	bombParticle_->RandParticle(hoverCarObject_->GetPosition());
+}
+
 FBXObject3d* FbxPlayer::GetObject3d()
 {
 	return gameObject_.get();
@@ -536,9 +586,9 @@ void FbxPlayer::PColliderUpdate()
 			if (sphere[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIES) {
 
 				audio_->PlayWave("kuri.wav");
-				//Boss::minusHp(1);
-				hitDeley = 4;
-				particle_->RandParticle(sphere[i]->GetCollisionInfo().inter);
+				
+				hitDeley = delayCount_;
+				hitParticle_->RandParticle(sphere[i]->GetCollisionInfo().inter);
 				HitStopManager::GetInstance()->SetHitStop(&isHitStop, 2);
 				break;
 			}
@@ -548,9 +598,8 @@ void FbxPlayer::PColliderUpdate()
 			sphere[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIEBULLETS
 			&& hitDeley <= 0) {
 			audio_->PlayWave("kuri.wav");
-			hitDeley = 6;
-			this->hp -= 2;
-			HitStopManager::GetInstance()->SetHitStop(&isHitStop, 2);
+			hitDeley = delayCount_;
+			this->hp -= damage_;
 			break;
 		}
 	}

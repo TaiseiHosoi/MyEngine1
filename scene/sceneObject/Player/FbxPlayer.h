@@ -49,6 +49,12 @@ public:
 	//射撃
 	void BulletShot();
 
+	//死亡時アクション
+	void CrashAction();
+	void BombAction();
+
+public:	//アクセッサ
+
 	// 自機Object3d変数のゲッタ
 	FBXObject3d* GetObject3d();
 
@@ -120,7 +126,8 @@ private:
 	//hpモデル
 	std::unique_ptr<Object3d> hpObject_;
 	std::unique_ptr<Mesh> hpModel_;
-	std::unique_ptr<ParticleManager> particle_;
+	std::unique_ptr<ParticleManager> hitParticle_;
+	std::unique_ptr<ParticleManager> bombParticle_;
 	//テスト用
 	std::vector<std::unique_ptr<Object3d>> coliderPosTest_;
 
@@ -171,6 +178,8 @@ private:
 	//攻撃フラグ
 	bool isAtk = false;
 
+
+
 	//当たり判定外部参照用
 	static bool isAtkCollide;
 	static bool isGuardCollide;
@@ -189,8 +198,23 @@ private:
 	static int hp;
 	const int maxHp_ = 100;
 	bool isHitStop = false;
+	//生死フラグ
 	bool isDead_ = false;
+	const int maxDeadActCount_ = 120;
+	int deadActCount_ = 0;
+	int deadActNum_ = 0;
+	enum DEAD_ACT_NUM {
+		none,
+		crash,
+		bomb,
+		disappear
+	};
+	 
 	//アニメーション
 	int oldPActNum_ = 0;	//アクション前フレーム保存変数
 	int count = 0;
+
+	//固定値
+	const int delayCount_ = 4;
+	const int damage_ = 2;
 };

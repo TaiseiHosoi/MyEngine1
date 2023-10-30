@@ -82,12 +82,20 @@ private:// 当たり判定
     CollisionManager* collider_ = nullptr;
     std::unique_ptr <SphereCollider> sphere_ = nullptr;
     Vector3 colliderPos_ = { 0,0,0 };
+    
+    //ステータス
+    const float spownBattlePosTimeRate_ = -0.002f;
+    const float offsetBattlePosTimeRate_ = 0.006f;
+    //float battlePosTimeRate_ = offsetBattlePosTimeRate_;    //進行度
 
 
     //phase関係
     int oldFlamePhase_ = 0;
     int nowPhase_ = 0;
     int moveCount_ = 0;
+    float adjustFAngle_ = 0.0f; // 向いている方向を可変する為の変数
+    const float maxAdjustFAngle_ = 180.f;
+    const float minAdjustFAngle_ = 0;
 
     //その他
     float advancedValue_ = 0.0f;    //進んだ値
@@ -95,9 +103,10 @@ private:// 当たり判定
 
     //固定値
     const float apparancePosY_ = 10.f;  // 登場時の
-    const float offsetBattlePosY_ = 1.5f;
+    const float offsetBattlePosY_ = 0.5f;
     const int maxFowardTime_ = 120;
     const float forwardEaseStrength = 3.0f;
+    const float turnEaseStrength = 4.0f;
     
 };
 

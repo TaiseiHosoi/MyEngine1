@@ -33,7 +33,7 @@ void PlayerHomingBullet::Initialize(Mesh* model,Vector3 setPos,Vector3 setRot)
 	object_->SetScale({ 1,1,1 });
 	object_->Update();
 
-	Vector3 strVec = { 0,0,1.f };
+	
 	angleVel_ = MathFunc::bVelocity(strVec, object_->worldTransform.matWorld_);
 
 	

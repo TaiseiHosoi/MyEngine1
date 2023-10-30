@@ -291,7 +291,7 @@ void GameObjManager::UpdateWalkingEnemyPopCommands()
 			
 			if (lane == SPOWN_OFFSET_POS::SP_LEFT) {
 				//offset
-				Vector3 offset = { -10,0,0 };
+				Vector3 offset = { -adjustSpownLen_,0,0 };
 				AddEnemy(0,0,offset);
 			}
 			else if (lane == SPOWN_OFFSET_POS::SP_CENTER) {
@@ -301,7 +301,7 @@ void GameObjManager::UpdateWalkingEnemyPopCommands()
 			}
 			else if (lane == SPOWN_OFFSET_POS::SP_RIGHT) {
 				//offset
-				Vector3 offset = { 10,0,0 };
+				Vector3 offset = { adjustSpownLen_,0,0 };
 				AddEnemy(0, 0, offset);
 			}
 			else {

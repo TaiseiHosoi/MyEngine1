@@ -17,8 +17,8 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
 	move_ = std::make_unique<Sprite>();
 	move_->Initialize(_controller->spriteCommon_.get(), 10);
-	move_->SetSize({ 128,80 });
-	move_->SetPozition({ 100,550 });
+	move_->SetSize({ moveSprSize_.x,moveSprSize_.y });
+	move_->SetPozition({ moveSprPos_.x,moveSprPos_.y });
 
 	////音の初期化と読み込み
 	//audio_ = std::make_unique<Audio>();
@@ -59,17 +59,6 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 
 
 	if (isPause_ == false) {
-		//test-----------------------------//
-
-		if (camera->GetRailCameraInfo()->nowCount == 200 || camera->GetRailCameraInfo()->nowCount == 800) {
-
-			_controller->gameObjectManager_->AddEnemy(0,0,{0,0,0});
-			_controller->gameObjectManager_->GetWalkingEnemies()->back()->SetRailCameraInfo(camera->GetRailCameraInfo());	//レールカメラ情報をセット
-			_controller->gameObjectManager_->GetWalkingEnemies()->back()->SetPlayerWorldTransform(_controller->fbxPlayer_->GetObject3d()->GetWorldTransformPtr());	//
-		}
-
-
-		//test-----------------------------//
 
 
 		_controller->field_->Update();

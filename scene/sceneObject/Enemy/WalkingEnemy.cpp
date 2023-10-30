@@ -17,8 +17,8 @@ void WalkingEnemy::Initialize(Mesh* model)
 	object3d_->Initialize(true);
 	object3d_->SetModel(model_);
 	object3d_->SetScale({ 3,3,3});
-	object3d_->SetPosition({ object3d_->GetPosition().x,1.5f,object3d_->GetPosition().z });
-	nowPhase_ = 1;	//自機の挙動が何から始まるか
+	object3d_->SetPosition( object3d_->GetPosition());
+	nowPhase_ = MOVE_PHASE::forward;	//自機の挙動が何から始まるか
 	advancedValue_ = 0.0f;
 
 	//当たり判定初期化
@@ -46,6 +46,8 @@ void WalkingEnemy::Update()
 		
 	}
 	
+	object3d_->worldTransform.translation_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + advancedValue_);
+
 	// パターン行動
 	if (oldFlamePhase_ != nowPhase_) {
 		moveCount_ = 0;
@@ -59,14 +61,20 @@ void WalkingEnemy::Update()
 		Forward();
 		
 	}
+	else if (nowPhase_ == MOVE_PHASE::turn) {
+		Turn();
+	}
 
 	// 回転角,位置計算
 	Vector3 nowOffset;
 	if (railCameraInfo_ != nullptr) {
 		//進行上の向いている方向(顔の向きではない)
-		directionLoot_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + 0.005f)
+		directionLoot_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + offsetBattlePosTimeRate_)
 			- MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);
 		directionLoot_.nomalize();
+
+		//自身のtranslation計算
+		
 
 		//ワールド上の自機の回転量yを求める
 		float dirAngle = atan2(directionLoot_.x, directionLoot_.z);
@@ -74,13 +82,11 @@ void WalkingEnemy::Update()
 		nowOffset = MathFunc::RotateVecAngleY(nowOffset,dirAngle);
 		nowOffset.y = 0;	// yの値は別計算
 		object3d_->worldTransform.translation_ += nowOffset;
+		
 
 		//y軸回転で前を向く
-		object3d_->worldTransform.rotation_.y = dirAngle - MathFunc::PI;
-
-		ImGui::Begin("wEnemyAngle");
-		ImGui::InputFloat("dirAngle",&dirAngle);
-		ImGui::End();
+		object3d_->worldTransform.rotation_.y = adjustFAngle_ + dirAngle + MathFunc::PI;
+	
 
 	}
 
@@ -125,11 +131,18 @@ void WalkingEnemy::Forward()
 	if (moveCount_ < maxTime) {
 		moveCount_++;
 	}
+	else {
+		moveCount_ = 0;
+		nowPhase_ = MOVE_PHASE::turn;
+	}
 	
 	
-	advancedValue_ = Ease::LinearEaseOutEasing(-0.002f,0.006f,moveCount_,maxTime, forwardEaseStrength);
-	object3d_->worldTransform.translation_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + advancedValue_);
+	advancedValue_ = Ease::LinearEaseOutEasing(spownBattlePosTimeRate_,offsetBattlePosTimeRate_,moveCount_,maxTime, forwardEaseStrength);
 	object3d_->worldTransform.translation_.y = Ease::LinierEaseInOutEasing(apparancePosY_,offsetBattlePosY_,moveCount_, maxTime, forwardEaseStrength);
+	//ImGui::Begin("enemy");
+	//ImGui::InputInt("count",&moveCount_);
+	//ImGui::InputFloat("y", &object3d_->worldTransform.translation_.y);
+	//ImGui::End();
 
 }
 
@@ -139,6 +152,12 @@ void WalkingEnemy::Turn()
 	if (moveCount_ < maxTime) {
 		moveCount_++;
 	}
+	else {
+		moveCount_ = 0;
+		nowPhase_ = MOVE_PHASE::none;
+	}
+
+	adjustFAngle_ = Ease::LinierEaseInOutEasing(minAdjustFAngle_, maxAdjustFAngle_, moveCount_, maxTime, turnEaseStrength) * MathFunc::PI / 180.f;
 }
 
 

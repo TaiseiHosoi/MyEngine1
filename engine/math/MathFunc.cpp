@@ -153,7 +153,7 @@ Vector3 MathFunc::MatVector(const Vector3 vector3, const Matrix4 matrix4) {
 
 }
 
-Vector3 MathFunc:: bVelocity(Vector3& velocity, Matrix4& mat) {
+Vector3 MathFunc:: bVelocity(const Vector3 velocity, const Matrix4 mat) {
 
 	Vector3 result = { 0, 0, 0 };
 

@@ -12,7 +12,8 @@
 enum CAM_MODE {
 	title,
 	battle,
-	startDirection
+	startDirection,
+	gameOver
 };
 
 struct RailCameraInfo {
@@ -177,6 +178,10 @@ private:
 	float startDirectionFOV_ = 0.5f;
 	const float offsetStartDirectionFOV_ = 1.4f;
 	bool isCountInc_ = false;
+	//ゲームオーバー演出用
+	int gameOverDirectionNowCount_ = 0;
+	const int maxGameOverDirectionCount_ = 180;
+	const float adjustGameOverDirectionLen_ = 70.f;
 	
 	//制御店の集合(vectorコンテナ),補完する区間の添字、時間経過率
 	Vector3 splinePosition(const std::vector<Vector3>& points, size_t startIndex, float t);

@@ -82,7 +82,7 @@ private:
 
     //固定値
     const int offsetHp_ = 3;
-
+    const float adjustSpownLen_ = 10.f;
 
     //csv
     std::stringstream walkingEnemyPopCommands_;

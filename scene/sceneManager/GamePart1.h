@@ -66,7 +66,9 @@ private:
 	bool isSounds = false;
 	std::unique_ptr<Audio> audio_;
 
-	
+	//画像用固定変数
+	const Vector2 moveSprPos_ = { 100,550 };
+	const Vector2 moveSprSize_ = { 128,80 };
 
 
 };

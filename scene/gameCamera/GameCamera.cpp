@@ -81,6 +81,9 @@ void GameCamera::Update()
 		targetTimeRate -= maxTimeRate_;	//もし1を超えてたら-1
 	}
 	
+	if (input_->TriggerKey(DIK_N)) {
+		camMode_ = CAM_MODE::gameOver;
+	}
 
 	if (camMode_ == CAM_MODE::title) {
 
@@ -176,7 +179,45 @@ void GameCamera::Update()
 		}
 
 	}
+	else if (camMode_ == CAM_MODE::gameOver) {
+		
+		if (gameOverDirectionNowCount_ < maxGameOverDirectionCount_) {
+			gameOverDirectionNowCount_++;
+		}
+		else {
 
+		}
+
+		//値を入力
+		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
+
+		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
+		railTargetPos_ = target;	//ローカル変数に保存
+
+
+		Vector3 minusVec = railTargetPos_ - basePos_;
+		minusVec.nomalize();
+		float minusVal = battleSCMinusVal_;
+		minusVec *= minusVal;	//引きカメラ
+		
+		//進行方向vec
+		Vector3 plusVec = basePos_ - railTargetPos_;
+		plusVec.nomalize();
+		plusVec *= adjustGameOverDirectionLen_;
+
+		basePos_ += minusVec;
+		basePos_.y = gamepartCamPosY;
+
+		Vector3 tempEye = { Ease::LinierEaseInOutEasing(basePos_.x,basePos_.x - plusVec.x,gameOverDirectionNowCount_,maxGameOverDirectionCount_,startDirectionSAFStrength_)
+			,Ease::LinierEaseInOutEasing(basePos_.y,basePos_.y - plusVec.y,gameOverDirectionNowCount_,maxGameOverDirectionCount_,startDirectionSAFStrength_)
+			,Ease::LinierEaseInOutEasing(basePos_.z,basePos_.z - plusVec.z,gameOverDirectionNowCount_,maxGameOverDirectionCount_,startDirectionSAFStrength_) };
+
+		SetEye(tempEye);
+		SetTarget(railTargetPos_);
+
+
+	}
+	
 
 
 	//infoの情報更新

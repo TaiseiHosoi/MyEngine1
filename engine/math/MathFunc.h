@@ -42,7 +42,7 @@ namespace MathFunc {
 	Vector3 AddVector(const Vector3 v1, const Vector3 v2);
 
 	//matrix4とVec3のベロシティを求める
-	Vector3 bVelocity(Vector3& velocity, Matrix4& mat);
+	Vector3 bVelocity(const Vector3 velocity, const Matrix4 mat);
 
 	// Vector3を任意の角度で回転
 	Vector3 RotateVecAngleY(Vector3 v, float angle);	

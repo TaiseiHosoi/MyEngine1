@@ -169,6 +169,8 @@ public: // メンバ関数
 
 	void RandParticle(Vector3 pos);
 
+	void SpotParticle(Vector3 pos);
+
 
 	/// <summary>
 	/// パーティクルの追加

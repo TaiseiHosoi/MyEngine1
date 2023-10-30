@@ -79,7 +79,12 @@ private:
 
 	//音用変数
 	std::unique_ptr<Audio> audio_;
-
+	
+	//画像用固定変数
+	const Vector2 title1SprPos_ = { 100,550 };
+	const Vector2 title1SprSize_ = { 128,80 };
+	const Vector2 title2SprPos_ = { 100,550 };
+	const Vector2 title2SprSize_ = { 128,80 };
 
 
 };

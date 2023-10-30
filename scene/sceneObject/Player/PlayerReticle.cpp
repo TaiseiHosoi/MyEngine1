@@ -58,6 +58,6 @@ void PlayerReticle::Update()
 
 void PlayerReticle::Draw(ID3D12GraphicsCommandList* cmdList)
 {
-	nierReticleO_->Draw(cmdList);
+	//nierReticleO_->Draw(cmdList);
 	farReticleO_->Draw(cmdList);
 }

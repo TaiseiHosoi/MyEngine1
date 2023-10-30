@@ -614,6 +614,23 @@ void ParticleManager::Add(int life, Vector3 position, Vector3 velociy, Vector3 a
 
 void ParticleManager::RandParticle(Vector3 pos)
 {
+	for (int i = 0; i < 30; i++)
+	{
+		// 追加
+		wtf_.translation_ = pos;
+		wtf_.UpdateMatWorld();
+		Add(30, wtf_.translation_,
+			{ static_cast<float>((rand() % 20 - 10) / 10.0f),
+			static_cast<float>((rand() % 20 - 10) / 10.0f) ,
+			static_cast<float>((rand() % 20 - 10) / 10.0f) },
+			{ static_cast<float>((rand() % 20 - 10) / 100.0f),
+			static_cast<float>((rand() % 20 - 10) / 100.0f) ,
+			static_cast<float>((rand() % 20 - 10) / 100.0f) });
+	}
+}
+
+void ParticleManager::SpotParticle(Vector3 pos)
+{
 	for (int i = 0; i < 20; i++)
 	{
 
@@ -621,7 +638,7 @@ void ParticleManager::RandParticle(Vector3 pos)
 		// 追加
 		wtf_.translation_ = pos;
 		wtf_.UpdateMatWorld();
-		Add(30, wtf_.translation_,
+		Add(1, wtf_.translation_,
 			{ static_cast<float>((rand() % 20 - 10) / 10.0f),
 			static_cast<float>((rand() % 20 - 10) / 10.0f) ,
 			static_cast<float>((rand() % 20 - 10) / 10.0f) },
