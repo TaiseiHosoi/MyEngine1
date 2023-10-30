@@ -598,8 +598,7 @@ void ParticleManager::Draw(ID3D12GraphicsCommandList* cmdList)
 	}
 }
 
-
-void ParticleManager::Add(int life, Vector3 position, Vector3 velociy, Vector3 accel)
+void ParticleManager::Add(int life, Vector3 position, Vector3 velocity, Vector3 accel)
 {
 	//リストに要素を追加
 	particles.emplace_front();
@@ -607,25 +606,40 @@ void ParticleManager::Add(int life, Vector3 position, Vector3 velociy, Vector3 a
 	Particle& p = particles.front();
 	//値のセット
 	p.position = position;
-	p.velocity = velociy;
+	p.velocity = velocity;
 	p.accel = accel;
 	p.num_frame = life;
+
+}
+
+void ParticleManager::Add(int life, Vector3 position, Vector3 velocity, Vector3 accel, float s_scale, float e_scale)
+{
+	//リストに要素を追加
+	particles.emplace_front();
+	//追加した要素の参照
+	Particle& p = particles.front();
+	//値のセット
+	p.e_scale = e_scale;
+	p.s_scale = s_scale;
+	p.position = position;
+	p.velocity = velocity;
+	p.accel = accel;
+	p.num_frame = life;
+
 }
 
 void ParticleManager::RandParticle(Vector3 pos)
 {
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 60; i++)
 	{
 		// 追加
 		wtf_.translation_ = pos;
 		wtf_.UpdateMatWorld();
-		Add(30, wtf_.translation_,
-			{ static_cast<float>((rand() % 20 - 10) / 10.0f),
-			static_cast<float>((rand() % 20 - 10) / 10.0f) ,
-			static_cast<float>((rand() % 20 - 10) / 10.0f) },
-			{ static_cast<float>((rand() % 20 - 10) / 100.0f),
-			static_cast<float>((rand() % 20 - 10) / 100.0f) ,
-			static_cast<float>((rand() % 20 - 10) / 100.0f) });
+		Add(50, wtf_.translation_,
+			{ static_cast<float>((rand() % 20 - 10) / 20.0f),
+			static_cast<float>((rand() % 30 - 10) / 20.0f) ,
+			static_cast<float>((rand() % 20 - 10) / 20.0f) },
+			{ 0,-0.1f,0 },3.0f,0.1f);
 	}
 }
 

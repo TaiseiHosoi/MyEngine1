@@ -180,6 +180,7 @@ public: // メンバ関数
 	///	<param name="velocity">速度</param>
 	///	<param name="accel">加速度</param>
 	void Add(int life, Vector3 position, Vector3 velociy, Vector3 accel);
+	void Add(int life, Vector3 position, Vector3 velociy, Vector3 accel, float s_scale,float e_scale);
 
 	static void SetCamera(Camera* cameraArg) { ParticleManager::camera = cameraArg; }
 

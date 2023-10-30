@@ -81,9 +81,10 @@ void GameCamera::Update()
 		targetTimeRate -= maxTimeRate_;	//もし1を超えてたら-1
 	}
 	
-	if (input_->TriggerKey(DIK_N)) {
-		camMode_ = CAM_MODE::gameOver;
-	}
+	//if (input_->TriggerKey(DIK_N)) {
+	//	gameOverDirectionNowCount_ = 0;
+	//	camMode_ = CAM_MODE::gameOver;
+	//}
 
 	if (camMode_ == CAM_MODE::title) {
 
@@ -185,7 +186,7 @@ void GameCamera::Update()
 			gameOverDirectionNowCount_++;
 		}
 		else {
-
+			
 		}
 
 		//値を入力
@@ -470,6 +471,12 @@ bool GameCamera::GetIsCountInc()
 void GameCamera::SetIsCountInc(bool setArg)
 {
 	isCountInc_ = setArg;
+}
+
+void GameCamera::GoGameOver()
+{
+	gameOverDirectionNowCount_ = 0;
+	camMode_ = CAM_MODE::gameOver;
 }
 
 Vector3 GameCamera::splinePosition(const std::vector<Vector3>& pointsArg, size_t startIndex, float t)

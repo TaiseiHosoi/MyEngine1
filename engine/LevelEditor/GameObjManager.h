@@ -93,6 +93,9 @@ private:
     //プレイヤー情報
     WorldTransform* playerWorldTF_ = nullptr;
 
+    //歩兵全削除
+    void DeleteWalkingEnemy();
+
 
 public:
     // ゲーム起動時の初期化

@@ -160,4 +160,9 @@ void WalkingEnemy::Turn()
 	adjustFAngle_ = Ease::LinierEaseInOutEasing(minAdjustFAngle_, maxAdjustFAngle_, moveCount_, maxTime, turnEaseStrength) * MathFunc::PI / 180.f;
 }
 
+bool WalkingEnemy::compultionTrue()
+{
+	return true;
+}
+
 

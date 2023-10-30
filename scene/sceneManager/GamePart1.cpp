@@ -61,6 +61,7 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 	if (isPause_ == false) {
 
 
+
 		_controller->field_->Update();
 		_controller->fbxPlayer_->Update();
 		_controller->gameObjectManager_->UpdateAllObjects();
@@ -69,6 +70,22 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 			isPause_ = true;
 			pauseMenuOptions_ = PauseMenu::RESUME;
 		}
+
+		if (_controller->fbxPlayer_->GetIsDeadActNum() == DEAD_ACT_NUM::disappear) {
+			_controller->SetIsBlackDisolve(true);
+			if (_controller->GetIsTurnBackBlackDisolve() == true) {
+				_controller->fbxPlayer_->PlayerPalamReset();
+				_controller->gameObjectManager_->DestroyAllEnemies();
+				camera->SetCamMode(CAM_MODE::title);
+				_controller->ChangeScene(new TitleScene(_controller));
+			}
+		}
+		if (input->TriggerKey(DIK_1)) {
+			camera->GoGameOver();
+			_controller->fbxPlayer_->GoGameOver();
+
+		}
+		
 		/*ImGui::Begin("Pause");
 		ImGui::SetWindowPos({200 , 200});
 		ImGui::InputInt("isPause" , &isPause_);

@@ -49,6 +49,9 @@ public: // アクセッサ
     // 敵情報構造体ゲッタ
     EnemyState* GetState();
 
+    //強制true
+    bool compultionTrue();
+
 public: //　行動
     // 突進
     void Forward();
@@ -77,6 +80,8 @@ private:// メンバ変数
     WorldTransform* playerWorldTransform = nullptr;
     Vector3 directionLoot_ = {};
     Vector3 offsetPos_ = {};
+
+    
 
 private:// 当たり判定
     CollisionManager* collider_ = nullptr;

@@ -11,6 +11,14 @@ GameObjManager::~GameObjManager()
 	
 }
 
+void GameObjManager::DeleteWalkingEnemy()
+{
+	// Listのremove
+	walkingEnemies.remove_if([](std::unique_ptr<WalkingEnemy>& enemy) {
+		return enemy->compultionTrue();
+		});
+}
+
 void GameObjManager::StaticInit()
 {
 
@@ -221,6 +229,10 @@ void GameObjManager::DestroyAllEnemies()
     //    delete enemy;
     //}
     //enemies.clear();
+		// Listのremove
+	walkingEnemies.remove_if([](std::unique_ptr<WalkingEnemy>& enemy) {
+		return enemy->compultionTrue();
+		});
 }
 
 void GameObjManager::LoadData(const char* filename, std::stringstream& stream)

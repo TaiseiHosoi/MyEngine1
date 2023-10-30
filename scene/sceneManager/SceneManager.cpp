@@ -47,6 +47,7 @@ void SceneManager::ObjectInitialize() {
 	spriteCommon_->LoadTexture(19, "exp.png");
 	spriteCommon_->LoadTexture(20, "HpBar-sheet.png");
 	spriteCommon_->LoadTexture(21, "HpGage-sheet.png");
+	spriteCommon_->LoadTexture(22, "gameOver.png");
 
 	audio = std::make_unique<Audio>();
 	audio->Initialize();
@@ -63,7 +64,11 @@ void SceneManager::ObjectInitialize() {
 
 	}
 
-	
+	//暗転画像初期化
+	blackSc_ = std::make_unique<Sprite>();
+	blackSc_->Initialize(spriteCommon_.get(), 22);
+	blackSc_->SetPozition({ 0,0 });
+	blackSc_->SetColor({ 1,1,1,blackScAlpha_ });
 
 	//パーティクルのセット
 	particleManager_ = std::make_unique<ParticleManager>();
@@ -91,10 +96,16 @@ void SceneManager::SceneUpdate(Input* input) {
 	ImGui::End();*/
 
 	_scene.get()->Update(input,_camera);	
+	BlackDisolve();
 }
 
 void SceneManager::SceneDraw() {
 	_scene.get()->Draw(_dxCommon);
+
+	if (isBlackDisolve_ == true) {
+		blackSc_->Draw();
+	}
+
 
 }
 
@@ -112,4 +123,34 @@ void SceneManager::ResetParameters() {
 	fbxPlayer_->SetHp(100);
 
 	fbxPlayer_->GetObject3d()->Update();
+}
+
+void SceneManager::BlackDisolve()
+{
+	if (isBlackDisolve_ == true && isTurnBackDis_ == false) {
+		blackScAlpha_ += 0.02f;
+		if (blackScAlpha_ > maxBlackScAlpha_) {
+			isTurnBackDis_ = true;
+		}
+		
+	}
+	else if (isBlackDisolve_ == true && isTurnBackDis_ == true) {
+		blackScAlpha_ -= 0.02f;
+		if (blackScAlpha_ < 0) {
+			isTurnBackDis_ = false;
+			isBlackDisolve_ = false;
+		}
+		
+	}
+	blackSc_->SetColor({ 1.f,1.f,1.f,blackScAlpha_ });
+}
+
+void SceneManager::SetIsBlackDisolve(bool arg)
+{
+	isBlackDisolve_ = arg;
+}
+
+bool SceneManager::GetIsTurnBackBlackDisolve()
+{
+	return isTurnBackDis_;
 }

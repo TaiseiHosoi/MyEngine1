@@ -17,7 +17,12 @@
 #include"PlayerHomingBullet.h"
 #include"PlayerRapidBullet.h"
 
-
+enum DEAD_ACT_NUM {
+	none,
+	crash,
+	bomb,
+	disappear
+};
 
 class FbxPlayer
 {
@@ -82,7 +87,13 @@ public:	//アクセッサ
 
 	//hpアクセッサ
 	static void SetHp(int hp);	
-	
+
+	//死亡時演出のフェーズゲッタ
+	int GetIsDeadActNum();
+
+	void SetIsDeadActNum(int arg);
+
+	void PlayerPalamReset();
 
 
 private:	
@@ -96,6 +107,8 @@ private:
 	bool GetGuardExcute() { return isGuard; }
 
 
+
+
 public:
 	//自機の向いている方向のゲッタ
 	Vector3 GetNowFaceAngle();
@@ -105,6 +118,11 @@ public:
 
 	//ゲームオブジェクトの定数バッファゲッタ
 	ID3D12Resource* GetConstBuff() { return gameObject_->GetConstBuff(); };
+
+	//ゲームオーバー遷移
+	void GoGameOver();
+
+
 
 private:
 
@@ -200,15 +218,15 @@ private:
 	bool isHitStop = false;
 	//生死フラグ
 	bool isDead_ = false;
-	const int maxDeadActCount_ = 120;
+	const int maxCrashActCount_ = 120;
 	int deadActCount_ = 0;
+	int oldDeadActNum_ = 0;
 	int deadActNum_ = 0;
-	enum DEAD_ACT_NUM {
-		none,
-		crash,
-		bomb,
-		disappear
-	};
+	Vector3 bombStartPos_ = {};
+	Vector3 bombStartRot_ = {};
+	const Vector3 bombPosVel_ = { 0.01f,0.6f,0.01f };	//吹っ飛び時のベロシティ
+	const Vector3 bombRotateVel_ = { 0.1f,0.1f,0.2f };	//吹っ飛び時回転量
+
 	 
 	//アニメーション
 	int oldPActNum_ = 0;	//アクション前フレーム保存変数

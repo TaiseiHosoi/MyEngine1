@@ -19,6 +19,7 @@
 
 #include "FbxPlayer.h"
 #include "Ground.h"
+#include "Sprite.h"
 
 
 class Input;
@@ -58,10 +59,27 @@ public:
 	// jsonManager情報をセット
 	void SetJsonManager(GameObjManager* jsonmanager) { gameObjectManager_ = jsonmanager; };
 
+	//暗転
+	void BlackDisolve();
+
+	//暗転フラグ
+	void SetIsBlackDisolve(bool arg);
+
+	bool GetIsTurnBackBlackDisolve();
+
 public:
 	
 	std::unique_ptr <Audio> audio;
 	std::unique_ptr <SpriteCommon> spriteCommon_;
+
+	//暗転用
+	std::unique_ptr <Sprite> blackSc_;
+	float blackScAlpha_ = 0;
+	const float maxBlackScAlpha_ = 4.0f;
+	float alphaDisSpeed_ = 0.02f;
+	bool oldIsBlackDisolve_ = false;
+	bool isBlackDisolve_ = false;
+	bool isTurnBackDis_ = false;
 
 	std::unique_ptr<ParticleManager> particleManager_;
 	
@@ -80,6 +98,7 @@ public:
 	const Vector2 offsetHpSpritePos_ = { 30.f,500.f };
 	const Vector2 toExpPos_ = { 1500.f,100.f };
 	const Vector2 offsetExpPos_ = { 1000.f,200.f };
+	
 };
 
 //	参照元

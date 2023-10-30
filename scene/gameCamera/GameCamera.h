@@ -128,6 +128,8 @@ public:	// アクセッサ
 	// isCountIncセット
 	void SetIsCountInc(bool setArg);
 
+	// ゲームオーバー遷移
+	void GoGameOver();
 
 	// 1-> target ,0-> eye
 	WorldTransform swap_[2];
@@ -181,7 +183,7 @@ private:
 	//ゲームオーバー演出用
 	int gameOverDirectionNowCount_ = 0;
 	const int maxGameOverDirectionCount_ = 180;
-	const float adjustGameOverDirectionLen_ = 70.f;
+	const float adjustGameOverDirectionLen_ = 35.f;
 	
 	//制御店の集合(vectorコンテナ),補完する区間の添字、時間経過率
 	Vector3 splinePosition(const std::vector<Vector3>& points, size_t startIndex, float t);
