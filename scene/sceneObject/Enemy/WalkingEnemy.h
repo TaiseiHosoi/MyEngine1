@@ -80,6 +80,7 @@ private:// メンバ変数
     WorldTransform* playerWorldTransform = nullptr;
     Vector3 directionLoot_ = {};
     Vector3 offsetPos_ = {};
+    float posY_ = 0;
 
     
 
@@ -89,6 +90,7 @@ private:// 当たり判定
     Vector3 colliderPos_ = { 0,0,0 };
     
     //ステータス
+    const float enemyScale_ = 5.0f;
     const float spownBattlePosTimeRate_ = -0.002f;
     const float offsetBattlePosTimeRate_ = 0.006f;
     //float battlePosTimeRate_ = offsetBattlePosTimeRate_;    //進行度
@@ -98,6 +100,7 @@ private:// 当たり判定
     int oldFlamePhase_ = 0;
     int nowPhase_ = 0;
     int moveCount_ = 0;
+    int turnCount_ = 0;
     float adjustFAngle_ = 0.0f; // 向いている方向を可変する為の変数
     const float maxAdjustFAngle_ = 180.f;
     const float minAdjustFAngle_ = 0;
@@ -109,9 +112,11 @@ private:// 当たり判定
     //固定値
     const float apparancePosY_ = 10.f;  // 登場時の
     const float offsetBattlePosY_ = 0.5f;
-    const int maxFowardTime_ = 120;
-    const float forwardEaseStrength = 3.0f;
+    const float forwardEaseStrength = 2.0f;
     const float turnEaseStrength = 4.0f;
+    const int maxFowardTime_ = 60;
+    const int maxTurnTime_ = 30;
+
     
 };
 

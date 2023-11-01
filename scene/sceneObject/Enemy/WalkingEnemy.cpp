@@ -16,7 +16,7 @@ void WalkingEnemy::Initialize(Mesh* model)
 	object3d_ = std::make_unique<Object3d>();
 	object3d_->Initialize(true);
 	object3d_->SetModel(model_);
-	object3d_->SetScale({ 3,3,3});
+	object3d_->SetScale({ enemyScale_,enemyScale_,enemyScale_});
 	object3d_->SetPosition( object3d_->GetPosition());
 	nowPhase_ = MOVE_PHASE::forward;	//自機の挙動が何から始まるか
 	advancedValue_ = 0.0f;
@@ -82,10 +82,10 @@ void WalkingEnemy::Update()
 		nowOffset = MathFunc::RotateVecAngleY(nowOffset,dirAngle);
 		nowOffset.y = 0;	// yの値は別計算
 		object3d_->worldTransform.translation_ += nowOffset;
-		
+		object3d_->worldTransform.translation_.y = posY_;
 
 		//y軸回転で前を向く
-		object3d_->worldTransform.rotation_.y = adjustFAngle_ + dirAngle + MathFunc::PI;
+		object3d_->worldTransform.rotation_.y = adjustFAngle_ + dirAngle;
 	
 
 	}
@@ -132,13 +132,13 @@ void WalkingEnemy::Forward()
 		moveCount_++;
 	}
 	else {
-		moveCount_ = 0;
+		
 		nowPhase_ = MOVE_PHASE::turn;
 	}
 	
 	
 	advancedValue_ = Ease::LinearEaseOutEasing(spownBattlePosTimeRate_,offsetBattlePosTimeRate_,moveCount_,maxTime, forwardEaseStrength);
-	object3d_->worldTransform.translation_.y = Ease::LinierEaseInOutEasing(apparancePosY_,offsetBattlePosY_,moveCount_, maxTime, forwardEaseStrength);
+	posY_ = Ease::LinierEaseInOutEasing(apparancePosY_,offsetBattlePosY_,moveCount_, maxTime, forwardEaseStrength);
 	//ImGui::Begin("enemy");
 	//ImGui::InputInt("count",&moveCount_);
 	//ImGui::InputFloat("y", &object3d_->worldTransform.translation_.y);
@@ -148,16 +148,15 @@ void WalkingEnemy::Forward()
 
 void WalkingEnemy::Turn()
 {
-	int maxTime = maxFowardTime_;
-	if (moveCount_ < maxTime) {
-		moveCount_++;
+	int maxTime = maxTurnTime_;
+	if (turnCount_ < maxTime) {
+		turnCount_++;
 	}
 	else {
-		moveCount_ = 0;
 		nowPhase_ = MOVE_PHASE::none;
 	}
 
-	adjustFAngle_ = Ease::LinierEaseInOutEasing(minAdjustFAngle_, maxAdjustFAngle_, moveCount_, maxTime, turnEaseStrength) * MathFunc::PI / 180.f;
+	adjustFAngle_ = Ease::LinierEaseInOutEasing(minAdjustFAngle_, maxAdjustFAngle_, turnCount_, maxTime, turnEaseStrength) * MathFunc::PI / 180.f;
 }
 
 bool WalkingEnemy::compultionTrue()
