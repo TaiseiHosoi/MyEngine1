@@ -52,6 +52,7 @@ void Application::Initialize(DirectXCommon* dxcomon)
 	sceneManager_->SetJsonManager(JsonManager_.get());
 	sceneManager_->ObjectInitialize();
 	sceneManager_->SceneInitialize();
+	sceneManager_->SetCollisionManager(collisionManager_);
 
 	
 	
@@ -67,6 +68,7 @@ void Application::Update()
 	collisionManager_->CheckAllCollisions();
 
 	sceneManager_->SceneUpdate(input_);
+
 
 	hitStopManager_->Update();
 

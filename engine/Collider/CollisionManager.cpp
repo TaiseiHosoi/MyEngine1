@@ -11,6 +11,12 @@ CollisionManager* CollisionManager::GetInstance()
 	return &instance;
 }
 
+void CollisionManager::CrearColliders()
+{
+
+	colliders.clear();
+}
+
 void CollisionManager::CheckAllCollisions()
 {
 	std::forward_list<BaseCollider*>::iterator itA;
@@ -32,6 +38,10 @@ void CollisionManager::CheckAllCollisions()
 			{
 				continue;
 			}
+
+			//if (colA->info.collider == nullptr || colB->info.collider == nullptr) {
+			//	continue;
+			//}
 
 			if (colA->GetShapeType() == COLLISIONSHAPE_SPHERE &&
 				colB->GetShapeType() == COLLISIONSHAPE_SPHERE)

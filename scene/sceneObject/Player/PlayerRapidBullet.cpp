@@ -35,7 +35,10 @@ void PlayerRapidBullet::Initialize(Mesh* model, Vector3 setPos, Vector3 setRot)
 
 void PlayerRapidBullet::Update()
 {
-	
+	countSinceBirth_++;
+	if (countSinceBirth_ >= maxCountSinceBirth_) {
+		isDead_ = true;
+	}
 
 	//弾の方向ベクトル
 	Vector3 bulletVec = { 0,0,bulletSpeed_ };
@@ -60,3 +63,4 @@ void PlayerRapidBullet::Draw(ID3D12GraphicsCommandList* cmdList)
 	//object_->Draw(cmdList);
 	testObject_->Draw(cmdList);
 }
+

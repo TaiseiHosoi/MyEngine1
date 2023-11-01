@@ -110,10 +110,13 @@ void SceneManager::SceneDraw() {
 }
 
 void SceneManager::ChangeScene(IScene* scene) {
+	
 	_camera->ChangeFollowFlag(true);
 	_scene.reset(scene);
+	_collisionManager->ResetColliders();
 	ResetParameters();
 	SceneInitialize();
+	
 
 }
 
@@ -153,4 +156,19 @@ void SceneManager::SetIsBlackDisolve(bool arg)
 bool SceneManager::GetIsTurnBackBlackDisolve()
 {
 	return isTurnBackDis_;
+}
+
+bool SceneManager::GetIsChangeScene_()
+{
+	return isChangeScene_;
+}
+
+void SceneManager::SetIsChangeScene_(bool arg)
+{
+	isChangeScene_ = arg;
+}
+
+void SceneManager::SetCollisionManager(CollisionManager* collisionManager)
+{
+	_collisionManager = collisionManager;
 }

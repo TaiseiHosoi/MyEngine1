@@ -286,7 +286,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\LevelEditor\GameObjManager.h" />
+    <ClInclude Include="scene\sceneObject\GameObjManager.h" />
     <ClInclude Include="engine\math\SplineCurve.h" />
     <ClInclude Include="engine\3dObject\Mesh.h" />
     <ClInclude Include="engine\3dObject\Object3d.h" />

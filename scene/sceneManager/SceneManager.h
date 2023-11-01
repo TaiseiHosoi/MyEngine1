@@ -64,13 +64,20 @@ public:
 
 	//暗転フラグ
 	void SetIsBlackDisolve(bool arg);
-
 	bool GetIsTurnBackBlackDisolve();
+
+	//シーンチェンジしたかどうかをGet,Set
+	bool GetIsChangeScene_();
+	void SetIsChangeScene_(bool arg);
+
+	//コリジョンマネージャセット
+	void SetCollisionManager(CollisionManager* collisionManager);
 
 public:
 	
 	std::unique_ptr <Audio> audio;
 	std::unique_ptr <SpriteCommon> spriteCommon_;
+	CollisionManager* _collisionManager = nullptr;
 
 	//暗転用
 	std::unique_ptr <Sprite> blackSc_;
@@ -91,6 +98,9 @@ public:
 	std::unique_ptr<FbxPlayer> fbxPlayer_;
 	
 	std::unique_ptr<Field> field_;
+
+	// 外部用変数
+	bool isChangeScene_ = false;
 
 	//スプライト位置保存
 	//UI
