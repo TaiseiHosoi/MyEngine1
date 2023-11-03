@@ -175,7 +175,7 @@ void FbxPlayer::Update()
 			if (rapidBullet->GetSphereCollider()->GetIsHit() == true) {
 				if (rapidBullet->GetSphereCollider()->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIES) {
 					rapidBullet->SetIsDead(true);
-					hitParticle_->RandParticle(rapidBullet->GetSphereCollider()->GetCollisionInfo().inter);
+					CreateBulHitParticle(rapidBullet->GetSphereCollider()->GetCollisionInfo().inter);
 				}
 			}
 		}
@@ -286,29 +286,32 @@ void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 
 }
 
-void FbxPlayer::CreateParticle()
+void FbxPlayer::CreateBulHitParticle(Vector3 posArg)
 {
 	
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 40; i++) {
 			
+
 			const float rnd_pos = 2.0f;
 			Vector3 pos{};
 			pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
 			pos.y = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
 			pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
 
-			const float rnd_vel = 0.3f;
+			const float rnd_vel = 2.f;
 			Vector3 vel{};
 			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 
 			Vector3 acc{};
-			const float rnd_acc = 0.01f;
+			const float rnd_acc = 0.1f;
+			acc.x = -(float)rand() / RAND_MAX * rnd_acc;
 			acc.y = -(float)rand() / RAND_MAX * rnd_acc;
+			acc.z = -(float)rand() / RAND_MAX * rnd_acc;
 
 			//追加
-			hitParticle_->Add(60, pos, vel, acc);
+			hitParticle_->Add(maxHitParticleLife_,posArg+pos, vel, acc,startHitParticleSize_,endHitParticleSize_);
 		}
 	
 }

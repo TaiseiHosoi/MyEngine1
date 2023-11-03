@@ -42,11 +42,11 @@ void WalkingEnemy::Update()
 {
 	// レールカメラ情報から現在の進行度を求める
 	if (railCameraInfo_ != nullptr) {
-		primaryPos_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);	
-		
+		primaryPos_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);	//ゲーム進行度合を一点に定めた場合
+
+		object3d_->worldTransform.translation_ =	//挙動
+			MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + advancedValue_ + moveDifferenceValue_);
 	}
-	
-	object3d_->worldTransform.translation_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + advancedValue_);
 
 	// パターン行動
 	if (oldFlamePhase_ != nowPhase_) {
@@ -64,6 +64,9 @@ void WalkingEnemy::Update()
 	else if (nowPhase_ == MOVE_PHASE::turn) {
 		Turn();
 	}
+	else if (nowPhase_ == MOVE_PHASE::atk) {
+		Atk();
+	}
 
 	// 回転角,位置計算
 	Vector3 nowOffset;
@@ -72,9 +75,6 @@ void WalkingEnemy::Update()
 		directionLoot_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + offsetBattlePosTimeRate_)
 			- MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);
 		directionLoot_.nomalize();
-
-		//自身のtranslation計算
-		
 
 		//ワールド上の自機の回転量yを求める
 		float dirAngle = atan2(directionLoot_.x, directionLoot_.z);
@@ -153,10 +153,33 @@ void WalkingEnemy::Turn()
 		turnCount_++;
 	}
 	else {
-		nowPhase_ = MOVE_PHASE::none;
+		nowPhase_ = MOVE_PHASE::atk;
 	}
 
 	adjustFAngle_ = Ease::LinierEaseInOutEasing(minAdjustFAngle_, maxAdjustFAngle_, turnCount_, maxTime, turnEaseStrength) * MathFunc::PI / 180.f;
+}
+
+void WalkingEnemy::Atk()
+{
+	// カウント処理
+	if (atkMoveCount_ < atkMaxMoveCount_) {
+		atkMoveCount_++;
+	}
+	else {
+		nowPhase_ = MOVE_PHASE::none;
+	}
+
+	// 移動処理
+	if (atkMoveCount_ < atkMaxFowardMoveCount_) {
+		moveDifferenceValue_ = Ease::LinierEaseInOutEasing(0, maxMoveDifferencePosTimeRate_, atkMoveCount_, atkMaxFowardMoveCount_, forwardEaseStrength);
+	}
+	else if (atkMoveCount_ >= atkMaxFowardMoveCount_ && atkMoveCount_ < atkMaxMoveCount_) {
+		moveDifferenceValue_ = Ease::LinearEasing(maxMoveDifferencePosTimeRate_, minMoveDifferencePosTimeRate_,  atkMoveCount_ - atkMaxFowardMoveCount_, atkMaxMoveCount_ - atkMaxFowardMoveCount_, forwardEaseStrength);
+	}
+	
+	// 自機回転処理
+	
+
 }
 
 bool WalkingEnemy::compultionTrue()

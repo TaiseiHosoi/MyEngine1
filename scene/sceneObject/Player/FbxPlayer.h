@@ -43,7 +43,7 @@ public:
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
 	//パーティクル発生
-	void CreateParticle();
+	void CreateBulHitParticle(Vector3 posArg);
 
 	//ダメージ
 	static void minusHp(int damage);
@@ -179,6 +179,11 @@ private:
 
 	//連射弾
 	std::list< std::unique_ptr<PlayerRapidBullet>> rapidBullets_;
+
+	//ヒット時パーティクルのサイズ
+	const int maxHitParticleLife_ = 10;
+	const float startHitParticleSize_ = 0.7f;
+	const float endHitParticleSize_ = 0.1f;
 	
 
 #pragma endregion 射撃処理変数

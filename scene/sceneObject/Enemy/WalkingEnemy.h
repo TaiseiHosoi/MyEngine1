@@ -80,7 +80,16 @@ private:// メンバ変数
     WorldTransform* playerWorldTransform = nullptr;
     Vector3 directionLoot_ = {};
     Vector3 offsetPos_ = {};
-    float posY_ = 0;
+    float posY_ = 0;    //yのみ明示的に位置決定
+    float advancedValue_ = 0.0f;    //進んだ値
+
+    //Atk()用
+    const int atkMaxMoveCount_ = 240;
+    const int atkMaxFowardMoveCount_ = 160;
+    int atkMoveCount_ = 0;
+    float moveDifferenceValue_ = 0.0f;
+    const float maxMoveDifferencePosTimeRate_ = 0.007f; // 前に動いたり後ろに動いたりする値
+    const float minMoveDifferencePosTimeRate_ = -0.004f; // 前に動いたり後ろに動いたりする値
 
     
 
@@ -93,6 +102,7 @@ private:// 当たり判定
     const float enemyScale_ = 5.0f;
     const float spownBattlePosTimeRate_ = -0.002f;
     const float offsetBattlePosTimeRate_ = 0.006f;
+
     //float battlePosTimeRate_ = offsetBattlePosTimeRate_;    //進行度
 
 
@@ -106,7 +116,7 @@ private:// 当たり判定
     const float minAdjustFAngle_ = 0;
 
     //その他
-    float advancedValue_ = 0.0f;    //進んだ値
+   
     bool isDead_ = false;
 
     //固定値
@@ -115,7 +125,7 @@ private:// 当たり判定
     const float forwardEaseStrength = 2.0f;
     const float turnEaseStrength = 4.0f;
     const int maxFowardTime_ = 60;
-    const int maxTurnTime_ = 30;
+    const int maxTurnTime_ = 10;
 
     
 };
