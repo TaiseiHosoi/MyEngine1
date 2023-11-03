@@ -131,7 +131,7 @@ public:
     void SetRailCamInfo(RailCameraInfo* info) { railCameraInfo_ = info; };
 
     // プレイヤーのworldTFのセット
-    void SetPlayerWorldTF(WorldTransform* worldTF) { playerWorldTF_ = worldTF; };
+    void SetPlayerWorldTF(WorldTransform* worldTF);
 
 
 public:

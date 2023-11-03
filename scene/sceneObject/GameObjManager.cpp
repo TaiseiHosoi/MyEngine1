@@ -338,3 +338,8 @@ void GameObjManager::UpdateWalkingEnemyPopCommands()
 		}
 	}
 }
+
+void GameObjManager::SetPlayerWorldTF(WorldTransform* worldTF)
+{
+	playerWorldTF_ = worldTF;
+}

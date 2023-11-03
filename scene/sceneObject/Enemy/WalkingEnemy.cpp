@@ -66,6 +66,7 @@ void WalkingEnemy::Update()
 	}
 	else if (nowPhase_ == MOVE_PHASE::atk) {
 		Atk();
+		rotMode_ = ROT_MODE::toPlayer;
 	}
 
 	// 回転角,位置計算
@@ -76,17 +77,43 @@ void WalkingEnemy::Update()
 			- MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);
 		directionLoot_.nomalize();
 
-		//ワールド上の自機の回転量yを求める
-		float dirAngle = atan2(directionLoot_.x, directionLoot_.z);
-		nowOffset = offsetPos_;
+		float dirAngle = {};
+		dirAngle = atan2(directionLoot_.x, directionLoot_.z);
+
+
+		
+	
+		nowOffset += offsetPos_;
 		nowOffset = MathFunc::RotateVecAngleY(nowOffset,dirAngle);
+
+		//値をオブジェクトに挿入
 		nowOffset.y = 0;	// yの値は別計算
 		object3d_->worldTransform.translation_ += nowOffset;
 		object3d_->worldTransform.translation_.y = posY_;
 
-		//y軸回転で前を向く
-		object3d_->worldTransform.rotation_.y = adjustFAngle_ + dirAngle;
-	
+		//ワールド上の自機の回転量yを求める
+		if (rotMode_ == ROT_MODE::straight) {
+
+			object3d_->worldTransform.rotation_.y = adjustFAngle_ + dirAngle;
+
+
+		}
+		else if (rotMode_ == ROT_MODE::toPlayer) {
+
+			Vector3 toPlayerVec = playerWorldTransform->translation_ -
+				object3d_->worldTransform.translation_;
+
+			float toPlayerAngleY = atan2(toPlayerVec.x, toPlayerVec.z);
+
+			//y軸回転で前を向く
+			object3d_->worldTransform.rotation_.y =  toPlayerAngleY;
+
+			ImGui::Begin("pPos");
+			ImGui::InputFloat("roty", &toPlayerAngleY);
+			ImGui::InputFloat3("pos", &playerWorldTransform->translation_.x);
+			ImGui::End();
+		}
+		
 
 	}
 
@@ -118,6 +145,11 @@ void WalkingEnemy::Update()
 void WalkingEnemy::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	object3d_->Draw(cmdList);
+}
+
+void WalkingEnemy::SetPlayerWorldTransform(WorldTransform* worldTransform)
+{
+	playerWorldTransform = worldTransform; 
 }
 
 EnemyState* WalkingEnemy::GetState()

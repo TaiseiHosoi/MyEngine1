@@ -29,7 +29,7 @@ public: // アクセッサ
     void SetRailCameraInfo(RailCameraInfo* info) override{ railCameraInfo_ = info; };
     
     // playerWorldTransformセット
-    void SetPlayerWorldTransform(WorldTransform* worldTransform) { playerWorldTransform = worldTransform; };
+    void SetPlayerWorldTransform(WorldTransform* worldTransform);
     
     // offsetPos_セッタ
     void SetOffsetVec3(const Vector3 v) { offsetPos_ = v; };
@@ -68,6 +68,11 @@ private:
         forward,
         turn,
         atk
+    };
+
+    enum ROT_MODE {
+        straight,
+        toPlayer
     };
 
 private:// メンバ変数
@@ -116,8 +121,9 @@ private:// 当たり判定
     const float minAdjustFAngle_ = 0;
 
     //その他
-   
     bool isDead_ = false;
+    int rotMode_ = ROT_MODE::straight;
+
 
     //固定値
     const float apparancePosY_ = 10.f;  // 登場時の
