@@ -6,6 +6,7 @@
 #include<vector>
 #include"Enemy.h"
 #include"WalkingEnemy.h"
+#include"FloatingEnemy.h"
 #include"BasicEnemy.h"
 #include"Mesh.h"
 #include "Object3d.h"
@@ -22,6 +23,7 @@ struct LevelData;
 
 enum ENEMY_NUM {
     WALKING_ENEMY,
+    FLOATING_ENEMY
 };
 
 enum SPOWN_OFFSET_POS{
@@ -40,7 +42,7 @@ public:
 
 private:
     //std::vector<std::unique_ptr<Enemy>> enemies;
-    std::list<std::unique_ptr<WalkingEnemy>> walkingEnemies;
+   
 
     LevelData* levelData;
 
@@ -76,16 +78,31 @@ private:
 
     //その他
     int moaiDigRot = 0; //自機の回転用クロック変数
-    bool isStand_ = false;  //待機フラグ
-    int standTime_ = 0; //ポップデータの待機時間
+    const int offsetEnemyHp_ = 3;
+
+    //歩兵用変数
+    std::list<std::unique_ptr<WalkingEnemy>> walkingEnemies;
+    std::stringstream walkingEnemyPopCommands_; //csv
+    bool walkingEIsStand_ = false;  //待機フラグ
+    int walkingEstandTime_ = 0; //ポップデータの待機時間
+    const float adjustWalkingESpownLen_ = 15.f;
+
+    //浮遊敵用変数
+    std::list <std::unique_ptr<FloatingEnemy>> floatingEnemies;
+    std::stringstream floatingEnemyPopCommands_; //csv
+    bool floatingEIsStand_ = false;  //待機フラグ
+    int floatingEstandTime_ = 0; //ポップデータの待機時間
+    const float adjustFloatingESpownLenShort_ = 8.f;
+    const float adjustFloatingESpownLenLong_ = 16.f;
+
+
     int gameTime_ = 0;
 
     //固定値
-    const int offsetHp_ = 3;
-    const float adjustSpownLen_ = 15.f;
 
-    //csv
-    std::stringstream walkingEnemyPopCommands_;
+
+
+   
 
     //レールカメラ情報
     RailCameraInfo* railCameraInfo_ = nullptr;
@@ -124,8 +141,14 @@ public:
     //ファイル読みとりリセット
     void ResetCommands(const char* filename, std::stringstream& stream);
 
-    // 歩兵敵ポップコマンド
+    // ポップコマンド用変数更新
+    void UpdatePopCommandsInfo();
+
+    // 歩兵敵ポップコマンド更新
     void UpdateWalkingEnemyPopCommands();
+
+    // 浮遊敵ポップコマンド更新
+    void UpdateFloatingEnemyPopCommands();
 
     // レールカメラ情報セット
     void SetRailCamInfo(RailCameraInfo* info) { railCameraInfo_ = info; };

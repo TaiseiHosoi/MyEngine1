@@ -83,7 +83,7 @@ void GameObjManager::StaticInit()
 			moaiObjs.push_back(newObject);
 			moaiObjs.back().SetScale({3,3,3});
 			EnemyState newState;
-			newState.hp_ = offsetHp_;
+			newState.hp_ = offsetEnemyHp_;
 			newState.isDead_ = false;
 			newState.isAtk_ = false;
 			moaiState.push_back(newState);
@@ -103,10 +103,16 @@ void GameObjManager::StaticInit()
 	}
 
 #pragma region ポップデータ読み込み
+	//歩兵敵
 	ResetCommands("Resources/enemyPop2.csv", walkingEnemyPopCommands_);
 	gameTime_ = 0;
-	standTime_ = 0;
-	isStand_ = false;
+	walkingEstandTime_ = 0;
+	walkingEIsStand_ = false;
+
+	//浮遊敵
+	ResetCommands("Resources/floatingEnemyPop.csv", floatingEnemyPopCommands_);
+	floatingEIsStand_ = 0;
+	floatingEstandTime_ = false;
 #pragma endregion ポップデータ読み込み
 
 
@@ -127,6 +133,17 @@ void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
 		walkingEnemies.back()->SetPlayerWorldTransform(playerWorldTF_);
 
 	}
+	else if (enemyNum == ENEMY_NUM::FLOATING_ENEMY) {
+		//オブジェクト処理
+		std::unique_ptr<FloatingEnemy> newFloatingEnemy;
+		newFloatingEnemy = std::make_unique<FloatingEnemy>();
+		floatingEnemies.push_back(std::move(newFloatingEnemy));
+		floatingEnemies.back()->Initialize(modelWalkRobo.get());
+		floatingEnemies.back()->SetOffsetVec3(offsetPos);
+		floatingEnemies.back()->SetRailCameraInfo(railCameraInfo_);
+		floatingEnemies.back()->SetPlayerWorldTransform(playerWorldTF_);
+
+	}
 }
 
 
@@ -139,8 +156,12 @@ void GameObjManager::UpdateAllObjects()
 	walkingEnemies.remove_if([](std::unique_ptr<WalkingEnemy>& enemy) {
 		return enemy->GetState()->isDead_;
 		});
+	floatingEnemies.remove_if([](std::unique_ptr<FloatingEnemy>& enemy) {
+		return enemy->GetState()->isDead_;
+		});
 
 	UpdateWalkingEnemyPopCommands();
+	UpdateFloatingEnemyPopCommands();
 
 	for (int i = 0; i < objects.size();i++) {
 		objects[i].Update();
@@ -196,6 +217,10 @@ void GameObjManager::UpdateAllObjects()
 		enemy->Update();
 	}
 
+	//浮遊敵更新
+	for (const unique_ptr<FloatingEnemy>& enemy : floatingEnemies) {
+		enemy->Update();
+	}
 
 
 	
@@ -208,6 +233,11 @@ void GameObjManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
 	for (const unique_ptr<WalkingEnemy>& enemy : walkingEnemies) {
 		enemy->Draw(cmdList);
 	}
+
+	for (const unique_ptr<FloatingEnemy>& enemy : floatingEnemies) {
+		enemy->Draw(cmdList);
+	}
+
 
 
 	for (int i = 0; i < objects.size(); i++) {
@@ -258,15 +288,19 @@ void GameObjManager::ResetCommands(const char* filename, std::stringstream& stre
 
 }
 
+void GameObjManager::UpdatePopCommandsInfo()
+{
+}
+
 void GameObjManager::UpdateWalkingEnemyPopCommands()
 {
 	gameTime_++;	//毎f処理
 	//待機処理
-	if (isStand_) {
-		standTime_--;
-		if (standTime_ <= 0) {
+	if (walkingEIsStand_) {
+		walkingEstandTime_--;
+		if (walkingEstandTime_ <= 0) {
 			//待機完了
-			isStand_ = false;
+			walkingEIsStand_ = false;
 		}
 		return;
 	}
@@ -303,7 +337,7 @@ void GameObjManager::UpdateWalkingEnemyPopCommands()
 			
 			if (lane == SPOWN_OFFSET_POS::SP_LEFT) {
 				//offset
-				Vector3 offset = { -adjustSpownLen_,0,0 };
+				Vector3 offset = { -adjustWalkingESpownLen_,0,0 };
 				AddEnemy(0,0,offset);
 			}
 			else if (lane == SPOWN_OFFSET_POS::SP_CENTER) {
@@ -313,7 +347,7 @@ void GameObjManager::UpdateWalkingEnemyPopCommands()
 			}
 			else if (lane == SPOWN_OFFSET_POS::SP_RIGHT) {
 				//offset
-				Vector3 offset = { adjustSpownLen_,0,0 };
+				Vector3 offset = { adjustWalkingESpownLen_,0,0 };
 				AddEnemy(0, 0, offset);
 			}
 			else {
@@ -330,8 +364,88 @@ void GameObjManager::UpdateWalkingEnemyPopCommands()
 			int32_t waitTime = std::atoi(word.c_str());
 
 			//待機開始
-			isStand_ = true;
-			standTime_ = waitTime;
+			walkingEIsStand_ = true;
+			walkingEstandTime_ = waitTime;
+
+			//抜ける
+			break;
+		}
+	}
+}
+
+void GameObjManager::UpdateFloatingEnemyPopCommands()
+{
+	//待機処理
+	if (floatingEIsStand_) {
+		floatingEstandTime_--;
+		if (floatingEstandTime_ <= 0) {
+			//待機完了
+			floatingEIsStand_ = false;
+		}
+		return;
+	}
+	// 1行分の文字列を入れる変数
+	std::string line;
+
+	//コマンド実行ループ
+	while (getline(floatingEnemyPopCommands_, line)) {
+		// 1行分の文字数をストリームに変換して解折しやすくなる
+		std::istringstream line_stream(line);
+
+		std::string word;
+		//,区切りで行の先頭文字を取得
+		getline(line_stream, word, ',');
+
+		//"//"から始まる行はコメント
+		if (word.find("//") == 0) {
+			//コメント行を飛ばす
+			continue;
+		}
+		// POPコマンド
+		if (word.find("POP") == 0) {
+
+			//レーン
+			std::getline(line_stream, word, ',');
+			int lane = static_cast<int>(std::atof(word.c_str()));
+
+			// ID
+			std::getline(line_stream, word, ',');
+			//int ID = static_cast<int>(std::atof(word.c_str()));
+
+
+
+
+			if (lane == SPOWN_OFFSET_POS::SP_LEFT) {
+				//offset
+				Vector3 offset = { -adjustFloatingESpownLenShort_,0,0 };
+				AddEnemy(ENEMY_NUM::FLOATING_ENEMY, 0, offset);
+			}
+			else if (lane == SPOWN_OFFSET_POS::SP_CENTER) {
+				//offset
+				Vector3 offset = { 0,0,0 };
+				AddEnemy(ENEMY_NUM::FLOATING_ENEMY, 0, offset);
+			}
+			else if (lane == SPOWN_OFFSET_POS::SP_RIGHT) {
+				//offset
+				Vector3 offset = { adjustFloatingESpownLenShort_,0,0 };
+				AddEnemy(ENEMY_NUM::FLOATING_ENEMY, 0, offset);
+			}
+			else {
+				//offset
+				Vector3 offset = { 0,0,0 };
+				AddEnemy(ENEMY_NUM::FLOATING_ENEMY, 0, offset);
+			}
+		}
+		// WAITコマンド
+		else if (word.find("WAIT") == 0) {
+			std::getline(line_stream, word, ',');
+
+			//待ち時間
+			int32_t waitTime = std::atoi(word.c_str());
+
+			//待機開始
+			floatingEIsStand_ = true;
+			floatingEstandTime_ = waitTime;
 
 			//抜ける
 			break;

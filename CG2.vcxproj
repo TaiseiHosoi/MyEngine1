@@ -195,6 +195,7 @@
     <ClCompile Include="engine\sprite\Sprite.cpp" />
     <ClCompile Include="engine\sprite\SpriteCommon.cpp" />
     <ClCompile Include="engine\SummarizeEngine\SummarizeEngine.cpp" />
+    <ClCompile Include="scene\sceneObject\Enemy\FloatingEnemy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="scene\Application.cpp" />
     <ClCompile Include="scene\gameCamera\GameCamera.cpp" />
@@ -288,6 +289,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="scene\sceneObject\Enemy\FloatingEnemy.h" />
     <ClInclude Include="scene\sceneObject\GameObjManager.h" />
     <ClInclude Include="engine\math\SplineCurve.h" />
     <ClInclude Include="engine\3dObject\Mesh.h" />

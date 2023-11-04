@@ -1,23 +1,23 @@
-﻿#include "WalkingEnemy.h"
+﻿#include "FloatingEnemy.h"
 
 #include "Ease.h"
 
-WalkingEnemy::WalkingEnemy()
+FloatingEnemy::FloatingEnemy()
 {
 }
 
-WalkingEnemy::~WalkingEnemy()
+FloatingEnemy::~FloatingEnemy()
 {
 }
 
-void WalkingEnemy::Initialize(Mesh* model)
+void FloatingEnemy::Initialize(Mesh* model)
 {
 	model_ = model;
 	object3d_ = std::make_unique<Object3d>();
 	object3d_->Initialize(true);
 	object3d_->SetModel(model_);
-	object3d_->SetScale({ enemyScale_,enemyScale_,enemyScale_});
-	object3d_->SetPosition( object3d_->GetPosition());
+	object3d_->SetScale({ enemyScale_,enemyScale_,enemyScale_ });
+	object3d_->SetPosition(object3d_->GetPosition());
 	nowPhase_ = MOVE_PHASE::forward;	//自機の挙動が何から始まるか
 	advancedValue_ = 0.0f;
 
@@ -30,7 +30,7 @@ void WalkingEnemy::Initialize(Mesh* model)
 	sphere_->Update();
 
 	collider_ = CollisionManager::GetInstance();
-	
+
 	//ステータス初期化
 	state_.hp_ = 1;
 	state_.isDead_ = false;
@@ -38,7 +38,7 @@ void WalkingEnemy::Initialize(Mesh* model)
 
 }
 
-void WalkingEnemy::Update()
+void FloatingEnemy::Update()
 {
 	// レールカメラ情報から現在の進行度を求める
 	if (railCameraInfo_ != nullptr) {
@@ -59,7 +59,7 @@ void WalkingEnemy::Update()
 	}
 	else if (nowPhase_ == MOVE_PHASE::forward) {
 		Forward();
-		
+
 	}
 	else if (nowPhase_ == MOVE_PHASE::turn) {
 		Turn();
@@ -81,10 +81,8 @@ void WalkingEnemy::Update()
 		dirAngle = atan2(directionLoot_.x, directionLoot_.z);
 
 
-		
-	
 		nowOffset += offsetPos_;
-		nowOffset = MathFunc::RotateVecAngleY(nowOffset,dirAngle);
+		nowOffset = MathFunc::RotateVecAngleY(nowOffset, dirAngle);
 
 		//値をオブジェクトに挿入
 		nowOffset.y = 0;	// yの値は別計算
@@ -92,25 +90,7 @@ void WalkingEnemy::Update()
 		object3d_->worldTransform.translation_.y = posY_;
 
 		//ワールド上の自機の回転量yを求める
-		if (rotMode_ == ROT_MODE::straight) {
-
-			object3d_->worldTransform.rotation_.y = adjustFAngle_ + dirAngle;
-
-
-		}
-		else if (rotMode_ == ROT_MODE::toPlayer) {
-
-			Vector3 toPlayerVec = playerWorldTransform->translation_ -
-				object3d_->worldTransform.translation_;
-
-			float toPlayerAngleY = atan2(toPlayerVec.x, toPlayerVec.z);
-
-			//y軸回転で前を向く
-			object3d_->worldTransform.rotation_.y =  toPlayerAngleY;
-
-
-		}
-		
+		object3d_->worldTransform.rotation_.y = adjustFAngle_ + dirAngle;
 
 	}
 
@@ -124,50 +104,49 @@ void WalkingEnemy::Update()
 	if (state_.hp_ <= 0) {
 		state_.isDead_ = true;
 	}
-	
+
 	// コライダー更新
 	colliderPos_ = object3d_->worldTransform.matWorld_.GetWorldPos();
 	sphere_->Update();
 
 	//object3d更新
 	object3d_->Update();
-	
-	//ImGui::Begin("WalkingEnemy");
+
+	//ImGui::Begin("FloatingEnemy");
 	//ImGui::InputFloat3("translation", &object3d_->worldTransform.translation_.x);
 	//ImGui::End();
 
 
 }
 
-void WalkingEnemy::Draw(ID3D12GraphicsCommandList* cmdList)
+void FloatingEnemy::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	object3d_->Draw(cmdList);
 }
 
-void WalkingEnemy::SetPlayerWorldTransform(WorldTransform* worldTransform)
+void FloatingEnemy::SetPlayerWorldTransform(WorldTransform* worldTransform)
 {
-	playerWorldTransform = worldTransform; 
+	playerWorldTransform = worldTransform;
 }
 
-EnemyState* WalkingEnemy::GetState()
+EnemyState* FloatingEnemy::GetState()
 {
 	return &state_;
 }
 
-void WalkingEnemy::Forward()
+void FloatingEnemy::Forward()
 {
 	int maxTime = maxFowardTime_;
 	if (moveCount_ < maxTime) {
 		moveCount_++;
 	}
 	else {
-		
+
 		nowPhase_ = MOVE_PHASE::turn;
 	}
-	
-	
-	advancedValue_ = Ease::LinearEaseOutEasing(spownBattlePosTimeRate_,offsetBattlePosTimeRate_,moveCount_,maxTime, forwardEaseStrength);
-	posY_ = Ease::LinierEaseInOutEasing(apparancePosY_,offsetBattlePosY_,moveCount_, maxTime, forwardEaseStrength);
+
+
+	advancedValue_ = Ease::LinearEaseOutEasing(spownBattlePosTimeRate_, offsetBattlePosTimeRate_, moveCount_, maxTime, forwardEaseStrength);
 	//ImGui::Begin("enemy");
 	//ImGui::InputInt("count",&moveCount_);
 	//ImGui::InputFloat("y", &object3d_->worldTransform.translation_.y);
@@ -175,7 +154,7 @@ void WalkingEnemy::Forward()
 
 }
 
-void WalkingEnemy::Turn()
+void FloatingEnemy::Turn()
 {
 	int maxTime = maxTurnTime_;
 	if (turnCount_ < maxTime) {
@@ -188,7 +167,7 @@ void WalkingEnemy::Turn()
 	adjustFAngle_ = Ease::LinierEaseInOutEasing(minAdjustFAngle_, maxAdjustFAngle_, turnCount_, maxTime, turnEaseStrength) * MathFunc::PI / 180.f;
 }
 
-void WalkingEnemy::Atk()
+void FloatingEnemy::Atk()
 {
 	// カウント処理
 	if (atkMoveCount_ < atkMaxMoveCount_) {
@@ -203,17 +182,15 @@ void WalkingEnemy::Atk()
 		moveDifferenceValue_ = Ease::LinierEaseInOutEasing(0, maxMoveDifferencePosTimeRate_, atkMoveCount_, atkMaxFowardMoveCount_, forwardEaseStrength);
 	}
 	else if (atkMoveCount_ >= atkMaxFowardMoveCount_ && atkMoveCount_ < atkMaxMoveCount_) {
-		moveDifferenceValue_ = Ease::LinearEasing(maxMoveDifferencePosTimeRate_, minMoveDifferencePosTimeRate_,  atkMoveCount_ - atkMaxFowardMoveCount_, atkMaxMoveCount_ - atkMaxFowardMoveCount_, forwardEaseStrength);
+		moveDifferenceValue_ = Ease::LinearEasing(maxMoveDifferencePosTimeRate_, minMoveDifferencePosTimeRate_, atkMoveCount_ - atkMaxFowardMoveCount_, atkMaxMoveCount_ - atkMaxFowardMoveCount_, forwardEaseStrength);
 	}
-	
+
 	// 自機回転処理
-	
+
 
 }
 
-bool WalkingEnemy::compultionTrue()
+bool FloatingEnemy::compultionTrue()
 {
 	return true;
 }
-
-
