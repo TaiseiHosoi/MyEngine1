@@ -54,6 +54,7 @@ private:
     std::unique_ptr <Mesh> modelRoad1;
     std::unique_ptr <Mesh> modelCam;
     std::unique_ptr<Mesh> modelWalkRobo;
+    std::unique_ptr<Mesh> modelFly;
     std::unique_ptr<Mesh> modelTower1;
     std::unique_ptr<Mesh> modelBill1;
 

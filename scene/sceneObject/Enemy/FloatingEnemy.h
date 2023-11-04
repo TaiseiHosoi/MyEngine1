@@ -90,7 +90,7 @@ private:// メンバ変数
     int atkMoveCount_ = 0;
     float moveDifferenceValue_ = 0.0f;
     const float maxMoveDifferencePosTimeRate_ = 0.003f; // 前に動いたり後ろに動いたりする値
-    const float minMoveDifferencePosTimeRate_ = -0.01f; // 前に動いたり後ろに動いたりする値
+    const float minMoveDifferencePosTimeRate_ = -0.014f; // 前に動いたり後ろに動いたりする値
 
 
 
@@ -100,7 +100,7 @@ private:// 当たり判定
     Vector3 colliderPos_ = { 0,0,0 };
 
     //ステータス
-    const float enemyScale_ = 5.0f;
+    const float enemyScale_ = 4.5f;
     const float spownBattlePosTimeRate_ = -0.004f;
     const float offsetBattlePosTimeRate_ = 0.012f;
 

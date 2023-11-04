@@ -29,6 +29,7 @@ void GameObjManager::StaticInit()
 	modelRoad1 = Mesh::LoadFormOBJ("alphaVerLoad", true);
 	modelCam = Mesh::LoadFormOBJ("cube", true); 
 	modelWalkRobo = Mesh::LoadFormOBJ("walkEnemy",true);
+	modelFly = Mesh::LoadFormOBJ("enemy", true);
 	modelBill1 = Mesh::LoadFormOBJ("bill1", true);
 	modelTower1 = Mesh::LoadFormOBJ("tower1", true);
 	//モデルインサート
@@ -138,7 +139,7 @@ void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
 		std::unique_ptr<FloatingEnemy> newFloatingEnemy;
 		newFloatingEnemy = std::make_unique<FloatingEnemy>();
 		floatingEnemies.push_back(std::move(newFloatingEnemy));
-		floatingEnemies.back()->Initialize(modelWalkRobo.get());
+		floatingEnemies.back()->Initialize(modelFly.get());
 		floatingEnemies.back()->SetOffsetVec3(offsetPos);
 		floatingEnemies.back()->SetRailCameraInfo(railCameraInfo_);
 		floatingEnemies.back()->SetPlayerWorldTransform(playerWorldTF_);
