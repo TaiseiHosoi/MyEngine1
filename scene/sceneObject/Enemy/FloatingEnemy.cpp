@@ -40,6 +40,12 @@ void FloatingEnemy::Initialize(Mesh* model)
 
 void FloatingEnemy::Update()
 {
+
+	//弾リムーヴ処理
+	bullets_.remove_if([](std::unique_ptr<EnemyNormalBullet>& bullet) {
+		return bullet->ReturnIsDead();
+		});
+
 	// レールカメラ情報から現在の進行度を求める
 	if (railCameraInfo_ != nullptr) {
 		primaryPos_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);	//ゲーム進行度合を一点に定めた場合
@@ -112,6 +118,10 @@ void FloatingEnemy::Update()
 	//object3d更新
 	object3d_->Update();
 
+	for (std::unique_ptr<EnemyNormalBullet>& rapidBullet : bullets_) {
+		rapidBullet->Update();
+	}
+
 	//ImGui::Begin("FloatingEnemy");
 	//ImGui::InputFloat3("translation", &object3d_->worldTransform.translation_.x);
 	//ImGui::End();
@@ -122,6 +132,10 @@ void FloatingEnemy::Update()
 void FloatingEnemy::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	object3d_->Draw(cmdList);
+
+	for (std::unique_ptr<EnemyNormalBullet>& rapidBullet : bullets_) {
+		rapidBullet->Draw(cmdList);
+	}
 }
 
 void FloatingEnemy::SetPlayerWorldTransform(WorldTransform* worldTransform)
@@ -185,12 +199,41 @@ void FloatingEnemy::Atk()
 		moveDifferenceValue_ = Ease::LinearEasing(maxMoveDifferencePosTimeRate_, minMoveDifferencePosTimeRate_, atkMoveCount_ - atkMaxFowardMoveCount_, atkMaxMoveCount_ - atkMaxFowardMoveCount_, forwardEaseStrength);
 	}
 
-	// 自機回転処理
+	ShotBullet();
 
 
+}
+
+void FloatingEnemy::ShotBullet()
+{
+	nowShotDelay_++;
+	if (nowShotDelay_ > bulletShotDelay_) {
+		nowShotDelay_ = 0;
+
+		AddBullet();
+
+	}
+
+
+}
+
+void FloatingEnemy::AddBullet()
+{
+	std::unique_ptr<EnemyNormalBullet> newRapidBullet;
+	newRapidBullet = std::make_unique<EnemyNormalBullet>();
+
+	Vector3 bulletRot = object3d_->worldTransform.rotation_;
+	bulletRot.z -= directlyBelow_;
+	newRapidBullet->Initialize(bulletModel_, object3d_->worldTransform.matWorld_.GetWorldPos(), bulletRot);
+	bullets_.push_back(std::move(newRapidBullet));
 }
 
 bool FloatingEnemy::compultionTrue()
 {
 	return true;
+}
+
+void FloatingEnemy::SetBulletModel(Mesh* model)
+{
+	bulletModel_ = model;
 }

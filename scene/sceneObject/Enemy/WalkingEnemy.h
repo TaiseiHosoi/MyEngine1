@@ -8,6 +8,7 @@
 #include"CollisionAttribute.h"
 #include"CollisionManager.h"
 #include"SphereCollider.h"
+#include"EnemyNormalBullet.h"
 
 class WalkingEnemy : public Enemy {
 public:
@@ -49,8 +50,11 @@ public: // アクセッサ
     // 敵情報構造体ゲッタ
     EnemyState* GetState();
 
-    //強制true
+    // 強制true
     bool compultionTrue();
+
+    // Shot
+    void SetBulletModel(Mesh* model);
 
 public: //　行動
     // 突進
@@ -61,6 +65,9 @@ public: //　行動
     void Turn();
     //攻撃
     void Atk();
+    //射撃
+    void ShotBullet();
+    void AddBullet();
 
 private:
     enum MOVE_PHASE {
@@ -119,6 +126,12 @@ private:// 当たり判定
     float adjustFAngle_ = 0.0f; // 向いている方向を可変する為の変数
     const float maxAdjustFAngle_ = 180.f;
     const float minAdjustFAngle_ = 0;
+
+    //射撃関連
+    Mesh* bulletModel_ = nullptr;
+    std::list< std::unique_ptr<EnemyNormalBullet>> bullets_;
+    const int bulletShotDelay_ = 40;
+    int nowShotDelay_ = 0;
 
     //その他
     bool isDead_ = false;

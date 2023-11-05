@@ -46,7 +46,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	hoverCarObject_->SetModel(hoverCarModel_.get());
 	hoverCarObject_->SetPosition(gameObject_->GetPosition());
 	hoverCarObject_->SetRotate(gameObject_->GetRotate());
-	hoverCarObject_->SetScale({1.f,1.f,1.f});
+	hoverCarObject_->SetScale({ 1.f,1.f,1.f });
 
 
 	SPHERE_COLISSION_NUM = static_cast<int>(gameObject_->GetBonesMatPtr()->size());
@@ -79,8 +79,6 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	//ヒットポイント
 	hp = maxHp_;
 
-
-
 	//パーティクル
 	hitParticle_ = std::make_unique<ParticleManager>();
 	hitParticle_->Initialize();
@@ -98,15 +96,15 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	//初期化
 	FbxPlayer::isAtkCollide = false;
 	isGuardCollide = false;
-	
-	
+
+
 	reticle_.Initialize(gameObject_->GetWorldTransformPtr());
 
 	//弾
-	bulletModel_ = Mesh::LoadFormOBJ("cube",true);
+	bulletModel_ = Mesh::LoadFormOBJ("cube", true);
 
-	
-	
+
+
 
 }
 
@@ -116,11 +114,11 @@ void FbxPlayer::Update()
 
 
 	//デスフラグの立った弾を削除
-	
-		rapidBullets_.remove_if([](std::unique_ptr<PlayerRapidBullet>& bullet) {
-			return bullet->ReturnIsDead();
-			});
-	
+
+	rapidBullets_.remove_if([](std::unique_ptr<PlayerRapidBullet>& bullet) {
+		return bullet->ReturnIsDead();
+		});
+
 
 	if (isHitStop == false)
 	{
@@ -135,7 +133,7 @@ void FbxPlayer::Update()
 		Ray ray;
 		ray.start = gameObject_->GetCamera().GetEye();
 		ray.dir = reticle_.GetFarReticleObjPtr()->worldTransform.matWorld_.GetWorldPos() - gameObject_->GetCamera().GetEye();
-		
+
 
 		RaycastHit raycast;
 
@@ -147,19 +145,19 @@ void FbxPlayer::Update()
 				PRockTarget newRockTarget;
 				rockTargets_.push_back(newRockTarget);
 				int nowRockNum = static_cast<int>(rockTargets_.size()) - 1;
-				
+
 				rockTargets_[nowRockNum].targetWtfPtr = raycast.collider->GetObject3d()->GetWorldTransformPtr();
 				rockTargets_[nowRockNum].isRockOn = true;
-				
+
 				// そのロックオンによって弾発射
 				std::unique_ptr<PlayerHomingBullet> newHomingBullet;
 				newHomingBullet = std::make_unique<PlayerHomingBullet>();
 				newHomingBullet->Initialize(bulletModel_.get(), gameObject_->GetPosition(), gameObject_->GetRotate());
 				newHomingBullet->SetTargerPtr(rockTargets_[nowRockNum].targetWtfPtr);
 				homingBullets_.push_back(std::move(newHomingBullet));
-				
-				
-				
+
+
+
 			}
 		}
 
@@ -171,7 +169,7 @@ void FbxPlayer::Update()
 		}
 
 		for (std::unique_ptr<PlayerRapidBullet>& rapidBullet : rapidBullets_) {
-			
+
 			if (rapidBullet->GetSphereCollider()->GetIsHit() == true) {
 				if (rapidBullet->GetSphereCollider()->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIES) {
 					rapidBullet->SetIsDead(true);
@@ -201,7 +199,7 @@ void FbxPlayer::Update()
 			}
 			else if (deadActNum_ == DEAD_ACT_NUM::disappear) {
 				if (oldDeadActNum_ == DEAD_ACT_NUM::bomb) {
-					
+
 				}
 			}
 
@@ -229,7 +227,7 @@ void FbxPlayer::Update()
 		//	hoverCarObject_->worldTransform.translation_.y = yPos;
 		//	gameObject_->wtf.translation_.y = yPos;
 		//}
-		
+
 		//更新
 		PColliderUpdate();
 
@@ -239,7 +237,7 @@ void FbxPlayer::Update()
 		hoverCarObject_->Update();
 
 		count++;
-		
+
 
 
 
@@ -251,8 +249,8 @@ void FbxPlayer::Update()
 
 
 	} //ヒットストップ
-	
-	
+
+
 	reticle_.Update();
 
 
@@ -272,7 +270,7 @@ void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 
 	hitParticle_->Draw(cmdList);
 	bombParticle_->Draw(cmdList);
-	
+
 	if (isDead_ == false) {
 		reticle_.Draw(cmdList);
 	}
@@ -288,32 +286,32 @@ void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 
 void FbxPlayer::CreateBulHitParticle(Vector3 posArg)
 {
-	
-		for (int i = 0; i < 40; i++) {
-			
 
-			const float rnd_pos = 2.0f;
-			Vector3 pos{};
-			pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-			pos.y = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-			pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+	for (int i = 0; i < 40; i++) {
 
-			const float rnd_vel = 2.f;
-			Vector3 vel{};
-			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 
-			Vector3 acc{};
-			const float rnd_acc = 0.1f;
-			acc.x = -(float)rand() / RAND_MAX * rnd_acc;
-			acc.y = -(float)rand() / RAND_MAX * rnd_acc;
-			acc.z = -(float)rand() / RAND_MAX * rnd_acc;
+		const float rnd_pos = 2.0f;
+		Vector3 pos{};
+		pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+		pos.y = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+		pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
 
-			//追加
-			hitParticle_->Add(maxHitParticleLife_,posArg+pos, vel, acc,startHitParticleSize_,endHitParticleSize_);
-		}
-	
+		const float rnd_vel = 2.f;
+		Vector3 vel{};
+		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+
+		Vector3 acc{};
+		const float rnd_acc = 0.1f;
+		acc.x = -(float)rand() / RAND_MAX * rnd_acc;
+		acc.y = -(float)rand() / RAND_MAX * rnd_acc;
+		acc.z = -(float)rand() / RAND_MAX * rnd_acc;
+
+		//追加
+		hitParticle_->Add(maxHitParticleLife_, posArg + pos, vel, acc, startHitParticleSize_, endHitParticleSize_);
+	}
+
 }
 
 void FbxPlayer::minusHp(int damage)
@@ -323,8 +321,8 @@ void FbxPlayer::minusHp(int damage)
 
 void FbxPlayer::Move()
 {
-	
-	Vector3 primaryNorm = MathFunc::TangentSplinePosition( railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate+0.005f)
+
+	Vector3 primaryNorm = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + 0.005f)
 		- MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);
 	primaryNorm.nomalize();
 
@@ -351,7 +349,7 @@ void FbxPlayer::Move()
 		if (input_->PushKey(DIK_W) && input_->PushKey(DIK_D))
 		{
 			nowPos.x += kDiagonalSpeed;
-			
+
 
 			if (faceAngle_.x >= -faceMaxAngle_) {
 				faceAngle_.x -= faceRotSpeed_;
@@ -370,7 +368,7 @@ void FbxPlayer::Move()
 		{
 
 			nowPos.x -= kDiagonalSpeed;
-			
+
 			if (faceAngle_.x >= -faceMaxAngle_) {
 				faceAngle_.x -= faceRotSpeed_;
 			}
@@ -440,11 +438,11 @@ void FbxPlayer::Move()
 		else if (input_->PushKey(DIK_D))
 		{
 			nowPos.x += kMoveSpeed_;
-			
+
 
 			if (faceAngle_.y <= faceMaxAngle_) {
 				faceAngle_.y += faceRotSpeed_;
-				
+
 
 			}
 
@@ -523,7 +521,7 @@ void FbxPlayer::Move()
 
 	gameObject_->SetPosition(playerPos);
 
-	
+
 }
 
 void FbxPlayer::BulletShot()
@@ -543,10 +541,10 @@ void FbxPlayer::CrashAction()
 	if (deadActCount_ % 10 == 0) {
 		bombParticle_->Add(40, hoverCarObject_->GetPosition(), Vector3(0, 0.01f, 0), Vector3(0, 0.01f, 0), 7.f, 0.2f);
 	}
-	
 
-	
-	
+
+
+
 
 }
 
@@ -624,7 +622,7 @@ void FbxPlayer::PColliderUpdate()
 			if (sphere[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIES) {
 
 				audio_->PlayWave("kuri.wav");
-				
+
 				hitDeley = delayCount_;
 				hitParticle_->RandParticle(sphere[i]->GetCollisionInfo().inter);
 				HitStopManager::GetInstance()->SetHitStop(&isHitStop, 2);

@@ -33,16 +33,18 @@ public:
 	void SetIsDead(bool isDead) { isDead_ = isDead; };
 
 private:
-	std::unique_ptr<Object3d> object_;
-	Mesh* model_ = nullptr;
+
 	float bulletSpeed_ = 8.f;
 	const int maxCountSinceBirth_ = 60;
 	int countSinceBirth_ = 0;
 	CollisionManager* collider = nullptr;
 	std::unique_ptr<SphereCollider> sphere;
+	std::unique_ptr<Object3d> object_;
+	Mesh* model_ = nullptr;
+	bool isDead_ = false;
 	Vector3 pos;
 	
-	bool isDead_ = false;
+	
 	std::unique_ptr<Object3d> testObject_;
 
 };

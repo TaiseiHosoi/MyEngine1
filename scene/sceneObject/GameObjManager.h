@@ -26,10 +26,13 @@ enum ENEMY_NUM {
     FLOATING_ENEMY
 };
 
-enum SPOWN_OFFSET_POS{
+enum SPOWN_OFFSET_POS {
     SP_RIGHT = 0,
     SP_CENTER = 1,
-    SP_LEFT = 2
+    SP_LEFT = 2,
+    SP_SHORT_RIGHT = 3,
+    SP_SHORT_LEFT = 4
+
 };
 
 
@@ -57,6 +60,7 @@ private:
     std::unique_ptr<Mesh> modelFly;
     std::unique_ptr<Mesh> modelTower1;
     std::unique_ptr<Mesh> modelBill1;
+    std::unique_ptr<Mesh> enemyBulletModel_;
 
     //オブジェクトの配列
     std::vector<Object3d> objects;
@@ -93,8 +97,8 @@ private:
     std::stringstream floatingEnemyPopCommands_; //csv
     bool floatingEIsStand_ = false;  //待機フラグ
     int floatingEstandTime_ = 0; //ポップデータの待機時間
-    const float adjustFloatingESpownLenShort_ = 8.f;
-    const float adjustFloatingESpownLenLong_ = 16.f;
+    const float adjustFloatingESpownLenShort_ = 12.5f;
+    const float adjustFloatingESpownLenLong_ = 25.f;
 
 
     int gameTime_ = 0;

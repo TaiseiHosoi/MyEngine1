@@ -32,6 +32,7 @@ void GameObjManager::StaticInit()
 	modelFly = Mesh::LoadFormOBJ("enemy", true);
 	modelBill1 = Mesh::LoadFormOBJ("bill1", true);
 	modelTower1 = Mesh::LoadFormOBJ("tower1", true);
+	enemyBulletModel_ = Mesh::LoadFormOBJ("cube", true);
 	//モデルインサート
 	models.insert(std::make_pair("moai", modelMoai.get()));
 	models.insert(std::make_pair("Cube", modelCube.get()));
@@ -103,6 +104,8 @@ void GameObjManager::StaticInit()
 		objects.push_back(newObject);
 	}
 
+
+
 #pragma region ポップデータ読み込み
 	//歩兵敵
 	ResetCommands("Resources/enemyPop2.csv", walkingEnemyPopCommands_);
@@ -132,6 +135,7 @@ void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
 		walkingEnemies.back()->SetOffsetVec3(offsetPos);
 		walkingEnemies.back()->SetRailCameraInfo(railCameraInfo_);
 		walkingEnemies.back()->SetPlayerWorldTransform(playerWorldTF_);
+		walkingEnemies.back()->SetBulletModel(enemyBulletModel_.get());
 
 	}
 	else if (enemyNum == ENEMY_NUM::FLOATING_ENEMY) {
@@ -143,6 +147,7 @@ void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
 		floatingEnemies.back()->SetOffsetVec3(offsetPos);
 		floatingEnemies.back()->SetRailCameraInfo(railCameraInfo_);
 		floatingEnemies.back()->SetPlayerWorldTransform(playerWorldTF_);
+		floatingEnemies.back()->SetBulletModel(enemyBulletModel_.get());
 
 	}
 }
@@ -418,7 +423,7 @@ void GameObjManager::UpdateFloatingEnemyPopCommands()
 
 			if (lane == SPOWN_OFFSET_POS::SP_LEFT) {
 				//offset
-				Vector3 offset = { -adjustFloatingESpownLenShort_,0,0 };
+				Vector3 offset = { -adjustFloatingESpownLenLong_,0,0 };
 				AddEnemy(ENEMY_NUM::FLOATING_ENEMY, 0, offset);
 			}
 			else if (lane == SPOWN_OFFSET_POS::SP_CENTER) {
@@ -428,9 +433,20 @@ void GameObjManager::UpdateFloatingEnemyPopCommands()
 			}
 			else if (lane == SPOWN_OFFSET_POS::SP_RIGHT) {
 				//offset
+				Vector3 offset = { adjustFloatingESpownLenLong_,0,0 };
+				AddEnemy(ENEMY_NUM::FLOATING_ENEMY, 0, offset);
+			}
+			else if (lane == SPOWN_OFFSET_POS::SP_SHORT_RIGHT) {
+				//offset
 				Vector3 offset = { adjustFloatingESpownLenShort_,0,0 };
 				AddEnemy(ENEMY_NUM::FLOATING_ENEMY, 0, offset);
 			}
+			else if (lane == SPOWN_OFFSET_POS::SP_SHORT_LEFT) {
+				//offset
+				Vector3 offset = { adjustFloatingESpownLenShort_,0,0 };
+				AddEnemy(ENEMY_NUM::FLOATING_ENEMY, 0, offset);
+			}
+
 			else {
 				//offset
 				Vector3 offset = { 0,0,0 };

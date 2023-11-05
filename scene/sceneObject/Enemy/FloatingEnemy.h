@@ -4,6 +4,7 @@
 #include "CollisionManager.h"
 #include"CollisionAttribute.h"
 #include "GameCamera.h"
+#include"EnemyNormalBullet.h"
 
 class FloatingEnemy : public Enemy {
 public:
@@ -48,6 +49,9 @@ public: // アクセッサ
     //強制true
     bool compultionTrue();
 
+    // 弾も出るセット
+    void SetBulletModel(Mesh* model);
+
 public: //　行動
     // 突進
     void Forward();
@@ -57,6 +61,9 @@ public: //　行動
     void Turn();
     //攻撃
     void Atk();
+    //射撃
+    void ShotBullet();
+    void AddBullet();
 
 private:
     enum MOVE_PHASE {
@@ -113,6 +120,14 @@ private:// 当たり判定
     float adjustFAngle_ = 0.0f; // 向いている方向を可変する為の変数
     const float maxAdjustFAngle_ = 180.f;
     const float minAdjustFAngle_ = 0;
+
+
+    //射撃関連
+    Mesh* bulletModel_ = nullptr;
+    std::list< std::unique_ptr<EnemyNormalBullet>> bullets_;
+    const int bulletShotDelay_ = 10;
+    int nowShotDelay_ = 0;
+    const float directlyBelow_ = 0.5f;
 
     //その他
     bool isDead_ = false;

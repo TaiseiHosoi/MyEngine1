@@ -36,10 +36,19 @@ void WalkingEnemy::Initialize(Mesh* model)
 	state_.isDead_ = false;
 	state_.isAtk_ = false;
 
+	//弾情報初期化
+
+
 }
 
 void WalkingEnemy::Update()
 {
+
+	//弾リムーヴ処理
+	bullets_.remove_if([](std::unique_ptr<EnemyNormalBullet>& bullet) {
+		return bullet->ReturnIsDead();
+		});
+
 	// レールカメラ情報から現在の進行度を求める
 	if (railCameraInfo_ != nullptr) {
 		primaryPos_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);	//ゲーム進行度合を一点に定めた場合
@@ -129,8 +138,15 @@ void WalkingEnemy::Update()
 	colliderPos_ = object3d_->worldTransform.matWorld_.GetWorldPos();
 	sphere_->Update();
 
+	//弾更新
+	for (std::unique_ptr<EnemyNormalBullet>& rapidBullet : bullets_) {
+		rapidBullet->Update();
+	}
+
 	//object3d更新
 	object3d_->Update();
+
+
 	
 	//ImGui::Begin("WalkingEnemy");
 	//ImGui::InputFloat3("translation", &object3d_->worldTransform.translation_.x);
@@ -142,6 +158,10 @@ void WalkingEnemy::Update()
 void WalkingEnemy::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	object3d_->Draw(cmdList);
+	//弾更新
+	for (std::unique_ptr<EnemyNormalBullet>& rapidBullet : bullets_) {
+		rapidBullet->Draw(cmdList);
+	}
 }
 
 void WalkingEnemy::SetPlayerWorldTransform(WorldTransform* worldTransform)
@@ -194,9 +214,7 @@ void WalkingEnemy::Atk()
 	if (atkMoveCount_ < atkMaxMoveCount_) {
 		atkMoveCount_++;
 	}
-	else {
-		nowPhase_ = MOVE_PHASE::none;
-	}
+
 
 	// 移動処理
 	if (atkMoveCount_ < atkMaxFowardMoveCount_) {
@@ -206,14 +224,39 @@ void WalkingEnemy::Atk()
 		moveDifferenceValue_ = Ease::LinearEasing(maxMoveDifferencePosTimeRate_, minMoveDifferencePosTimeRate_,  atkMoveCount_ - atkMaxFowardMoveCount_, atkMaxMoveCount_ - atkMaxFowardMoveCount_, forwardEaseStrength);
 	}
 	
-	// 自機回転処理
-	
+	ShotBullet();
 
+}
+
+void WalkingEnemy::ShotBullet()
+{
+	nowShotDelay_++;
+	if (nowShotDelay_ > bulletShotDelay_) {
+		nowShotDelay_ = 0;
+
+		AddBullet();
+		
+	}
+
+
+}
+
+void WalkingEnemy::AddBullet()
+{
+	std::unique_ptr<EnemyNormalBullet> newRapidBullet;
+	newRapidBullet = std::make_unique<EnemyNormalBullet>();
+	newRapidBullet->Initialize(bulletModel_, object3d_->worldTransform.matWorld_.GetWorldPos(), object3d_->worldTransform.rotation_);
+	bullets_.push_back(std::move(newRapidBullet));
 }
 
 bool WalkingEnemy::compultionTrue()
 {
 	return true;
+}
+
+void WalkingEnemy::SetBulletModel(Mesh* model)
+{
+	bulletModel_ = model;
 }
 
 
