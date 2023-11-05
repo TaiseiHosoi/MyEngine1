@@ -443,10 +443,9 @@ void GameObjManager::UpdateFloatingEnemyPopCommands()
 			}
 			else if (lane == SPOWN_OFFSET_POS::SP_SHORT_LEFT) {
 				//offset
-				Vector3 offset = { adjustFloatingESpownLenShort_,0,0 };
+				Vector3 offset = { -adjustFloatingESpownLenShort_,0,0 };
 				AddEnemy(ENEMY_NUM::FLOATING_ENEMY, 0, offset);
 			}
-
 			else {
 				//offset
 				Vector3 offset = { 0,0,0 };

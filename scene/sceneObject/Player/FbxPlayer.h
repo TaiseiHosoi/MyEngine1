@@ -179,6 +179,8 @@ private:
 
 	//連射弾
 	std::list< std::unique_ptr<PlayerRapidBullet>> rapidBullets_;
+	const int shotDelay_ = 10;
+	int nowShotDelayCount_ = 0;
 
 	//ヒット時パーティクルのサイズ
 	const int maxHitParticleLife_ = 10;

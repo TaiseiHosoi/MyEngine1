@@ -1,5 +1,4 @@
 ﻿#include "FloatingEnemy.h"
-
 #include "Ease.h"
 
 FloatingEnemy::FloatingEnemy()
@@ -189,6 +188,7 @@ void FloatingEnemy::Atk()
 	}
 	else {
 		nowPhase_ = MOVE_PHASE::none;
+		isDead_ = true;
 	}
 
 	// 移動処理

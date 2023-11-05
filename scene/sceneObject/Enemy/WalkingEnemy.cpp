@@ -214,6 +214,9 @@ void WalkingEnemy::Atk()
 	if (atkMoveCount_ < atkMaxMoveCount_) {
 		atkMoveCount_++;
 	}
+	else {
+		isDead_ = true;
+	}
 
 
 	// 移動処理

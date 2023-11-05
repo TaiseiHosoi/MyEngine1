@@ -67,7 +67,6 @@ private:
     std::vector<Object3d> camObjs;
     std::vector<Object3d> moaiObjs;
     std::vector<EnemyState> moaiState;
-\
 
     //オブジェクト
     Object3d* objSkydome = nullptr;
@@ -97,8 +96,8 @@ private:
     std::stringstream floatingEnemyPopCommands_; //csv
     bool floatingEIsStand_ = false;  //待機フラグ
     int floatingEstandTime_ = 0; //ポップデータの待機時間
-    const float adjustFloatingESpownLenShort_ = 12.5f;
-    const float adjustFloatingESpownLenLong_ = 25.f;
+    const float adjustFloatingESpownLenShort_ = 15.f;
+    const float adjustFloatingESpownLenLong_ = 30.f;
 
 
     int gameTime_ = 0;

@@ -47,7 +47,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	hoverCarObject_->SetPosition(gameObject_->GetPosition());
 	hoverCarObject_->SetRotate(gameObject_->GetRotate());
 	hoverCarObject_->SetScale({ 1.f,1.f,1.f });
-
+	
 
 	SPHERE_COLISSION_NUM = static_cast<int>(gameObject_->GetBonesMatPtr()->size());
 	sphere.resize(SPHERE_COLISSION_NUM);
@@ -104,14 +104,10 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	bulletModel_ = Mesh::LoadFormOBJ("cube", true);
 
 
-
-
 }
 
 void FbxPlayer::Update()
 {
-
-
 
 	//デスフラグの立った弾を削除
 
