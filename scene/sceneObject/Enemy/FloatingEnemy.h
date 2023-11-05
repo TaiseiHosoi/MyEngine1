@@ -104,8 +104,6 @@ private:// 当たり判定
     const float spownBattlePosTimeRate_ = -0.004f;
     const float offsetBattlePosTimeRate_ = 0.012f;
 
-    //float battlePosTimeRate_ = offsetBattlePosTimeRate_;    //進行度
-
 
     //phase関係
     int oldFlamePhase_ = 0;
