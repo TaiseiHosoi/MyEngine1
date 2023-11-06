@@ -269,6 +269,10 @@ void GameObjManager::DestroyAllEnemies()
 	walkingEnemies.remove_if([](std::unique_ptr<WalkingEnemy>& enemy) {
 		return enemy->compultionTrue();
 		});
+
+	floatingEnemies.remove_if([](std::unique_ptr<FloatingEnemy>& enemy) {
+		return enemy->compultionTrue();
+		});
 }
 
 void GameObjManager::LoadData(const char* filename, std::stringstream& stream)

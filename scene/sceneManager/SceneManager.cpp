@@ -48,6 +48,7 @@ void SceneManager::ObjectInitialize() {
 	spriteCommon_->LoadTexture(20, "HpBar-sheet.png");
 	spriteCommon_->LoadTexture(21, "HpGage-sheet.png");
 	spriteCommon_->LoadTexture(22, "gameOver.png");
+	spriteCommon_->LoadTexture(23, "gameClear.png");
 
 	audio = std::make_unique<Audio>();
 	audio->Initialize();

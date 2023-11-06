@@ -218,6 +218,67 @@ void GameCamera::Update()
 
 
 	}
+	else if (camMode_ == CAM_MODE::gameClear) {
+
+		if (gameClearDirectionNowCount_ <= stopCamDirectionCount_) {
+			if (gameClearDirectionNowCount_ == stopCamDirectionCount_){
+				stopTimeRate_ = timeRate_ + 0.01f;
+				if (stopTimeRate_ > 1.0f) {
+					stopTimeRate_ = DecrimentTimeRate(stopTimeRate_);
+				}
+			}
+
+			gameClearDirectionNowCount_++;
+			//値を入力
+			basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
+
+			//値初期化
+			isGameClearDirectionEnd_ = false;
+ 
+		}
+		else if(gameClearDirectionNowCount_ < maxGameClearDirectionCount_){
+
+			gameClearDirectionNowCount_++;
+			//値を入力
+			basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, stopTimeRate_);	//カメラの位置
+		}
+		else {
+			isGameClearDirectionEnd_ = true;
+			basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, stopTimeRate_);	//カメラの位置
+		}
+
+
+
+		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
+		railTargetPos_ = target;	//ローカル変数に保存
+
+
+		Vector3 minusVec = railTargetPos_ - basePos_;
+		minusVec.nomalize();
+		float minusVal = battleSCMinusVal_;
+		minusVec *= minusVal;	//引きカメラ
+
+		//進行方向vec
+		Vector3 plusVec = basePos_ - railTargetPos_;
+		plusVec.nomalize();
+		plusVec *= adjustGameOverDirectionLen_;
+
+		basePos_ += minusVec;
+		basePos_.y = gamepartCamPosY;
+
+		Vector3 tempEye = { Ease::LinierEaseInOutEasing(basePos_.x,basePos_.x - plusVec.x,gameClearDirectionNowCount_,maxGameOverDirectionCount_,startDirectionSAFStrength_)
+			,Ease::LinierEaseInOutEasing(basePos_.y,basePos_.y - plusVec.y,gameClearDirectionNowCount_,maxGameClearDirectionCount_,startDirectionSAFStrength_)
+			,Ease::LinierEaseInOutEasing(basePos_.z,basePos_.z - plusVec.z,gameClearDirectionNowCount_,maxGameClearDirectionCount_,startDirectionSAFStrength_) };
+
+		tempEye += adjustCamDirPos_;
+
+		SetEye(tempEye);
+		SetTarget(railTargetPos_);
+
+
+	}
+
+	
 	
 
 
@@ -435,6 +496,15 @@ float GameCamera::CalculateTValueBasedOnElapsedTime(float maxTimeArg)
 	return t;
 }
 
+float GameCamera::DecrimentTimeRate(float arg)
+{
+
+	float answer = arg;
+	answer -= 1.0f;
+
+	return answer;
+}
+
 
 
 void GameCamera::FollowPlayer()
@@ -473,11 +543,29 @@ void GameCamera::SetIsCountInc(bool setArg)
 	isCountInc_ = setArg;
 }
 
+bool GameCamera::GetIsGameClearDirectionEnd()
+{
+	return isGameClearDirectionEnd_;
+}
+
+void GameCamera::SetIsGameClearDirectionEnd(bool arg)
+{
+	isGameClearDirectionEnd_ = arg;
+}
+
 void GameCamera::GoGameOver()
 {
 	gameOverDirectionNowCount_ = 0;
 	camMode_ = CAM_MODE::gameOver;
 }
+
+void GameCamera::GoGameClear()
+{
+	gameClearDirectionNowCount_ = 0;
+	camMode_ = CAM_MODE::gameClear;
+}
+
+
 
 Vector3 GameCamera::splinePosition(const std::vector<Vector3>& pointsArg, size_t startIndex, float t)
 {

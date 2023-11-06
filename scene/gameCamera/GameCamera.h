@@ -13,7 +13,8 @@ enum CAM_MODE {
 	title,
 	battle,
 	startDirection,
-	gameOver
+	gameOver,
+	gameClear
 };
 
 struct RailCameraInfo {
@@ -86,6 +87,9 @@ public:
 	// 移動にかかる時間に基づいてt値を計算する関数
 	float CalculateTValueBasedOnElapsedTime(float maxTime);
 
+	// timeRate用のデクリメント処理
+	float DecrimentTimeRate(float arg);
+
 public:	// アクセッサ
 
 	// シェイクのベクトルセット
@@ -128,8 +132,17 @@ public:	// アクセッサ
 	// isCountIncセット
 	void SetIsCountInc(bool setArg);
 
+	//カメラ演出終了時フラグゲッタ
+	bool GetIsGameClearDirectionEnd();
+
+	//カメラ演出終了時フラグセッタ
+	void SetIsGameClearDirectionEnd(bool arg);
+
 	// ゲームオーバー遷移
 	void GoGameOver();
+
+	// ゲームクリア遷移
+	void GoGameClear();
 
 	// 1-> target ,0-> eye
 	WorldTransform swap_[2];
@@ -180,10 +193,23 @@ private:
 	float startDirectionFOV_ = 0.5f;
 	const float offsetStartDirectionFOV_ = 1.4f;
 	bool isCountInc_ = false;
+
 	//ゲームオーバー演出用
 	int gameOverDirectionNowCount_ = 0;
 	const int maxGameOverDirectionCount_ = 180;
 	const float adjustGameOverDirectionLen_ = 35.f;
+
+	//ゲームクリア演出用
+	int gameClearDirectionNowCount_ = 0;
+	int oldGameClearDirectionNowCount_ = 0; //前フレーム処理
+	const int maxGameClearDirectionCount_ = 170;
+	const int stopCamDirectionCount_ = 60;
+	const float adjustGameCrearDirectionLen_ = 35.f;
+	float stopTimeRate_ = 0;
+	bool isGameClearDirectionEnd_ = false; //ゲームクリア演出終了フラグ
+	const Vector3 adjustCamDirPos_ = { 4.f,4.f,4.f };
+
+
 	
 	//制御店の集合(vectorコンテナ),補完する区間の添字、時間経過率
 	Vector3 splinePosition(const std::vector<Vector3>& points, size_t startIndex, float t);

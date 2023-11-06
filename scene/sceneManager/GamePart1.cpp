@@ -48,7 +48,7 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
 	
 	//camera->ResetGameCam();
-
+	gameSceneMode_ = GAME_SCENE_MODE::inGame;
 }
 
 void GamePart1::Update(Input* input, GameCamera* camera) {
@@ -80,10 +80,27 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 				_controller->ChangeScene(new TitleScene(_controller));
 			}
 		}
+
+		if (camera->GetIsGameClearDirectionEnd() == true) {	//クリア演出終了
+			_controller->SetIsBlackDisolve(true);
+			if (_controller->GetIsTurnBackBlackDisolve() == true) {
+				_controller->fbxPlayer_->PlayerPalamReset();
+				_controller->gameObjectManager_->DestroyAllEnemies();
+				camera->SetCamMode(CAM_MODE::title);
+				_controller->ChangeScene(new TitleScene(_controller));
+				camera->SetIsGameClearDirectionEnd(false);
+			}
+		}
+
 		if (input->TriggerKey(DIK_1)) {
 			camera->GoGameOver();
 			_controller->fbxPlayer_->GoGameOver();
+			gameSceneMode_ = GAME_SCENE_MODE::gameOver;
 
+		}
+		else if (input->TriggerKey(DIK_2)) {
+			camera->GoGameClear();
+			gameSceneMode_ = GAME_SCENE_MODE::gameClear;
 		}
 		
 		/*ImGui::Begin("Pause");
@@ -111,7 +128,9 @@ void GamePart1::Draw(DirectXCommon* dxCommon) {
 
 	exp_->Draw();
 	hpBar_->Draw();
-	hpGage_->Draw();
+	if (gameSceneMode_ != GAME_SCENE_MODE::gameOver) {
+		hpGage_->Draw();
+	}
 
 
 

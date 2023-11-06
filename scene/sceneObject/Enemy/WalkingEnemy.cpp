@@ -211,7 +211,7 @@ void WalkingEnemy::Turn()
 void WalkingEnemy::Atk()
 {
 	// カウント処理
-	if (atkMoveCount_ < atkMaxMoveCount_) {
+	if (atkMoveCount_ <= atkMaxMoveCount_) {
 		atkMoveCount_++;
 	}
 	else {

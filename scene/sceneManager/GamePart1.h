@@ -70,6 +70,15 @@ private:
 	const Vector2 moveSprPos_ = { 100,550 };
 	const Vector2 moveSprSize_ = { 128,80 };
 
+	//現在のモード
+	enum GAME_SCENE_MODE{
+		inGame,
+		gameOver,
+		gameClear
+
+	};
+	int gameSceneMode_ = 0;
+
 
 };
 

@@ -81,6 +81,7 @@ public:
 
 	//暗転用
 	std::unique_ptr <Sprite> blackSc_;
+	std::unique_ptr <Sprite> blackSc2_;
 	float blackScAlpha_ = 0;
 	const float maxBlackScAlpha_ = 4.0f;
 	float alphaDisSpeed_ = 0.02f;

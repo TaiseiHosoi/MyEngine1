@@ -183,7 +183,7 @@ void FloatingEnemy::Turn()
 void FloatingEnemy::Atk()
 {
 	// カウント処理
-	if (atkMoveCount_ < atkMaxMoveCount_) {
+	if (atkMoveCount_ <= atkMaxMoveCount_) {
 		atkMoveCount_++;
 	}
 	else {
