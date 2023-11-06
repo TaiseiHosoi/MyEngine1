@@ -91,10 +91,7 @@ void SceneManager::SceneInitialize() {
 }
 
 void SceneManager::SceneUpdate(Input* input) {
-	/*ImGui::Begin("Info");
-	ImGui::Text("E : particle");
-	ImGui::Text("arrowkey : %f,%f,%f", fbxPlayer_->GetObject3d()->GetPosition().x, fbxPlayer_->GetObject3d()->GetPosition().y,fbxPlayer_->GetObject3d()->GetPosition().z);
-	ImGui::End();*/
+
 
 	_scene.get()->Update(input,_camera);	
 	BlackDisolve();
@@ -131,6 +128,12 @@ void SceneManager::ResetParameters() {
 
 void SceneManager::BlackDisolve()
 {
+	if (oldDisolveMode_ != nowDisolveMode_) {
+		blackSc_->SetTextureIndex(nowDisolveMode_);
+	}
+
+	oldDisolveMode_ = nowDisolveMode_;	//前フレーム
+
 	if (isBlackDisolve_ == true && isTurnBackDis_ == false) {
 		blackScAlpha_ += 0.02f;
 		if (blackScAlpha_ > maxBlackScAlpha_) {
@@ -149,9 +152,10 @@ void SceneManager::BlackDisolve()
 	blackSc_->SetColor({ 1.f,1.f,1.f,blackScAlpha_ });
 }
 
-void SceneManager::SetIsBlackDisolve(bool arg)
+void SceneManager::SetIsBlackDisolve(bool isDisolve, int mode)
 {
-	isBlackDisolve_ = arg;
+	isBlackDisolve_ = isDisolve;
+	nowDisolveMode_ = mode;
 }
 
 bool SceneManager::GetIsTurnBackBlackDisolve()

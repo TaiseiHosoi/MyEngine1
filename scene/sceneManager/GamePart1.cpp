@@ -72,7 +72,7 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 		}
 
 		if (_controller->fbxPlayer_->GetIsDeadActNum() == DEAD_ACT_NUM::disappear) {
-			_controller->SetIsBlackDisolve(true);
+			_controller->SetIsBlackDisolve(true,DisolveMode::gameOverMode);
 			if (_controller->GetIsTurnBackBlackDisolve() == true) {
 				_controller->fbxPlayer_->PlayerPalamReset();
 				_controller->gameObjectManager_->DestroyAllEnemies();
@@ -82,7 +82,8 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 		}
 
 		if (camera->GetIsGameClearDirectionEnd() == true) {	//クリア演出終了
-			_controller->SetIsBlackDisolve(true);
+			_controller->SetIsBlackDisolve(true,DisolveMode::gameClearMode);
+
 			if (_controller->GetIsTurnBackBlackDisolve() == true) {
 				_controller->fbxPlayer_->PlayerPalamReset();
 				_controller->gameObjectManager_->DestroyAllEnemies();

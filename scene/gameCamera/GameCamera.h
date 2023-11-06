@@ -202,12 +202,12 @@ private:
 	//ゲームクリア演出用
 	int gameClearDirectionNowCount_ = 0;
 	int oldGameClearDirectionNowCount_ = 0; //前フレーム処理
-	const int maxGameClearDirectionCount_ = 170;
-	const int stopCamDirectionCount_ = 60;
+	const int maxGameClearDirectionCount_ = 150;
+	const int stopCamDirectionCount_ = 100;
 	const float adjustGameCrearDirectionLen_ = 35.f;
 	float stopTimeRate_ = 0;
 	bool isGameClearDirectionEnd_ = false; //ゲームクリア演出終了フラグ
-	const Vector3 adjustCamDirPos_ = { 4.f,4.f,4.f };
+	const Vector3 adjustCamDirPos_ = { 4.f,-2.f,4.f };
 
 
 	

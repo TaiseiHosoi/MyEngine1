@@ -222,7 +222,7 @@ void GameCamera::Update()
 
 		if (gameClearDirectionNowCount_ <= stopCamDirectionCount_) {
 			if (gameClearDirectionNowCount_ == stopCamDirectionCount_){
-				stopTimeRate_ = timeRate_ + 0.01f;
+				stopTimeRate_ = timeRate_ + 0.005f;
 				if (stopTimeRate_ > 1.0f) {
 					stopTimeRate_ = DecrimentTimeRate(stopTimeRate_);
 				}
@@ -240,7 +240,7 @@ void GameCamera::Update()
 
 			gameClearDirectionNowCount_++;
 			//値を入力
-			basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, stopTimeRate_);	//カメラの位置
+			basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
 		}
 		else {
 			isGameClearDirectionEnd_ = true;
@@ -250,6 +250,7 @@ void GameCamera::Update()
 
 
 		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
+		target.y += adjustCamDirPos_.y;	//注視点微調整
 		railTargetPos_ = target;	//ローカル変数に保存
 
 

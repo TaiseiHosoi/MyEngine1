@@ -27,6 +27,10 @@ class IScene;
 class DirectXCommon;
 class GameCamera;
 
+enum DisolveMode {
+	gameClearMode = 23,
+	gameOverMode = 22
+};
 // シーン管理クラス
 class SceneManager
 {
@@ -63,7 +67,7 @@ public:
 	void BlackDisolve();
 
 	//暗転フラグ
-	void SetIsBlackDisolve(bool arg);
+	void SetIsBlackDisolve(bool isDisolve,int mode);
 	bool GetIsTurnBackBlackDisolve();
 
 	//シーンチェンジしたかどうかをGet,Set
@@ -81,13 +85,14 @@ public:
 
 	//暗転用
 	std::unique_ptr <Sprite> blackSc_;
-	std::unique_ptr <Sprite> blackSc2_;
 	float blackScAlpha_ = 0;
 	const float maxBlackScAlpha_ = 4.0f;
 	float alphaDisSpeed_ = 0.02f;
 	bool oldIsBlackDisolve_ = false;
 	bool isBlackDisolve_ = false;
 	bool isTurnBackDis_ = false;
+	int nowDisolveMode_ = 0;	//暗転画像切り替えの為
+	int oldDisolveMode_ = 0;
 
 	std::unique_ptr<ParticleManager> particleManager_;
 	
