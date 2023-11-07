@@ -111,7 +111,6 @@ void SceneManager::ChangeScene(IScene* scene) {
 	
 	_camera->ChangeFollowFlag(true);
 	_scene.reset(scene);
-	_collisionManager->CrearColliders();
 	ResetParameters();
 	SceneInitialize();
 	

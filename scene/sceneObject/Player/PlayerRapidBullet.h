@@ -12,6 +12,7 @@
 class PlayerRapidBullet
 {
 public:
+	~PlayerRapidBullet();
 	// 初期化
 	void Initialize(Mesh* model, Vector3 setPos, Vector3 setRot);
 

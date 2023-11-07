@@ -7,6 +7,7 @@ FloatingEnemy::FloatingEnemy()
 
 FloatingEnemy::~FloatingEnemy()
 {
+	collider_->RemoveCollider(sphere_.get());
 }
 
 void FloatingEnemy::Initialize(Mesh* model)

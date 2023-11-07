@@ -3,6 +3,11 @@
 
 
 
+PlayerRapidBullet::~PlayerRapidBullet()
+{
+	CollisionManager::GetInstance()->RemoveCollider(sphere.get());
+}
+
 void PlayerRapidBullet::Initialize(Mesh* model, Vector3 setPos, Vector3 setRot)
 {
 	//ObjectInit

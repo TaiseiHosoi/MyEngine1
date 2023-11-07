@@ -14,7 +14,7 @@ CollisionManager* CollisionManager::GetInstance()
 void CollisionManager::CrearColliders()
 {
 
-	colliders.clear();
+	//colliders.clear();
 }
 
 void CollisionManager::CheckAllCollisions()

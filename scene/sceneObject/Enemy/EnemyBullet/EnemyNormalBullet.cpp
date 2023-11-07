@@ -1,5 +1,10 @@
 ﻿#include "EnemyNormalBullet.h"
 
+EnemyNormalBullet::~EnemyNormalBullet()
+{
+	CollisionManager::GetInstance()->RemoveCollider(sphere.get());
+}
+
 void EnemyNormalBullet::Initialize(Mesh* model, Vector3 setPos, Vector3 setRot)
 {
 	//ObjectInit

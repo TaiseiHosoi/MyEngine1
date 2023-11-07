@@ -8,6 +8,7 @@ WalkingEnemy::WalkingEnemy()
 
 WalkingEnemy::~WalkingEnemy()
 {
+	collider_->RemoveCollider(sphere_.get());
 }
 
 void WalkingEnemy::Initialize(Mesh* model)
