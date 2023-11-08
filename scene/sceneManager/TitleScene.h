@@ -43,6 +43,8 @@ private://リソース
 	std::unique_ptr <Sprite> exp_;
 	std::unique_ptr <Sprite> hpBar_;
 	std::unique_ptr <Sprite> hpGage_;
+	//背景スプライト
+	std::unique_ptr <Sprite> backGroundSp_;
 private:
 
 	enum SceneSwapPhaseNum {

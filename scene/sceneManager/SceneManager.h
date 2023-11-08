@@ -11,7 +11,7 @@
 #include "fbx/FBXLoader.h"
 #include "FBXModel.h"
 #include "Audio.h"
-#include "SpriteCommon.h"
+
 #include "Mesh.h"
 #include "Object3d.h"
 #include "ParticleManager.h"
@@ -20,7 +20,7 @@
 #include "FbxPlayer.h"
 #include "Ground.h"
 #include "Sprite.h"
-
+#include "SpriteCommon.h"
 
 class Input;
 class IScene;
@@ -93,6 +93,9 @@ public:
 	bool isTurnBackDis_ = false;
 	int nowDisolveMode_ = 0;	//暗転画像切り替えの為
 	int oldDisolveMode_ = 0;
+
+	//背景スプライト
+	std::unique_ptr <Sprite> backGroundSp_;
 
 	std::unique_ptr<ParticleManager> particleManager_;
 	

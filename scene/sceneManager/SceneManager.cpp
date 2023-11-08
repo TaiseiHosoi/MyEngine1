@@ -49,6 +49,7 @@ void SceneManager::ObjectInitialize() {
 	spriteCommon_->LoadTexture(21, "HpGage-sheet.png");
 	spriteCommon_->LoadTexture(22, "gameOver.png");
 	spriteCommon_->LoadTexture(23, "gameClear.png");
+	spriteCommon_->LoadTexture(24, "background.png");
 
 	audio = std::make_unique<Audio>();
 	audio->Initialize();
@@ -70,6 +71,12 @@ void SceneManager::ObjectInitialize() {
 	blackSc_->Initialize(spriteCommon_.get(), 22);
 	blackSc_->SetPozition({ 0,0 });
 	blackSc_->SetColor({ 1,1,1,blackScAlpha_ });
+
+	//背景スプライト
+	backGroundSp_ = std::make_unique<Sprite>();
+	backGroundSp_->Initialize(spriteCommon_.get(), 24);
+	backGroundSp_->SetPozition({ 0,0 });
+	backGroundSp_->SetSize({WinApp::window_width,WinApp::window_height });
 
 	//パーティクルのセット
 	particleManager_ = std::make_unique<ParticleManager>();
@@ -98,8 +105,12 @@ void SceneManager::SceneUpdate(Input* input) {
 }
 
 void SceneManager::SceneDraw() {
+	
+	spriteCommon_->SpritePreDraw();
+	backGroundSp_->Draw();
+	spriteCommon_->SpritePostDraw();
 	_scene.get()->Draw(_dxCommon);
-
+	
 	if (isBlackDisolve_ == true) {
 		blackSc_->Draw();
 	}
