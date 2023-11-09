@@ -17,7 +17,7 @@ void Field::Initialize()
 	
 
 	continuousFloorModel_ = std::make_unique<Mesh>();
-	continuousFloorModel_ = Mesh::LoadFormOBJ("ground.png", false);
+	continuousFloorModel_ = Mesh::LoadFormOBJ("ground", false);
 
 	groundObj1_ = std::make_unique<Object3d>();
 	groundObj1_.get()->Initialize(true);
@@ -30,9 +30,9 @@ void Field::Initialize()
 	continuousFloor_ = std::make_unique<Object3d>();
 	continuousFloor_.get()->Initialize(true);
 	continuousFloor_.get()->SetModel(continuousFloorModel_.get());
-	continuousFloor_->worldTransform.translation_ = { 0,0,0 };
+	continuousFloor_->worldTransform.translation_ = { 0,groundAdjustPosY_,0 };
 	continuousFloor_->worldTransform.rotation_ = { 0,0,0 };
-	continuousFloor_->worldTransform.scale_ = { 1,1,1 };
+	continuousFloor_->worldTransform.scale_ = { groundAdjustScale_,1,groundAdjustScale_ };
 	continuousFloor_->Update();
 
 
@@ -43,7 +43,7 @@ void Field::Initialize()
 	skydomeObj_ = std::make_unique<Object3d>();
 	skydomeObj_.get()->Initialize(false);
 	skydomeObj_.get()->SetModel(skydomeModel_.get());
-	skydomeObj_->worldTransform.translation_ = { 0,groundAdjustPosY_,0 };
+	skydomeObj_->worldTransform.translation_ = { 0,backGroundAdjustPosY_,0 };
 	skydomeObj_->worldTransform.scale_ = { groundAdjustScale_,groundAdjustScale_,groundAdjustScale_ };
 	skydomeObj_->Update();
 
@@ -51,6 +51,7 @@ void Field::Initialize()
 }
 void Field::Update()
 {
+	
 
 	groundObj1_->Update();
 
