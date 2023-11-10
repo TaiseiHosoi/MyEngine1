@@ -49,6 +49,9 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	
 	//camera->ResetGameCam();
 	gameSceneMode_ = GAME_SCENE_MODE::inGame;
+
+	//ポップコマンドモードセット
+	_controller->gameObjectManager_->SetIsEnemyPops(true);
 }
 
 void GamePart1::Update(Input* input, GameCamera* camera) {
@@ -123,7 +126,7 @@ void GamePart1::Draw(DirectXCommon* dxCommon) {
 	//_controller->boss_->Draw();
 	_controller->fbxPlayer_->Draw(dxCommon->GetCommandList());
 
-	_controller->gameObjectManager_->DrawAllEnemies(dxCommon->GetCommandList());
+	_controller->gameObjectManager_->DrawAllObjs(dxCommon->GetCommandList());
 
 	_controller->spriteCommon_->SpritePreDraw();
 

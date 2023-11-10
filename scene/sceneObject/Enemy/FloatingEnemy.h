@@ -125,7 +125,7 @@ private:// 当たり判定
     //射撃関連
     Mesh* bulletModel_ = nullptr;
     std::list< std::unique_ptr<EnemyNormalBullet>> bullets_;
-    const int bulletShotDelay_ = 10;
+    const int bulletShotDelay_ = 4;
     int nowShotDelay_ = 0;
     const float directlyBelow_ = 0.5f;
 

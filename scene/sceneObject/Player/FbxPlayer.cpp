@@ -63,7 +63,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 		CollisionManager::GetInstance()->AddCollider(sphere[i]);
 		spherePos[i] = gameObject_.get()->bonesMat[i].GetWorldPos();
 		sphere[i]->SetBasisPos(&spherePos[i]);
-		sphere[i]->SetRadius(1.0f);
+		sphere[i]->SetRadius(2.5f);
 		sphere[i]->SetAttribute(COLLISION_ATTR_ALLIES);
 		sphere[i]->Update();
 		//test

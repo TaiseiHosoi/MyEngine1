@@ -98,15 +98,12 @@ private:
     int floatingEstandTime_ = 0; //ポップデータの待機時間
     const float adjustFloatingESpownLenShort_ = 15.f;
     const float adjustFloatingESpownLenLong_ = 30.f;
-
-
-    int gameTime_ = 0;
+    int gameTime_ = 0;  //ゲーム開始からの時間
+    bool isEnemyPops_ = false;
 
     //固定値
 
 
-
-   
 
     //レールカメラ情報
     RailCameraInfo* railCameraInfo_ = nullptr;
@@ -134,7 +131,7 @@ public:
     void UpdateAllObjects();
 
     // 全敵オブジェ描画
-    void DrawAllEnemies(ID3D12GraphicsCommandList* cmdList);
+    void DrawAllObjs(ID3D12GraphicsCommandList* cmdList);
 
     // 全敵消滅
     void DestroyAllEnemies();
@@ -159,6 +156,9 @@ public:
 
     // プレイヤーのworldTFのセット
     void SetPlayerWorldTF(WorldTransform* worldTF);
+
+    // アップデートコマンドのフラグ
+    void SetIsEnemyPops(bool isPop);
 
 
 public:

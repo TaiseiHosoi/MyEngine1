@@ -52,10 +52,11 @@ void GameObjManager::StaticInit()
 			model = it->second;
 		}
 		
-		// 建物を一時的に消去
-		if (objectData.fileName == "bill1" || objectData.fileName == "tower1") {
-			continue;
-		}
+		//// 建物を一時的に消去
+		//if (objectData.fileName == "bill1" || objectData.fileName == "tower1") {
+		//	continue;
+		//}
+		
 		// モデルを指定して3Dオブジェクトを生成
 		Object3d newObject;
 		newObject.Initialize(true);
@@ -166,8 +167,10 @@ void GameObjManager::UpdateAllObjects()
 		return enemy->GetState()->isDead_;
 		});
 
-	UpdateWalkingEnemyPopCommands();
-	UpdateFloatingEnemyPopCommands();
+	if (isEnemyPops_ == true) {
+		UpdateWalkingEnemyPopCommands();
+		UpdateFloatingEnemyPopCommands();
+	}
 
 	for (int i = 0; i < objects.size();i++) {
 		objects[i].Update();
@@ -233,7 +236,7 @@ void GameObjManager::UpdateAllObjects()
 
 }
 
-void GameObjManager::DrawAllEnemies(ID3D12GraphicsCommandList* cmdList)
+void GameObjManager::DrawAllObjs(ID3D12GraphicsCommandList* cmdList)
 {
 
 	for (const unique_ptr<WalkingEnemy>& enemy : walkingEnemies) {
@@ -476,4 +479,9 @@ void GameObjManager::UpdateFloatingEnemyPopCommands()
 void GameObjManager::SetPlayerWorldTF(WorldTransform* worldTF)
 {
 	playerWorldTF_ = worldTF;
+}
+
+void GameObjManager::SetIsEnemyPops(bool isPop)
+{
+	isEnemyPops_ = isPop;
 }

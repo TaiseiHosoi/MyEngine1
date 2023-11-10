@@ -65,17 +65,19 @@ void TitleScene::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	//ゲームオブジェクトクラスに情報セット
 	_controller->gameObjectManager_->SetRailCamInfo(camera->GetRailCameraInfo());
 	_controller->gameObjectManager_->SetPlayerWorldTF(_controller->fbxPlayer_->GetObject3d()->GetWorldTransformPtr());
+
+	//ポップコマンドの設定
+	_controller->gameObjectManager_->SetIsEnemyPops(false);
 }
 
 void TitleScene::Update(Input* input, GameCamera* camera) {
 	_controller->field_->Update();
 	_controller->fbxPlayer_->Update();
+	_controller->gameObjectManager_->UpdateAllObjects();
 
 	//audio_->PlayWave();
 
 	ChangeCamera(input, camera);
-
-
 
 
 	if (isChangeScene == true) {
@@ -86,12 +88,15 @@ void TitleScene::Update(Input* input, GameCamera* camera) {
 		_controller->ChangeScene(new GamePart1(_controller));
 
 	}// ここから下にコード書くとメモリ君がエラー吐く
+
+
 }
 
 void TitleScene::Draw(DirectXCommon* dxCommon) {
 
 	_controller->fbxPlayer_->Draw(dxCommon->GetCommandList());
 	_controller->field_->Draw(dxCommon);
+	_controller->gameObjectManager_->DrawAllObjs(dxCommon->GetCommandList());
 
 	_controller->spriteCommon_->SpritePreDraw();
 	if (isSwapCamera == true) {

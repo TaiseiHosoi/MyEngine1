@@ -30,7 +30,7 @@ private:
     Mesh* model_ = nullptr;
     bool isDead_ = false;
     Vector3 colPos_ = {};
-    float bulletSpeed_ = 3.f;
+    float bulletSpeed_ = 2.f;
     const int maxCountSinceBirth_ = 60;
     int countSinceBirth_ = 0;
 

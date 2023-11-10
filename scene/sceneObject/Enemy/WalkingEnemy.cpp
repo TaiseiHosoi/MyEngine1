@@ -212,11 +212,13 @@ void WalkingEnemy::Turn()
 void WalkingEnemy::Atk()
 {
 	// カウント処理
-	if (atkMoveCount_ <= atkMaxMoveCount_) {
+	if (atkMoveCount_ < atkMaxMoveCount_) {
 		atkMoveCount_++;
+		ShotBullet();
 	}
 	else {
 		isDead_ = true;
+
 	}
 
 
@@ -228,7 +230,7 @@ void WalkingEnemy::Atk()
 		moveDifferenceValue_ = Ease::LinearEasing(maxMoveDifferencePosTimeRate_, minMoveDifferencePosTimeRate_,  atkMoveCount_ - atkMaxFowardMoveCount_, atkMaxMoveCount_ - atkMaxFowardMoveCount_, forwardEaseStrength);
 	}
 	
-	ShotBullet();
+
 
 }
 
