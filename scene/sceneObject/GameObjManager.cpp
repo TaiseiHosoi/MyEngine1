@@ -32,7 +32,7 @@ void GameObjManager::StaticInit()
 	modelFly = Mesh::LoadFormOBJ("enemy", true);
 	modelBill1 = Mesh::LoadFormOBJ("bill1", true);
 	modelTower1 = Mesh::LoadFormOBJ("tower1", true);
-	enemyBulletModel_ = Mesh::LoadFormOBJ("cube", true);
+	enemyBulletModel_ = Mesh::LoadFormOBJ("bume2", true);
 	//モデルインサート
 	models.insert(std::make_pair("moai", modelMoai.get()));
 	models.insert(std::make_pair("Cube", modelCube.get()));

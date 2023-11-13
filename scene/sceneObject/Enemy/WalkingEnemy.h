@@ -147,7 +147,6 @@ private:// 当たり判定
     const float deadAtTheStartAcceleration_ = 2.f;
 
 
-
     //その他
     bool isDead_ = false;
     int rotMode_ = ROT_MODE::straight;
