@@ -82,17 +82,15 @@ void WalkingEnemy::Update()
 	// 回転角,位置計算
 	Vector3 nowOffset;
 	if (railCameraInfo_ != nullptr) {
-		//進行上の向いている方向(顔の向きではない)
+		//進行上の向いている方向を設定(顔の向きではない)
 		directionLoot_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + offsetBattlePosTimeRate_)
 			- MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);
 		directionLoot_.nomalize();
 
+		//Y方向設定
 		float dirAngle = {};
-		dirAngle = atan2(directionLoot_.x, directionLoot_.z);
-
-
+		dirAngle = atan2(directionLoot_.x, directionLoot_.z);	
 		
-	
 		nowOffset += offsetPos_;
 		nowOffset = MathFunc::RotateVecAngleY(nowOffset,dirAngle);
 
@@ -254,6 +252,8 @@ void WalkingEnemy::AddBullet()
 	newRapidBullet->Initialize(bulletModel_, object3d_->worldTransform.matWorld_.GetWorldPos(), object3d_->worldTransform.rotation_);
 	bullets_.push_back(std::move(newRapidBullet));
 }
+
+
 
 bool WalkingEnemy::compultionTrue()
 {

@@ -158,9 +158,14 @@ private:
 	const float kTurnSpeed_ = MathFunc::Dig2Rad(10);//旋回速度
 	bool isRun_ = false;
 	Vector3 faceAngle_ = {};
-	const float faceMaxAngle_ = 0.4f; //自機回転の最大
-	float faceRotSpeed_ = 0.05f;
-	float returnRotSpeed = 0.03f;
+	const float maxFaceAngle_ = 0.02f;
+	const float faceMaxAngleY_ = 0.4f; //自機回転の最大
+	const float faceMaxAngleX_ = 0.3f; //自機回転の最大
+	
+	float faceRotSpeedY_ = 0.05f;
+	float faceRotSpeedX_ = 0.02f;
+	float returnRotSpeed_ = 0.03f;
+
 	Matrix4 pAngleMat = {};//自機の移動用Matrix
 	Vector3 nowPos = {};
 #pragma endregion 移動処理で使う変数
@@ -179,7 +184,7 @@ private:
 
 	//連射弾
 	std::list< std::unique_ptr<PlayerRapidBullet>> rapidBullets_;
-	const int shotDelay_ = 10;
+	const int shotDelay_ = 5;
 	int nowShotDelayCount_ = 0;
 
 	//ヒット時パーティクルのサイズ

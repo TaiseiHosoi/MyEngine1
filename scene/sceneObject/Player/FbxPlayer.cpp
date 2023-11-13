@@ -38,7 +38,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	gameObject_->SetModel(fbxModel);
 	gameObject_->SetIsBonesWorldMatCalc(true);	//ボーンワールド行列計算あり
 	gameObject_->SetScale({ 1,1,1 });
-	gameObject_->SetPosition({ 0,15.f,0 });
+	gameObject_->SetPosition({ 0,0,0 });
 	gameObject_->Update();
 
 	hoverCarModel_ = Mesh::LoadFormOBJ("hoverCar", false);
@@ -101,7 +101,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	reticle_.Initialize(gameObject_->GetWorldTransformPtr());
 
 	//弾
-	bulletModel_ = Mesh::LoadFormOBJ("cube", true);
+	bulletModel_ = Mesh::LoadFormOBJ("bume", true);
 
 
 }
@@ -152,16 +152,22 @@ void FbxPlayer::Update()
 		//		newHomingBullet->SetTargerPtr(rockTargets_[nowRockNum].targetWtfPtr);
 		//		homingBullets_.push_back(std::move(newHomingBullet));
 
-
-
 		//	}
 		//}
 
-		if (input_->TriggerMouseButton(0)) {
-			std::unique_ptr<PlayerRapidBullet> newRapidBullet;
-			newRapidBullet = std::make_unique<PlayerRapidBullet>();
-			newRapidBullet->Initialize(bulletModel_.get(), gameObject_->GetPosition(), gameObject_->GetRotate());
-			rapidBullets_.push_back(std::move(newRapidBullet));
+		nowShotDelayCount_++;
+		if (input_->PushMouseButton(0)) {
+
+			
+			if (nowShotDelayCount_ > shotDelay_) {
+
+				std::unique_ptr<PlayerRapidBullet> newRapidBullet;
+				newRapidBullet = std::make_unique<PlayerRapidBullet>();
+				newRapidBullet->Initialize(bulletModel_.get(), gameObject_->GetPosition(), gameObject_->GetRotate());
+				rapidBullets_.push_back(std::move(newRapidBullet));
+
+				nowShotDelayCount_ = 0;
+			}
 		}
 
 		for (std::unique_ptr<PlayerRapidBullet>& rapidBullet : rapidBullets_) {
@@ -173,12 +179,12 @@ void FbxPlayer::Update()
 				}
 			}
 		}
-
+		
 		//if (input_->TriggerKey(DIK_N)) {
 		//	isDead_ = true;
 		//	deadActNum_ = DEAD_ACT_NUM::crash;
 		//}
-
+		
 		if (isDead_ == true) {
 			//前フレーム処理
 			oldDeadActNum_ = deadActNum_;
@@ -198,9 +204,6 @@ void FbxPlayer::Update()
 
 				}
 			}
-
-
-
 
 		}
 
@@ -347,11 +350,11 @@ void FbxPlayer::Move()
 			nowPos.x += kDiagonalSpeed;
 
 
-			if (faceAngle_.x >= -faceMaxAngle_) {
-				faceAngle_.x -= faceRotSpeed_;
+			if (faceAngle_.x >= -faceMaxAngleY_) {
+				faceAngle_.x -= faceRotSpeedY_;
 			}
-			if (faceAngle_.y <= faceMaxAngle_) {
-				faceAngle_.y += faceRotSpeed_;
+			if (faceAngle_.y <= faceMaxAngleY_) {
+				faceAngle_.y += faceRotSpeedY_;
 
 			}
 
@@ -365,11 +368,11 @@ void FbxPlayer::Move()
 
 			nowPos.x -= kDiagonalSpeed;
 
-			if (faceAngle_.x >= -faceMaxAngle_) {
-				faceAngle_.x -= faceRotSpeed_;
+			if (faceAngle_.x >= -faceMaxAngleX_) {
+				faceAngle_.x -= faceRotSpeedX_;
 			}
-			if (faceAngle_.y >= -faceMaxAngle_) {
-				faceAngle_.y -= faceRotSpeed_;
+			if (faceAngle_.y >= -faceMaxAngleY_) {
+				faceAngle_.y -= faceRotSpeedY_;
 
 			}
 
@@ -383,11 +386,11 @@ void FbxPlayer::Move()
 			nowPos.x += kDiagonalSpeed;
 
 
-			if (faceAngle_.x <= faceMaxAngle_) {
-				faceAngle_.x += faceRotSpeed_;
+			if (faceAngle_.x <= faceMaxAngleX_) {
+				faceAngle_.x += faceRotSpeedX_;
 			}
-			if (faceAngle_.y <= faceMaxAngle_) {
-				faceAngle_.y += faceRotSpeed_;
+			if (faceAngle_.y <= faceMaxAngleY_) {
+				faceAngle_.y += faceRotSpeedY_;
 
 			}
 
@@ -399,11 +402,11 @@ void FbxPlayer::Move()
 		{
 			nowPos.x -= kDiagonalSpeed;
 
-			if (faceAngle_.x <= faceMaxAngle_) {
-				faceAngle_.x += faceRotSpeed_;
+			if (faceAngle_.x <= faceMaxAngleX_) {
+				faceAngle_.x += faceRotSpeedX_;
 			}
-			if (faceAngle_.y >= -faceMaxAngle_) {
-				faceAngle_.y -= faceRotSpeed_;
+			if (faceAngle_.y >= -faceMaxAngleY_) {
+				faceAngle_.y -= faceRotSpeedY_;
 
 			}
 
@@ -414,8 +417,8 @@ void FbxPlayer::Move()
 		else if (input_->PushKey(DIK_W))
 		{
 
-			if (faceAngle_.x >= -faceMaxAngle_) {
-				faceAngle_.x -= faceRotSpeed_;
+			if (faceAngle_.x >= -faceMaxAngleX_) {
+				faceAngle_.x -= faceRotSpeedX_;
 			}
 
 		}
@@ -424,8 +427,8 @@ void FbxPlayer::Move()
 		else if (input_->PushKey(DIK_S))
 		{
 
-			if (faceAngle_.x <= faceMaxAngle_) {
-				faceAngle_.x += faceRotSpeed_;
+			if (faceAngle_.x <= faceMaxAngleY_) {
+				faceAngle_.x += faceRotSpeedY_;
 			}
 
 		}
@@ -436,8 +439,8 @@ void FbxPlayer::Move()
 			nowPos.x += kMoveSpeed_;
 
 
-			if (faceAngle_.y <= faceMaxAngle_) {
-				faceAngle_.y += faceRotSpeed_;
+			if (faceAngle_.y <= faceMaxAngleY_) {
+				faceAngle_.y += faceRotSpeedY_;
 
 
 			}
@@ -449,8 +452,8 @@ void FbxPlayer::Move()
 		else if (input_->PushKey(DIK_A))
 		{
 			nowPos.x -= kMoveSpeed_;
-			if (faceAngle_.y >= -faceMaxAngle_) {
-				faceAngle_.y -= faceRotSpeed_;
+			if (faceAngle_.y >= -faceMaxAngleY_) {
+				faceAngle_.y -= faceRotSpeedY_;
 
 			}
 
@@ -461,11 +464,11 @@ void FbxPlayer::Move()
 		if (input_->PushKey(DIK_A) != 1 && input_->PushKey(DIK_D) != 1) {
 			if (faceAngle_.y > 0.02f) {
 
-				faceAngle_.y -= returnRotSpeed;
+				faceAngle_.y -= returnRotSpeed_;
 
 			}
 			else if (faceAngle_.y < -0.02f) {
-				faceAngle_.y += returnRotSpeed;
+				faceAngle_.y += returnRotSpeed_;
 
 			}
 
@@ -473,10 +476,10 @@ void FbxPlayer::Move()
 
 		if (input_->PushKey(DIK_W) != 1 && input_->PushKey(DIK_S) != 1) {
 			if (faceAngle_.x > 0.02f) {
-				faceAngle_.x -= returnRotSpeed;
+				faceAngle_.x -= returnRotSpeed_;
 			}
 			else if (faceAngle_.x < -0.02f) {
-				faceAngle_.x += returnRotSpeed;
+				faceAngle_.x += returnRotSpeed_;
 			}
 
 		}
@@ -486,19 +489,19 @@ void FbxPlayer::Move()
 	{
 
 		//押されていないときの処理
-		if (faceAngle_.x > 0.02f) {
-			faceAngle_.x -= returnRotSpeed;
+		if (faceAngle_.x > maxFaceAngle_) {
+			faceAngle_.x -= returnRotSpeed_;
 		}
-		else if (faceAngle_.x < -0.02f) {
-			faceAngle_.x += returnRotSpeed;
+		else if (faceAngle_.x < -maxFaceAngle_) {
+			faceAngle_.x += returnRotSpeed_;
 		}
 
-		if (faceAngle_.y > 0.02f) {
-			faceAngle_.y -= returnRotSpeed;
+		if (faceAngle_.y > maxFaceAngle_) {
+			faceAngle_.y -= returnRotSpeed_;
 
 		}
-		else if (faceAngle_.y < -0.02f) {
-			faceAngle_.y += returnRotSpeed;
+		else if (faceAngle_.y < -maxFaceAngle_) {
+			faceAngle_.y += returnRotSpeed_;
 
 		}
 	}

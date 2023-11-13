@@ -69,6 +69,11 @@ public: //　行動
     void ShotBullet();
     void AddBullet();
 
+    //死亡アクション
+    void DeadAction();
+
+
+
 private:
     enum MOVE_PHASE {
         none,
@@ -132,6 +137,16 @@ private:// 当たり判定
     std::list< std::unique_ptr<EnemyNormalBullet>> bullets_;
     const int bulletShotDelay_ = 40;
     int nowShotDelay_ = 0;
+
+    //死亡時用変数
+    bool isDeathAction_ = false;
+    int isDeathActionCount_ = 0;
+    const float lowestPosY_ = 0.25f;
+    float deadDecelerationSpeed_ = 0.0f;
+    const float deadDecelerationAcceleration_ = 0.05f;
+    const float deadAtTheStartAcceleration_ = 2.f;
+
+
 
     //その他
     bool isDead_ = false;
