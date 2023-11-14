@@ -168,6 +168,7 @@ private:
 
 	Matrix4 pAngleMat = {};//自機の移動用Matrix
 	Vector3 nowPos = {};
+	float maxParallelMovement_ = 12.f;
 #pragma endregion 移動処理で使う変数
 
 #pragma region 射撃処理変数

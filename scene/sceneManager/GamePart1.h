@@ -78,6 +78,7 @@ private:
 
 	};
 	int gameSceneMode_ = 0;
+	int gameCount_ = 0;
 
 
 };

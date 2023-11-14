@@ -347,7 +347,10 @@ void FbxPlayer::Move()
 		//W,Dを押していたら
 		if (input_->PushKey(DIK_W) && input_->PushKey(DIK_D))
 		{
-			nowPos.x += kDiagonalSpeed;
+
+			if (nowPos.x < maxParallelMovement_) {
+				nowPos.x += kDiagonalSpeed;
+			}
 
 
 			if (faceAngle_.x >= -faceMaxAngleY_) {
@@ -365,8 +368,9 @@ void FbxPlayer::Move()
 		//W,Aを押していたら
 		else if (input_->PushKey(DIK_W) && input_->PushKey(DIK_A))
 		{
-
-			nowPos.x -= kDiagonalSpeed;
+			if (nowPos.x > -maxParallelMovement_) {
+				nowPos.x -= kDiagonalSpeed;
+			}
 
 			if (faceAngle_.x >= -faceMaxAngleX_) {
 				faceAngle_.x -= faceRotSpeedX_;
@@ -382,8 +386,9 @@ void FbxPlayer::Move()
 		//S,Dを押していたら
 		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_D))
 		{
-
-			nowPos.x += kDiagonalSpeed;
+			if (nowPos.x < maxParallelMovement_) {
+				nowPos.x += kDiagonalSpeed;
+			}
 
 
 			if (faceAngle_.x <= faceMaxAngleX_) {
@@ -400,7 +405,10 @@ void FbxPlayer::Move()
 		//S,Aを押していたら
 		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_A))
 		{
-			nowPos.x -= kDiagonalSpeed;
+
+			if (nowPos.x < -maxParallelMovement_) {
+				nowPos.x -= kDiagonalSpeed;
+			}
 
 			if (faceAngle_.x <= faceMaxAngleX_) {
 				faceAngle_.x += faceRotSpeedX_;
@@ -436,7 +444,9 @@ void FbxPlayer::Move()
 		//Dを押していたら
 		else if (input_->PushKey(DIK_D))
 		{
-			nowPos.x += kMoveSpeed_;
+			if (nowPos.x < maxParallelMovement_) {
+				nowPos.x += kMoveSpeed_;
+			}
 
 
 			if (faceAngle_.y <= faceMaxAngleY_) {
@@ -451,7 +461,10 @@ void FbxPlayer::Move()
 		//Aを押していたら
 		else if (input_->PushKey(DIK_A))
 		{
-			nowPos.x -= kMoveSpeed_;
+			if (nowPos.x > -maxParallelMovement_) {
+				nowPos.x -= kMoveSpeed_;
+			}
+
 			if (faceAngle_.y >= -faceMaxAngleY_) {
 				faceAngle_.y -= faceRotSpeedY_;
 
@@ -467,10 +480,10 @@ void FbxPlayer::Move()
 				faceAngle_.y -= returnRotSpeed_;
 
 			}
-			else if (faceAngle_.y < -0.02f) {
-				faceAngle_.y += returnRotSpeed_;
+			//else if (faceAngle_.y < -0.02f) {
+			//	faceAngle_.y += returnRotSpeed_;
 
-			}
+			//}
 
 		}
 
@@ -478,9 +491,9 @@ void FbxPlayer::Move()
 			if (faceAngle_.x > 0.02f) {
 				faceAngle_.x -= returnRotSpeed_;
 			}
-			else if (faceAngle_.x < -0.02f) {
+			/*else if (faceAngle_.x < -0.02f) {
 				faceAngle_.x += returnRotSpeed_;
-			}
+			}*/
 
 		}
 
@@ -492,9 +505,9 @@ void FbxPlayer::Move()
 		if (faceAngle_.x > maxFaceAngle_) {
 			faceAngle_.x -= returnRotSpeed_;
 		}
-		else if (faceAngle_.x < -maxFaceAngle_) {
-			faceAngle_.x += returnRotSpeed_;
-		}
+		//else if (faceAngle_.x < -maxFaceAngle_) {
+		//	faceAngle_.x += returnRotSpeed_;
+		//}
 
 		if (faceAngle_.y > maxFaceAngle_) {
 			faceAngle_.y -= returnRotSpeed_;

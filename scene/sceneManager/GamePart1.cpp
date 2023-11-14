@@ -95,16 +95,17 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 				camera->SetIsGameClearDirectionEnd(false);
 			}
 		}
-
+		gameCount_++;
 		if (input->TriggerKey(DIK_1)) {
 			camera->GoGameOver();
 			_controller->fbxPlayer_->GoGameOver();
 			gameSceneMode_ = GAME_SCENE_MODE::gameOver;
 
 		}
-		else if (input->TriggerKey(DIK_2)) {
+		else if (input->TriggerKey(DIK_2) || gameCount_ > 1200) {
 			camera->GoGameClear();
 			gameSceneMode_ = GAME_SCENE_MODE::gameClear;
+			gameCount_ = 0;
 		}
 		
 		/*ImGui::Begin("Pause");
