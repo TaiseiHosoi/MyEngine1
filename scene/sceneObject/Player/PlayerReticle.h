@@ -40,14 +40,22 @@ private:
 	std::unique_ptr<Object3d> nierReticleO_;
 	std::unique_ptr<Mesh> nierReticleM_;
 
+	//中距離レティクル
+	std::unique_ptr<Object3d> mediumRangeReticleO_;
+	std::unique_ptr<Mesh> mediumRangeReticleM_;
+
 	//遠距離レティクル
 	std::unique_ptr<Object3d> farReticleO_;
 	std::unique_ptr<Mesh> farReticleM_;
 
-
+	const float offsetRotY_ = 0.5f * 3.14f;
 	
-	float offsetNier = 10.f;
-	float offsetFar = 30.f;
+	const float offsetNierPos_ = 10.f;
+	const float offsetMediumRangePos_ = 50.f;
+	const float offsetFarPos_ = 90.f;
+	const Vector3 nierReticleScale_ = { 0.1f,1.f,1.f };
+	const Vector3 mediumRangeReticleScale_ = { 0.1f,1.f,1.f };
+	const Vector3 farReticleScale_ = { 0.1f,1.f,1.f };
 
 	//CollisionManager* collider_ = nullptr;
 	//std::unique_ptr<RaycastHit> raycastHit;

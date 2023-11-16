@@ -154,21 +154,29 @@ private:
 	
 #pragma region 移動処理で使う変数
 	Vector3 velocity_;
-	const float kMoveSpeed_ = 0.4f;//移動速度
+	float kMoveSpeed_ = 0.0f;//移動速度
 	const float kTurnSpeed_ = MathFunc::Dig2Rad(10);//旋回速度
 	bool isRun_ = false;
 	Vector3 faceAngle_ = {};
+	const float minFaceAngleX_ = -0.02f;
 	const float maxFaceAngle_ = 0.02f;
 	const float faceMaxAngleY_ = 0.4f; //自機回転の最大
 	const float faceMaxAngleX_ = 0.3f; //自機回転の最大
+
+	const float offsetSpeed_ = 0.1f;
+	float increaseSpeed_ = 0.0f;
+	const float increaseSpeedVel_ = 0.03f;
+	const float maxIncreaseSpeed_ = 0.6f;
 	
+	float nowFlameParallelMove_ = 0;	//そのフレームの移動量
 	float faceRotSpeedY_ = 0.05f;
 	float faceRotSpeedX_ = 0.02f;
-	float returnRotSpeed_ = 0.03f;
+	float returnRotSpeed_ = 0.015f;
 
 	Matrix4 pAngleMat = {};//自機の移動用Matrix
 	Vector3 nowPos = {};
-	float maxParallelMovement_ = 12.f;
+	const float maxParallelMovement_ = 12.f;	//最大平行Pos
+	
 #pragma endregion 移動処理で使う変数
 
 #pragma region 射撃処理変数

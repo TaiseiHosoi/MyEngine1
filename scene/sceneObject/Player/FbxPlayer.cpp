@@ -330,6 +330,9 @@ void FbxPlayer::Move()
 	Vector3 primaryPos = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + 0.002f) + primaryNorm * 10.0f;
 
 
+	//移動速度計算
+	kMoveSpeed_ = increaseSpeed_;
+	//float kDiagonalSpeed = kMoveSpeed_ * 0.707f;	// √2をかける
 
 	//キー入力があったら
 	if (input_->PushKey(DIK_W) ||
@@ -338,19 +341,20 @@ void FbxPlayer::Move()
 		input_->PushKey(DIK_D) && isDead_ == false)
 	{
 
+		//押し続けると増えるスピード
+		increaseSpeed_ += increaseSpeedVel_;
 
-		//Z軸方向にの速度を入れる
-		velocity_ = { 0 , 0 , 0.1f };
 
-		float kDiagonalSpeed = kMoveSpeed_ * 0.707f;	// √2をかける
 
 		//W,Dを押していたら
 		if (input_->PushKey(DIK_W) && input_->PushKey(DIK_D))
 		{
 
-			if (nowPos.x < maxParallelMovement_) {
-				nowPos.x += kDiagonalSpeed;
+			//if (nowPos.x < maxParallelMovement_) {
+			if (nowFlameParallelMove_ < maxIncreaseSpeed_) {
+				nowFlameParallelMove_ += increaseSpeedVel_;
 			}
+			//}
 
 
 			if (faceAngle_.x >= -faceMaxAngleY_) {
@@ -368,8 +372,8 @@ void FbxPlayer::Move()
 		//W,Aを押していたら
 		else if (input_->PushKey(DIK_W) && input_->PushKey(DIK_A))
 		{
-			if (nowPos.x > -maxParallelMovement_) {
-				nowPos.x -= kDiagonalSpeed;
+			if (nowFlameParallelMove_ > -maxIncreaseSpeed_) {
+				nowFlameParallelMove_ -= increaseSpeedVel_;
 			}
 
 			if (faceAngle_.x >= -faceMaxAngleX_) {
@@ -386,12 +390,12 @@ void FbxPlayer::Move()
 		//S,Dを押していたら
 		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_D))
 		{
-			if (nowPos.x < maxParallelMovement_) {
-				nowPos.x += kDiagonalSpeed;
+			if (nowFlameParallelMove_ < maxIncreaseSpeed_) {
+				nowFlameParallelMove_ += increaseSpeedVel_;
 			}
 
 
-			if (faceAngle_.x <= faceMaxAngleX_) {
+			if (faceAngle_.x <= minFaceAngleX_) {
 				faceAngle_.x += faceRotSpeedX_;
 			}
 			if (faceAngle_.y <= faceMaxAngleY_) {
@@ -405,12 +409,11 @@ void FbxPlayer::Move()
 		//S,Aを押していたら
 		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_A))
 		{
-
-			if (nowPos.x < -maxParallelMovement_) {
-				nowPos.x -= kDiagonalSpeed;
+			if (nowFlameParallelMove_ > -maxIncreaseSpeed_) {
+				nowFlameParallelMove_ -= increaseSpeedVel_;
 			}
 
-			if (faceAngle_.x <= faceMaxAngleX_) {
+			if (faceAngle_.x <= minFaceAngleX_) {
 				faceAngle_.x += faceRotSpeedX_;
 			}
 			if (faceAngle_.y >= -faceMaxAngleY_) {
@@ -435,7 +438,7 @@ void FbxPlayer::Move()
 		else if (input_->PushKey(DIK_S))
 		{
 
-			if (faceAngle_.x <= faceMaxAngleY_) {
+			if (faceAngle_.x <= minFaceAngleX_) {
 				faceAngle_.x += faceRotSpeedY_;
 			}
 
@@ -444,10 +447,9 @@ void FbxPlayer::Move()
 		//Dを押していたら
 		else if (input_->PushKey(DIK_D))
 		{
-			if (nowPos.x < maxParallelMovement_) {
-				nowPos.x += kMoveSpeed_;
+			if (nowFlameParallelMove_ < maxIncreaseSpeed_) {
+				nowFlameParallelMove_ += increaseSpeedVel_;
 			}
-
 
 			if (faceAngle_.y <= faceMaxAngleY_) {
 				faceAngle_.y += faceRotSpeedY_;
@@ -461,8 +463,8 @@ void FbxPlayer::Move()
 		//Aを押していたら
 		else if (input_->PushKey(DIK_A))
 		{
-			if (nowPos.x > -maxParallelMovement_) {
-				nowPos.x -= kMoveSpeed_;
+			if (nowFlameParallelMove_ > -maxIncreaseSpeed_) {
+				nowFlameParallelMove_ -= increaseSpeedVel_;
 			}
 
 			if (faceAngle_.y >= -faceMaxAngleY_) {
@@ -500,6 +502,7 @@ void FbxPlayer::Move()
 	}
 	else
 	{
+		increaseSpeed_ = 0;	//加速度リセット
 
 		//押されていないときの処理
 		if (faceAngle_.x > maxFaceAngle_) {
@@ -517,9 +520,30 @@ void FbxPlayer::Move()
 			faceAngle_.y += returnRotSpeed_;
 
 		}
+
+		//減速
+		if (nowFlameParallelMove_ > 0) {
+			nowFlameParallelMove_ -= increaseSpeedVel_;
+		}
+		else if (nowFlameParallelMove_ < 0) {
+			nowFlameParallelMove_ += increaseSpeedVel_;
+		}
+
+		
 	}
 
+	//一定以上の左右移動量行かないようにする
+	if (nowPos.x > maxParallelMovement_ ) {
+		nowFlameParallelMove_ = 0;
+		nowPos.x = maxParallelMovement_;
+	}
+	else if (nowPos.x < -maxParallelMovement_) {
+		nowFlameParallelMove_ = 0;
+		nowPos.x = -maxParallelMovement_;
+	}
 
+	//挙動
+	nowPos.x += nowFlameParallelMove_;
 	gameObject_->wtf.rotation_ = { faceAngle_.x, faceAngle_.y + pAngle ,faceAngle_.z };
 
 
