@@ -160,6 +160,9 @@ public:
     // アップデートコマンドのフラグ
     void SetIsEnemyPops(bool isPop);
 
+    // 敵発生のリセット
+    void InitEnemyCommands();
+
 
 public:
     // camObjsのゲッタ

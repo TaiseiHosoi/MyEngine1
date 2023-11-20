@@ -108,16 +108,7 @@ void GameObjManager::StaticInit()
 
 
 #pragma region ポップデータ読み込み
-	//歩兵敵
-	ResetCommands("Resources/enemyPop2.csv", walkingEnemyPopCommands_);
-	gameTime_ = 0;
-	walkingEstandTime_ = 0;
-	walkingEIsStand_ = false;
-
-	//浮遊敵
-	ResetCommands("Resources/floatingEnemyPop.csv", floatingEnemyPopCommands_);
-	floatingEIsStand_ = 0;
-	floatingEstandTime_ = false;
+	InitEnemyCommands();
 #pragma endregion ポップデータ読み込み
 
 
@@ -484,4 +475,18 @@ void GameObjManager::SetPlayerWorldTF(WorldTransform* worldTF)
 void GameObjManager::SetIsEnemyPops(bool isPop)
 {
 	isEnemyPops_ = isPop;
+}
+
+void GameObjManager::InitEnemyCommands()
+{
+	//歩兵敵
+	ResetCommands("Resources/enemyPop2.csv", walkingEnemyPopCommands_);
+	gameTime_ = 0;
+	walkingEstandTime_ = 0;
+	walkingEIsStand_ = false;
+
+	//浮遊敵
+	ResetCommands("Resources/floatingEnemyPop.csv", floatingEnemyPopCommands_);
+	floatingEIsStand_ = 0;
+	floatingEstandTime_ = false;
 }

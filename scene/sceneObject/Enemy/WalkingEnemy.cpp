@@ -55,7 +55,7 @@ void WalkingEnemy::Update()
 		primaryPos_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);	//ゲーム進行度合を一点に定めた場合
 
 		object3d_->worldTransform.translation_ =	//挙動
-			MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + advancedValue_ + moveDifferenceValue_);
+			MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + advancedValue_ + moveDifferenceValue_ + nowSubtractTimeRate_);
 	}
 
 	// パターン行動
@@ -130,8 +130,11 @@ void WalkingEnemy::Update()
 	}
 
 	if (state_.hp_ <= 0) {
-		state_.isDead_ = true;
+		isDeathAction_ = true;
 	}
+
+	// 死亡アクション
+	DeadAction();
 	
 	// コライダー更新
 	colliderPos_ = object3d_->worldTransform.matWorld_.GetWorldPos();
@@ -210,12 +213,13 @@ void WalkingEnemy::Turn()
 void WalkingEnemy::Atk()
 {
 	// カウント処理
+	atkMoveCount_++;
 	if (atkMoveCount_ < atkMaxMoveCount_) {
-		atkMoveCount_++;
+		
 		ShotBullet();
 	}
 	else {
-		isDead_ = true;
+		state_.isDead_ = true;
 
 	}
 
@@ -251,6 +255,32 @@ void WalkingEnemy::AddBullet()
 	newRapidBullet = std::make_unique<EnemyNormalBullet>();
 	newRapidBullet->Initialize(bulletModel_, object3d_->worldTransform.matWorld_.GetWorldPos(), object3d_->worldTransform.rotation_);
 	bullets_.push_back(std::move(newRapidBullet));
+}
+
+void WalkingEnemy::DeadAction()
+{
+
+	if (isDeathAction_ == true) {
+		deathActionCount_++;
+		if (deathActionCount_ >= maxDeathActionCount_) {
+			state_.isDead_ = true;
+		}
+
+
+		if (object3d_->worldTransform.translation_.y < lowestPosY_) {
+			nowFallSpeed_ = offsetBoundSpeed_;
+			posY_ = 0;
+		}
+		else {
+			nowFallSpeed_ -= fallSpeedVel_;
+		}
+		posY_ += nowFallSpeed_;	//y変動
+		object3d_->worldTransform.rotation_.x += deathActionRotateVel_;
+		nowSubtractTimeRate_ += subtractTimeRateVel_;	//タイムレートが落ちてくる
+
+	}
+
+
 }
 
 

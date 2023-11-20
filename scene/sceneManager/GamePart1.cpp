@@ -52,6 +52,7 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
 	//ポップコマンドモードセット
 	_controller->gameObjectManager_->SetIsEnemyPops(true);
+	_controller->gameObjectManager_->InitEnemyCommands();
 }
 
 void GamePart1::Update(Input* input, GameCamera* camera) {
@@ -102,7 +103,7 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 			gameSceneMode_ = GAME_SCENE_MODE::gameOver;
 
 		}
-		else if (input->TriggerKey(DIK_2) || gameCount_ > 1200) {
+		else if (input->TriggerKey(DIK_2) || gameCount_ > 2000) {
 			camera->GoGameClear();
 			gameSceneMode_ = GAME_SCENE_MODE::gameClear;
 			gameCount_ = 0;

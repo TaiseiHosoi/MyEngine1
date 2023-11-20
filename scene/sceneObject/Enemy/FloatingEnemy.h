@@ -38,10 +38,10 @@ public: // アクセッサ
     SphereCollider* GetSphereCollider() { return sphere_.get(); };
 
     // isDead_ゲッタ
-    bool ReturnIsDead() { return isDead_; };
+    bool ReturnIsDead() { return state_.isDead_; };
 
     // isDead_セッタ
-    void SetIsDead(bool isDead) { isDead_ = isDead; };
+    void SetIsDead(bool isDead) { state_.isDead_ = isDead; };
 
     // 敵情報構造体ゲッタ
     EnemyState* GetState();
@@ -64,6 +64,9 @@ public: //　行動
     //射撃
     void ShotBullet();
     void AddBullet();
+
+    //死亡アクション
+    void DeadAction();
 
 private:
     enum MOVE_PHASE {
@@ -130,8 +133,24 @@ private:// 当たり判定
     const float directlyBelow_ = 0.5f;
 
     //その他
-    bool isDead_ = false;
     int rotMode_ = ROT_MODE::straight;
+
+    //死亡時用変数
+    bool isDeathAction_ = false;
+    int deathActionCount_ = 0;
+
+    const float deathActionRotateVel_ = 0.2f;
+    const float lowestPosY_ = 0.0f;
+    const float fallSpeedVel_ = 0.1f;
+    const float offsetBoundSpeed_ = 1.4f;
+    const float deadDecelerationAcceleration_ = 0.05f;
+    const float deadAtTheStartAcceleration_ = 2.f;
+    const float subtractTimeRateVel_ = -0.0001f;
+    const int maxDeathActionCount_ = 180;
+
+    float deadDecelerationSpeed_ = 0.0f;
+    float nowFallSpeed_ = offsetBoundSpeed_;
+    float nowSubtractTimeRate_ = 0;
 
 
     //固定値
