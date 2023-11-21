@@ -119,8 +119,14 @@ public:
 	//ゲームオブジェクトの定数バッファゲッタ
 	ID3D12Resource* GetConstBuff() { return gameObject_->GetConstBuff(); };
 
-	//ゲームオーバー遷移
+	//ゲームオーバー用
 	void GoGameOver();
+
+	//無敵
+	void Invincible();
+
+	//点滅処理
+	void Blink(float elapsedTime, float blinkDuration, float blinkInterval, float& currentAlpha);
 
 
 
@@ -229,6 +235,14 @@ private:
 	static int hp;
 	const int maxHp_ = 100;
 	bool isHitStop = false;
+	//被弾関連
+	bool isInvincible_ = false;
+	bool isHitAction_ = false;
+	int hitActFlameCount_ = 0;
+	const int maxHitActFlameCount_ = 120;
+	const float minHitBlinkingAlpha_ = 0.1f;
+	const float maxHitBlinkingAlpha_ = 0.1f;
+
 	//生死フラグ
 	bool isDead_ = false;
 	const int maxCrashActCount_ = 120;

@@ -704,3 +704,39 @@ void FbxPlayer::GoGameOver()
 	isDead_ = true;
 	deadActNum_ = DEAD_ACT_NUM::crash;
 }
+
+void FbxPlayer::Invincible()
+{
+	if (isInvincible_ == true) {
+		hitActFlameCount_++;
+		if (hitActFlameCount_ > maxHitActFlameCount_) {
+			hitActFlameCount_ = 0;
+			isInvincible_ = false;
+		}
+
+		
+	}
+}
+
+void FbxPlayer::Blink(float elapsedTime, float blinkDuration, float blinkInterval, float& currentAlpha)
+{
+// blinkDuration: 点滅の周期（秒）
+// blinkInterval: 点滅の間隔（秒）
+// currentAlpha: 現在のアルファ値
+
+	static float timer = 0.0f;
+	timer += elapsedTime;
+
+	if (timer >= blinkInterval) {
+		// アルファ値を反転する（0.0から1.0までの範囲を行き来する）
+		currentAlpha = 1.0f - currentAlpha;
+		timer = 0.0f;
+	}
+
+	// blinkDurationを超えたら点滅を停止する
+	if (timer >= blinkDuration) {
+		currentAlpha = 1.0f; // 完全に不透明にする（点滅しない）
+	}
+}
+
+
