@@ -26,7 +26,7 @@ void FloatingEnemy::Initialize(Mesh* model)
 	CollisionManager::GetInstance()->AddCollider(sphere_.get());
 	sphere_->SetAttribute(COLLISION_ATTR_ENEMIES);
 	sphere_->SetBasisPos(&colliderPos_);
-	sphere_->SetRadius(object3d_->worldTransform.scale_.x);
+	sphere_->SetRadius(object3d_->worldTransform.scale_.x+3.0f);
 	sphere_->Update();
 
 	collider_ = CollisionManager::GetInstance();

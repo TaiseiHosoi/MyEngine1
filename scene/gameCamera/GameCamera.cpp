@@ -63,7 +63,7 @@ void GameCamera::Update()
 	{
 		//ShowCursor(false);
 		//ViewPointMovement();
-		CulDirection();
+		//CulDirection();
 	}
 #pragma endregion マウス処理
 
