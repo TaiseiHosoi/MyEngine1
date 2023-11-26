@@ -46,7 +46,13 @@ public:
 	void CreateBulHitParticle(Vector3 posArg);
 
 	//ダメージ
-	static void minusHp(int damage);
+	void MinusHp(int damage);
+
+	//hpアクセッサ
+	int GetHp();
+
+	//hpアクセッサ
+	void SetHp(int hp);
 
 	//移動処理
 	void Move();
@@ -69,24 +75,13 @@ public:	//アクセッサ
 	//デスフラグのGetter
 	bool GetIsDead() { return isDead_; }
 
-	//スタティック用の変数アクセッサ
-	//攻撃に当たり判定が発生しているかのアクセッサ
-	static bool GetIsAtkCollide();
-
-	//攻撃に当たり判定が発生しているかのアクセッサ
-	static void SetIsAtkCollide(bool isAtkCollide);
-
 	//ガードの判定が出ているかのアクセッサ
 	static bool GetIsGuardCollide();
 
 	//ガードの判定が出ているかのアクセッサ
 	static void SetIsGuardCollide(bool isGuardCollide);
 
-	//hpアクセッサ
-	static int GetHp();	
 
-	//hpアクセッサ
-	static void SetHp(int hp);	
 
 	//死亡時演出のフェーズゲッタ
 	int GetIsDeadActNum();
@@ -219,10 +214,6 @@ private:
 
 
 
-	//当たり判定外部参照用
-	static bool isAtkCollide;
-	static bool isGuardCollide;
-
 	//防御時行動
 	bool isGuard = false;	//ガードをするかしないか
 	bool isGuardExcute = false;	//ガード成功時用
@@ -234,7 +225,7 @@ private:
 
 	//ヒットポイント
 	int hitDeley = 0;	//何フレーム連続で当たるか
-	static int hp;
+	int hp_ = 0;
 	const int maxHp_ = 100;
 	bool isHitStop = false;
 	//生死フラグ

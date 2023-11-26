@@ -11,9 +11,7 @@
 
 
 
-int FbxPlayer::hp = 100;
-bool FbxPlayer::isAtkCollide = false;
-bool FbxPlayer::isGuardCollide = false;
+
 
 FbxPlayer::FbxPlayer()
 {
@@ -77,7 +75,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	}
 
 	//ヒットポイント
-	hp = maxHp_;
+	hp_ = maxHp_;
 
 	//パーティクル
 	hitParticle_ = std::make_unique<ParticleManager>();
@@ -92,10 +90,6 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 
 	// 現在時刻を取得してシード値とする
 	std::srand(static_cast<int>(std::time(nullptr)));
-
-	//初期化
-	FbxPlayer::isAtkCollide = false;
-	isGuardCollide = false;
 
 
 	reticle_.Initialize(gameObject_->GetWorldTransformPtr());
@@ -313,10 +307,22 @@ void FbxPlayer::CreateBulHitParticle(Vector3 posArg)
 
 }
 
-void FbxPlayer::minusHp(int damage)
+void FbxPlayer::MinusHp(int damage)
 {
-	hp -= damage;
+	hp_ = damage;
 }
+
+int FbxPlayer::GetHp()
+{
+	return hp_;
+}
+
+void FbxPlayer::SetHp(int hp)
+{
+	hp_ = hp;
+}
+
+
 
 void FbxPlayer::Move()
 {
@@ -614,35 +620,9 @@ FBXObject3d* FbxPlayer::GetObject3d()
 	return gameObject_.get();
 }
 
-bool FbxPlayer::GetIsAtkCollide()
-{
-	return FbxPlayer::isAtkCollide;
-}
 
-void FbxPlayer::SetIsAtkCollide(bool isAtkCollideArg)
-{
-	FbxPlayer::isAtkCollide = isAtkCollideArg;
-}
 
-bool FbxPlayer::GetIsGuardCollide()
-{
-	return isGuardCollide;
-}
 
-void FbxPlayer::SetIsGuardCollide(bool isGuardCollideArg)
-{
-	FbxPlayer::isGuardCollide = isGuardCollideArg;
-}
-
-int FbxPlayer::GetHp()
-{
-	return FbxPlayer::hp;
-}
-
-void FbxPlayer::SetHp(int hpArg)
-{
-	FbxPlayer::hp = hpArg;
-}
 
 void FbxPlayer::PColliderUpdate()
 {
@@ -653,25 +633,13 @@ void FbxPlayer::PColliderUpdate()
 
 	for (int i = 0; i < SPHERE_COLISSION_NUM; i++)
 	{
-		if (isAtkCollide == true && hitDeley <= 0 && sphere[i]->GetIsHit() == true) {
-
-			if (sphere[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIES) {
-
-				audio_->PlayWave("kuri.wav");
-
-				hitDeley = delayCount_;
-				hitParticle_->RandParticle(sphere[i]->GetCollisionInfo().inter);
-				HitStopManager::GetInstance()->SetHitStop(&isHitStop, 2);
-				break;
-			}
-
-		}
+		
 		if (sphere[i]->GetIsHit() == true &&
 			sphere[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIEBULLETS
 			&& hitDeley <= 0) {
 			audio_->PlayWave("kuri.wav");
 			hitDeley = delayCount_;
-			this->hp -= damage_;
+			this->hp_ -= damage_;
 			break;
 		}
 	}
