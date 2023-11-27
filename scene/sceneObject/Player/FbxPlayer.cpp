@@ -88,6 +88,12 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	bombParticle_->LoadTexture("bombBlack.png");
 	bombParticle_->Update();
 
+	slashParticle_ = std::make_unique<ParticleManager>();
+	slashParticle_->Initialize();
+	slashParticle_->LoadTexture("ParticleEffectR.png");
+	slashParticle_->Update();
+
+
 	// 現在時刻を取得してシード値とする
 	std::srand(static_cast<int>(std::time(nullptr)));
 
@@ -104,7 +110,6 @@ void FbxPlayer::Update()
 {
 
 	//デスフラグの立った弾を削除
-
 	rapidBullets_.remove_if([](std::unique_ptr<PlayerRapidBullet>& bullet) {
 		return bullet->ReturnIsDead();
 		});
@@ -124,30 +129,6 @@ void FbxPlayer::Update()
 		ray.start = gameObject_->GetCamera().GetEye();
 		ray.dir = reticle_.GetFarReticleObjPtr()->worldTransform.matWorld_.GetWorldPos() - gameObject_->GetCamera().GetEye();
 
-
-		RaycastHit raycast;
-
-		//// レイキャストによるロックオン登録
-		//if (CollisionManager::GetInstance()->Raycast(ray, &raycast, 120.f)) {
-
-		//	if (raycast.collider->GetAttribute() == COLLISION_ATTR_ENEMIES && raycast.object != nullptr) {
-		//		// ロックオン処理
-		//		PRockTarget newRockTarget;
-		//		rockTargets_.push_back(newRockTarget);
-		//		int nowRockNum = static_cast<int>(rockTargets_.size()) - 1;
-
-		//		rockTargets_[nowRockNum].targetWtfPtr = raycast.collider->GetObject3d()->GetWorldTransformPtr();
-		//		rockTargets_[nowRockNum].isRockOn = true;
-
-		//		// そのロックオンによって弾発射
-		//		std::unique_ptr<PlayerHomingBullet> newHomingBullet;
-		//		newHomingBullet = std::make_unique<PlayerHomingBullet>();
-		//		newHomingBullet->Initialize(bulletModel_.get(), gameObject_->GetPosition(), gameObject_->GetRotate());
-		//		newHomingBullet->SetTargerPtr(rockTargets_[nowRockNum].targetWtfPtr);
-		//		homingBullets_.push_back(std::move(newHomingBullet));
-
-		//	}
-		//}
 
 		nowShotDelayCount_++;
 		if (input_->PushMouseButton(0)) {
@@ -174,10 +155,6 @@ void FbxPlayer::Update()
 			}
 		}
 		
-		//if (input_->TriggerKey(DIK_N)) {
-		//	isDead_ = true;
-		//	deadActNum_ = DEAD_ACT_NUM::crash;
-		//}
 		
 		if (isDead_ == true) {
 			//前フレーム処理
@@ -213,19 +190,14 @@ void FbxPlayer::Update()
 			rapidBullet->Update();
 		}
 
-
-		//y固定
-		//float yPos = 2.0f;
-		//if (isDead_ == false) {
-		//	hoverCarObject_->worldTransform.translation_.y = yPos;
-		//	gameObject_->wtf.translation_.y = yPos;
-		//}
+		
 
 		//更新
 		PColliderUpdate();
-
+		DamageEffectUpdate();
 		hitParticle_->Update();
 		bombParticle_->Update();
+		slashParticle_->Update();
 		gameObject_->Update();
 		hoverCarObject_->Update();
 
@@ -245,7 +217,7 @@ void FbxPlayer::Update()
 
 
 	reticle_.Update();
-
+	
 
 
 }
@@ -261,8 +233,7 @@ void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 		hoverCarObject_->Draw(cmdList);
 	}
 
-	hitParticle_->Draw(cmdList);
-	bombParticle_->Draw(cmdList);
+
 
 	if (isDead_ == false) {
 		reticle_.Draw(cmdList);
@@ -275,6 +246,15 @@ void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 		rapidBullet->Draw(cmdList);
 	}
 
+
+
+}
+
+void FbxPlayer::ParticleDraw(ID3D12GraphicsCommandList* cmdList)
+{
+	hitParticle_->Draw(cmdList);
+	bombParticle_->Draw(cmdList);
+	slashParticle_->Draw(cmdList);
 }
 
 void FbxPlayer::CreateBulHitParticle(Vector3 posArg)
@@ -301,15 +281,20 @@ void FbxPlayer::CreateBulHitParticle(Vector3 posArg)
 		acc.y = -(float)rand() / RAND_MAX * rnd_acc;
 		acc.z = -(float)rand() / RAND_MAX * rnd_acc;
 
+		float sRot = 0;
+		const float rnd_sRot = 2.0f;
+		sRot = (float)rand() / RAND_MAX * rnd_sRot - 1.0f;
+
 		//追加
-		hitParticle_->Add(maxHitParticleLife_, posArg + pos, vel, acc, startHitParticleSize_, endHitParticleSize_);
+		bombParticle_->Add(maxHitParticleLife_, posArg + pos, vel, acc, startHitParticleSize_, endHitParticleSize_);
+		slashParticle_->Add(maxHitParticleLife_, posArg, {0,0,0},{0,0,0}, 10.f, 0.1f, sRot,0.1f);
 	}
 
 }
 
 void FbxPlayer::MinusHp(int damage)
 {
-	hp_ = damage;
+	hp_ -= damage;
 }
 
 int FbxPlayer::GetHp()
@@ -620,37 +605,34 @@ FBXObject3d* FbxPlayer::GetObject3d()
 	return gameObject_.get();
 }
 
-
-
-
-
 void FbxPlayer::PColliderUpdate()
 {
-	if (hitDeley > 0) {	//毎フレームヒットを防止
-		hitDeley--;
-	}
-
-
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++)
-	{
+	if (hitDeley_ > 0) {	//毎フレームヒットを防止
+		hitDeley_--;
 		
-		if (sphere[i]->GetIsHit() == true &&
-			sphere[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIEBULLETS
-			&& hitDeley <= 0) {
-			audio_->PlayWave("kuri.wav");
-			hitDeley = delayCount_;
-			this->hp_ -= damage_;
-			break;
+	}
+	else {
+		for (int i = 0; i < SPHERE_COLISSION_NUM; i++)
+		{
+
+			if (sphere[i]->GetIsHit() == true &&
+				sphere[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ENEMIEBULLETS
+				&& hitDeley_ <= 0) {
+				audio_->PlayWave("kuri.wav");
+				hitDeley_ = delayCount_;
+				SetMaxFramesToMaxAlpha(delayCount_);
+				MinusHp(damage_);
+				break;
+			}
+		}
+
+		for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
+			spherePos[i] = gameObject_.get()->bonesMat[i].GetWorldPos();
+			sphere[i]->Update();
+			coliderPosTest_[i]->SetPosition(sphere[i]->center);
+			coliderPosTest_[i]->Update();
 		}
 	}
-
-	for (int i = 0; i < SPHERE_COLISSION_NUM; i++) {
-		spherePos[i] = gameObject_.get()->bonesMat[i].GetWorldPos();
-		sphere[i]->Update();
-		coliderPosTest_[i]->SetPosition(sphere[i]->center);
-		coliderPosTest_[i]->Update();
-	}
-
 
 
 }
@@ -666,6 +648,16 @@ void FbxPlayer::SetIsDeadActNum(int arg)
 	deadActNum_ = arg;
 }
 
+float FbxPlayer::GetCurrentAlpha()
+{
+	return currentAlpha_;
+}
+
+void FbxPlayer::SetMaxFramesToMaxAlpha(int frame)
+{
+	maxFramesToMaxAlpha_ = frame;
+}
+
 void FbxPlayer::PlayerPalamReset()
 {
 
@@ -676,6 +668,30 @@ void FbxPlayer::PlayerPalamReset()
 	bombStartRot_ = {};
 	SetIsDeadActNum(DEAD_ACT_NUM::none);
 	isDead_ = false;
+
+}
+
+void FbxPlayer::DamageEffectUpdate()
+{
+	// 最大アルファ値までのフレーム数を超えたら逆転させる
+	if (currentDamageFrame_ >= maxFramesToMaxAlpha_) {
+		increasingAlpha_ = !increasingAlpha_;
+		currentDamageFrame_ = 0;
+	}
+	
+
+	// アルファ値を計算
+	if (increasingAlpha_) {
+		// アルファ値を上げる
+		currentAlpha_ = static_cast<float>(currentDamageFrame_) / maxFramesToMaxAlpha_;
+	}
+	else {
+		// アルファ値を下げる
+		currentAlpha_ = 1.0f - static_cast<float>(currentDamageFrame_) / maxFramesToMaxAlpha_;
+	}
+
+	// フレームカウントをインクリメント
+	currentDamageFrame_++;
 
 }
 

@@ -32,6 +32,10 @@ public:
 	// サウンド再生
 	void PlaySounds();
 
+	//hp変動
+	void HpFlucture();
+
+
 private:
 	enum PauseMenu{
 		RESUME,
@@ -51,6 +55,8 @@ private:
 	std::unique_ptr <Sprite> playerHpRed_;
 
 	std::unique_ptr <Sprite> exp_;
+
+	//hp
 	std::unique_ptr <Sprite> hpBar_;
 	std::unique_ptr <Sprite> hpGage_;
 	

@@ -97,7 +97,7 @@ void TitleScene::Draw(DirectXCommon* dxCommon) {
 	_controller->fbxPlayer_->Draw(dxCommon->GetCommandList());
 	_controller->field_->Draw(dxCommon);
 	_controller->gameObjectManager_->DrawAllObjs(dxCommon->GetCommandList());
-
+	_controller->fbxPlayer_->ParticleDraw(dxCommon->GetCommandList());
 	_controller->spriteCommon_->SpritePreDraw();
 	if (isSwapCamera == true) {
 
@@ -116,6 +116,8 @@ void TitleScene::Draw(DirectXCommon* dxCommon) {
 	blackBackTitle_->Draw();
 
 	_controller->spriteCommon_->SpritePostDraw();
+
+	
 }
 
 void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {

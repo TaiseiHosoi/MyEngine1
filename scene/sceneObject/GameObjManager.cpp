@@ -33,6 +33,7 @@ void GameObjManager::StaticInit()
 	modelBill1 = Mesh::LoadFormOBJ("bill1", true);
 	modelTower1 = Mesh::LoadFormOBJ("tower1", true);
 	enemyBulletModel_ = Mesh::LoadFormOBJ("bume2", true);
+	ojamaFenceModel_ = Mesh::LoadFormOBJ("ojamaFence",true);
 	//モデルインサート
 	models.insert(std::make_pair("moai", modelMoai.get()));
 	models.insert(std::make_pair("Cube", modelCube.get()));
@@ -40,6 +41,7 @@ void GameObjManager::StaticInit()
 	models.insert(std::make_pair("cam", modelCam.get()));
 	models.insert(std::make_pair("bill1", modelBill1.get()));
 	models.insert(std::make_pair("tower1", modelTower1.get()));
+	models.insert(std::make_pair("ojamaFence", ojamaFenceModel_.get()));
 	
 	levelData = JsonLoader::LoadFile("testScene");
 

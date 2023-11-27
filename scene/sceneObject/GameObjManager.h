@@ -61,6 +61,7 @@ private:
     std::unique_ptr<Mesh> modelTower1;
     std::unique_ptr<Mesh> modelBill1;
     std::unique_ptr<Mesh> enemyBulletModel_;
+    std::unique_ptr<Mesh> ojamaFenceModel_;
 
     //オブジェクトの配列
     std::vector<Object3d> objects;

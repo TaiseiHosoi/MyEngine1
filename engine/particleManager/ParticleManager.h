@@ -36,6 +36,8 @@ public: // サブクラス
 	{
 		Vector3 pos; // xyz座標
 		float scale;
+		float rotate;
+
 	};
 
 	// 定数バッファ用データ構造体
@@ -52,6 +54,10 @@ public: // サブクラス
 		Vector3 position = {};
 		//速度
 		Vector3 velocity = {};
+		//回転
+		float rotate = 0;
+		float s_rotate = 0;
+		float rotateAccel = 0;
 		//加速度
 		Vector3 accel = {};
 		//現在フレーム
@@ -181,6 +187,8 @@ public: // メンバ関数
 	///	<param name="accel">加速度</param>
 	void Add(int life, Vector3 position, Vector3 velociy, Vector3 accel);
 	void Add(int life, Vector3 position, Vector3 velociy, Vector3 accel, float s_scale,float e_scale);
+	void Add(int life, const Vector3 position, const Vector3 velocity, const Vector3 accel,
+		float s_scale, float e_scale, float s_rotate,float rotateVel);
 
 	static void SetCamera(Camera* cameraArg) { ParticleManager::camera = cameraArg; }
 

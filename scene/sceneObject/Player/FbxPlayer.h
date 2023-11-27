@@ -42,6 +42,8 @@ public:
 	//描画
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
+	void ParticleDraw(ID3D12GraphicsCommandList* cmdList);
+
 	//パーティクル発生
 	void CreateBulHitParticle(Vector3 posArg);
 
@@ -64,6 +66,12 @@ public:
 	void CrashAction();
 	void BombAction();
 
+	//パラメータリセット
+	void PlayerPalamReset();
+
+	//ダメージエフェクト
+	void DamageEffectUpdate();
+
 public:	//アクセッサ
 
 	// 自機Object3d変数のゲッタ
@@ -75,12 +83,6 @@ public:	//アクセッサ
 	//デスフラグのGetter
 	bool GetIsDead() { return isDead_; }
 
-	//ガードの判定が出ているかのアクセッサ
-	static bool GetIsGuardCollide();
-
-	//ガードの判定が出ているかのアクセッサ
-	static void SetIsGuardCollide(bool isGuardCollide);
-
 
 
 	//死亡時演出のフェーズゲッタ
@@ -88,7 +90,12 @@ public:	//アクセッサ
 
 	void SetIsDeadActNum(int arg);
 
-	void PlayerPalamReset();
+
+	//現在のアルファ値取得
+	float GetCurrentAlpha();
+
+	//ダメージエフェクト秒数カウント
+	void SetMaxFramesToMaxAlpha(int frame);
 
 
 private:	
@@ -141,6 +148,7 @@ private:
 	std::unique_ptr<Mesh> hpModel_;
 	std::unique_ptr<ParticleManager> hitParticle_;
 	std::unique_ptr<ParticleManager> bombParticle_;
+	std::unique_ptr<ParticleManager> slashParticle_;
 	//テスト用
 	std::vector<std::unique_ptr<Object3d>> coliderPosTest_;
 
@@ -170,7 +178,7 @@ private:
 
 	Matrix4 pAngleMat = {};//自機の移動用Matrix
 	Vector3 nowPos = {};
-	const float maxParallelMovement_ = 12.f;	//最大平行Pos
+	const float maxParallelMovement_ = 14.f;	//最大平行Pos
 	
 #pragma endregion 移動処理で使う変数
 
@@ -192,14 +200,12 @@ private:
 	int nowShotDelayCount_ = 0;
 
 	//ヒット時パーティクルのサイズ
-	const int maxHitParticleLife_ = 10;
-	const float startHitParticleSize_ = 0.7f;
+	const int maxHitParticleLife_ = 20;
+	const float startHitParticleSize_ = 2.f;
 	const float endHitParticleSize_ = 0.1f;
 	
 
 #pragma endregion 射撃処理変数
-
-
 	//カメラの向き
 	Vector3 cameraAngle_ = {0 , 0 , 0};
 	RailCameraInfo* railCameraInfo_ = nullptr;
@@ -213,7 +219,6 @@ private:
 	bool isAtk = false;
 
 
-
 	//防御時行動
 	bool isGuard = false;	//ガードをするかしないか
 	bool isGuardExcute = false;	//ガード成功時用
@@ -221,13 +226,12 @@ private:
 	//反撃フラグオン→反撃遷移モーション→反撃→反撃フラグオフ
 	bool isCounter = false;	//反撃フラグ
 
-	
-
 	//ヒットポイント
-	int hitDeley = 0;	//何フレーム連続で当たるか
+	int hitDeley_ = 0;	//何フレーム連続で当たるか
 	int hp_ = 0;
 	const int maxHp_ = 100;
 	bool isHitStop = false;
+
 	//生死フラグ
 	bool isDead_ = false;
 	const int maxCrashActCount_ = 120;
@@ -245,6 +249,12 @@ private:
 	int count = 0;
 
 	//固定値
-	const int delayCount_ = 4;
-	const int damage_ = 2;
+	const int delayCount_ = 30;
+	const int damage_ = 10;
+
+	//点滅エフェクト用
+	int maxFramesToMaxAlpha_ = 0; //最大アルファ値までのフレーム数
+	int currentDamageFrame_ = 0;        //現在のフレームカウント
+	bool increasingAlpha_ = true;    //アルファ値を増加させるかどうか
+	float currentAlpha_ = 1.0f;      //現在のアルファ値
 };

@@ -125,6 +125,7 @@ void SceneManager::ChangeScene(IScene* scene) {
 	ResetParameters();
 	SceneInitialize();
 	
+	
 
 }
 

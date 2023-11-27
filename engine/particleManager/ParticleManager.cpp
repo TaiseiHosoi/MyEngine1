@@ -167,7 +167,9 @@ void ParticleManager::InitializeGraphicsPipeline()
 			"TEXCOORD",0,DXGI_FORMAT_R32_FLOAT,0,
 			D3D12_APPEND_ALIGNED_ELEMENT,
 			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
-		},
+		}
+
+
 	};
 
 	// グラフィックスパイプラインの流れを設定
@@ -519,6 +521,9 @@ void ParticleManager::Update()
 		//スケールの線形補完
 		it->scale = (it->e_scale - it->s_scale) * f;
 		it->scale += it->s_scale;
+
+		//回転
+		it->rotate += it->s_rotate + it->rotateAccel;
 		//色
 		constMapMaterial->color = it->color;
 	}
@@ -539,6 +544,8 @@ void ParticleManager::Update()
 			vertMap++;
 			//スケール
 			vertMap->scale = it->scale;
+			//回転
+			vertMap->rotate = it->rotate;
 
 		}
 		vertBuff->Unmap(0, nullptr);
@@ -627,6 +634,24 @@ void ParticleManager::Add(int life, Vector3 position, Vector3 velocity, Vector3 
 	p.num_frame = life;
 
 }
+
+void ParticleManager::Add(int life, const Vector3 position, const Vector3 velocity, const Vector3 accel, float s_scale, float e_scale, float s_rotate, float rotateVel)
+{
+	//リストに要素を追加
+	particles.emplace_front();
+	//追加した要素の参照
+	Particle& p = particles.front();
+	//値のセット
+	p.e_scale = e_scale;
+	p.s_scale = s_scale;
+	p.position = position;
+	p.velocity = velocity;
+	p.accel = accel;
+	p.s_rotate = s_rotate;
+	p.rotateAccel = rotateVel;
+	p.num_frame = life;
+}
+
 
 void ParticleManager::RandParticle(Vector3 pos)
 {

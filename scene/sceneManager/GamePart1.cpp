@@ -20,10 +20,10 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	move_->SetSize({ moveSprSize_.x,moveSprSize_.y });
 	move_->SetPozition({ moveSprPos_.x,moveSprPos_.y });
 
-	////音の初期化と読み込み
-	//audio_ = std::make_unique<Audio>();
-	//audio_->Initialize();
-	//audio_->LoadWave("newspaper.wav");
+	//音の初期化と読み込み
+	audio_ = std::make_unique<Audio>();
+	audio_->Initialize();
+	audio_->LoadWave("newspaper.wav");
 
 
 
@@ -41,6 +41,8 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	hpBar_ = std::make_unique<Sprite>();
 	hpBar_->Initialize(_controller->spriteCommon_.get(), 20);
 	hpBar_->SetPozition({ _controller->offsetHpSpritePos_.x ,_controller->offsetHpSpritePos_.y });
+	hpBar_->SetAnchorPoint({0.5,1.f});
+	hpBar_->Update();
 
 	hpGage_ = std::make_unique<Sprite>();
 	hpGage_->Initialize(_controller->spriteCommon_.get(), 21);
@@ -58,17 +60,14 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 void GamePart1::Update(Input* input, GameCamera* camera) {
 
 	//BGMを流す
-	//PlaySounds();
-
-
+	PlaySounds();
 
 	if (isPause_ == false) {
-
-
 
 		_controller->field_->Update();
 		_controller->fbxPlayer_->Update();
 		_controller->gameObjectManager_->UpdateAllObjects();
+		HpFlucture();
 
 		if (input->TriggerKey(DIK_ESCAPE)) {
 			isPause_ = true;
@@ -103,11 +102,16 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 			gameSceneMode_ = GAME_SCENE_MODE::gameOver;
 
 		}
-		else if (input->TriggerKey(DIK_2) || gameCount_ > 2000) {
+		else if (input->TriggerKey(DIK_2) || gameCount_ == 2000) {
 			camera->GoGameClear();
 			gameSceneMode_ = GAME_SCENE_MODE::gameClear;
 			gameCount_ = 0;
 		}
+		else if (gameCount_ > 2000) {
+			gameCount_ = 0;
+		}
+		
+
 		
 		/*ImGui::Begin("Pause");
 		ImGui::SetWindowPos({200 , 200});
@@ -129,6 +133,7 @@ void GamePart1::Draw(DirectXCommon* dxCommon) {
 	_controller->fbxPlayer_->Draw(dxCommon->GetCommandList());
 
 	_controller->gameObjectManager_->DrawAllObjs(dxCommon->GetCommandList());
+	_controller->fbxPlayer_->ParticleDraw(dxCommon->GetCommandList());
 
 	_controller->spriteCommon_->SpritePreDraw();
 
@@ -142,6 +147,7 @@ void GamePart1::Draw(DirectXCommon* dxCommon) {
 
 	_controller->spriteCommon_->SpritePostDraw();
 
+	
 
 
 }
@@ -206,5 +212,14 @@ void GamePart1::PlaySounds()
 	{
 		isSounds = true;
 		audio_->PlayWave("newspaper.wav"); //ループ再生はしない
+	}
+}
+
+void GamePart1::HpFlucture()
+{
+	float nowHp = static_cast<float>(_controller->fbxPlayer_->GetHp());
+	//10段階
+	if (nowHp >= 0) {
+		hpGage_->SetSize({ 80.f,nowHp / 100.f * 160.f });
 	}
 }
