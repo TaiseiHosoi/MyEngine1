@@ -201,7 +201,7 @@ private:
 
 	//ヒット時パーティクルのサイズ
 	const int maxHitParticleLife_ = 20;
-	const float startHitParticleSize_ = 2.f;
+	const float startHitParticleSize_ = 3.f;
 	const float endHitParticleSize_ = 0.1f;
 	
 
