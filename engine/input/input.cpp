@@ -49,6 +49,8 @@ void Input::Update() {
 	// 前回のキー保存
 	memcpy(keysPre, keys, sizeof(keys));
 
+
+
 	//キーボード情報の取得開始
 	result = keyboard->Acquire();
 	//全キーの入力状態を取得する
@@ -70,7 +72,7 @@ void Input::Update() {
 bool Input::PushKey(BYTE keyNumber) {
 
 	// 指定キーを押していればtrueを返す
-	if (keys[keyNumber]) {
+	if (isDontInput_ == false && keys[keyNumber]) {
 		return true;
 	}
 
@@ -82,7 +84,7 @@ bool Input::PushKey(BYTE keyNumber) {
 /// </summary>
 bool Input::TriggerKey(BYTE keyNumber) {
 	// 指定キーを押していればtrueを返す
-	if (keysPre[keyNumber] == 0 && keys[keyNumber]) {
+	if (isDontInput_ == false && keysPre[keyNumber] == 0 && keys[keyNumber]) {
 		return true;
 	}
 
@@ -91,7 +93,7 @@ bool Input::TriggerKey(BYTE keyNumber) {
 bool Input::ReleaseKey(BYTE keyNumber)
 {
 	// 指定キーを押していればtrueを返す
-	if (keysPre[keyNumber] && keys[keyNumber] == 0) {
+	if (isDontInput_ == false && keysPre[keyNumber] && keys[keyNumber] == 0) {
 		return true;
 	}
 
@@ -103,13 +105,28 @@ Input* Input::GetInstance() {
 }
 
 bool Input::PushMouseButton(unsigned char mouseButtons) {
+	if (isDontInput_ == true) {
+		return false;
+	}
 	return mouseButton.rgbButtons[mouseButtons];
 }
 
 bool Input::TriggerMouseButton(unsigned char mouseButtons) {
+
+	if (isDontInput_ == true) {
+		return false;
+	}
 	return mouseButton.rgbButtons[mouseButtons] && !oldMouseButton.rgbButtons[mouseButtons];
 }
 
 bool Input::ReleaseMouseButton(unsigned char mouseButtons) {
+	if (isDontInput_ == true) {
+		return false;
+	}
 	return !mouseButton.rgbButtons[mouseButtons] && oldMouseButton.rgbButtons[mouseButtons];;
+}
+
+void Input::SetIsDontInput(bool isDontInput)
+{
+	isDontInput_ = isDontInput;
 }

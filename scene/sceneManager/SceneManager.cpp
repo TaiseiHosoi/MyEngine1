@@ -143,7 +143,9 @@ void SceneManager::BlackDisolve()
 		blackSc_->SetTextureIndex(nowDisolveMode_);
 	}
 
-	oldDisolveMode_ = nowDisolveMode_;	//前フレーム
+	if (oldIsBlackDisolve_ == false && isBlackDisolve_ == true) {
+		Input::GetInstance()->SetIsDontInput(true);
+	}
 
 	if (isBlackDisolve_ == true && isTurnBackDis_ == false) {
 		blackScAlpha_ += 0.02f;
@@ -157,10 +159,23 @@ void SceneManager::BlackDisolve()
 		if (blackScAlpha_ < 0) {
 			isTurnBackDis_ = false;
 			isBlackDisolve_ = false;
+			Input::GetInstance()->SetIsDontInput(false);
 		}
 		
 	}
+	
+	//入力受付セット
+	if (isBlackDisolve_ == true) {
+		Input::GetInstance()->SetIsDontInput(true);
+	}
+
+
+	//α値設定
 	blackSc_->SetColor({ 1.f,1.f,1.f,blackScAlpha_ });
+
+	//前フレーム処理
+	oldDisolveMode_ = nowDisolveMode_;
+	oldIsBlackDisolve_ = isBlackDisolve_;
 }
 
 void SceneManager::SetIsBlackDisolve(bool isDisolve, int mode)

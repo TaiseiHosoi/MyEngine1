@@ -128,6 +128,7 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 
 	if (input->TriggerMouseButton(MOUSE_KEY::LEFT)) {
 		sceneSwapPhase_ = SceneSwapPhaseNum::START;
+		input->SetIsDontInput(true);
 	}
 
 
@@ -202,7 +203,7 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 	}else if (sceneSwapPhase_ == SceneSwapPhaseNum::END) {
 		isSwapCamera = true;
 		isChangeScene = true;
-		
+		input->SetIsDontInput(false);
 
 	}
 

@@ -55,6 +55,7 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	//ポップコマンドモードセット
 	_controller->gameObjectManager_->SetIsEnemyPops(true);
 	_controller->gameObjectManager_->InitEnemyCommands();
+
 }
 
 void GamePart1::Update(Input* input, GameCamera* camera) {

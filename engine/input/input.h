@@ -50,6 +50,8 @@ public:
 	bool TriggerMouseButton(unsigned char mouseButtons);
 	bool ReleaseMouseButton(unsigned char mouseButtons);
 
+	void SetIsDontInput(bool isDontInput);
+
 	static Input* GetInstance();
 
 public:
@@ -71,5 +73,7 @@ private:
 
 	BYTE keys[256] = {};
 	BYTE keysPre[256] = {};
+
+	bool isDontInput_ = false;	//キー入力を受け付けなくするか
 };
 
