@@ -535,6 +535,7 @@ void FbxPlayer::Move()
 
 	//挙動
 	nowPos.x += nowFlameParallelMove_;
+	playerParalellMoveVal_ = nowPos.x;
 	gameObject_->wtf.rotation_ = { faceAngle_.x, faceAngle_.y + pAngle ,faceAngle_.z };
 
 
@@ -656,6 +657,11 @@ float FbxPlayer::GetCurrentAlpha()
 void FbxPlayer::SetMaxFramesToMaxAlpha(int frame)
 {
 	maxFramesToMaxAlpha_ = frame;
+}
+
+float* FbxPlayer::GetParallelMovePtr()
+{
+	return &playerParalellMoveVal_;
 }
 
 void FbxPlayer::PlayerPalamReset()

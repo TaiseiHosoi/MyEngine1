@@ -97,6 +97,9 @@ public:	//アクセッサ
 	//ダメージエフェクト秒数カウント
 	void SetMaxFramesToMaxAlpha(int frame);
 
+	//平行移動の値ポインタゲット
+	float* GetParallelMovePtr();
+
 
 private:	
 	
@@ -175,10 +178,11 @@ private:
 	float faceRotSpeedY_ = 0.05f;
 	float faceRotSpeedX_ = 0.02f;
 	float returnRotSpeed_ = 0.015f;
+	float playerParalellMoveVal_ = 0;
 
 	Matrix4 pAngleMat = {};//自機の移動用Matrix
 	Vector3 nowPos = {};
-	const float maxParallelMovement_ = 14.f;	//最大平行Pos
+	const float maxParallelMovement_ = 25.f;	//最大平行Pos
 	
 #pragma endregion 移動処理で使う変数
 

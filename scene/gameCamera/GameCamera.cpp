@@ -86,17 +86,29 @@ void GameCamera::Update()
 	//	camMode_ = CAM_MODE::gameOver;
 	//}
 
+	//進行上の向いている方向
+	directionLoot_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + 0.005f)
+		- MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);
+	directionLoot_.nomalize();
+
+	Vector3 nowOffset;
+	float dirAngle = atan2(directionLoot_.x, directionLoot_.z);
+
+	//プレイヤーの動きに合わせて動くカメラ挙動分のVec3
+	Vector3 parallelVal = { 0,0,0 };
+	if (playerParallelMoveVal_ != nullptr) {
+		parallelVal.x = *playerParallelMoveVal_ / 2.f;
+	}
+	Vector3 nowParalellVec = MathFunc::RotateVecAngleY(parallelVal, dirAngle);
+
+
 	if (camMode_ == CAM_MODE::title) {
 
-		//進行上の向いている方向
-		directionLoot_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + 0.005f)
-			- MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);
-		directionLoot_.nomalize();
+		nowOffset = MathFunc::RotateVecAngleY(titleScOffsetPos_, dirAngle);
+		
 
 		//ワールド上の自機の回転量yを求める
-		Vector3 nowOffset;
-		float dirAngle = atan2(directionLoot_.x, directionLoot_.z);
-		nowOffset = MathFunc::RotateVecAngleY(titleScOffsetPos_, dirAngle);
+		
 
 		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
 		
@@ -118,11 +130,13 @@ void GameCamera::Update()
 		
 	}
 	else if (camMode_ == CAM_MODE::battle) {
+
+
+
 		//値を入力
 		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
-
 		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
-		railTargetPos_ = target;	//ローカル変数に保存
+		railTargetPos_ = target + nowParalellVec;	//ローカル変数に保存
 
 
 		Vector3 minusVec = railTargetPos_ - basePos_;
@@ -130,7 +144,7 @@ void GameCamera::Update()
 		float minusVal = battleSCMinusVal_;
 		minusVec *= minusVal;	//引きカメラ
 
-		basePos_ += minusVec;
+		basePos_ += minusVec + nowParalellVec;
 		basePos_.y = gamepartCamPosY;
 
 		FollowPlayer();
@@ -144,7 +158,7 @@ void GameCamera::Update()
 		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
 
 		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
-		railTargetPos_ = target;	//ローカル変数に保存
+		railTargetPos_ = target + nowParalellVec;	//ローカル変数に保存
 
 
 		Vector3 minusVec = railTargetPos_ - basePos_;
@@ -164,7 +178,7 @@ void GameCamera::Update()
 			Ease::LinearEaseOutEasing(directionPos.y,gamepartCamPos.y,startDirectionNowCount_,maxStartDirectionNowCount_,startDirectionSAFStrength_),
 			Ease::LinearEaseOutEasing(directionPos.z,gamepartCamPos.z,startDirectionNowCount_,maxStartDirectionNowCount_,startDirectionSAFStrength_)
 		};
-
+		basePos_ += nowParalellVec;	//プレイヤー横移動プラス
 		FollowPlayer();
 
 		// fovY演出処理
@@ -193,7 +207,7 @@ void GameCamera::Update()
 		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
 
 		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
-		railTargetPos_ = target;	//ローカル変数に保存
+		railTargetPos_ = target + nowParalellVec;	//ローカル変数に保存
 
 
 		Vector3 minusVec = railTargetPos_ - basePos_;
@@ -206,7 +220,7 @@ void GameCamera::Update()
 		plusVec.nomalize();
 		plusVec *= adjustGameOverDirectionLen_;
 
-		basePos_ += minusVec;
+		basePos_ += minusVec + nowParalellVec;
 		basePos_.y = gamepartCamPosY;
 
 		Vector3 tempEye = { Ease::LinierEaseInOutEasing(basePos_.x,basePos_.x - plusVec.x,gameOverDirectionNowCount_,maxGameOverDirectionCount_,startDirectionSAFStrength_)
@@ -251,7 +265,7 @@ void GameCamera::Update()
 
 		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
 		target.y += adjustCamDirPos_.y;	//注視点微調整
-		railTargetPos_ = target;	//ローカル変数に保存
+		railTargetPos_ = target + nowParalellVec;	//ローカル変数に保存
 
 
 		Vector3 minusVec = railTargetPos_ - basePos_;
@@ -264,7 +278,7 @@ void GameCamera::Update()
 		plusVec.nomalize();
 		plusVec *= adjustGameOverDirectionLen_;
 
-		basePos_ += minusVec;
+		basePos_ += minusVec + nowParalellVec;
 		basePos_.y = gamepartCamPosY;
 
 		Vector3 tempEye = { Ease::LinierEaseInOutEasing(basePos_.x,basePos_.x - plusVec.x,gameClearDirectionNowCount_,maxGameOverDirectionCount_,startDirectionSAFStrength_)
@@ -564,6 +578,11 @@ void GameCamera::GoGameClear()
 {
 	gameClearDirectionNowCount_ = 0;
 	camMode_ = CAM_MODE::gameClear;
+}
+
+void GameCamera::SetPlayerParallelMoveVal_(float* val)
+{
+	playerParallelMoveVal_ = val;
 }
 
 

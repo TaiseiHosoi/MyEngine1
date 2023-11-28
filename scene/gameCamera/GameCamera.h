@@ -144,6 +144,9 @@ public:	// アクセッサ
 	// ゲームクリア遷移
 	void GoGameClear();
 
+	//player平行移動量セッタ
+	void SetPlayerParallelMoveVal_(float* val);
+
 	// 1-> target ,0-> eye
 	WorldTransform swap_[2];
 private:
@@ -244,6 +247,9 @@ private:
 	const float directionShiftY = 20.f;
 
 	std::unique_ptr<RailCameraInfo> railCameraInfo_;
+
+	//プレイヤーの平行移動量
+	float* playerParallelMoveVal_ = nullptr;
 
 	//camMode
 	int camMode_ = 0;

@@ -55,6 +55,8 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	//ポップコマンドモードセット
 	_controller->gameObjectManager_->SetIsEnemyPops(true);
 	_controller->gameObjectManager_->InitEnemyCommands();
+	
+	camera->SetPlayerParallelMoveVal_(_controller->fbxPlayer_->GetParallelMovePtr());
 
 }
 
