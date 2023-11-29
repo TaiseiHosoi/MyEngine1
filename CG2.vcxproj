@@ -209,6 +209,7 @@
     <ClCompile Include="scene\sceneObject\Enemy\BasicEnemy.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\Enemy.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\EnemyManager.cpp" />
+    <ClCompile Include="scene\sceneObject\Enemy\OjamaFence.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\WalkingEnemy.cpp" />
     <ClCompile Include="scene\sceneObject\GameObjManager.cpp" />
     <ClCompile Include="scene\sceneObject\Ground.cpp" />
@@ -292,6 +293,7 @@
   <ItemGroup>
     <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyNormalBullet.h" />
     <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBullet.h" />
+    <ClInclude Include="scene\sceneObject\Enemy\OjamaFence.h" />
     <ClInclude Include="scene\sceneObject\Enemy\FloatingEnemy.h" />
     <ClInclude Include="scene\sceneObject\GameObjManager.h" />
     <ClInclude Include="engine\math\SplineCurve.h" />

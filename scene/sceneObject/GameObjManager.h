@@ -7,6 +7,7 @@
 #include"Enemy.h"
 #include"WalkingEnemy.h"
 #include"FloatingEnemy.h"
+#include"OjamaFence.h"
 #include"BasicEnemy.h"
 #include"Mesh.h"
 #include "Object3d.h"
@@ -102,6 +103,9 @@ private:
     int gameTime_ = 0;  //ゲーム開始からの時間
     bool isEnemyPops_ = false;
 
+    //おじゃまフェンス
+    std::list<std::unique_ptr<OjamaFence>> ojamaFences;
+
     //固定値
 
 
@@ -163,6 +167,9 @@ public:
 
     // 敵発生のリセット
     void InitEnemyCommands();
+
+    //おじゃまフェンスリセット
+    void InitOjamaFence();
 
 
 public:

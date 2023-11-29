@@ -55,6 +55,7 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	//ポップコマンドモードセット
 	_controller->gameObjectManager_->SetIsEnemyPops(true);
 	_controller->gameObjectManager_->InitEnemyCommands();
+	_controller->gameObjectManager_->InitOjamaFence();
 	
 	camera->SetPlayerParallelMoveVal_(_controller->fbxPlayer_->GetParallelMovePtr());
 
@@ -99,13 +100,14 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 			}
 		}
 		gameCount_++;
-		if (input->TriggerKey(DIK_1)) {
+		if (_controller->fbxPlayer_->GetHp() <= 10) {
 			camera->GoGameOver();
 			_controller->fbxPlayer_->GoGameOver();
 			gameSceneMode_ = GAME_SCENE_MODE::gameOver;
+			gameCount_ = 0;
 
 		}
-		else if (input->TriggerKey(DIK_2) || gameCount_ == 2000) {
+		else if ( gameCount_ == 2000) {
 			camera->GoGameClear();
 			gameSceneMode_ = GAME_SCENE_MODE::gameClear;
 			gameCount_ = 0;

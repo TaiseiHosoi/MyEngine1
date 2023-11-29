@@ -41,7 +41,6 @@ void GameObjManager::StaticInit()
 	models.insert(std::make_pair("cam", modelCam.get()));
 	models.insert(std::make_pair("bill1", modelBill1.get()));
 	models.insert(std::make_pair("tower1", modelTower1.get()));
-	models.insert(std::make_pair("ojamaFence", ojamaFenceModel_.get()));
 	
 	levelData = JsonLoader::LoadFile("testScene");
 
@@ -103,6 +102,11 @@ void GameObjManager::StaticInit()
 			moaiSpCollider[nowSphereNum]->Update();
 			continue;
 		}
+		else if (objectData.fileName == "ojamaFence") {
+
+
+			continue;
+		}
 		// 配列に登録
 		objects.push_back(newObject);
 	}
@@ -159,7 +163,11 @@ void GameObjManager::UpdateAllObjects()
 	floatingEnemies.remove_if([](std::unique_ptr<FloatingEnemy>& enemy) {
 		return enemy->GetState()->isDead_;
 		});
+	ojamaFences.remove_if([](std::unique_ptr<OjamaFence>& enemy) {
+		return enemy->GetState()->isDead_;
+		});
 
+	//ポップコマンド
 	if (isEnemyPops_ == true) {
 		UpdateWalkingEnemyPopCommands();
 		UpdateFloatingEnemyPopCommands();
@@ -224,6 +232,10 @@ void GameObjManager::UpdateAllObjects()
 		enemy->Update();
 	}
 
+	//おじゃまフェンス
+	for (const unique_ptr<OjamaFence>& enemy : ojamaFences) {
+		enemy->Update();
+	}
 
 	
 
@@ -237,6 +249,10 @@ void GameObjManager::DrawAllObjs(ID3D12GraphicsCommandList* cmdList)
 	}
 
 	for (const unique_ptr<FloatingEnemy>& enemy : floatingEnemies) {
+		enemy->Draw(cmdList);
+	}
+
+	for (const unique_ptr<OjamaFence>& enemy : ojamaFences) {
 		enemy->Draw(cmdList);
 	}
 
@@ -491,4 +507,46 @@ void GameObjManager::InitEnemyCommands()
 	ResetCommands("Resources/floatingEnemyPop.csv", floatingEnemyPopCommands_);
 	floatingEIsStand_ = 0;
 	floatingEstandTime_ = false;
+}
+
+void GameObjManager::InitOjamaFence()
+{
+	for (auto& objectData : levelData->objects) {
+		// ファイル名から登録済みモデルを検索
+		Mesh* model = nullptr;
+		decltype(models)::iterator it = models.find(objectData.fileName);
+		if (it != models.end()) {
+			model = it->second;
+		}
+
+		// モデルを指定して3Dオブジェクトを生成
+		Object3d newObject;
+		newObject.Initialize(true);
+		newObject.SetModel(model);
+
+		// 座標
+		DirectX::XMFLOAT3 pos;
+		DirectX::XMStoreFloat3(&pos, objectData.translation);
+		newObject.SetPosition(Vector3(pos.x, pos.y, pos.z));
+
+		// 回転角
+		DirectX::XMFLOAT3 rot;
+		DirectX::XMStoreFloat3(&rot, objectData.rotation);
+		newObject.SetRotate(Vector3(rot.x, rot.y, rot.z));
+
+		// 座標
+		DirectX::XMFLOAT3 scale;
+		DirectX::XMStoreFloat3(&scale, objectData.scaling);
+		newObject.SetScale(Vector3(scale.x, scale.y, scale.z));
+
+		if (objectData.fileName == "ojamaFence") {
+
+			std::unique_ptr<OjamaFence> newOjamaFence;
+			newOjamaFence = std::make_unique<OjamaFence>();
+			ojamaFences.push_back(std::move(newOjamaFence));
+			ojamaFences.back()->Initialize(ojamaFenceModel_.get());
+			ojamaFences.back()->SetWorldTransform(newObject.worldTransform);
+			
+		}
+	}
 }
