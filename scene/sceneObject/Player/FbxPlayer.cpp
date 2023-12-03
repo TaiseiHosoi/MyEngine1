@@ -656,7 +656,7 @@ float FbxPlayer::GetCurrentAlpha()
 
 void FbxPlayer::SetMaxFramesToMaxAlpha(int frame)
 {
-	maxFramesToMaxAlpha_ = frame;
+	maxFramesToMaxAlpha_ = frame / 5;
 }
 
 float* FbxPlayer::GetParallelMovePtr()
@@ -679,26 +679,37 @@ void FbxPlayer::PlayerPalamReset()
 
 void FbxPlayer::DamageEffectUpdate()
 {
-	// 最大アルファ値までのフレーム数を超えたら逆転させる
-	if (currentDamageFrame_ >= maxFramesToMaxAlpha_) {
-		increasingAlpha_ = !increasingAlpha_;
-		currentDamageFrame_ = 0;
-	}
-	
+	if (maxFramesToMaxAlpha_ > 0) {
+		// フレームカウントをインクリメント
+		currentDamageFrame_++;
 
-	// アルファ値を計算
-	if (increasingAlpha_) {
-		// アルファ値を上げる
-		currentAlpha_ = static_cast<float>(currentDamageFrame_) / maxFramesToMaxAlpha_;
-	}
-	else {
-		// アルファ値を下げる
-		currentAlpha_ = 1.0f - static_cast<float>(currentDamageFrame_) / maxFramesToMaxAlpha_;
-	}
+		// 点滅回数を計算
+		int blinkCount = currentDamageFrame_ / maxFramesToMaxAlpha_;
 
-	// フレームカウントをインクリメント
-	currentDamageFrame_++;
+		// 奇数回の点滅の場合、アルファ値を上げる
+		if (blinkCount % 2 == 1) {
+			currentAlpha_ = static_cast<float>(currentDamageFrame_ % maxFramesToMaxAlpha_) / maxFramesToMaxAlpha_;
+		}
+		else {
+			// 偶数回の点滅の場合、アルファ値を下げる
+			currentAlpha_ = 1.0f - static_cast<float>(currentDamageFrame_ % maxFramesToMaxAlpha_) / maxFramesToMaxAlpha_;
+		}
 
+		if (blinkCount == 3) {
+			int a = 0;
+			static_cast<void>(a);
+		}
+
+		// 点滅回数が5回を超えたらリセット
+		if (blinkCount >= 5) {
+			currentDamageFrame_ = 0;
+			maxFramesToMaxAlpha_ = 0;
+			hoverCarObject_->SetRimColor({ 1.f,1.f,1.f,1.f });
+		}
+		else {
+			hoverCarObject_->SetRimColor({ 1.f,1.f,1.f,GetCurrentAlpha() });
+		}
+	}
 }
 
 Vector3 FbxPlayer::GetNowFaceAngle()
