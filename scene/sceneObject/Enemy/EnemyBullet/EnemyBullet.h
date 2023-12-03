@@ -9,7 +9,7 @@ class EnemyBullet
 {
 public:
     // 初期化
-    virtual void Initialize(Mesh* model, Vector3 setPos, Vector3 setRot) = 0;
+    virtual void Initialize(Mesh* model, const Vector3& setPos, const Vector3& setRot) = 0;
     // 更新
     virtual void Update() = 0;
     // 描画

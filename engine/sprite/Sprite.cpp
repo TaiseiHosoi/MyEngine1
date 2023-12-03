@@ -223,7 +223,7 @@ void Sprite::SetRotation(float rotation_)
 	Update();
 }
 
-void Sprite::SetSize(XMFLOAT2 size)
+void Sprite::SetSize(const XMFLOAT2& size)
 {
 	size_ = size;
 	Update();

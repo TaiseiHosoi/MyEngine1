@@ -100,14 +100,14 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 			}
 		}
 		gameCount_++;
-		if (_controller->fbxPlayer_->GetHp() <= 10) {
-			camera->GoGameOver();
-			_controller->fbxPlayer_->GoGameOver();
-			gameSceneMode_ = GAME_SCENE_MODE::gameOver;
-			gameCount_ = 0;
-
-		}
-		else if ( gameCount_ == 2000) {
+		//if (_controller->fbxPlayer_->GetHp() <= 10) {
+		//	camera->GoGameOver();
+		//	_controller->fbxPlayer_->GoGameOver();
+		//	gameSceneMode_ = GAME_SCENE_MODE::gameOver;
+		//	gameCount_ = 0;
+		//
+		//}
+		if ( gameCount_ == 2000) {
 			camera->GoGameClear();
 			gameSceneMode_ = GAME_SCENE_MODE::gameClear;
 			gameCount_ = 0;
