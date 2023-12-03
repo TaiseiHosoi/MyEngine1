@@ -84,7 +84,7 @@ public:
 	uint32_t GetTextureIndex() { return textureIndex_; }
 
 	// テクスチャサイズセット
-	void SetTexSize(XMFLOAT2 texSize) { textureSize = texSize; }
+	void SetTexSize(const XMFLOAT2& texSize) { textureSize = texSize; }
 
 	// テクスチャサイズゲット
 	XMFLOAT2 GetTexSize() { return textureSize; }
@@ -93,7 +93,7 @@ public:
 	XMFLOAT2 GetSize() { return size_; }
 
 	// サイズのセッタ
-	void SetSize(XMFLOAT2 size);
+	void SetSize(const XMFLOAT2& size);
 
 	// アンカーポイントゲッタ
 	XMFLOAT2 GetAnchorPonit() { return anchorpoint; }

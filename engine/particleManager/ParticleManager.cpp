@@ -605,7 +605,7 @@ void ParticleManager::Draw(ID3D12GraphicsCommandList* cmdList)
 	}
 }
 
-void ParticleManager::Add(int life, Vector3 position, Vector3 velocity, Vector3 accel)
+void ParticleManager::Add(int life, const Vector3& position, const Vector3& velocity, const Vector3& accel)
 {
 	//リストに要素を追加
 	particles.emplace_front();
@@ -619,7 +619,7 @@ void ParticleManager::Add(int life, Vector3 position, Vector3 velocity, Vector3 
 
 }
 
-void ParticleManager::Add(int life, Vector3 position, Vector3 velocity, Vector3 accel, float s_scale, float e_scale)
+void ParticleManager::Add(int life, const Vector3& position, const Vector3& velocity, const Vector3& accel, float s_scale, float e_scale)
 {
 	//リストに要素を追加
 	particles.emplace_front();
@@ -635,7 +635,8 @@ void ParticleManager::Add(int life, Vector3 position, Vector3 velocity, Vector3 
 
 }
 
-void ParticleManager::Add(int life, const Vector3 position, const Vector3 velocity, const Vector3 accel, float s_scale, float e_scale, float s_rotate, float rotateVel)
+void ParticleManager::Add(int life, const Vector3& position, const Vector3& velocity, const Vector3& accel,
+	float s_scale, float e_scale, float s_rotate, float rotateVel)
 {
 	//リストに要素を追加
 	particles.emplace_front();

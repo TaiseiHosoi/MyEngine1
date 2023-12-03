@@ -28,11 +28,7 @@ public:
 	// 描画
 	void Draw(DirectXCommon* dxcomon_);
 
-	// 自機が接地しているか
-	static bool PlayerOnGround(Vector3 wolPos, float Obj_R);
-
-	// 敵が接地しているか
-	static bool EnemyOnGround(Vector3 wolPos, float Obj_R);
+	
 
 
 	//メンバ変数

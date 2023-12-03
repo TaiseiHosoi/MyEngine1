@@ -33,7 +33,7 @@ public: // アクセッサ
     void SetPlayerWorldTransform(WorldTransform* worldTransform);
 
     // offsetPos_セッタ
-    void SetOffsetVec3(const Vector3 v) { offsetPos_ = v; };
+    void SetOffsetVec3(const Vector3& v) { offsetPos_ = v; };
 
     // object3d_ゲッタ
     Object3d* GetObject3d() { return object3d_.get(); }
@@ -53,7 +53,7 @@ public: // アクセッサ
     // 強制true
     bool compultionTrue();
 
-    void SetWorldTransform(const WorldTransform arg);
+    void SetWorldTransform(const WorldTransform& arg);
 
 
 

@@ -7,7 +7,7 @@ public:
     ~EnemyNormalBullet();
 
     // 初期化
-    void Initialize(Mesh* model, Vector3 setPos, Vector3 setRot);
+    void Initialize(Mesh* model, const Vector3& setPos, const Vector3& setRot);
     // 更新
     void Update();
     // 描画

@@ -93,7 +93,7 @@ public:
 public:	// アクセッサ
 
 	// シェイクのベクトルセット
-	void SetShakeVec(Vector3 shakeVec);
+	void SetShakeVec(const Vector3& shakeVec);
 
 	// シーン切り替え用
 	void ChangeFollowFlag(bool flag);

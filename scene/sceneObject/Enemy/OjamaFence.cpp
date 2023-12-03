@@ -135,7 +135,7 @@ bool OjamaFence::compultionTrue()
 	return true;
 }
 
-void OjamaFence::SetWorldTransform(const WorldTransform arg)
+void OjamaFence::SetWorldTransform(const WorldTransform& arg)
 {
 	object3d_->worldTransform = arg;
 }

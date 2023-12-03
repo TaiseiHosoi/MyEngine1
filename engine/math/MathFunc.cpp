@@ -34,7 +34,7 @@ Matrix4 MathFunc::Initialize() {
 	return matInitialize;
 }
 
-Matrix4 MathFunc::Scale(Vector3 scale) {
+Matrix4 MathFunc::Scale(const Vector3& scale) {
 
 	//スケーリング行列を宣言
 	Matrix4 matScale = {
@@ -50,7 +50,7 @@ Matrix4 MathFunc::Scale(Vector3 scale) {
 	return scaling;
 }
 
-Matrix4 MathFunc::Rotation(Vector3 rotation, int X_1_Y_2_Z_3_XYZ_6) {
+Matrix4 MathFunc::Rotation(const Vector3& rotation, int X_1_Y_2_Z_3_XYZ_6) {
 	int rotationX = 1;
 	int rotationY = 2;
 	int rotationZ = 3;
@@ -124,7 +124,7 @@ Matrix4 MathFunc::Rotation(Vector3 rotation, int X_1_Y_2_Z_3_XYZ_6) {
 	}
 }
 
-Matrix4 MathFunc::Move(Vector3 Move) {
+Matrix4 MathFunc::Move(const Vector3& Move) {
 	Matrix4 matMove = {
 		1.0f, 0.0f, 0.0f, 0.0f,
 		0.0f, 1.0f, 0.0f, 0.0f,
@@ -174,7 +174,7 @@ Vector3 MathFunc:: bVelocity(const Vector3 velocity, const Matrix4 mat) {
 	return result;
 }
 
-Vector3 MathFunc::RotateVecAngleY(Vector3 v, float angle)
+Vector3 MathFunc::RotateVecAngleY(const Vector3& v, float angle)
 {
 	float cosA = cos(angle);
 	float sinA = sin(angle);
@@ -259,7 +259,7 @@ float MathFunc::FieldOfViewY(float focalLengs, float sensor) {
 
 }
 
-Matrix4 MathFunc::ConvertXMMATtoMat4(DirectX::XMMATRIX XMMatrix) {
+Matrix4 MathFunc::ConvertXMMATtoMat4(const DirectX::XMMATRIX& XMMatrix) {
 	Matrix4 result;
 	for (int i = 0; i < 4; i++) {
 
@@ -273,7 +273,7 @@ Matrix4 MathFunc::ConvertXMMATtoMat4(DirectX::XMMATRIX XMMatrix) {
 	return result;
 }
 
-DirectX::XMMATRIX MathFunc::ConvertMat4toXMMat(Matrix4 m) {
+DirectX::XMMATRIX MathFunc::ConvertMat4toXMMat(const Matrix4& m) {
 	DirectX::XMMATRIX result;
 	result = DirectX::XMMatrixSet(
 		m.m[0][0], m.m[0][1], m.m[0][2], m.m[0][3],

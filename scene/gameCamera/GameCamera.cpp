@@ -446,7 +446,7 @@ void GameCamera::SetShakePrimST(float dura , float mag , bool isShakePrim)
 	isShake = isShakePrim;
 }
 
-void GameCamera::SetShakeVec(Vector3 shakeVec)
+void GameCamera::SetShakeVec(const Vector3& shakeVec)
 {
 	shakeVec_ = shakeVec;
 }

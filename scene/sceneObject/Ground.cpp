@@ -72,37 +72,3 @@ void Field::Draw(DirectXCommon* dxcomon_)
 }
 
 
-
-bool Field::PlayerOnGround(Vector3 wolPos, float Obj_R) {
-
-	{
-		Vector3 field = { 0,0,0 };
-		Vector3 world = wolPos;
-		float xz = std::pow(field.x - world.x, 2.0f) + std::pow(field.z - world.z, 2.0f);
-		float lenR = std::pow(Obj_R + R, 2.0f);
-		if (xz <= lenR) {
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
-
-}
-
-
-bool Field::EnemyOnGround(Vector3 wolPos, float Obj_R) {
-	{
-		Vector3 field = { 0,0,0 };
-		Vector3 world = wolPos;
-		float xz = std::pow(field.x - world.x, 2.0f) + std::pow(field.z - world.z, 2.0f);
-		float lenR = std::pow(Obj_R + BR, 2.0f);
-		if (xz <= lenR) {
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
-
-}

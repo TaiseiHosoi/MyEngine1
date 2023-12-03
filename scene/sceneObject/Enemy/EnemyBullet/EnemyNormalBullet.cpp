@@ -5,7 +5,7 @@ EnemyNormalBullet::~EnemyNormalBullet()
 	CollisionManager::GetInstance()->RemoveCollider(sphere.get());
 }
 
-void EnemyNormalBullet::Initialize(Mesh* model, Vector3 setPos, Vector3 setRot)
+void EnemyNormalBullet::Initialize(Mesh* model, const Vector3& setPos, const Vector3& setRot)
 {
 	//ObjectInit
 	model_ = model;

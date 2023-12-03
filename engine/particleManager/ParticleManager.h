@@ -185,21 +185,21 @@ public: // メンバ関数
 	///	<param name="position">初期座標</param>
 	///	<param name="velocity">速度</param>
 	///	<param name="accel">加速度</param>
-	void Add(int life, Vector3 position, Vector3 velociy, Vector3 accel);
-	void Add(int life, Vector3 position, Vector3 velociy, Vector3 accel, float s_scale,float e_scale);
-	void Add(int life, const Vector3 position, const Vector3 velocity, const Vector3 accel,
+	void Add(int life, const Vector3& position, const Vector3& velocity, const Vector3& accel);
+	void Add(int life, const Vector3& position, const Vector3& velocity, const Vector3& accel, float s_scale,float e_scale);
+	void Add(int life, const Vector3& position, const Vector3& velocity, const Vector3& accel,
 		float s_scale, float e_scale, float s_rotate,float rotateVel);
 
 	static void SetCamera(Camera* cameraArg) { ParticleManager::camera = cameraArg; }
 
 	// ワールドトランスフォームの設定
-	void SetWorldTransform(WorldTransform wtf) { wtf_ = wtf; };
+	void SetWorldTransform(const WorldTransform& wtf) { wtf_ = wtf; };
 	// パーティクル発生位置の設定
-	void Setposition(Vector3 position) { wtf_.translation_ = position; };
+	void Setposition(const Vector3& position) { wtf_.translation_ = position; };
 	// マット行列セット
-	void SetMatWorld(Matrix4 mat) { wtf_.matWorld_ = mat; };
+	void SetMatWorld(const Matrix4& mat) { wtf_.matWorld_ = mat; };
 	// ビルボード行列をセット
-	void SetBillboardMatWorld(Matrix4 mat) { bill = mat; };
+	void SetBillboardMatWorld(const Matrix4& mat) { bill = mat; };
 
 	// ワールドトランスフォームゲッタ
 	WorldTransform GetWorldTransform()
