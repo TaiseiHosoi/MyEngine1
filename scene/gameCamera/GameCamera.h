@@ -245,6 +245,7 @@ private:
 	const float battleSCMinusVal_ = 15.f;
 	const float directionMagnification = 50.f;
 	const float directionShiftY = 20.f;
+	const float targetParalellVecMag_ = 1.5f;	//taigetカメラ平行移動倍率
 
 	std::unique_ptr<RailCameraInfo> railCameraInfo_;
 

@@ -136,7 +136,7 @@ void GameCamera::Update()
 		//値を入力
 		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
 		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
-		railTargetPos_ = target + nowParalellVec;	//ローカル変数に保存
+		railTargetPos_ = target + nowParalellVec* targetParalellVecMag_;	//ローカル変数に保存
 
 
 		Vector3 minusVec = railTargetPos_ - basePos_;
@@ -158,7 +158,7 @@ void GameCamera::Update()
 		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
 
 		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
-		railTargetPos_ = target + nowParalellVec;	//ローカル変数に保存
+		railTargetPos_ = target + nowParalellVec * targetParalellVecMag_;	//ローカル変数に保存
 
 
 		Vector3 minusVec = railTargetPos_ - basePos_;

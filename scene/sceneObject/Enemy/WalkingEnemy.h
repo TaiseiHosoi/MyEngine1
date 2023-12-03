@@ -165,7 +165,7 @@ private:// 当たり判定
     const float turnEaseStrength = 4.0f;
     const int maxFowardTime_ = 60;
     const int maxTurnTime_ = 10;
-
+   
     
 };
 
