@@ -23,6 +23,10 @@ public:
     // 死亡時フラグセッタ
     void SetIsDead(bool isDead) { isDead_ = isDead; };
 
+    void SetRadius(float rad);
+
+    void SetSpeed(float speed);
+
 private:
     CollisionManager* collider = nullptr;
     std::unique_ptr<SphereCollider> sphere;

@@ -8,6 +8,7 @@
 #include"WalkingEnemy.h"
 #include"FloatingEnemy.h"
 #include"OjamaFence.h"
+#include"CarryBallEnemy.h"
 #include"BasicEnemy.h"
 #include"Mesh.h"
 #include "Object3d.h"
@@ -24,7 +25,8 @@ struct LevelData;
 
 enum ENEMY_NUM {
     WALKING_ENEMY,
-    FLOATING_ENEMY
+    FLOATING_ENEMY,
+    CARRY_BALL_ENEMY
 };
 
 enum SPOWN_OFFSET_POS {
@@ -103,6 +105,16 @@ private:
     int gameTime_ = 0;  //ゲーム開始からの時間
     bool isEnemyPops_ = false;
 
+    //抱玉敵用変数
+    std::list <std::unique_ptr<CarryBallEnemy>> carryBallEnemies;
+    std::stringstream carryBallEnemyPopCommands_; //csv
+    bool carryBallEIsStand_ = false;  //待機フラグ
+    int carryBallEstandTime_ = 0; //ポップデータの待機時間
+    const float adjustCarryBallESpownLenShort_ = 13.f;
+    const float adjustCarryBallESpownLenLong_ = 25.f;
+
+   
+
     //おじゃまフェンス
     std::list<std::unique_ptr<OjamaFence>> ojamaFences;
 
@@ -155,6 +167,9 @@ public:
 
     // 浮遊敵ポップコマンド更新
     void UpdateFloatingEnemyPopCommands();
+
+    // 抱玉敵ポップコマンド更新
+    void UpdateCarryBallEnemyPopCommands();
 
     // レールカメラ情報セット
     void SetRailCamInfo(RailCameraInfo* info) { railCameraInfo_ = info; };

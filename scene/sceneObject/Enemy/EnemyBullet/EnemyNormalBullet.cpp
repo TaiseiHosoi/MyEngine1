@@ -51,3 +51,14 @@ void EnemyNormalBullet::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	object_->Draw(cmdList);
 }
+
+void EnemyNormalBullet::SetRadius(float rad)
+{
+	object_->worldTransform.scale_ = { rad,rad,rad };
+	sphere->SetRadius(object_->worldTransform.scale_.x);
+}
+
+void EnemyNormalBullet::SetSpeed(float speed)
+{
+	bulletSpeed_ = speed;
+}

@@ -107,6 +107,7 @@ void GameObjManager::StaticInit()
 
 			continue;
 		}
+		
 		// 配列に登録
 		objects.push_back(newObject);
 	}
@@ -148,6 +149,18 @@ void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
 		floatingEnemies.back()->SetBulletModel(enemyBulletModel_.get());
 
 	}
+	else if (enemyNum == ENEMY_NUM::CARRY_BALL_ENEMY) {
+		//オブジェクト処理
+		std::unique_ptr<CarryBallEnemy> newCarryBallEnemy;
+		newCarryBallEnemy = std::make_unique<CarryBallEnemy>();
+		carryBallEnemies.push_back(std::move(newCarryBallEnemy));
+		carryBallEnemies.back()->Initialize(modelCube.get());
+		carryBallEnemies.back()->SetOffsetVec3(offsetPos);
+		carryBallEnemies.back()->SetRailCameraInfo(railCameraInfo_);
+		carryBallEnemies.back()->SetPlayerWorldTransform(playerWorldTF_);
+		carryBallEnemies.back()->SetBulletModel(enemyBulletModel_.get());
+
+	}
 }
 
 
@@ -163,6 +176,9 @@ void GameObjManager::UpdateAllObjects()
 	floatingEnemies.remove_if([](std::unique_ptr<FloatingEnemy>& enemy) {
 		return enemy->GetState()->isDead_;
 		});
+	carryBallEnemies.remove_if([](std::unique_ptr<CarryBallEnemy>& enemy) {
+		return enemy->GetState()->isDead_;
+		});
 	ojamaFences.remove_if([](std::unique_ptr<OjamaFence>& enemy) {
 		return enemy->GetState()->isDead_;
 		});
@@ -171,6 +187,7 @@ void GameObjManager::UpdateAllObjects()
 	if (isEnemyPops_ == true) {
 		UpdateWalkingEnemyPopCommands();
 		UpdateFloatingEnemyPopCommands();
+		UpdateCarryBallEnemyPopCommands();
 	}
 
 	for (int i = 0; i < objects.size();i++) {
@@ -232,6 +249,11 @@ void GameObjManager::UpdateAllObjects()
 		enemy->Update();
 	}
 
+	//抱玉敵更新
+	for (const unique_ptr<CarryBallEnemy>& enemy : carryBallEnemies) {
+		enemy->Update();
+	}
+
 	//おじゃまフェンス
 	for (const unique_ptr<OjamaFence>& enemy : ojamaFences) {
 		enemy->Update();
@@ -249,6 +271,10 @@ void GameObjManager::DrawAllObjs(ID3D12GraphicsCommandList* cmdList)
 	}
 
 	for (const unique_ptr<FloatingEnemy>& enemy : floatingEnemies) {
+		enemy->Draw(cmdList);
+	}
+
+	for (const unique_ptr<CarryBallEnemy>& enemy :carryBallEnemies) {
 		enemy->Draw(cmdList);
 	}
 
@@ -284,6 +310,16 @@ void GameObjManager::DestroyAllEnemies()
 
 	floatingEnemies.remove_if([](std::unique_ptr<FloatingEnemy>& enemy) {
 		return enemy->compultionTrue();
+		});
+
+	carryBallEnemies.remove_if([](std::unique_ptr<CarryBallEnemy>& enemy) {
+		static_cast<void>(enemy);
+		return true;
+		});
+
+	ojamaFences.remove_if([](std::unique_ptr<OjamaFence>& enemy) {
+		static_cast<void>(enemy);
+		return true;
 		});
 }
 
@@ -485,6 +521,98 @@ void GameObjManager::UpdateFloatingEnemyPopCommands()
 	}
 }
 
+void GameObjManager::UpdateCarryBallEnemyPopCommands()
+{
+	//待機処理
+	if (carryBallEIsStand_) {
+		carryBallEstandTime_--;
+		if (carryBallEstandTime_ <= 0) {
+			//待機完了
+			carryBallEIsStand_ = false;
+		}
+		return;
+	}
+	// 1行分の文字列を入れる変数
+	std::string line;
+
+	//コマンド実行ループ
+	while (getline(carryBallEnemyPopCommands_, line)) {
+		// 1行分の文字数をストリームに変換して解折しやすくなる
+		std::istringstream line_stream(line);
+
+		std::string word;
+		//,区切りで行の先頭文字を取得
+		getline(line_stream, word, ',');
+
+		//"//"から始まる行はコメント
+		if (word.find("//") == 0) {
+			//コメント行を飛ばす
+			continue;
+		}
+		// POPコマンド
+		if (word.find("POP") == 0) {
+
+			//レーン
+			std::getline(line_stream, word, ',');
+			int lane = static_cast<int>(std::atof(word.c_str()));
+
+			// ID
+			std::getline(line_stream, word, ',');
+			//int ID = static_cast<int>(std::atof(word.c_str()));
+
+
+
+
+			if (lane == SPOWN_OFFSET_POS::SP_LEFT) {
+				//offset
+				Vector3 offset = { -adjustCarryBallESpownLenLong_,0,0 };
+				AddEnemy(ENEMY_NUM::CARRY_BALL_ENEMY, 0, offset);
+			}
+			else if (lane == SPOWN_OFFSET_POS::SP_CENTER) {
+				//offset
+				Vector3 offset = { 0,0,0 };
+				AddEnemy(ENEMY_NUM::CARRY_BALL_ENEMY, 0, offset);
+			}
+			else if (lane == SPOWN_OFFSET_POS::SP_RIGHT) {
+				//offset
+				Vector3 offset = { adjustCarryBallESpownLenLong_,0,0 };
+				AddEnemy(ENEMY_NUM::CARRY_BALL_ENEMY, 0, offset);
+			}
+			else if (lane == SPOWN_OFFSET_POS::SP_SHORT_RIGHT) {
+				//offset
+				Vector3 offset = { adjustCarryBallESpownLenShort_,0,0 };
+				AddEnemy(ENEMY_NUM::CARRY_BALL_ENEMY, 0, offset);
+			}
+			else if (lane == SPOWN_OFFSET_POS::SP_SHORT_LEFT) {
+				//offset
+				Vector3 offset = { -adjustCarryBallESpownLenShort_,0,0 };
+				AddEnemy(ENEMY_NUM::CARRY_BALL_ENEMY, 0, offset);
+			}
+			else {
+				//offset
+				Vector3 offset = { 0,0,0 };
+				AddEnemy(ENEMY_NUM::CARRY_BALL_ENEMY, 0, offset);
+			}
+		}
+		// WAITコマンド
+		else if (word.find("WAIT") == 0) {
+			std::getline(line_stream, word, ',');
+
+			//待ち時間
+			int32_t waitTime = std::atoi(word.c_str());
+
+			//待機開始
+			carryBallEIsStand_ = true;
+			carryBallEstandTime_ = waitTime;
+
+			//抜ける
+			break;
+		}
+	}
+}
+
+
+
 void GameObjManager::SetPlayerWorldTF(WorldTransform* worldTF)
 {
 	playerWorldTF_ = worldTF;
@@ -507,6 +635,10 @@ void GameObjManager::InitEnemyCommands()
 	ResetCommands("Resources/floatingEnemyPop.csv", floatingEnemyPopCommands_);
 	floatingEIsStand_ = 0;
 	floatingEstandTime_ = false;
+
+	ResetCommands("Resources/carryBallEnemyPop.csv", carryBallEnemyPopCommands_);
+	carryBallEIsStand_ = 0;
+	carryBallEstandTime_ = false;
 }
 
 void GameObjManager::InitOjamaFence()
