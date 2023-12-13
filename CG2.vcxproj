@@ -161,6 +161,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\CarryBallEnemy.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\EnemyBullet\EnemyNormalBullet.cpp" />
     <ClCompile Include="engine\3dObject\Mesh.cpp" />
@@ -292,6 +293,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.h" />
     <ClInclude Include="scene\sceneObject\Enemy\CarryBallEnemy.h" />
     <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyNormalBullet.h" />
     <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBullet.h" />

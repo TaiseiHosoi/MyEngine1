@@ -297,6 +297,9 @@
     <ClCompile Include="scene\sceneObject\Enemy\CarryBallEnemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\ObjPS.hlsl">
@@ -526,6 +529,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="scene\sceneObject\Enemy\CarryBallEnemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
