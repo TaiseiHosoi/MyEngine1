@@ -27,7 +27,7 @@ void SceneManager::ObjectInitialize() {
 	spriteCommon_->Initialize(_dxCommon);
 	// TITLE
 	spriteCommon_->LoadTexture(1, "title.png");
-	spriteCommon_->LoadTexture(2, "title2.png");
+	spriteCommon_->LoadTexture(2, "title2.dds");
 	spriteCommon_->LoadTexture(3, "end.png");
 
 	// UI

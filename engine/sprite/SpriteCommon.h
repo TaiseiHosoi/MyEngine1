@@ -7,6 +7,8 @@
 #include <DirectXTex.h>
 #include <array>
 #include <string>
+#include <locale>
+#include <codecvt>
 
 using namespace DirectX;
 
@@ -52,6 +54,10 @@ public:
 
 	// テクスチャのコマンドセット
 	void SetTextureCommands(uint32_t index);
+
+	// テクスチャのファイルネームセパレート
+	void SeparateFilePath(const std::string& filePath);
+
 
 	// texBuff[index]ゲッタ
 	Microsoft::WRL::ComPtr<ID3D12Resource> GetTexBuff(uint32_t index) { return texBuff[index]; }
@@ -125,5 +131,12 @@ private:
 
 	UINT incrementSize;
 
+	///セパレート用(一時保存)
+	//ディレクトリパス
+	std::string directoryPath_;
+	//ファイル名
+	std::string fileName_;
+	//ファイル拡張子
+	std::string fileExt_;
 
 };
