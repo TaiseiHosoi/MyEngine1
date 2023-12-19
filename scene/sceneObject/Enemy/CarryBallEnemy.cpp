@@ -44,7 +44,7 @@ void CarryBallEnemy::Update()
 
 
 	//弾リムーヴ処理
-	bullets_.remove_if([](std::unique_ptr<EnemyNormalBullet>& bullet) {
+	bullets_.remove_if([](std::unique_ptr<EnemyBoundBall>& bullet) {
 		return bullet->ReturnIsDead();
 		});
 
@@ -122,7 +122,7 @@ void CarryBallEnemy::Update()
 	//object3d更新
 	object3d_->Update();
 
-	for (std::unique_ptr<EnemyNormalBullet>& rapidBullet : bullets_) {
+	for (std::unique_ptr<EnemyBoundBall>& rapidBullet : bullets_) {
 		rapidBullet->Update();
 	}
 
@@ -137,7 +137,7 @@ void CarryBallEnemy::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	object3d_->Draw(cmdList);
 
-	for (std::unique_ptr<EnemyNormalBullet>& rapidBullet : bullets_) {
+	for (std::unique_ptr<EnemyBoundBall>& rapidBullet : bullets_) {
 		rapidBullet->Draw(cmdList);
 	}
 }
@@ -193,7 +193,7 @@ void CarryBallEnemy::Atk()
 	}
 	else {
 		nowPhase_ = MOVE_PHASE::none;
-		state_.isDead_ = true;
+		isDeathAction_ = true;
 	}
 
 	// 移動処理
@@ -212,7 +212,7 @@ void CarryBallEnemy::Atk()
 void CarryBallEnemy::ShotBullet()
 {
 	nowShotDelay_++;
-	if (nowShotDelay_ > bulletShotDelay_) {
+	if (nowShotDelay_ > bulletShotDelay_ && nowShotNum_ < maxShotNum_) {
 		nowShotDelay_ = 0;
 
 		if (isDeathAction_ == false) {
@@ -225,14 +225,13 @@ void CarryBallEnemy::ShotBullet()
 
 void CarryBallEnemy::AddBullet()
 {
-	std::unique_ptr<EnemyNormalBullet> newRapidBullet;
-	newRapidBullet = std::make_unique<EnemyNormalBullet>();
+	std::unique_ptr<EnemyBoundBall> newRapidBullet;
+	newRapidBullet = std::make_unique<EnemyBoundBall>();
 
 	Vector3 bulletRot = object3d_->worldTransform.rotation_;
 	bulletRot.z -= directlyBelow_;
 	newRapidBullet->Initialize(bulletModel_, object3d_->worldTransform.matWorld_.GetWorldPos(), bulletRot);
 	newRapidBullet->SetRadius(bulRad_);
-	newRapidBullet->SetSpeed(bulSpeed_);
 	bullets_.push_back(std::move(newRapidBullet));
 }
 

@@ -33,11 +33,20 @@ void EnemyBoundBall::Update()
 		isDead_ = true;
 	}
 
-	//弾の方向ベクトル
-	Vector3 bulletVec = { 0,0,bulletSpeed_ };
-	bulletVec = MathFunc::MatVector(bulletVec, object_->worldTransform.matWorld_);
+	if (object_->GetWorldTransformPtr()->translation_.y <= lowestPos_) {
+		nowSpeed_ = offsetBoundSpeed_;
+		boundCount_++;
+	}else{
+		nowSpeed_ -= gravityVel_;
+	}
 
-	object_->worldTransform.translation_ += bulletVec;
+	if (boundCount_ > 0) {
+		object_->GetWorldTransformPtr()->rotation_.z += rollSpeed_;
+	}
+
+	
+	object_->GetWorldTransformPtr()->translation_.y += nowSpeed_;
+	
 
 	//更新
 	object_->Update();
@@ -58,7 +67,3 @@ void EnemyBoundBall::SetRadius(float rad)
 	sphere->SetRadius(object_->worldTransform.scale_.x);
 }
 
-void EnemyBoundBall::SetSpeed(float speed)
-{
-	bulletSpeed_ = speed;
-}

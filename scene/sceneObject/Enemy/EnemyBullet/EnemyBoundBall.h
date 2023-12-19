@@ -25,7 +25,6 @@ public:
 
     void SetRadius(float rad);
 
-    void SetSpeed(float speed);
 
 private:
     CollisionManager* collider = nullptr;
@@ -34,11 +33,18 @@ private:
     Mesh* model_ = nullptr;
     bool isDead_ = false;
     Vector3 colPos_ = {};
-    float bulletSpeed_ = 2.f;
-    const int maxCountSinceBirth_ = 60;
-    int countSinceBirth_ = 0;
 
+    //生まれてから何Fか
+    const int maxCountSinceBirth_ = 200;
+    int countSinceBirth_ = 0;   
 
+    //挙動
+    const float offsetBoundSpeed_ = 1.2f;
+    const float gravityVel_ = 0.04f;
+    const float lowestPos_ = 0.1f;
+    float nowSpeed_ = 0.0f;
+    int boundCount_ = 0;    //バウンドした回数
+    const float rollSpeed_ = -0.06f;
 
 
 };

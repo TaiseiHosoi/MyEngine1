@@ -34,6 +34,9 @@ void GameObjManager::StaticInit()
 	modelTower1 = Mesh::LoadFormOBJ("tower1", true);
 	enemyBulletModel_ = Mesh::LoadFormOBJ("bume2", true);
 	ojamaFenceModel_ = Mesh::LoadFormOBJ("ojamaFence",true);
+	icoBallModel_ = Mesh::LoadFormOBJ("IcoSphere", true);
+	carryBallEnemyModel_ = Mesh::LoadFormOBJ("CarryArm", true);
+
 	//モデルインサート
 	models.insert(std::make_pair("moai", modelMoai.get()));
 	models.insert(std::make_pair("Cube", modelCube.get()));
@@ -154,11 +157,11 @@ void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
 		std::unique_ptr<CarryBallEnemy> newCarryBallEnemy;
 		newCarryBallEnemy = std::make_unique<CarryBallEnemy>();
 		carryBallEnemies.push_back(std::move(newCarryBallEnemy));
-		carryBallEnemies.back()->Initialize(modelCube.get());
+		carryBallEnemies.back()->Initialize(carryBallEnemyModel_.get());
 		carryBallEnemies.back()->SetOffsetVec3(offsetPos);
 		carryBallEnemies.back()->SetRailCameraInfo(railCameraInfo_);
 		carryBallEnemies.back()->SetPlayerWorldTransform(playerWorldTF_);
-		carryBallEnemies.back()->SetBulletModel(enemyBulletModel_.get());
+		carryBallEnemies.back()->SetBulletModel(icoBallModel_.get());
 
 	}
 }

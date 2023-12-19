@@ -4,7 +4,7 @@
 #include "CollisionManager.h"
 #include"CollisionAttribute.h"
 #include "GameCamera.h"
-#include"EnemyNormalBullet.h"
+#include "EnemyBoundBall.h"
 
 class CarryBallEnemy : public Enemy {
 public:
@@ -127,12 +127,15 @@ private:// 当たり判定
 
     //射撃関連
     Mesh* bulletModel_ = nullptr;
-    std::list< std::unique_ptr<EnemyNormalBullet>> bullets_;
-    const int bulletShotDelay_ = 20;
+    std::list< std::unique_ptr<EnemyBoundBall>> bullets_;
+    const int bulletShotDelay_ = 60;
+    const int maxShotNum_ = 2;  //最大発射回数
+    int nowShotNum_ = 0;    //発射回数
     const float bulRad_ = 7.f;
     const float bulSpeed_ = 0.15f;
     int nowShotDelay_ = 0;
     const float directlyBelow_ = 0.5f;
+
 
     //その他
     int rotMode_ = ROT_MODE::straight;
