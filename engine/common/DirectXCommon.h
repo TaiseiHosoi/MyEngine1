@@ -40,6 +40,9 @@ public:
 	void PostDraw();
 	// デバイスゲッタ
 	ID3D12Device* GetDevice() const { return device_.Get(); }
+
+	ID3D12DescriptorHeap* GetDsvHeap() const { return dsvHeap_.Get(); }
+	ID3D12Resource* GetDepthBuffers() const { return depthBuff_.Get(); }
 	// コマンドリストヘッダ
 	ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
 	//バックバッハの数をw取得

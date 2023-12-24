@@ -121,6 +121,12 @@
     <Filter Include="ヘッダー ファイル\scene\Player\bullet">
       <UniqueIdentifier>{3554c282-87a6-4d18-be03-17a9ded77f5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\PostEffect">
+      <UniqueIdentifier>{1836ab50-1957-40e6-9578-68016d04e808}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\PostEffect">
+      <UniqueIdentifier>{9bcb0049-2a48-45ab-876d-0c1554351969}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -300,6 +306,9 @@
     <ClCompile Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="engine\PostEffect\PostEffect.cpp">
+      <Filter>ソース ファイル\PostEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\ObjPS.hlsl">
@@ -329,6 +338,12 @@
       <Filter>リソース ファイル</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ParticleVS.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffectPS.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffectVS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
   </ItemGroup>
@@ -534,6 +549,9 @@
     <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="engine\PostEffect\PostEffect.h">
+      <Filter>ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Obj.hlsli">
@@ -551,5 +569,8 @@
     </None>
     <None Include=".editorconfig" />
     <None Include="Resources\carryBallEnemyPop.csv" />
+    <None Include="Resources\shaders\PostEffect.hlsli">
+      <Filter>リソース ファイル</Filter>
+    </None>
   </ItemGroup>
 </Project>
