@@ -107,8 +107,9 @@ void SceneManager::SceneUpdate(Input* input) {
 void SceneManager::SceneDraw() {
 	
 	spriteCommon_->SpritePreDraw();
-	backGroundSp_->Draw();
+	backGroundSp_->Draw();	//背景スプライト
 	spriteCommon_->SpritePostDraw();
+
 	_scene.get()->Draw(_dxCommon);
 	
 	if (isBlackDisolve_ == true) {

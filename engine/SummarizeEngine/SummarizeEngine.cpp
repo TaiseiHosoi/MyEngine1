@@ -1,4 +1,5 @@
 #include"SummarizeEngine.h"
+#include"PostEffect.h"
 
 void SummarizeEngine::Initialize() {
 	winApp_ = WinApp::GetInstance();
@@ -27,6 +28,9 @@ void SummarizeEngine::Initialize() {
 	application_ = new Application();
 	application_->Initialize(dxCommon_);
 
+	//ポストエフェクト
+	PostEffect::Initialize(dxCommon_);	//ポストエフェクトのスタティックメンバ変数初期化
+
 	imGuiManager_ = new ImGuiManager;
 	imGuiManager_->Initialize(winApp_, dxCommon_);
 
@@ -48,10 +52,19 @@ void SummarizeEngine::Update() {
 
 void SummarizeEngine::Draw() {
 	//描画
-	dxCommon_->PreDraw();
+	PostEffect::PreDrawScene(dxCommon_->GetCommandList());
+
+	
 
 
 	application_->Draw();
+
+	PostEffect::PostDrawScene();
+
+	
+
+	dxCommon_->PreDraw();
+	PostEffect::Draw(dxCommon_->GetCommandList());
 
 	imGuiManager_->End();
 

@@ -1,4 +1,4 @@
-﻿#include "PostEffect.h"
+﻿#include "MultiTex.h"
 #include<d3dx12.h>
 #include"WinApp.h"
 #include <cassert>
@@ -6,43 +6,43 @@
 
 #pragma comment(lib, "d3dcompiler.lib")
 
-ID3D12Device* PostEffect::device_;
+ID3D12Device* MultiTex::device_;
 
-ID3D12GraphicsCommandList* PostEffect::commandList;
+ID3D12GraphicsCommandList* MultiTex::commandList;
 
-PostEffect::VertexPosUv PostEffect::vertices[4];
+MultiTex::VertexPosUv MultiTex::vertices[4];
 
-PostEffect::VertexPosUv* PostEffect::vertMap;
+MultiTex::VertexPosUv* MultiTex::vertMap;
 
-PostEffect::ConstBufferDataB1* PostEffect::constBuffDataB1;
 
-Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::vertBuff;	//頂点バッファ
+Microsoft::WRL::ComPtr<ID3D12Resource> MultiTex::vertBuff;	//頂点バッファ
 
-Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::constBuffResourceB1;
+Microsoft::WRL::ComPtr<ID3D12Resource> MultiTex::constBuffResourceB1;
 
 //頂点バッファビューの作成
-D3D12_VERTEX_BUFFER_VIEW PostEffect::vbView{};
-Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::texBuff[2];
+D3D12_VERTEX_BUFFER_VIEW MultiTex::vbView{};
+Microsoft::WRL::ComPtr<ID3D12Resource> MultiTex::texBuff[2];
 
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> PostEffect::descHeapSRV;
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> MultiTex::descHeapSRV;
 //深度バッファ
-Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::depthBuff;
+Microsoft::WRL::ComPtr<ID3D12Resource> MultiTex::depthBuff;
 //RTV用のデスクリプタヒープ
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> PostEffect::descHeapRTV;
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> MultiTex::descHeapRTV;
 //DSV用のデスクリプタヒープ
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> PostEffect::descHeapDSV;
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> MultiTex::descHeapDSV;
 
-Microsoft::WRL::ComPtr<ID3D12PipelineState> PostEffect::pipelineState;
-Microsoft::WRL::ComPtr<ID3D12RootSignature> PostEffect::rootSignature;
+Microsoft::WRL::ComPtr<ID3D12PipelineState> MultiTex::pipelineState;
+Microsoft::WRL::ComPtr<ID3D12RootSignature> MultiTex::rootSignature;
 
-int PostEffect::blurTexNum_ = 7;
-int PostEffect::breadth_ = 1;
 
-const float PostEffect::clearColor[4] = { 0.25f,0.5f,0.1f,0 };
-Input* PostEffect::input_ = Input::GetInstance();
 
-void PostEffect::Initialize(DirectXCommon* dxCommon)
+const float MultiTex::clearColor[4] = { 0.25f,0.5f,0.1f,0 };
+Input* MultiTex::input_ = Input::GetInstance();
+
+void MultiTex::Initialize(DirectXCommon* dxCommon)
 {
+
+
 
 	HRESULT result;
 
@@ -151,7 +151,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 		vertices[i] = vertices_[i];
 	}
 
-	
+
 
 	//頂点データ全体のサイズ=頂点データ一つ分のサイズ*頂点データの要素数
 	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
@@ -180,17 +180,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 #pragma region 定数バッファ生成
 	// ヒーププロパティ
 	CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-	// リソース設定
-	CD3DX12_RESOURCE_DESC resourceDesc =
-		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataB1) + 0xff) & ~0xff);
 
-
-	// 定数バッファの生成
-	result = device_->CreateCommittedResource(
-		&heapProps, // アップロード可能
-		D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&constBuffResourceB1));
-	assert(SUCCEEDED(result));
 #pragma endregion 定数バッファ生成
 
 	//GPU上のバッファに対応した仮想メモリ（メインメモリ上）を取得
@@ -211,29 +201,13 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	CreatGraphicsPipelineState();
 
 	// ヒーププロパティ
-	CD3DX12_HEAP_PROPERTIES heapProps1= CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-	// リソース設定
-	CD3DX12_RESOURCE_DESC resourceDesc1 =
-		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataB1) + 0xff) & ~0xff);
+	CD3DX12_HEAP_PROPERTIES heapProps1 = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 
-	// 定数バッファの生成
-	result = device_->CreateCommittedResource(
-		&heapProps1, // アップロード可能
-		D3D12_HEAP_FLAG_NONE, &resourceDesc1, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&constBuffResourceB1));
-	assert(SUCCEEDED(result));
 
-	//定数バッファのマッピング
-	result = constBuffResourceB1->Map(0, nullptr, (void**)&constBuffDataB1);
-	assert(SUCCEEDED(result));
-
-	//定数として10を入れておく(ぼかし度)
-	constBuffDataB1->blurTexNum = 1;
-	constBuffDataB1->breadth = 1;
 
 }
 
-void PostEffect::Finalize()
+void MultiTex::Finalize()
 {
 
 	vertBuff.Reset();
@@ -249,7 +223,7 @@ void PostEffect::Finalize()
 
 }
 
-void PostEffect::CreatGraphicsPipelineState()
+void MultiTex::CreatGraphicsPipelineState()
 {
 	HRESULT result;
 
@@ -260,7 +234,7 @@ void PostEffect::CreatGraphicsPipelineState()
 
 	//頂点シェーダーの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/shaders/PostEffectVS.hlsl", //シェーダーファイル名
+		L"Resources/shaders/MultiTextureVS.hlsl", //シェーダーファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,//インクルード可能にする
 		"main", "vs_5_0",//エントリーポイント名、シェーダーモデル指定
@@ -284,7 +258,7 @@ void PostEffect::CreatGraphicsPipelineState()
 	}
 	//ピクセルシェーダーの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/shaders/PostEffectPS.hlsl",
+		L"Resources/shaders/MultiTexturePS.hlsl",
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,
 		"main", "ps_5_0",
@@ -414,17 +388,12 @@ void PostEffect::CreatGraphicsPipelineState()
 	assert(SUCCEEDED(result));
 }
 
-void PostEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
+void MultiTex::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 {
-	if (input_->TriggerKey(DIK_UP)) {
-		constBuffDataB1->blurTexNum += 1;
-	}
-	else if (input_->TriggerKey(DIK_DOWN)) {
-		constBuffDataB1->blurTexNum -= 1;
-	}
+
 	//定数バッファをセット
 	commandList = cmdList;
-	
+
 
 	for (int i = 0; i < 2; i++) {
 		CD3DX12_RESOURCE_BARRIER resouceBar = CD3DX12_RESOURCE_BARRIER::Transition(texBuff[i].Get(),
@@ -468,9 +437,9 @@ void PostEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 	commandList->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
-void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
+void MultiTex::Draw(ID3D12GraphicsCommandList* cmdList)
 {
-	
+
 
 	commandList = cmdList;
 
@@ -503,7 +472,7 @@ void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
 	commandList->DrawInstanced(_countof(vertices), 1, 0, 0);//すべての頂点を使って描画
 }
 
-void PostEffect::PostDrawScene()
+void MultiTex::PostDrawScene()
 {
 	for (int i = 0; i < 2; i++) {
 		CD3DX12_RESOURCE_BARRIER RESOURCE_BARRIER = CD3DX12_RESOURCE_BARRIER::Transition(texBuff[i].Get(),
