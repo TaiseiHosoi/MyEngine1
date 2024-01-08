@@ -70,16 +70,9 @@ public:
 	// シェイク用
 	float randomFloat(float min , float max);	//ランダムを引き出す
 
-	// 画面シェイク関数
-	void ShakePrim();
 
-	/// <summary>
-	/// 画面シェイク関数情報セット
-	/// </summary>
-	/// <param name="dura"></時間>
-	/// <param name="mag"></大きさ>
-	/// <param name="isShakePrim"></シェイクさせるか>
-	static void SetShakePrimST(float dura , float mag , bool isShakePrim);
+
+
 
 	//カメラの向きを計算する関数
 	void CulDirection();
@@ -92,8 +85,6 @@ public:
 
 public:	// アクセッサ
 
-	// シェイクのベクトルセット
-	void SetShakeVec(const Vector3& shakeVec);
 
 	// シーン切り替え用
 	void ChangeFollowFlag(bool flag);
@@ -166,14 +157,7 @@ private:
 	int cameraModeChangeCountTimer = 30;
 	float cameraHeight_ = 6;
 	
-	//ShakePrim用変数
-	static float magnitude;	//シェイクの強さ
-	static float duration;//シェイクを起こす時間
-	static bool isShake;
-	float elapsedTime = 0.0f;
-	const float deltaTime = 0.016f;	//1.0fを1秒(60FPS)と考えた際の1F
-	Vector3 loolAtPos = {};
-	Vector3 shakeVec_ = {0 , 0 , 0};
+	
 
 	//マウスカメラ用
 	Vector3 rotation_ = {0 , 0 , 0};

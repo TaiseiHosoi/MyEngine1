@@ -104,7 +104,6 @@ void WalkingEnemy::Update()
 
 			object3d_->worldTransform.rotation_.y = adjustFAngle_ + dirAngle;
 
-
 		}
 		else if (rotMode_ == ROT_MODE::toPlayer) {
 

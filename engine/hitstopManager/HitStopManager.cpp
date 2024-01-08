@@ -60,7 +60,7 @@ void HitStopManager::Execute()
 
 void HitStopManager::CameraShake()
 {
-	gameCamera_->SetShakeVec(gameCamera_->GetTarget() + (shakeAngle_ * 3));
+	
 	gameCamera_->Update();
 }
 
@@ -70,5 +70,5 @@ void HitStopManager::Finalize()
 	*hitStopFlag_ = false;
 	hitStopFlag_ = nullptr;
 	shakeAngle_ = {0 , 0 , 0};
-	gameCamera_->SetShakeVec({0 , 0 , 0});
+	
 }

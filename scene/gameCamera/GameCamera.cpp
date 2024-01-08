@@ -10,10 +10,6 @@
 #include"WinApp.h"
 #include <WinUser.h>
 
-float GameCamera::magnitude = 0.0f;
-float GameCamera::duration = 0.0f;
-bool GameCamera::isShake = 0.0f;
-
 GameCamera::GameCamera(int window_width , int window_height , Input* input)
 	: Camera(window_width , window_height)
 {
@@ -413,43 +409,8 @@ float GameCamera::randomFloat(float min , float max)
 	return min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (max - min)));
 }
 
-void GameCamera::ShakePrim()
-{
-	if (isShake == true)
-	{
 
-		if (elapsedTime < duration)
-		{
-			float offsetX = randomFloat(-1.0f , 1.0f) * magnitude;
-			float offsetY = randomFloat(-1.0f , 1.0f) * magnitude;
-			float offsetZ = randomFloat(-1.0f , 1.0f) * magnitude;
 
-			loolAtPos = {offsetX , offsetY , offsetZ};
-
-			elapsedTime += deltaTime;
-		}
-		else
-		{
-			elapsedTime = 0.0f;
-
-			isShake = false;
-		}
-
-	}
-
-}
-
-void GameCamera::SetShakePrimST(float dura , float mag , bool isShakePrim)
-{
-	duration = dura;
-	magnitude = mag;
-	isShake = isShakePrim;
-}
-
-void GameCamera::SetShakeVec(const Vector3& shakeVec)
-{
-	shakeVec_ = shakeVec;
-}
 
 void GameCamera::ResetGameCam()
 {
