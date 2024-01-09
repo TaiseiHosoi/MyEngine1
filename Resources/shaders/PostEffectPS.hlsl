@@ -57,7 +57,7 @@ float crt_ease(const float x, const float base, const float offset)
 float4 main(VSOutput input) : SV_TARGET
 {
 
-	float shift = 0.003f;
+	float shift = 0.0018f;
 	float4 colortex0 = tex0.Sample(smp, input.uv);
 	float4 colortex1 = tex0.Sample(smp, input.uv);
 
@@ -83,15 +83,21 @@ float4 main(VSOutput input) : SV_TARGET
 	uv +=  0 * dy;
 	uv +=  1 * dy;
 
+
+
 	// ガウシアンフィルタによって、境界をぼかす
 	// 特に、黒背景にドット絵だけが浮かんでいるような場合に
 	// 背景とオブジェクトがハッキリ分かれてしまうことを防いでいる
-	half4 col = gaussian_sample(uv, dx, dy);
+	half4 col;
+	col.x = gaussian_sample(uv + float2(-shift,0), dx, dy).x;
+	col.y = gaussian_sample(uv, dx, dy).y;
+	col.z = gaussian_sample(uv + float2(shift,0), dx, dy).z;
+
 
 	const float floor_y = fmod(uv.y * 720 / 6, 1);
-	const float ease_r = crt_ease(floor_y, col.r, rand(uv) * 0.1);
+	const float ease_r = crt_ease(floor_y, col.r, rand(uv + float2(-shift,0)) * 0.1);
 	const float ease_g = crt_ease(floor_y, col.g, rand(uv) * 0.1);
-	const float ease_b = crt_ease(floor_y, col.b, rand(uv) * 0.1);
+	const float ease_b = crt_ease(floor_y, col.b, rand(uv + float2(shift,0)) * 0.1);
 
 	// 現在のピクセルによってRGBのうち一つの色だけを表示する
 	float r =  ease_r;
@@ -101,7 +107,8 @@ float4 main(VSOutput input) : SV_TARGET
 
 	return half4(r, g, b, 1);
 
-	
-	return col;
+
+
+
 
 }
