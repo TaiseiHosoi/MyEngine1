@@ -50,6 +50,7 @@ void SceneManager::ObjectInitialize() {
 	spriteCommon_->LoadTexture(22, "gameOver.png");
 	spriteCommon_->LoadTexture(23, "gameClear.png");
 	spriteCommon_->LoadTexture(24, "background.png");
+	spriteCommon_->LoadTexture(25, "sotowaku2.png");
 
 	audio = std::make_unique<Audio>();
 	audio->Initialize();
@@ -77,6 +78,12 @@ void SceneManager::ObjectInitialize() {
 	backGroundSp_->Initialize(spriteCommon_.get(), 24);
 	backGroundSp_->SetPozition({ 0,0 });
 	backGroundSp_->SetSize({WinApp::window_width,WinApp::window_height });
+
+	//外枠スプライト
+	outerFrameSp_ = std::make_unique<Sprite>();
+	outerFrameSp_->Initialize(spriteCommon_.get(), 25);
+	outerFrameSp_->SetPozition({ 0,0 });
+	outerFrameSp_->SetSize({ WinApp::window_width,WinApp::window_height });
 
 	//パーティクルのセット
 	particleManager_ = std::make_unique<ParticleManager>();
@@ -117,6 +124,13 @@ void SceneManager::SceneDraw() {
 	}
 
 
+}
+
+void SceneManager::OffsetBackSceneDraw()
+{
+	spriteCommon_->SpritePreDraw();
+	outerFrameSp_->Draw();	//背景スプライト
+	spriteCommon_->SpritePostDraw();
 }
 
 void SceneManager::ChangeScene(IScene* scene) {

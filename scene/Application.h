@@ -56,7 +56,8 @@ public:
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void PostEffectDraw();
+	void OffsetDraw();
 
 
 	int gameLevel_ = 0;

@@ -79,8 +79,13 @@ void Application::Update()
 
 }
 
-void Application::Draw()
+void Application::PostEffectDraw()
 {
 	sceneManager_->SceneDraw();
+}
+
+void Application::OffsetDraw()
+{
+	sceneManager_->OffsetBackSceneDraw();
 }
 

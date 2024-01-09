@@ -52,19 +52,22 @@ void SummarizeEngine::Update() {
 
 void SummarizeEngine::Draw() {
 	//描画
-	PostEffect::PreDrawScene(dxCommon_->GetCommandList());
-
 	
 
-
-	application_->Draw();
+	PostEffect::PreDrawScene(dxCommon_->GetCommandList());
+	application_->PostEffectDraw();
 
 	PostEffect::PostDrawScene();
 
-	
+
 
 	dxCommon_->PreDraw();
 	PostEffect::Draw(dxCommon_->GetCommandList());
+
+
+	
+	application_->OffsetDraw();
+	
 
 	imGuiManager_->End();
 

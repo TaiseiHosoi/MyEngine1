@@ -53,6 +53,7 @@ public:
 	void SceneUpdate(Input* input);
 	// 各シーンのDrawを呼び出す
 	void SceneDraw();
+	void OffsetBackSceneDraw();
 
 	// シーンを変更する
 	void ChangeScene(IScene*);
@@ -96,6 +97,7 @@ public:
 
 	//背景スプライト
 	std::unique_ptr <Sprite> backGroundSp_;
+	std::unique_ptr <Sprite> outerFrameSp_;
 
 	std::unique_ptr<ParticleManager> particleManager_;
 	
