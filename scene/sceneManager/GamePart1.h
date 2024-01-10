@@ -6,6 +6,8 @@
 #include "IScene.h"
 #include "GameObjManager.h"
 
+using namespace MyEngine;
+
 // 追いかけパート
 class GamePart1 :
     public IScene

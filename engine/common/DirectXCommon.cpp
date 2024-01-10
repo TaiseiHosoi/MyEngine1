@@ -9,6 +9,8 @@
 
 using namespace Microsoft::WRL;
 
+using namespace MyEngine;
+
 void DirectXCommon::Initialize(WinApp* winApp) {
 	assert(winApp);
 	winApp_ = winApp;

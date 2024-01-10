@@ -1,5 +1,5 @@
 #include "SceneIntegrate.h"
-
+using namespace MyEngine;
 
 
 GamePart1::GamePart1(SceneManager* controller) {

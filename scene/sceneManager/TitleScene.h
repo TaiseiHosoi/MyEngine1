@@ -5,7 +5,7 @@
 #pragma once
 #include "IScene.h"
 
-
+using namespace MyEngine;
 
 class TitleScene :public IScene
 {

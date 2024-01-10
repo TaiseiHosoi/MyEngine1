@@ -3,6 +3,8 @@
 
 #pragma comment(lib, "winmm.lib")
 
+using namespace MyEngine;
+
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wPalam, LPARAM lParam);
 WinApp* WinApp::WinApp_  = nullptr;
 void WinApp::Initialize() {

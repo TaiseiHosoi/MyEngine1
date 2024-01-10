@@ -22,10 +22,14 @@
 #include "Sprite.h"
 #include "SpriteCommon.h"
 
+using namespace MyEngine;
+
 class Input;
 class IScene;
-class DirectXCommon;
+class MyEngine::DirectXCommon;
 class GameCamera;
+
+
 
 enum DisolveMode {
 	gameClearMode = 23,

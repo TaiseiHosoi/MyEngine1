@@ -315,7 +315,7 @@
     <ClCompile Include="scene\gameCamera\CameraShake.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="scene\sceneObject\Enemy\EnemyDirectionUtility.cpp">
+    <ClCompile Include="scene\sceneObject\Utility\EnemyDirectionUtility.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -569,7 +569,7 @@
     <ClInclude Include="scene\gameCamera\CameraShake.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="scene\sceneObject\Enemy\EnemyDirectionUtility.h">
+    <ClInclude Include="scene\sceneObject\Utility\EnemyDirectionUtility.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="scene\gameCamera\RailCameraInfo.h">

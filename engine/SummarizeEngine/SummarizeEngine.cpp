@@ -1,5 +1,6 @@
 #include"SummarizeEngine.h"
 #include"PostEffect.h"
+using namespace MyEngine;
 
 void SummarizeEngine::Initialize() {
 	winApp_ = WinApp::GetInstance();

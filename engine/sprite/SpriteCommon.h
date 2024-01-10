@@ -11,7 +11,7 @@
 #include <codecvt>
 
 using namespace DirectX;
-
+using namespace MyEngine;
 
 //スプライト共通部分
 class SpriteCommon {

@@ -8,7 +8,7 @@
 #include <d3dx12.h>
 #include "DirectXCommon.h"
 
-
+using namespace MyEngine;
 class ImGuiManager
 {
 public:

@@ -29,7 +29,7 @@
 
 #include"Ground.h"
 
-
+using namespace MyEngine;
 
 class Application {
 public:

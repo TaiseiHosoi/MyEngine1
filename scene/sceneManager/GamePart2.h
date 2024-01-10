@@ -5,6 +5,7 @@
 #pragma once
 #include "IScene.h"
 #include "SceneManager.h"
+using namespace MyEngine;
 
 // ボス 戦闘1
 class GamePart2 :

@@ -1,5 +1,7 @@
 #include "SceneIntegrate.h"
 
+using namespace MyEngine;
+
 TitleScene::TitleScene(SceneManager* controller) {
 	_controller = controller;
 }

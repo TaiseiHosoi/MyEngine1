@@ -1,5 +1,6 @@
 #include"Sprite.h"
 
+using namespace MyEngine;
 void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t textureIndex)
 {
 

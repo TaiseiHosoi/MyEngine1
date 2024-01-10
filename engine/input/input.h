@@ -9,10 +9,13 @@
 #include <dinput.h>
 #include "WinApp.h"
 
+using namespace MyEngine;
+
 enum MOUSE_KEY {
 	LEFT,
 	RIGHT
 };
+
 
 class Input
 {

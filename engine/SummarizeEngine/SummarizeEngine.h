@@ -19,6 +19,8 @@ const float PI = 3.14f;
 
 template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
+using namespace MyEngine;
+
 class SummarizeEngine {
 public:
 

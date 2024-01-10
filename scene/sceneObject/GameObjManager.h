@@ -173,6 +173,9 @@ public:
     // 抱玉敵ポップコマンド更新
     void UpdateCarryBallEnemyPopCommands();
 
+    // 敵ぽっぷしたときの初期化をまとめている
+    void EnemyPopInitializes(std::list <std::unique_ptr<Enemy>>& enemyList, std::unique_ptr<FloatingEnemy>& newEnemy,Mesh& model,const Vector3& offsetPos, RailCameraInfo& railCameraInfo,WorldTransform& playerWorldTF,Mesh& BulletModel);
+
     // レールカメラ情報セット
     void SetRailCamInfo(RailCameraInfo* info) { railCameraInfo_ = info; };
 
