@@ -71,23 +71,18 @@ float4 main(VSOutput input) : SV_TARGET
 	}
 
 
-
 	// 隣のピクセルまでのUV座標での差を計算しておく
 	const float2 dx = float2(1 / 1280, 0);
 	const float2 dy = float2(0, 1 / 720);
 
-	// RGBごとにUVをずらすことで、
-	// 3. 画素の並びは色ごとに異なるオフセットがある
-	// を達成する
-	uv +=  -1 * dy;
-	uv +=  0 * dy;
-	uv +=  1 * dy;
+	// RGBごとにUVをずらす
+	uv += -1 * dy;
+	uv += 0 * dy;
+	uv += 1 * dy;
 
 
 
 	// ガウシアンフィルタによって、境界をぼかす
-	// 特に、黒背景にドット絵だけが浮かんでいるような場合に
-	// 背景とオブジェクトがハッキリ分かれてしまうことを防いでいる
 	half4 col;
 	col.x = gaussian_sample(uv + float2(-shift,0), dx, dy).x;
 	col.y = gaussian_sample(uv, dx, dy).y;
@@ -99,13 +94,12 @@ float4 main(VSOutput input) : SV_TARGET
 	const float ease_g = crt_ease(floor_y, col.g, rand(uv) * 0.1);
 	const float ease_b = crt_ease(floor_y, col.b, rand(uv + float2(shift,0)) * 0.1);
 
-	// 現在のピクセルによってRGBのうち一つの色だけを表示する
-	float r =  ease_r;
-	float g =  ease_g;
-	float b =  ease_b;
+	
+	float3 rgb =  float3(ease_r,ease_g,ease_b);
+	
 
 
-	return half4(r, g, b, 1);
+	return half4(rgb, 1);
 
 
 

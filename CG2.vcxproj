@@ -201,6 +201,7 @@
     <ClCompile Include="engine\sprite\Sprite.cpp" />
     <ClCompile Include="engine\sprite\SpriteCommon.cpp" />
     <ClCompile Include="engine\SummarizeEngine\SummarizeEngine.cpp" />
+    <ClCompile Include="scene\sceneObject\Enemy\EnemyDirectionUtility.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\FloatingEnemy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="scene\Application.cpp" />
@@ -323,10 +324,12 @@
     <ClInclude Include="engine\PostEffect\MultiTex.h" />
     <ClInclude Include="engine\PostEffect\PostEffect.h" />
     <ClInclude Include="scene\gameCamera\CameraShake.h" />
+    <ClInclude Include="scene\gameCamera\RailCameraInfo.h" />
     <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.h" />
     <ClInclude Include="scene\sceneObject\Enemy\CarryBallEnemy.h" />
     <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyNormalBullet.h" />
     <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBullet.h" />
+    <ClInclude Include="scene\sceneObject\Enemy\EnemyDirectionUtility.h" />
     <ClInclude Include="scene\sceneObject\Enemy\OjamaFence.h" />
     <ClInclude Include="scene\sceneObject\Enemy\FloatingEnemy.h" />
     <ClInclude Include="scene\sceneObject\GameObjManager.h" />

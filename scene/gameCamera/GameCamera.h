@@ -7,6 +7,7 @@
 #include"Camera.h"
 #include"Input.h"
 #include "Object3d.h"
+#include "RailCameraInfo.h"
 #include<vector>
 
 enum CAM_MODE {
@@ -17,13 +18,7 @@ enum CAM_MODE {
 	gameClear
 };
 
-struct RailCameraInfo {
-	int startIndex;
-	int oldStartIndex;
-	float timeRate;
-	int nowCount;
-	std::vector<Vector3>points;
-};
+
 
 class GameCamera :
 	public Camera

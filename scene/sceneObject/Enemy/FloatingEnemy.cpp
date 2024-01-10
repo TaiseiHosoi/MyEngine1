@@ -1,4 +1,5 @@
 ﻿#include "FloatingEnemy.h"
+#include"EnemyDirectionUtility.h"
 #include "Ease.h"
 
 FloatingEnemy::FloatingEnemy()
@@ -78,19 +79,11 @@ void FloatingEnemy::Update()
 	}
 
 	// 回転角,位置計算
-	Vector3 nowOffset;
+	Vector3 nowOffset = {};
+	float dirAngle = 0;
 	if (railCameraInfo_ != nullptr) {
-		//進行上の向いている方向(顔の向きではない)
-		directionLoot_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + offsetBattlePosTimeRate_)
-			- MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate);
-		directionLoot_.nomalize();
-
-		float dirAngle = {};
-		dirAngle = atan2(directionLoot_.x, directionLoot_.z);
-
-
-		nowOffset += offsetPos_;
-		nowOffset = MathFunc::RotateVecAngleY(nowOffset, dirAngle);
+		//進行度情報から必要な情報計算
+		EnemyDirectionUtility::GetOffsetDirInfo(dirAngle, nowOffset, offsetPos_, *(railCameraInfo_), offsetBattlePosTimeRate_);
 
 		//値をオブジェクトに挿入
 		nowOffset.y = 0;	// yの値は別計算
