@@ -128,7 +128,7 @@ void TitleScene::ChangeCamera(Input* input, GameCamera* camera) {
 	oldSSCount_ = sceneSwapPhase_;	//前フレーム処理
 
 
-	if (input->TriggerMouseButton(MOUSE_KEY::LEFT)) {
+	if (input->TriggerMouseButton(MOUSE_KEY::LEFT) || input->PButtonTrigger(B)) {
 		sceneSwapPhase_ = SceneSwapPhaseNum::START;
 		input->SetIsDontInput(true);
 	}

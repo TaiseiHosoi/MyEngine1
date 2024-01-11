@@ -254,7 +254,7 @@ private:
 
 	//固定値
 	const int delayCount_ = 30;
-	const int damage_ = 10;
+	const int damage_ = 2;
 
 	//点滅エフェクト用
 	int maxFramesToMaxAlpha_ = 0; //最大アルファ値までのフレーム数

@@ -38,6 +38,9 @@ void Input::Initialize(WinApp* winApp) {
 	result = mouse->SetCooperativeLevel(
 		winApp_->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	assert(SUCCEEDED(result));
+
+	//コントローラーの初期化
+	gamePad_ = new GamePad;
 }
 
 /// <summary>
@@ -64,6 +67,9 @@ void Input::Update() {
 	}
 
 	mouse->GetDeviceState(sizeof(DIMOUSESTATE), &mouseButton);
+
+	//コントローラーデバイスの更新
+	gamePad_->Update();
 }
 
 /// <summary>
@@ -129,4 +135,54 @@ bool Input::ReleaseMouseButton(unsigned char mouseButtons) {
 void Input::SetIsDontInput(bool isDontInput)
 {
 	isDontInput_ = isDontInput;
+}
+
+bool Input::PButtonTrigger(GamePadButton button)
+{
+	return gamePad_->ButtonTrigger(button);
+}
+
+bool Input::PStickTrigger(GamePadStick stickInput, const float& deadRange, const Vector2& deadRate)
+{
+	return gamePad_->StickTrigger(stickInput, deadRange, deadRate);
+}
+
+bool Input::ButtonInput(GamePadButton button)
+{
+	return gamePad_->ButtonInput(button);
+}
+
+bool Input::StickInput(GamePadStick stickInput, const float& deadRange, const Vector2& deadRate)
+{
+	return gamePad_->StickInput(stickInput, deadRange, deadRate);
+}
+
+bool Input::LeftStickInput(const float& deadRange) {
+	return gamePad_->LeftStickInput(deadRange);
+}
+
+
+bool Input::ButtonOffTrigger(GamePadButton button)
+{
+	return gamePad_->ButtonOffTrigger(button);
+}
+
+bool Input::StickOffTrigger(GamePadStick stickInput, const float& deadRange, const Vector2& deadRate)
+{
+	return gamePad_->StickOffTrigger(stickInput, deadRange, deadRate);
+}
+
+Vector2 Input::GetLeftStickVec(const Vector2& deadRate)
+{
+	return  gamePad_->GetLeftStickVec(deadRate);
+}
+
+Vector2 Input::GetRightStickVec(const Vector2& deadRate)
+{
+	return gamePad_->GetRightStickVec(deadRate);
+}
+
+void Input::ShakeGamePad(const float& power, const int& span)
+{
+	gamePad_->ShakeGamePad(power, span);
 }

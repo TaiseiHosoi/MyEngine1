@@ -131,7 +131,7 @@ void FbxPlayer::Update()
 
 
 		nowShotDelayCount_++;
-		if (input_->PushMouseButton(0)) {
+		if (input_->PushMouseButton(0) || input_->ButtonInput(RT)) {
 
 			
 			if (nowShotDelayCount_ > shotDelay_) {
@@ -329,7 +329,12 @@ void FbxPlayer::Move()
 	if (input_->PushKey(DIK_W) ||
 		input_->PushKey(DIK_A) ||
 		input_->PushKey(DIK_S) ||
-		input_->PushKey(DIK_D) && isDead_ == false)
+		input_->PushKey(DIK_D) || 
+		input_->StickInput(L_RIGHT) ||
+		input_->StickInput(L_LEFT) ||
+		input_->StickInput(L_UP) ||
+		input_->StickInput(L_DOWN) &&
+		isDead_ == false)
 	{
 
 		//押し続けると増えるスピード
@@ -338,7 +343,7 @@ void FbxPlayer::Move()
 
 
 		//W,Dを押していたら
-		if (input_->PushKey(DIK_W) && input_->PushKey(DIK_D))
+		if (input_->PushKey(DIK_W) && input_->PushKey(DIK_D) || input_->StickInput(L_UP) && input_->StickInput(L_RIGHT))
 		{
 
 			//if (nowPos.x < maxParallelMovement_) {
@@ -361,7 +366,7 @@ void FbxPlayer::Move()
 		}
 
 		//W,Aを押していたら
-		else if (input_->PushKey(DIK_W) && input_->PushKey(DIK_A))
+		else if (input_->PushKey(DIK_W) && input_->PushKey(DIK_A) || input_->StickInput(L_UP) && input_->StickInput(L_LEFT))
 		{
 			if (nowFlameParallelMove_ > -maxIncreaseSpeed_) {
 				nowFlameParallelMove_ -= increaseSpeedVel_;
@@ -379,7 +384,7 @@ void FbxPlayer::Move()
 		}
 
 		//S,Dを押していたら
-		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_D))
+		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_D) || input_->StickInput(L_DOWN) && input_->StickInput(L_RIGHT))
 		{
 			if (nowFlameParallelMove_ < maxIncreaseSpeed_) {
 				nowFlameParallelMove_ += increaseSpeedVel_;
@@ -398,7 +403,7 @@ void FbxPlayer::Move()
 		}
 
 		//S,Aを押していたら
-		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_A))
+		else if (input_->PushKey(DIK_S) && input_->PushKey(DIK_A) || input_->StickInput(L_DOWN) && input_->StickInput(L_LEFT))
 		{
 			if (nowFlameParallelMove_ > -maxIncreaseSpeed_) {
 				nowFlameParallelMove_ -= increaseSpeedVel_;
@@ -416,7 +421,7 @@ void FbxPlayer::Move()
 		}
 
 		//Wを押していたら
-		else if (input_->PushKey(DIK_W))
+		else if (input_->PushKey(DIK_W) || input_->StickInput(L_UP))
 		{
 
 			if (faceAngle_.x >= -faceMaxAngleX_) {
@@ -426,7 +431,7 @@ void FbxPlayer::Move()
 		}
 
 		//Sを押していたら
-		else if (input_->PushKey(DIK_S))
+		else if (input_->PushKey(DIK_S) || input_->StickInput(L_DOWN))
 		{
 
 			if (faceAngle_.x <= minFaceAngleX_) {
@@ -436,7 +441,7 @@ void FbxPlayer::Move()
 		}
 
 		//Dを押していたら
-		else if (input_->PushKey(DIK_D))
+		else if (input_->PushKey(DIK_D) || input_->StickInput(L_RIGHT))
 		{
 			if (nowFlameParallelMove_ < maxIncreaseSpeed_) {
 				nowFlameParallelMove_ += increaseSpeedVel_;
@@ -452,7 +457,7 @@ void FbxPlayer::Move()
 		}
 
 		//Aを押していたら
-		else if (input_->PushKey(DIK_A))
+		else if (input_->PushKey(DIK_A) || input_->StickInput(L_LEFT))
 		{
 			if (nowFlameParallelMove_ > -maxIncreaseSpeed_) {
 				nowFlameParallelMove_ -= increaseSpeedVel_;
@@ -467,7 +472,7 @@ void FbxPlayer::Move()
 
 		//押されていないときの処理
 
-		if (input_->PushKey(DIK_A) != 1 && input_->PushKey(DIK_D) != 1) {
+		if (input_->PushKey(DIK_A) || input_->StickInput(L_LEFT) != 1 && input_->PushKey(DIK_D) || input_->StickInput(L_RIGHT) != 1) {
 			if (faceAngle_.y > 0.02f) {
 
 				faceAngle_.y -= returnRotSpeed_;
@@ -480,7 +485,7 @@ void FbxPlayer::Move()
 
 		}
 
-		if (input_->PushKey(DIK_W) != 1 && input_->PushKey(DIK_S) != 1) {
+		if (input_->PushKey(DIK_W) || input_->StickInput(L_UP) != 1 && input_->PushKey(DIK_S) || input_->StickInput(L_DOWN) != 1) {
 			if (faceAngle_.x > 0.02f) {
 				faceAngle_.x -= returnRotSpeed_;
 			}
