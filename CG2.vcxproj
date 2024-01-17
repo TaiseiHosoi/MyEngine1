@@ -202,6 +202,7 @@
     <ClCompile Include="engine\sprite\Sprite.cpp" />
     <ClCompile Include="engine\sprite\SpriteCommon.cpp" />
     <ClCompile Include="engine\SummarizeEngine\SummarizeEngine.cpp" />
+    <ClCompile Include="scene\sceneObject\Utility\EnemyActionUtility.cpp" />
     <ClCompile Include="scene\sceneObject\Utility\EnemyDirectionUtility.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\FloatingEnemy.cpp" />
     <ClCompile Include="main.cpp" />
@@ -331,6 +332,7 @@
     <ClInclude Include="scene\sceneObject\Enemy\CarryBallEnemy.h" />
     <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyNormalBullet.h" />
     <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBullet.h" />
+    <ClInclude Include="scene\sceneObject\Utility\EnemyActionUtility.h" />
     <ClInclude Include="scene\sceneObject\Utility\EnemyDirectionUtility.h" />
     <ClInclude Include="scene\sceneObject\Enemy\OjamaFence.h" />
     <ClInclude Include="scene\sceneObject\Enemy\FloatingEnemy.h" />
