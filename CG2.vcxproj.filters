@@ -240,9 +240,6 @@
     <ClCompile Include="engine\LevelEditor\json.cpp">
       <Filter>ソース ファイル\LevelEditor</Filter>
     </ClCompile>
-    <ClCompile Include="scene\sceneObject\GameObjManager.cpp">
-      <Filter>ソース ファイル\LevelEditor</Filter>
-    </ClCompile>
     <ClCompile Include="scene\Application.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
@@ -277,9 +274,6 @@
       <Filter>ソース ファイル\scene\enemy</Filter>
     </ClCompile>
     <ClCompile Include="scene\sceneObject\Enemy\Enemy.cpp">
-      <Filter>ソース ファイル\scene\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\Enemy\EnemyManager.cpp">
       <Filter>ソース ファイル\scene\enemy</Filter>
     </ClCompile>
     <ClCompile Include="scene\sceneObject\Enemy\WalkingEnemy.cpp">
@@ -493,9 +487,6 @@
       <Filter>ヘッダー ファイル\scene\enemy</Filter>
     </ClInclude>
     <ClInclude Include="scene\sceneObject\Enemy\Enemy.h">
-      <Filter>ヘッダー ファイル\scene\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\Enemy\EnemyManager.h">
       <Filter>ヘッダー ファイル\scene\enemy</Filter>
     </ClInclude>
     <ClInclude Include="scene\sceneObject\Enemy\WalkingEnemy.h">
