@@ -26,18 +26,14 @@ public:
 	// 描画
 	void Draw(DirectXCommon* dxcomon_);
 
-	// 自機が接地しているか
-	static bool PlayerOnGround(Vector3 wolPos, float Obj_R);
-
-	// 敵が接地しているか
-	static bool EnemyOnGround(Vector3 wolPos, float Obj_R);
-
 
 	//メンバ変数
 private:
 
 	std::unique_ptr<Mesh> fieldM;
 	const float groundSpeed_ = 0.2f;
+	const float groundHeight_ = -5000;
+	const float groundScale_ = 100;
 	std::unique_ptr<Object3d> groundObj1_;	//地面1
 	std::unique_ptr<Object3d> groundObj2_;	//地面2
 	
