@@ -170,9 +170,6 @@ public:
     // 抱玉敵ポップコマンド更新
     void UpdateCarryBallEnemyPopCommands();
 
-    // 敵ぽっぷしたときの初期化をまとめている
-    void EnemyPopInitializes(std::list <std::unique_ptr<Enemy>>& enemyList, std::unique_ptr<FloatingEnemy>& newEnemy,Mesh& model,const Vector3& offsetPos, RailCameraInfo& railCameraInfo,WorldTransform& playerWorldTF,Mesh& BulletModel);
-
     // レールカメラ情報セット
     void SetRailCamInfo(RailCameraInfo* info) { railCameraInfo_ = info; };
 
@@ -192,9 +189,6 @@ public:
 public:
     // camObjsのゲッタ
     std::vector<Object3d>* GetCamObjsPtr() { return &camObjs; };
-
-    // enemiesのゲッタ
-    //std::vector<std::unique_ptr<Enemy>>*GetEnemies() { return &enemies; }
 
     // 歩兵敵のゲッタ
     std::list<std::unique_ptr<WalkingEnemy>>*GetWalkingEnemies() { return &walkingEnemies; }
