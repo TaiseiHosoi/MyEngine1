@@ -120,9 +120,6 @@ private:
     //おじゃまフェンス
     std::list<std::unique_ptr<OjamaFence>> ojamaFences;
 
-    //固定値
-
-
 
     //レールカメラ情報
     RailCameraInfo* railCameraInfo_ = nullptr;
