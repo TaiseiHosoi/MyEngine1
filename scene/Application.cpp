@@ -74,6 +74,7 @@ void Application::Update()
 
 	//カメラのアップデート
 	gameCamera_->Update();
+
 }
 
 void Application::PostEffectDraw()
