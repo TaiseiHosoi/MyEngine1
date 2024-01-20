@@ -19,7 +19,6 @@ public:
 
     // 描画
     void Draw(ID3D12GraphicsCommandList* cmdList) override;
-   
 
 public: // アクセッサ
     // レールカメラ情報セッタ
