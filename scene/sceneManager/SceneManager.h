@@ -57,7 +57,7 @@ public:
 	void SceneUpdate(Input* input);
 	// 各シーンのDrawを呼び出す
 	void SceneDraw();
-	void OffsetBackSceneDraw();
+	void FrontSpriteSceneDraw();
 
 	// シーンを変更する
 	void ChangeScene(IScene*);

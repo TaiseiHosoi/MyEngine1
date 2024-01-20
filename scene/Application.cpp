@@ -84,8 +84,8 @@ void Application::PostEffectDraw()
 	sceneManager_->SceneDraw();
 }
 
-void Application::OffsetDraw()
+void Application::OutFlameDraw()
 {
-	sceneManager_->OffsetBackSceneDraw();
+	sceneManager_->FrontSpriteSceneDraw();
 }
 

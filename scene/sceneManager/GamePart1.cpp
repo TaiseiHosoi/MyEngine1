@@ -15,10 +15,7 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
 	static_cast<void>(dxCommon);
 
-	move_ = std::make_unique<Sprite>();
-	move_->Initialize(_controller->spriteCommon_.get(), 10);
-	move_->SetSize({ moveSprSize_.x,moveSprSize_.y });
-	move_->SetPozition({ moveSprPos_.x,moveSprPos_.y });
+
 
 	//音の初期化と読み込み
 	audio_ = std::make_unique<Audio>();

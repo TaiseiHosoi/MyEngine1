@@ -126,7 +126,7 @@ void SceneManager::SceneDraw() {
 
 }
 
-void SceneManager::OffsetBackSceneDraw()
+void SceneManager::FrontSpriteSceneDraw()
 {
 	spriteCommon_->SpritePreDraw();
 	outerFrameSp_->Draw();	//背景スプライト

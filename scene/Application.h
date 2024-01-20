@@ -57,7 +57,7 @@ public:
 	/// 描画
 	/// </summary>
 	void PostEffectDraw();
-	void OffsetDraw();
+	void OutFlameDraw();
 
 
 	int gameLevel_ = 0;

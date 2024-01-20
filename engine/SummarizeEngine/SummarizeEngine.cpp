@@ -67,7 +67,7 @@ void SummarizeEngine::Draw() {
 
 
 	
-	application_->OffsetDraw();
+	application_->OutFlameDraw();
 	
 
 	imGuiManager_->End();

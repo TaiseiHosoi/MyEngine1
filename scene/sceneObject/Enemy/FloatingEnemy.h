@@ -19,7 +19,7 @@ public:
 
     // 描画
     void Draw(ID3D12GraphicsCommandList* cmdList) override;
-    // 固有のメソッドやデータ
+   
 
 public: // アクセッサ
     // レールカメラ情報セッタ
@@ -46,17 +46,13 @@ public: // アクセッサ
     // 敵情報構造体ゲッタ
     EnemyState* GetState();
 
-    //強制true
-    bool compultionTrue();
-
-    // 弾も出るセット
+    // 弾モデルセット
     void SetBulletModel(Mesh* model);
 
 public: //　行動
     // 突進
     void Forward();
-    // ゆっくり近づく
-    void Deceleration();
+
     // 旋回
     void Turn();
     //攻撃

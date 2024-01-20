@@ -46,11 +46,7 @@ private:
 	};
 
 private:
-	std::unique_ptr <Sprite> attack_;
-	std::unique_ptr <Sprite> attack2_;
-	std::unique_ptr <Sprite> guard_;
-	std::unique_ptr <Sprite> guard2_;
-	std::unique_ptr <Sprite> move_;
+
 	std::unique_ptr <Sprite> enemyHp_;
 	std::unique_ptr <Sprite> enemyHpRed_;
 	std::unique_ptr <Sprite> playerHp_;

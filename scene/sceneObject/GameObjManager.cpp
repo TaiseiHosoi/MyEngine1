@@ -471,9 +471,6 @@ void GameObjManager::UpdateFloatingEnemyPopCommands()
 
 			// ID
 			std::getline(line_stream, word, ',');
-			//int ID = static_cast<int>(std::atof(word.c_str()));
-
-
 
 
 			if (lane == SPOWN_OFFSET_POS::SP_LEFT) {
