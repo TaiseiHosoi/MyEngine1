@@ -39,7 +39,7 @@ void SceneManager::ObjectInitialize() {
 	spriteCommon_->LoadTexture(11, "mouse.png");
 	spriteCommon_->LoadTexture(12 , "purple.png");
 	spriteCommon_->LoadTexture(13 , "red.png");
-	spriteCommon_->LoadTexture(14 , "green.png");
+	spriteCommon_->LoadTexture("outFlame", "sotowaku2.png");
 	spriteCommon_->LoadTexture(15, "kinmiraTitle1.png");
 	spriteCommon_->LoadTexture(16, "sceneCLeft.png");
 	spriteCommon_->LoadTexture(17, "sceneCRight.png");
