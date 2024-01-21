@@ -296,34 +296,18 @@ void GameObjManager::DrawAllObjs(ID3D12GraphicsCommandList* cmdList)
 			moaiObjs[i].Draw(cmdList);
 		}
 	}
-
 	
 }
 
 void GameObjManager::DestroyAllEnemies()
 {
-    //for (Enemy* enemy : enemies) {
-    //    delete enemy;
-    //}
-    //enemies.clear();
-		// Listのremove
-	walkingEnemies.remove_if([](std::unique_ptr<WalkingEnemy>& enemy) {
-		return enemy->compultionTrue();
-		});
+ 
+	// 敵オブジェをクリア
+	walkingEnemies.clear();
+	floatingEnemies.clear();
+	carryBallEnemies.clear();
+	ojamaFences.clear();
 
-	floatingEnemies.remove_if([](std::unique_ptr<FloatingEnemy>& enemy) {
-		return enemy->compultionTrue();
-		});
-
-	carryBallEnemies.remove_if([](std::unique_ptr<CarryBallEnemy>& enemy) {
-		static_cast<void>(enemy);
-		return true;
-		});
-
-	ojamaFences.remove_if([](std::unique_ptr<OjamaFence>& enemy) {
-		static_cast<void>(enemy);
-		return true;
-		});
 }
 
 void GameObjManager::LoadData(const char* filename, std::stringstream& stream)

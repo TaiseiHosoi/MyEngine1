@@ -39,7 +39,7 @@ public:
 	};
 public:
 	// 初期化
-	void Initialize(SpriteCommon* spritecommon_, uint32_t texturerIndex = UINT32_MAX);
+	void Initialize(SpriteCommon* spritecommon_ , std::string texStr);
 
 	// 描画
 	void Draw();

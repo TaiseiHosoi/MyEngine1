@@ -32,17 +32,17 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	_controller->gameObjectManager_->SetRailCamInfo(camera->GetRailCameraInfo());
 	_controller->gameObjectManager_->SetPlayerWorldTF(_controller->fbxPlayer_->GetObject3d()->GetWorldTransformPtr());
 	exp_ = std::make_unique<Sprite>();
-	exp_->Initialize(_controller->spriteCommon_.get(), 19);
+	exp_->Initialize(_controller->spriteCommon_.get(), "exp");
 	exp_->SetPozition({ _controller->offsetExpPos_.x ,_controller->offsetExpPos_.y });
 
 	hpBar_ = std::make_unique<Sprite>();
-	hpBar_->Initialize(_controller->spriteCommon_.get(), 20);
+	hpBar_->Initialize(_controller->spriteCommon_.get(), "hpBar");
 	hpBar_->SetPozition({ _controller->offsetHpSpritePos_.x ,_controller->offsetHpSpritePos_.y });
 	hpBar_->SetAnchorPoint({0.5,1.f});
 	hpBar_->Update();
 
 	hpGage_ = std::make_unique<Sprite>();
-	hpGage_->Initialize(_controller->spriteCommon_.get(), 21);
+	hpGage_->Initialize(_controller->spriteCommon_.get(), "hpGage");
 	hpGage_->SetPozition({ _controller->offsetHpSpritePos_.x ,_controller->offsetHpSpritePos_.y });
 
 	

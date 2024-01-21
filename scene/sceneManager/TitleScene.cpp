@@ -19,40 +19,39 @@ void TitleScene::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	//audio_->LoadWave("newspaper.wav");
 
 	title_ = std::make_unique<Sprite>();
-	title_->Initialize(_controller->spriteCommon_.get(), 1);
+	title_->Initialize(_controller->spriteCommon_.get(), "title1");
 
 	title2_ = std::make_unique<Sprite>();
-	title2_->Initialize(_controller->spriteCommon_.get(), 2);
+	title2_->Initialize(_controller->spriteCommon_.get(), "title2");
 
-	mouse_ = std::make_unique<Sprite>();
-	mouse_->Initialize(_controller->spriteCommon_.get(), 11);
+
 
 	blackBackTitle_ = std::make_unique<Sprite>();
-	blackBackTitle_->Initialize(_controller->spriteCommon_.get(), 15);
+	blackBackTitle_->Initialize(_controller->spriteCommon_.get(), "sceneChangeTitle");
 	blackBackTitle_->SetPozition({ -1280,0 });
 
 	sceneChangeLeft_ = std::make_unique<Sprite>();
-	sceneChangeLeft_->Initialize(_controller->spriteCommon_.get(), 16);
+	sceneChangeLeft_->Initialize(_controller->spriteCommon_.get(), "sceneCLeft");
 	sceneChangeLeft_->SetPozition({ static_cast<float>( - WinApp::GetInstance()->window_width),0});
 
 	sceneChangeRight_ = std::make_unique<Sprite>();
-	sceneChangeRight_->Initialize(_controller->spriteCommon_.get(), 17);
+	sceneChangeRight_->Initialize(_controller->spriteCommon_.get(), "sceneCRight");
 	sceneChangeRight_->SetPozition({ static_cast<float>(WinApp::GetInstance()->window_width),0 });
 
 	leftMouseButtonStr_ = std::make_unique<Sprite>();
-	leftMouseButtonStr_->Initialize(_controller->spriteCommon_.get(), 18);
+	leftMouseButtonStr_->Initialize(_controller->spriteCommon_.get(), "leftMouseButton");
 	leftMouseButtonStr_->SetPozition({ 0,0 });
 
 	exp_ = std::make_unique<Sprite>();
-	exp_->Initialize(_controller->spriteCommon_.get(), 19);
+	exp_->Initialize(_controller->spriteCommon_.get(), "exp");
 	exp_->SetPozition({_controller->toExpPos_.x ,_controller->toExpPos_.y });
 
 	hpBar_ = std::make_unique<Sprite>();
-	hpBar_->Initialize(_controller->spriteCommon_.get(), 20);
+	hpBar_->Initialize(_controller->spriteCommon_.get(), "hpBar");
 	hpBar_->SetPozition({ _controller->toHpSpritePos_.x ,_controller->toHpSpritePos_.y });
 
 	hpGage_ = std::make_unique<Sprite>();
-	hpGage_->Initialize(_controller->spriteCommon_.get(), 21);
+	hpGage_->Initialize(_controller->spriteCommon_.get(), "hpGage");
 	hpGage_->SetPozition({ _controller->toHpSpritePos_.x ,_controller->toHpSpritePos_.y });
 
 

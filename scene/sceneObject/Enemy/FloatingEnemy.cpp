@@ -249,10 +249,6 @@ void FloatingEnemy::DeadAction()
 	}
 }
 
-bool FloatingEnemy::compultionTrue()
-{
-	return true;
-}
 
 void FloatingEnemy::SetBulletModel(Mesh* model)
 {

@@ -53,25 +53,28 @@ void SummarizeEngine::Update() {
 
 void SummarizeEngine::Draw() {
 	//描画
-	
+#pragma region PostEffectDraw
 
 	PostEffect::PreDrawScene(dxCommon_->GetCommandList());
+
 	application_->PostEffectDraw();
 
 	PostEffect::PostDrawScene();
 
-
-
 	dxCommon_->PreDraw();
+
 	PostEffect::Draw(dxCommon_->GetCommandList());
 
-
+#pragma endregion PostEffectDraw
 	
+#pragma region OutFlameDraw
+
 	application_->OutFlameDraw();
+
+#pragma endregion OutFlameDraw
 	
 
 	imGuiManager_->End();
-
 
 	imGuiManager_->Draw();
 

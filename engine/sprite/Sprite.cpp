@@ -1,7 +1,7 @@
 #include"Sprite.h"
 
 using namespace MyEngine;
-void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t textureIndex)
+void Sprite::Initialize(SpriteCommon* spritecommon_, std::string texStr)
 {
 
 	spritecommon = spritecommon_;
@@ -111,10 +111,11 @@ void Sprite::Initialize(SpriteCommon* spritecommon_, uint32_t textureIndex)
 
 	// 値を書き込むと自動的に転送される
 	constMapMaterial->color = XMFLOAT4(1, 0, 0, 0.5f);              // RGBAで半透明の赤
-
+	
 	//テクスチャサイズをイメージに合わせる
-	if (textureIndex != UINT32_MAX) {
-		textureIndex_ = textureIndex;
+	if (spritecommon_->FindIndex(texStr) != UINT32_MAX) {
+		
+		textureIndex_ = spritecommon_->FindIndex(texStr);
 		AdjustTextureSize();
 		//テクスチャサイズをスプライトのサイズに適応
 		size_ = textureSize;

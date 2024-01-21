@@ -25,32 +25,28 @@ void SceneManager::ObjectInitialize() {
 	//スプライト初期化
 	spriteCommon_ = std::make_unique<SpriteCommon>();
 	spriteCommon_->Initialize(_dxCommon);
+
+
+
 	// TITLE
-	spriteCommon_->LoadTexture(1, "title.png");
-	spriteCommon_->LoadTexture(2, "title2.dds");
-	spriteCommon_->LoadTexture(3, "end.png");
+	spriteCommon_->LoadTexture("title1", "title.png");
+	spriteCommon_->LoadTexture("title2", "title2.dds");
+	spriteCommon_->LoadTexture("endScene", "end.png");
 
 	// UI
-	spriteCommon_->LoadTexture(6, "attack.png");
-	spriteCommon_->LoadTexture(7, "attack2.png");
-	spriteCommon_->LoadTexture(8, "guard.png");
-	spriteCommon_->LoadTexture(9, "guard2.png");
-	spriteCommon_->LoadTexture(10, "move.png");
-	spriteCommon_->LoadTexture(11, "mouse.png");
-	spriteCommon_->LoadTexture(12 , "purple.png");
-	spriteCommon_->LoadTexture(13 , "red.png");
+
+	spriteCommon_->LoadTexture("sceneChangeTitle", "kinmiraTitle1.png");
+	spriteCommon_->LoadTexture("leftMouseButton", "LeftMouseButton.png");
+	spriteCommon_->LoadTexture("exp", "exp.png");
+	spriteCommon_->LoadTexture("hpBar", "HpBar-sheet.png");
+	spriteCommon_->LoadTexture("hpGage", "HpGage-sheet.png");
+	spriteCommon_->LoadTexture("gameOverScene", "gameOver.png");
+	spriteCommon_->LoadTexture("gameClearScene", "gameClear.png");
+	spriteCommon_->LoadTexture("background", "background.png");
 	spriteCommon_->LoadTexture("outFlame", "sotowaku2.png");
-	spriteCommon_->LoadTexture(15, "kinmiraTitle1.png");
-	spriteCommon_->LoadTexture(16, "sceneCLeft.png");
-	spriteCommon_->LoadTexture(17, "sceneCRight.png");
-	spriteCommon_->LoadTexture(18, "LeftMouseButton.png");
-	spriteCommon_->LoadTexture(19, "exp.png");
-	spriteCommon_->LoadTexture(20, "HpBar-sheet.png");
-	spriteCommon_->LoadTexture(21, "HpGage-sheet.png");
-	spriteCommon_->LoadTexture(22, "gameOver.png");
-	spriteCommon_->LoadTexture(23, "gameClear.png");
-	spriteCommon_->LoadTexture(24, "background.png");
-	spriteCommon_->LoadTexture(25, "sotowaku2.png");
+
+	spriteCommon_->LoadTexture("sceneCLeft", "sceneCLeft.png");
+	spriteCommon_->LoadTexture("sceneCRight", "sceneCRight.png");
 
 	audio = std::make_unique<Audio>();
 	audio->Initialize();
@@ -69,19 +65,19 @@ void SceneManager::ObjectInitialize() {
 
 	//暗転画像初期化
 	blackSc_ = std::make_unique<Sprite>();
-	blackSc_->Initialize(spriteCommon_.get(), 22);
+	blackSc_->Initialize(spriteCommon_.get(), "gameOverScene");
 	blackSc_->SetPozition({ 0,0 });
 	blackSc_->SetColor({ 1,1,1,blackScAlpha_ });
 
 	//背景スプライト
 	backGroundSp_ = std::make_unique<Sprite>();
-	backGroundSp_->Initialize(spriteCommon_.get(), 24);
+	backGroundSp_->Initialize(spriteCommon_.get(), "background");
 	backGroundSp_->SetPozition({ 0,0 });
 	backGroundSp_->SetSize({WinApp::window_width,WinApp::window_height });
 
 	//外枠スプライト
 	outerFrameSp_ = std::make_unique<Sprite>();
-	outerFrameSp_->Initialize(spriteCommon_.get(), 25);
+	outerFrameSp_->Initialize(spriteCommon_.get(), "outFlame");
 	outerFrameSp_->SetPozition({ 0,0 });
 	outerFrameSp_->SetSize({ WinApp::window_width,WinApp::window_height });
 

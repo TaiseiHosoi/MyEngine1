@@ -252,7 +252,7 @@ void SpriteCommon::Initialize(DirectXCommon* dxcommon)
 
 }
 
-void SpriteCommon::LoadTexture(uint32_t index, const std::string& fileName)
+void SpriteCommon::LoadTexture(const std::string& texName,const std::string& fileName)
 {
 	//ディレクトリパスとファイル名を連結してフルパスを得る
 	std::string fullPath = kDefaultTextureDirectoryPath + fileName;
@@ -297,14 +297,14 @@ void SpriteCommon::LoadTexture(uint32_t index, const std::string& fileName)
 		&textureResourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(texBuff[index].GetAddressOf()));
+		IID_PPV_ARGS(texBuff[texBuffEndNum_].GetAddressOf()));
 
 	// 全ミップマップについて
 	for (size_t i = 0; i < metadata.mipLevels; i++) {
 		// ミップマップレベルを指定してイメージを取得
 		const Image* img = scratchImg.GetImage(i, 0, 0);
 		// テクスチャバッファにデータ転送
-		result = texBuff[index]->WriteToSubresource(
+		result = texBuff[texBuffEndNum_]->WriteToSubresource(
 			(UINT)i,
 			nullptr,              // 全領域へコピー
 			img->pixels,          // 元データアドレス
@@ -322,11 +322,18 @@ void SpriteCommon::LoadTexture(uint32_t index, const std::string& fileName)
 	srvDesc.Texture2D.MipLevels = resDesc.MipLevels;
 
 	srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
-	srvHandle.ptr += (incrementSize * index);
+	srvHandle.ptr += (incrementSize * texBuffEndNum_);
 	srvHeap->SetName(L"textureManagerSrvHeap");
 
 	// ハンドルの指す位置にシェーダーリソースビュー作成
-	dxcommon_->GetDevice()->CreateShaderResourceView(texBuff[index].Get(), &srvDesc, srvHandle);
+	dxcommon_->GetDevice()->CreateShaderResourceView(texBuff[texBuffEndNum_].Get(), &srvDesc, srvHandle);
+
+	//識別用の名前保存
+	std::string newSpriteName = texName;
+	spriteNames_.push_back(newSpriteName);
+
+	//保存用変数インクリメント
+	texBuffEndNum_++;
 }
 
 void SpriteCommon::SetTextureCommands(uint32_t index)
@@ -370,7 +377,7 @@ void SpriteCommon::SeparateFilePath(const std::string& filePath)
 		return;
 	}
 
-	//区切り文字'/'が出てクス一番最後の部分を検索
+	//区切り文字'/'が出て一番最後の部分を検索
 	pos1 = exceptExt.rfind('/');
 	if (pos1 != std::wstring::npos) {
 		//区切り文字の前までをディレクトリパスとして保存
@@ -382,6 +389,16 @@ void SpriteCommon::SeparateFilePath(const std::string& filePath)
 
 	//区切り文字がないのでファイル毎のみとして扱う
 	fileName_ = exceptExt;
+}
+
+uint32_t SpriteCommon::FindIndex(const std::string& target)
+{
+	for (size_t i = 0; i < spriteNames_.size(); ++i) {
+		if (spriteNames_[i] == target) {
+			return static_cast<uint32_t>(i); // 文字列が見つかったらインデックスを返す
+		}
+	}
+	return static_cast<uint32_t>(0); // 文字列が見つからなかった場合は-1を返す
 }
 
 
