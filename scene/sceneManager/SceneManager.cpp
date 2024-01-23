@@ -151,7 +151,12 @@ void SceneManager::ResetParameters() {
 void SceneManager::BlackDisolve()
 {
 	if (oldDisolveMode_ != nowDisolveMode_) {
-		blackSc_->SetTextureIndex(nowDisolveMode_);
+		if (nowDisolveMode_ == DisolveMode::gameClearMode) {
+			blackSc_->SetTextureByName("gameClearScene");
+		}
+		else if (nowDisolveMode_ == DisolveMode::gameClearMode) {
+			blackSc_->SetTextureByName("gameOverScene");
+		}
 	}
 
 	if (oldIsBlackDisolve_ == false && isBlackDisolve_ == true) {

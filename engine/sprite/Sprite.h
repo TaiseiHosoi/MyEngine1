@@ -80,6 +80,8 @@ public:
 	// テクスチャ番号セット
 	void SetTextureIndex(uint32_t texNmb) { textureIndex_ = texNmb; }
 
+	void SetTextureByName(std::string tex);
+
 	// テクスチャ番号ゲッタ
 	uint32_t GetTextureIndex() { return textureIndex_; }
 
