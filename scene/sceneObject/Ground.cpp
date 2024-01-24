@@ -43,8 +43,11 @@ void Field::Initialize()
 	skydomeObj_ = std::make_unique<Object3d>();
 	skydomeObj_.get()->Initialize(false);
 	skydomeObj_.get()->SetModel(skydomeModel_.get());
+
 	skydomeObj_->worldTransform.translation_ = { 0,backGroundAdjustPosY_,0 };
 	skydomeObj_->worldTransform.scale_ = { groundAdjustScale_,groundAdjustScale_,groundAdjustScale_ };
+
+
 	skydomeObj_->Update();
 
 
@@ -66,6 +69,7 @@ void Field::Draw(DirectXCommon* dxcomon_)
 	groundObj1_->Draw(dxcomon_->GetCommandList());
 
 	continuousFloor_->Draw(dxcomon_->GetCommandList());
+
 
 	skydomeObj_->Draw(dxcomon_->GetCommandList());
 
