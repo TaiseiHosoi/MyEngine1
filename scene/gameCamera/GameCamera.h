@@ -28,7 +28,7 @@ public:
 	GameCamera(int window_width , int window_height , Input* input);
 
 	// 初期化
-	void Initialize();
+	void GameInfoInitialize();
 
 	// 更新
 	void Update();

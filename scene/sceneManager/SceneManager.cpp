@@ -52,16 +52,7 @@ void SceneManager::ObjectInitialize() {
 	audio->Initialize();
 
 
-	// fbx テスト
-	{
-		hitokunFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("Cube",true));
-		//Player
-		fbxPlayer_ = std::make_unique<FbxPlayer>();
-		fbxPlayer_.get()->Initialize(hitokunFbxM_.get());
-		fbxPlayer_->SetRailCameraInfo(_camera->GetRailCameraInfo());
-		_camera->SetFollowerPos(fbxPlayer_.get()->GetObject3d()->GetWorldTransformPtr());
 
-	}
 
 	//暗転画像初期化
 	blackSc_ = std::make_unique<Sprite>();
@@ -92,7 +83,7 @@ void SceneManager::ObjectInitialize() {
 	field_ = std::make_unique<Field>();
 	field_.get()->Initialize();
 
-	ResetParameters();
+	//ResetParameters();
 }
 
 void SceneManager::SceneInitialize() {
@@ -133,7 +124,7 @@ void SceneManager::ChangeScene(IScene* scene) {
 	
 	_camera->ChangeFollowFlag(true);
 	_scene.reset(scene);
-	ResetParameters();
+	//ResetParameters();
 	SceneInitialize();
 	
 	
@@ -141,12 +132,12 @@ void SceneManager::ChangeScene(IScene* scene) {
 }
 
 
-void SceneManager::ResetParameters() {
-	//boss_->SetHp(100);
-	fbxPlayer_->SetHp(100);
-
-	fbxPlayer_->GetObject3d()->Update();
-}
+//void SceneManager::ResetParameters() {
+//	//boss_->SetHp(100);
+//	fbxPlayer_->SetHp(100);
+//
+//	fbxPlayer_->GetObject3d()->Update();
+//}
 
 void SceneManager::BlackDisolve()
 {

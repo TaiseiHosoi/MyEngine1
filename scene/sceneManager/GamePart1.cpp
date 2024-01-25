@@ -30,7 +30,7 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
 	//ゲームオブジェクトクラスに情報セット
 	_controller->gameObjectManager_->SetRailCamInfo(camera->GetRailCameraInfo());
-	_controller->gameObjectManager_->SetPlayerWorldTF(_controller->fbxPlayer_->GetObject3d()->GetWorldTransformPtr());
+	_controller->gameObjectManager_->SetPlayerWorldTF(_controller->gameObjectManager_->GetPlayerPtr()->GetObject3d()->GetWorldTransformPtr());
 	exp_ = std::make_unique<Sprite>();
 	exp_->Initialize(_controller->spriteCommon_.get(), "exp");
 	exp_->SetPozition({ _controller->offsetExpPos_.x ,_controller->offsetExpPos_.y });
@@ -54,7 +54,7 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	_controller->gameObjectManager_->InitEnemyCommands();
 	_controller->gameObjectManager_->InitOjamaFence();
 	
-	camera->SetPlayerParallelMoveVal_(_controller->fbxPlayer_->GetParallelMovePtr());
+	camera->SetPlayerParallelMoveVal_(_controller->gameObjectManager_->GetPlayerPtr()->GetParallelMovePtr());
 
 }
 
@@ -66,7 +66,7 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 	if (isPause_ == false) {
 
 		_controller->field_->Update();
-		_controller->fbxPlayer_->Update();
+		_controller->gameObjectManager_->GetPlayerPtr()->Update();
 		_controller->gameObjectManager_->UpdateAllObjects();
 		HpFlucture();
 
@@ -75,10 +75,10 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 			pauseMenuOptions_ = PauseMenu::RESUME;
 		}
 
-		if (_controller->fbxPlayer_->GetIsDeadActNum() == DEAD_ACT_NUM::disappear) {
+		if (_controller->gameObjectManager_->GetPlayerPtr()->GetIsDeadActNum() == DEAD_ACT_NUM::disappear) {
 			_controller->SetIsBlackDisolve(true,DisolveMode::gameOverMode);
 			if (_controller->GetIsTurnBackBlackDisolve() == true) {
-				_controller->fbxPlayer_->PlayerPalamReset();
+				_controller->gameObjectManager_->GetPlayerPtr()->PlayerPalamReset();
 				_controller->gameObjectManager_->DestroyAllEnemies();
 				camera->SetCamMode(CAM_MODE::title);
 				_controller->ChangeScene(new TitleScene(_controller));
@@ -89,7 +89,7 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 			_controller->SetIsBlackDisolve(true,DisolveMode::gameClearMode);
 
 			if (_controller->GetIsTurnBackBlackDisolve() == true) {
-				_controller->fbxPlayer_->PlayerPalamReset();
+				_controller->gameObjectManager_->GetPlayerPtr()->PlayerPalamReset();
 				_controller->gameObjectManager_->DestroyAllEnemies();
 				camera->SetCamMode(CAM_MODE::title);
 				_controller->ChangeScene(new TitleScene(_controller));
@@ -132,10 +132,10 @@ void GamePart1::Draw(DirectXCommon* dxCommon) {
 
 	_controller->field_->Draw(dxCommon);
 	//_controller->boss_->Draw();
-	_controller->fbxPlayer_->Draw(dxCommon->GetCommandList());
+	_controller->gameObjectManager_->GetPlayerPtr()->Draw(dxCommon->GetCommandList());
 
 	_controller->gameObjectManager_->DrawAllObjs(dxCommon->GetCommandList());
-	_controller->fbxPlayer_->ParticleDraw(dxCommon->GetCommandList());
+	_controller->gameObjectManager_->GetPlayerPtr()->ParticleDraw(dxCommon->GetCommandList());
 
 	_controller->spriteCommon_->SpritePreDraw();
 
@@ -219,7 +219,7 @@ void GamePart1::PlaySounds()
 
 void GamePart1::HpFlucture()
 {
-	float nowHp = static_cast<float>(_controller->fbxPlayer_->GetHp());
+	float nowHp = static_cast<float>(_controller->gameObjectManager_->GetPlayerPtr()->GetHp());
 	//10段階
 	if (nowHp >= 0) {
 		hpGage_->SetSize({ 80.f,nowHp / 100.f * 160.f });

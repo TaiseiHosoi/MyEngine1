@@ -30,7 +30,7 @@ GameCamera::GameCamera(int window_width , int window_height , Input* input)
 	
 }
 
-void GameCamera::Initialize()
+void GameCamera::GameInfoInitialize()
 {
 	startCount_ = 0;
 	targetStartCount_ = 1;
@@ -288,10 +288,6 @@ void GameCamera::Update()
 
 
 	}
-
-	
-	
-
 
 	//infoの情報更新
 	railCameraInfo_->startIndex = startIndex_;

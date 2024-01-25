@@ -10,6 +10,7 @@ TitleScene::~TitleScene() {
 }
 
 void TitleScene::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
+	static_cast<void>(camera);
 	static_cast<void>(dxCommon);
 
 	//音の初期化と読み込み
@@ -63,9 +64,7 @@ void TitleScene::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	title2_->SetPozition({ 200,100 });
 
 
-	//ゲームオブジェクトクラスに情報セット
-	_controller->gameObjectManager_->SetRailCamInfo(camera->GetRailCameraInfo());
-	_controller->gameObjectManager_->SetPlayerWorldTF(_controller->fbxPlayer_->GetObject3d()->GetWorldTransformPtr());
+
 
 	//ポップコマンドの設定
 	_controller->gameObjectManager_->SetIsEnemyPops(false);
@@ -73,7 +72,7 @@ void TitleScene::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
 void TitleScene::Update(Input* input, GameCamera* camera) {
 	_controller->field_->Update();
-	_controller->fbxPlayer_->Update();
+	_controller->gameObjectManager_->GetPlayerPtr()->Update();
 	_controller->gameObjectManager_->UpdateAllObjects();
 
 	//audio_->PlayWave();
@@ -82,7 +81,7 @@ void TitleScene::Update(Input* input, GameCamera* camera) {
 
 
 	if (isChangeScene == true) {
-		camera->SetFollowerPos(_controller->fbxPlayer_.get()->GetObject3d()->GetWorldTransformPtr());
+		camera->SetFollowerPos(_controller->gameObjectManager_->GetPlayerPtr()->GetObject3d()->GetWorldTransformPtr());
 		//camera->SetTargetPos(_controller->boss_.get()->GetObject3d()->GetWorldTransformPtr());
 		// UPDATE の一番下に
 		
@@ -95,10 +94,10 @@ void TitleScene::Update(Input* input, GameCamera* camera) {
 
 void TitleScene::Draw(DirectXCommon* dxCommon) {
 
-	_controller->fbxPlayer_->Draw(dxCommon->GetCommandList());
+	_controller->gameObjectManager_->GetPlayerPtr()->Draw(dxCommon->GetCommandList());
 	_controller->field_->Draw(dxCommon);
 	_controller->gameObjectManager_->DrawAllObjs(dxCommon->GetCommandList());
-	_controller->fbxPlayer_->ParticleDraw(dxCommon->GetCommandList());
+	_controller->gameObjectManager_->GetPlayerPtr()->ParticleDraw(dxCommon->GetCommandList());
 	_controller->spriteCommon_->SpritePreDraw();
 	if (isSwapCamera == true) {
 

@@ -7,9 +7,7 @@
 #include <stack>
 
 
-#include "FBXObject3d.h"
-#include "fbx/FBXLoader.h"
-#include "FBXModel.h"
+
 #include "Audio.h"
 
 #include "Mesh.h"
@@ -17,7 +15,7 @@
 #include "ParticleManager.h"
 #include "GameObjManager.h"
 
-#include "FbxPlayer.h"
+
 #include "Ground.h"
 #include "Sprite.h"
 #include "SpriteCommon.h"
@@ -107,10 +105,7 @@ public:
 	
 	GameObjManager* gameObjectManager_ = nullptr;
 
-	//FBXモデル
-	std::unique_ptr<FBXModel> hitokunFbxM_;
-	std::unique_ptr<FBXObject3d>hitokunFbxO_;
-	std::unique_ptr<FbxPlayer> fbxPlayer_;
+
 	
 	std::unique_ptr<Field> field_;
 

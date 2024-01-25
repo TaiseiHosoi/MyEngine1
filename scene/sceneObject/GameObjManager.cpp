@@ -122,6 +122,7 @@ void GameObjManager::StaticInit()
 #pragma endregion ポップデータ読み込み
 
 
+
 }
 
 void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
@@ -667,3 +668,31 @@ void GameObjManager::InitOjamaFence()
 		}
 	}
 }
+
+void GameObjManager::GameObjInitialize()
+{
+
+	// fbx用変数
+	{
+		hitokunFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("Cube", true));
+		//Player
+		fbxPlayer_ = std::make_unique<FbxPlayer>();
+		fbxPlayer_.get()->Initialize(hitokunFbxM_.get());
+
+		fbxPlayer_->SetRailCameraInfo(railCameraInfo_);
+
+		camera_->SetFollowerPos(fbxPlayer_.get()->GetObject3d()->GetWorldTransformPtr());
+
+	}
+
+	//ゲームオブジェクトクラスに情報セット
+	SetRailCamInfo(camera_->GetRailCameraInfo());
+	SetPlayerWorldTF(fbxPlayer_->GetObject3d()->GetWorldTransformPtr());
+
+}
+
+void GameObjManager::RailCameraInit(RailCameraInfo* info)
+{
+	railCameraInfo_ = info;
+}
+

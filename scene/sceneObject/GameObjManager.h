@@ -3,23 +3,31 @@
  * @brief 読み込みデータでロードしたゲーム内の出現オブジェクトを一括管理する
  */
 #pragma once
-#include<vector>
+
 #include"Enemy.h"
 #include"WalkingEnemy.h"
 #include"FloatingEnemy.h"
 #include"OjamaFence.h"
 #include"CarryBallEnemy.h"
 #include"BasicEnemy.h"
+#include "FbxPlayer.h"
+
 #include"Mesh.h"
 #include "Object3d.h"
 #include"json.h"
 #include"SphereCollider.h"
 #include"CollisionManager.h"
 #include"CollisionAttribute.h"
+
+#include "FBXObject3d.h"
+#include "fbx/FBXLoader.h"
+#include "FBXModel.h"
+
 #include <cassert>
 #include<fstream>
 #include<string>
 #include<list>
+#include<vector>
 
 struct LevelData;
 
@@ -115,11 +123,18 @@ private:
     const float adjustCarryBallESpownLenShort_ = 13.f;
     const float adjustCarryBallESpownLenLong_ = 25.f;
 
+    //自機
+    //FBX
+    std::unique_ptr<FBXModel> hitokunFbxM_;
+    std::unique_ptr<FBXObject3d>hitokunFbxO_;
+    std::unique_ptr<FbxPlayer> fbxPlayer_;
+
    
 
     //おじゃまフェンス
     std::list<std::unique_ptr<OjamaFence>> ojamaFences;
 
+    GameCamera* camera_ = nullptr;
 
     //レールカメラ情報
     RailCameraInfo* railCameraInfo_ = nullptr;
@@ -182,8 +197,14 @@ public:
     // 敵発生のリセット
     void InitEnemyCommands();
 
-    //おじゃまフェンスリセット
+    // おじゃまフェンスリセット
     void InitOjamaFence();
+
+    // ゲームオブジェクト用初期化
+    void GameObjInitialize();
+
+    // レールカメラ情報初期化
+    void RailCameraInit(RailCameraInfo* info);
 
 
 public:
@@ -193,8 +214,9 @@ public:
     // 歩兵敵のゲッタ
     std::list<std::unique_ptr<WalkingEnemy>>*GetWalkingEnemies() { return &walkingEnemies; }
 
-    
+    void SetGameCamPtr(GameCamera* camPtr) { camera_ = camPtr; };
 
-    // その他の敵の管理機能
+    FbxPlayer* GetPlayerPtr() { return fbxPlayer_.get(); };
+    
 };
 
