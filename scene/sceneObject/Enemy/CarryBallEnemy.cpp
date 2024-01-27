@@ -37,6 +37,17 @@ void CarryBallEnemy::Initialize(Mesh* model)
 	state_.isDead_ = false;
 	state_.isAtk_ = false;
 
+	//死亡時アクション変数初期化
+	deathActionInfo_.deathActionCount = 0;
+	deathActionInfo_.deathActionRotateVel = 0.2f;
+	deathActionInfo_.fallSpeedVel = 0.1f;
+	deathActionInfo_.isDeathAction = false;
+	deathActionInfo_.lowestPosY = 0;
+	deathActionInfo_.maxDeathActionCount = 600;
+	deathActionInfo_.offsetBoundSpeed = 1.4f;
+	deathActionInfo_.nowFallSpeed = deathActionInfo_.offsetBoundSpeed;
+	deathActionInfo_.subtractTimeRateVel = -0.0001f;
+	
 }
 
 void CarryBallEnemy::Update()
@@ -102,10 +113,10 @@ void CarryBallEnemy::Update()
 	}
 
 	if (state_.hp_ <= 0) {
-		isDeathAction_ = true;
+		deathActionInfo_.isDeathAction = true;
 	}
 
-	DeadAction();
+	EnemyActionFunc::DeathAction(deathActionInfo_, state_.isDead_, *(object3d_.get()), posY_, nowSubtractTimeRate_);
 
 	// コライダー更新
 	colliderPos_ = object3d_->worldTransform.matWorld_.GetWorldPos();
@@ -185,7 +196,7 @@ void CarryBallEnemy::Atk()
 	}
 	else {
 		nowPhase_ = MOVE_PHASE::none;
-		isDeathAction_ = true;
+		deathActionInfo_.isDeathAction = true;
 	}
 
 	// 移動処理
@@ -207,7 +218,7 @@ void CarryBallEnemy::ShotBullet()
 	if (nowShotDelay_ > bulletShotDelay_ && nowShotNum_ < maxShotNum_) {
 		nowShotDelay_ = 0;
 
-		if (isDeathAction_ == false) {
+		if (deathActionInfo_.isDeathAction == false) {
 			AddBullet();
 		}
 	}
@@ -227,28 +238,7 @@ void CarryBallEnemy::AddBullet()
 	bullets_.push_back(std::move(newRapidBullet));
 }
 
-void CarryBallEnemy::DeadAction()
-{
-	if (isDeathAction_ == true) {
-		deathActionCount_++;
-		if (deathActionCount_ >= maxDeathActionCount_) {
-			state_.isDead_ = true;
-		}
 
-
-		if (object3d_->worldTransform.translation_.y < lowestPosY_) {
-			nowFallSpeed_ = offsetBoundSpeed_;
-			posY_ = 0;
-		}
-		else {
-			nowFallSpeed_ -= fallSpeedVel_;
-		}
-		posY_ += nowFallSpeed_;	//y変動
-		object3d_->worldTransform.rotation_.x += deathActionRotateVel_;
-		nowSubtractTimeRate_ += subtractTimeRateVel_;	//タイムレートが落ちてくる
-
-	}
-}
 
 bool CarryBallEnemy::compultionTrue()
 {

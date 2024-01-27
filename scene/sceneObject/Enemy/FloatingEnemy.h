@@ -5,6 +5,7 @@
 #include"CollisionAttribute.h"
 #include "GameCamera.h"
 #include"EnemyNormalBullet.h"
+#include"EnemyActionUtility.h"
 
 class FloatingEnemy : public Enemy {
 public:
@@ -131,20 +132,24 @@ private:// 当たり判定
     int rotMode_ = ROT_MODE::straight;
 
     //死亡時用変数
-    bool isDeathAction_ = false;
-    int deathActionCount_ = 0;
 
-    const float deathActionRotateVel_ = 0.2f;
-    const float lowestPosY_ = 0.0f;
-    const float fallSpeedVel_ = 0.1f;
-    const float offsetBoundSpeed_ = 1.4f;
+    DeathActionInfo deathActionInfo_;
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
     const float deadDecelerationAcceleration_ = 0.05f;
     const float deadAtTheStartAcceleration_ = 2.f;
-    const float subtractTimeRateVel_ = -0.0001f;
-    const int maxDeathActionCount_ = 180;
 
     float deadDecelerationSpeed_ = 0.0f;
-    float nowFallSpeed_ = offsetBoundSpeed_;
+ 
     float nowSubtractTimeRate_ = 0;
 
 
