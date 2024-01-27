@@ -29,7 +29,6 @@ public:
 	void Draw(DirectXCommon* dxcomon_);
 
 
-
 	//メンバ変数
 private:
 
@@ -41,6 +40,7 @@ private:
 	const float groundAdjustScale_ = 4000.f;
 	const float backGroundAdjustPosY_ = 400.f;
 	const float groundAdjustPosY_ = -10;
+
 
 	std::unique_ptr<Object3d> groundObj1_;	//地面1
 	std::unique_ptr<Object3d> continuousFloor_;	//地面2

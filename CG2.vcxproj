@@ -217,10 +217,11 @@
     <ClCompile Include="scene\sceneManager\TitleScene.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\BasicEnemy.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\Enemy.cpp" />
+
     <ClCompile Include="scene\sceneObject\Enemy\EnemyManager.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\OjamaFence.cpp" />
+
     <ClCompile Include="scene\sceneObject\Enemy\WalkingEnemy.cpp" />
-    <ClCompile Include="scene\sceneObject\GameObjManager.cpp" />
     <ClCompile Include="scene\sceneObject\Ground.cpp" />
     <ClCompile Include="scene\sceneObject\Player\Atk1.cpp" />
     <ClCompile Include="scene\sceneObject\Player\FbxPlayer.cpp" />
@@ -388,7 +389,6 @@
     <ClInclude Include="scene\sceneManager\TitleScene.h" />
     <ClInclude Include="scene\sceneObject\Enemy\BasicEnemy.h" />
     <ClInclude Include="scene\sceneObject\Enemy\Enemy.h" />
-    <ClInclude Include="scene\sceneObject\Enemy\EnemyManager.h" />
     <ClInclude Include="scene\sceneObject\Enemy\WalkingEnemy.h" />
     <ClInclude Include="scene\sceneObject\Ground.h" />
     <ClInclude Include="scene\sceneObject\Player\Atk1.h" />

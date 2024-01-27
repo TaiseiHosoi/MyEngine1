@@ -48,6 +48,7 @@ void Field::Initialize()
 	skydomeObj_->worldTransform.scale_ = { groundAdjustScale_,groundAdjustScale_,groundAdjustScale_ };
 
 
+
 	skydomeObj_->Update();
 
 
@@ -69,6 +70,7 @@ void Field::Draw(DirectXCommon* dxcomon_)
 	groundObj1_->Draw(dxcomon_->GetCommandList());
 
 	continuousFloor_->Draw(dxcomon_->GetCommandList());
+
 
 
 	skydomeObj_->Draw(dxcomon_->GetCommandList());
