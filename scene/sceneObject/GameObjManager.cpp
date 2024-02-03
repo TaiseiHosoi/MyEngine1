@@ -682,6 +682,8 @@ void GameObjManager::GameObjInitialize()
 		fbxPlayer_->SetRailCameraInfo(railCameraInfo_);
 
 		camera_->SetFollowerPos(fbxPlayer_.get()->GetObject3d()->GetWorldTransformPtr());
+		camera_->SetPlayerParallelMoveVal_(fbxPlayer_->GetParallelMovePtr());
+		camera_->SetTargetPosVelueToAdd(fbxPlayer_->GetTargetPosVelueToAddPtr());
 
 	}
 

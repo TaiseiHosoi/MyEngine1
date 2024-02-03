@@ -36,6 +36,8 @@ void GameCamera::GameInfoInitialize()
 	targetStartCount_ = 1;
 	nowCount_ = startCount_;
 	basePos_ = {};
+	
+
 	//新しいvectorセット
 	for (int i = 0; i < jsonObjsPtr->size(); i++) {
 		Vector3 newVec = jsonObjsPtr[0][i].worldTransform.translation_;
@@ -95,12 +97,16 @@ void GameCamera::Update()
 	if (playerParallelMoveVal_ != nullptr) {
 		parallelVal.x = *playerParallelMoveVal_ / 2.f;
 	}
+
+	//進行状況に合わせて回転させる現在のVector3
 	Vector3 nowParalellVec = MathFunc::RotateVecAngleY(parallelVal, dirAngle);
+	Vector3 nowTargetPosVelueToAdd = MathFunc::RotateVecAngleY(*targetPosVelueToAdd_, dirAngle);
 
 
 	if (camMode_ == CAM_MODE::title) {
 
 		nowOffset = MathFunc::RotateVecAngleY(titleScOffsetPos_, dirAngle);
+
 		
 
 		//ワールド上の自機の回転量yを求める
@@ -132,7 +138,7 @@ void GameCamera::Update()
 		//値を入力
 		basePos_ = MathFunc::TangentSplinePosition(points, startIndex_, timeRate_);	//カメラの位置
 		target = MathFunc::TangentSplinePosition(points, startIndex_, targetTimeRate);
-		railTargetPos_ = target + nowParalellVec* targetParalellVecMag_;	//ローカル変数に保存
+		railTargetPos_ = target + nowParalellVec* targetParalellVecMag_ + nowTargetPosVelueToAdd;	//ローカル変数に保存
 
 
 		Vector3 minusVec = railTargetPos_ - basePos_;
@@ -540,6 +546,11 @@ void GameCamera::GoGameClear()
 void GameCamera::SetPlayerParallelMoveVal_(float* val)
 {
 	playerParallelMoveVal_ = val;
+}
+
+void GameCamera::SetTargetPosVelueToAdd(Vector3* vec)
+{
+	targetPosVelueToAdd_ = vec;
 }
 
 

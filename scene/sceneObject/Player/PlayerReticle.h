@@ -24,10 +24,8 @@ public:
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
 public://アクセッサ
-	/// <summary>
-	/// ロックオンフラグ
-	/// </summary>
-	/// <returns><isRockOn_>
+
+	// 遠くのレティクルゲッタ
 	Object3d* GetFarReticleObjPtr() { return farReticleO_.get(); }
 	
 
@@ -50,16 +48,16 @@ private:
 
 	const float offsetRotY_ = 0.5f * 3.14f;
 	
-	const float offsetNierPos_ = 10.f;
+	const float offsetNierPosLength_ = 10.f;
 	const float offsetMediumRangePos_ = 50.f;
-	const float offsetFarPos_ = 90.f;
+	const float offsetFarPosLength_ = 90.f;
 	const Vector3 nierReticleScale_ = { 0.1f,1.f,1.f };
 	const Vector3 mediumRangeReticleScale_ = { 0.1f,1.f,1.f };
 	const Vector3 farReticleScale_ = { 0.1f,1.f,1.f };
 
-	//CollisionManager* collider_ = nullptr;
-	//std::unique_ptr<RaycastHit> raycastHit;
-	//bool isRockOn_ = false;
+	
+
+
 
 };
 

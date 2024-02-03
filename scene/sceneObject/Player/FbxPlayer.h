@@ -56,8 +56,11 @@ public:
 	//hpアクセッサ
 	void SetHp(int hp);
 
-	//移動処理
-	void Move();
+	//自機移動処理
+	void MoveBody();
+
+	//ターゲット移動処理
+	void MoveTarget();
 
 	//射撃
 	void BulletShot();
@@ -99,6 +102,9 @@ public:	//アクセッサ
 
 	//平行移動の値ポインタゲット
 	float* GetParallelMovePtr();
+
+	//カメラ移動のVector3ポインタゲット
+	Vector3* GetTargetPosVelueToAddPtr();
 
 
 private:	
@@ -160,7 +166,7 @@ private:
 	
 #pragma region 移動処理で使う変数
 	Vector3 velocity_;
-	float kMoveSpeed_ = 0.0f;//移動速度
+	float moveSpeed_ = 0.0f;//移動速度
 	const float kTurnSpeed_ = MathFunc::Dig2Rad(10);//旋回速度
 	bool isRun_ = false;
 	Vector3 faceAngle_ = {};
@@ -252,7 +258,7 @@ private:
 	int oldPActNum_ = 0;	//アクション前フレーム保存変数
 	int count = 0;
 
-	//固定値
+	//被弾変数固定値
 	const int delayCount_ = 30;
 	const int damage_ = 2;
 
@@ -261,4 +267,10 @@ private:
 	int currentDamageFrame_ = 0;        //現在のフレームカウント
 	bool increasingAlpha_ = true;    //アルファ値を増加させるかどうか
 	float currentAlpha_ = 1.0f;      //現在のアルファ値
+
+	//上下左右に始点操作するベクトル
+	Vector3 targetPosVelueToAdd_ = {};
+	const Vector3 maxTargetPosVTA_ = {30.f,30.f,0};
+	const float targetPosMoveSpeed_ = 0.5f;
+
 };

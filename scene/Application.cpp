@@ -55,7 +55,7 @@ void Application::Initialize(DirectXCommon* dxcomon)
 	gameObjManager_->SetGameCamPtr(gameCamera_.get());
 	gameObjManager_->GameObjInitialize();	//カメラ情報が必要なため隔離されている
 
-	//
+	//その他シーンマネージャの初期化
 	sceneManager_ = std::make_unique<SceneManager>(dxCommon_, gameCamera_.get());
 	sceneManager_->SetJsonManager(gameObjManager_.get());
 	sceneManager_->ObjectInitialize();

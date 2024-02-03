@@ -203,6 +203,7 @@
     <ClCompile Include="engine\sprite\Sprite.cpp" />
     <ClCompile Include="engine\sprite\SpriteCommon.cpp" />
     <ClCompile Include="engine\SummarizeEngine\SummarizeEngine.cpp" />
+    <ClCompile Include="scene\sceneObject\GameObjManager.cpp" />
     <ClCompile Include="scene\sceneObject\Utility\EnemyActionUtility.cpp" />
     <ClCompile Include="scene\sceneObject\Utility\EnemyDirectionUtility.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\FloatingEnemy.cpp" />
@@ -217,10 +218,7 @@
     <ClCompile Include="scene\sceneManager\TitleScene.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\BasicEnemy.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\Enemy.cpp" />
-
-    <ClCompile Include="scene\sceneObject\Enemy\EnemyManager.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\OjamaFence.cpp" />
-
     <ClCompile Include="scene\sceneObject\Enemy\WalkingEnemy.cpp" />
     <ClCompile Include="scene\sceneObject\Ground.cpp" />
     <ClCompile Include="scene\sceneObject\Player\Atk1.cpp" />

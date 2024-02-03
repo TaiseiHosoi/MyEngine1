@@ -103,6 +103,8 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	//弾
 	bulletModel_ = Mesh::LoadFormOBJ("bume", true);
 
+	
+
 
 }
 
@@ -113,7 +115,7 @@ void FbxPlayer::Update()
 	rapidBullets_.remove_if([](std::unique_ptr<PlayerRapidBullet>& bullet) {
 		return bullet->ReturnIsDead();
 		});
-
+	
 
 	if (isHitStop == false)
 	{
@@ -123,7 +125,9 @@ void FbxPlayer::Update()
 				gameObject_.get()->GetCamera().GetTarget().z - gameObject_.get()->GetCamera().GetEye().z);
 
 		//移動処理
-		Move();
+		MoveBody();
+		//ターゲット移動処理
+		//MoveTarget();
 
 		Ray ray;
 		ray.start = gameObject_->GetCamera().GetEye();
@@ -309,7 +313,7 @@ void FbxPlayer::SetHp(int hp)
 
 
 
-void FbxPlayer::Move()
+void FbxPlayer::MoveBody()
 {
 
 	Vector3 primaryNorm = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + 0.005f)
@@ -322,7 +326,7 @@ void FbxPlayer::Move()
 
 
 	//移動速度計算
-	kMoveSpeed_ = increaseSpeed_;
+	moveSpeed_ = increaseSpeed_;
 	//float kDiagonalSpeed = kMoveSpeed_ * 0.707f;	// √2をかける
 
 	//キー入力があったら
@@ -557,6 +561,140 @@ void FbxPlayer::Move()
 
 }
 
+void FbxPlayer::MoveTarget()
+{
+	//キー入力があったら
+	if (input_->PushKey(DIK_UP) ||
+		input_->PushKey(DIK_LEFT) ||
+		input_->PushKey(DIK_DOWN) ||
+		input_->PushKey(DIK_RIGHT) ||
+		input_->StickInput(L_RIGHT) ||
+		input_->StickInput(R_LEFT) ||
+		input_->StickInput(R_UP) ||
+		input_->StickInput(R_DOWN) &&
+		isDead_ == false)
+	{
+
+		//斜め移動
+		float diagonalSp = targetPosMoveSpeed_ * 0.707f;
+
+		//W,Dを押していたら
+		if (input_->PushKey(DIK_UP) && input_->PushKey(DIK_RIGHT) || input_->StickInput(R_UP) && input_->StickInput(L_RIGHT))
+		{
+
+			
+			if (targetPosVelueToAdd_.x >= -maxTargetPosVTA_.x) {
+				targetPosVelueToAdd_.x -= diagonalSp;
+			}
+			if (targetPosVelueToAdd_.y <= maxTargetPosVTA_.y) {
+				targetPosVelueToAdd_.y += diagonalSp;
+
+			}
+
+		}
+
+		//W,Aを押していたら
+		else if (input_->PushKey(DIK_UP) && input_->PushKey(DIK_LEFT) || input_->StickInput(R_UP) && input_->StickInput(R_LEFT))
+		{
+
+
+			if (targetPosVelueToAdd_.x >= -maxTargetPosVTA_.x) {
+				targetPosVelueToAdd_.x -= diagonalSp;
+			}
+			if (targetPosVelueToAdd_.y >= -maxTargetPosVTA_.y) {
+				targetPosVelueToAdd_.y -= diagonalSp;
+
+			}
+
+
+		}
+
+		//S,Dを押していたら
+		else if (input_->PushKey(DIK_DOWN) && input_->PushKey(DIK_RIGHT) || input_->StickInput(R_DOWN) && input_->StickInput(L_RIGHT))
+		{
+
+			if (targetPosVelueToAdd_.x <= maxTargetPosVTA_.x) {
+				targetPosVelueToAdd_.x += diagonalSp;
+			}
+			if (targetPosVelueToAdd_.y <= maxTargetPosVTA_.y) {
+				targetPosVelueToAdd_.y += diagonalSp;
+
+			}
+
+		}
+
+		//S,Aを押していたら
+		else if (input_->PushKey(DIK_DOWN) && input_->PushKey(DIK_LEFT) || input_->StickInput(R_DOWN) && input_->StickInput(R_LEFT))
+		{
+
+
+			if (targetPosVelueToAdd_.x <= maxTargetPosVTA_.x) {
+				targetPosVelueToAdd_.x += diagonalSp;
+			}
+			if (targetPosVelueToAdd_.y >= -maxTargetPosVTA_.y) {
+				targetPosVelueToAdd_.y -= diagonalSp;
+
+			}
+
+		}
+
+		//Wを押していたら
+		else if (input_->PushKey(DIK_UP) || input_->StickInput(R_UP))
+		{
+
+			if (targetPosVelueToAdd_.x >= -maxTargetPosVTA_.x) {
+				targetPosVelueToAdd_.x -= diagonalSp;
+			}
+
+		}
+
+		//Sを押していたら
+		else if (input_->PushKey(DIK_DOWN) || input_->StickInput(R_DOWN))
+		{
+
+			if (targetPosVelueToAdd_.x <= maxTargetPosVTA_.x) {
+				targetPosVelueToAdd_.x += diagonalSp;
+			}
+
+		}
+
+		//Dを押していたら
+		else if (input_->PushKey(DIK_RIGHT) || input_->StickInput(L_RIGHT))
+		{
+
+			if (targetPosVelueToAdd_.y <= maxTargetPosVTA_.y) {
+				targetPosVelueToAdd_.y += diagonalSp;
+
+
+			}
+
+
+		}
+
+		//Aを押していたら
+		else if (input_->PushKey(DIK_LEFT) || input_->StickInput(R_LEFT))
+		{
+
+			if (targetPosVelueToAdd_.y >= -maxTargetPosVTA_.y) {
+				targetPosVelueToAdd_.y -= diagonalSp;
+
+			}
+
+		}
+
+	
+
+	}
+	else
+	{
+
+		//押されていないときの処理
+	
+
+
+	}
+}
+
 void FbxPlayer::BulletShot()
 {
 }
@@ -667,6 +805,11 @@ void FbxPlayer::SetMaxFramesToMaxAlpha(int frame)
 float* FbxPlayer::GetParallelMovePtr()
 {
 	return &playerParalellMoveVal_;
+}
+
+Vector3* FbxPlayer::GetTargetPosVelueToAddPtr()
+{
+	return &targetPosVelueToAdd_;
 }
 
 void FbxPlayer::PlayerPalamReset()

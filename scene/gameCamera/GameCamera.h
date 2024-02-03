@@ -133,6 +133,9 @@ public:	// アクセッサ
 	//player平行移動量セッタ
 	void SetPlayerParallelMoveVal_(float* val);
 
+	//プレイヤーからのターゲット移動セット
+	void SetTargetPosVelueToAdd(Vector3* vec);
+
 	// 1-> target ,0-> eye
 	WorldTransform swap_[2];
 private:
@@ -228,11 +231,17 @@ private:
 
 	std::unique_ptr<RailCameraInfo> railCameraInfo_;
 
+	
 	//プレイヤーの平行移動量
 	float* playerParallelMoveVal_ = nullptr;
 
+	//プレイヤーが操作するカメラ位置の値
+	Vector3* targetPosVelueToAdd_ = nullptr;
+
 	//camMode
 	int camMode_ = 0;
+
+	//
 
 };
 
