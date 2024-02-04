@@ -2,10 +2,9 @@
 #include "Enemy.h"
 #include "SphereCollider.h"
 #include "CollisionManager.h"
-#include "CollisionAttribute.h"
+#include"CollisionAttribute.h"
 #include "GameCamera.h"
 #include "EnemyBoundBall.h"
-#include "EnemyActionUtility.h"
 
 class CarryBallEnemy : public Enemy {
 public:
@@ -50,7 +49,7 @@ public: // アクセッサ
     //強制true
     bool compultionTrue();
 
-    // 弾モデルセット
+    // 弾も出るセット
     void SetBulletModel(Mesh* model);
 
 public: //　行動
@@ -137,19 +136,25 @@ private:// 当たり判定
     int nowShotDelay_ = 0;
     const float directlyBelow_ = 0.5f;
 
+
     //その他
     int rotMode_ = ROT_MODE::straight;
 
     //死亡時用変数
-    DeathActionInfo deathActionInfo_;
+    bool isDeathAction_ = false;
+    int deathActionCount_ = 0;
 
-    
-
-    
+    const float deathActionRotateVel_ = 0.2f;
+    const float lowestPosY_ = 0.0f;
+    const float fallSpeedVel_ = 0.1f;
+    const float offsetBoundSpeed_ = 1.4f;
     const float deadDecelerationAcceleration_ = 0.05f;
     const float deadAtTheStartAcceleration_ = 2.f;
+    const float subtractTimeRateVel_ = -0.0001f;
+    const int maxDeathActionCount_ = 600;
 
     float deadDecelerationSpeed_ = 0.0f;
+    float nowFallSpeed_ = offsetBoundSpeed_;
     float nowSubtractTimeRate_ = 0;
 
 
