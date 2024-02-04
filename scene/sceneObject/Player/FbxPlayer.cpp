@@ -127,7 +127,7 @@ void FbxPlayer::Update()
 		//移動処理
 		MoveBody();
 		//ターゲット移動処理
-		//MoveTarget();
+		MoveTarget();
 
 		Ray ray;
 		ray.start = gameObject_->GetCamera().GetEye();
@@ -568,7 +568,7 @@ void FbxPlayer::MoveTarget()
 		input_->PushKey(DIK_LEFT) ||
 		input_->PushKey(DIK_DOWN) ||
 		input_->PushKey(DIK_RIGHT) ||
-		input_->StickInput(L_RIGHT) ||
+		input_->StickInput(R_RIGHT) ||
 		input_->StickInput(R_LEFT) ||
 		input_->StickInput(R_UP) ||
 		input_->StickInput(R_DOWN) &&
@@ -579,12 +579,12 @@ void FbxPlayer::MoveTarget()
 		float diagonalSp = targetPosMoveSpeed_ * 0.707f;
 
 		//W,Dを押していたら
-		if (input_->PushKey(DIK_UP) && input_->PushKey(DIK_RIGHT) || input_->StickInput(R_UP) && input_->StickInput(L_RIGHT))
+		if (input_->PushKey(DIK_UP) && input_->PushKey(DIK_RIGHT) || input_->StickInput(R_UP) && input_->StickInput(R_RIGHT))
 		{
 
 			
-			if (targetPosVelueToAdd_.x >= -maxTargetPosVTA_.x) {
-				targetPosVelueToAdd_.x -= diagonalSp;
+			if (targetPosVelueToAdd_.x <= maxTargetPosVTA_.x) {
+				targetPosVelueToAdd_.x += diagonalSp;
 			}
 			if (targetPosVelueToAdd_.y <= maxTargetPosVTA_.y) {
 				targetPosVelueToAdd_.y += diagonalSp;
@@ -601,8 +601,8 @@ void FbxPlayer::MoveTarget()
 			if (targetPosVelueToAdd_.x >= -maxTargetPosVTA_.x) {
 				targetPosVelueToAdd_.x -= diagonalSp;
 			}
-			if (targetPosVelueToAdd_.y >= -maxTargetPosVTA_.y) {
-				targetPosVelueToAdd_.y -= diagonalSp;
+			if (targetPosVelueToAdd_.y <= maxTargetPosVTA_.y) {
+				targetPosVelueToAdd_.y += diagonalSp;
 
 			}
 
@@ -610,14 +610,14 @@ void FbxPlayer::MoveTarget()
 		}
 
 		//S,Dを押していたら
-		else if (input_->PushKey(DIK_DOWN) && input_->PushKey(DIK_RIGHT) || input_->StickInput(R_DOWN) && input_->StickInput(L_RIGHT))
+		else if (input_->PushKey(DIK_DOWN) && input_->PushKey(DIK_RIGHT) || input_->StickInput(R_DOWN) && input_->StickInput(R_RIGHT))
 		{
 
 			if (targetPosVelueToAdd_.x <= maxTargetPosVTA_.x) {
 				targetPosVelueToAdd_.x += diagonalSp;
 			}
-			if (targetPosVelueToAdd_.y <= maxTargetPosVTA_.y) {
-				targetPosVelueToAdd_.y += diagonalSp;
+			if (targetPosVelueToAdd_.y >= -maxTargetPosVTA_.y) {
+				targetPosVelueToAdd_.y -= diagonalSp;
 
 			}
 
@@ -628,8 +628,8 @@ void FbxPlayer::MoveTarget()
 		{
 
 
-			if (targetPosVelueToAdd_.x <= maxTargetPosVTA_.x) {
-				targetPosVelueToAdd_.x += diagonalSp;
+			if (targetPosVelueToAdd_.x >= -maxTargetPosVTA_.x) {
+				targetPosVelueToAdd_.x -= diagonalSp;
 			}
 			if (targetPosVelueToAdd_.y >= -maxTargetPosVTA_.y) {
 				targetPosVelueToAdd_.y -= diagonalSp;
@@ -641,10 +641,10 @@ void FbxPlayer::MoveTarget()
 		//Wを押していたら
 		else if (input_->PushKey(DIK_UP) || input_->StickInput(R_UP))
 		{
-
-			if (targetPosVelueToAdd_.x >= -maxTargetPosVTA_.x) {
-				targetPosVelueToAdd_.x -= diagonalSp;
+			if (targetPosVelueToAdd_.y <= maxTargetPosVTA_.y) {
+				targetPosVelueToAdd_.y += targetPosMoveSpeed_;
 			}
+
 
 		}
 
@@ -652,18 +652,19 @@ void FbxPlayer::MoveTarget()
 		else if (input_->PushKey(DIK_DOWN) || input_->StickInput(R_DOWN))
 		{
 
-			if (targetPosVelueToAdd_.x <= maxTargetPosVTA_.x) {
-				targetPosVelueToAdd_.x += diagonalSp;
+
+			if (targetPosVelueToAdd_.y >= -maxTargetPosVTA_.y) {
+				targetPosVelueToAdd_.y -= targetPosMoveSpeed_;
 			}
 
 		}
 
 		//Dを押していたら
-		else if (input_->PushKey(DIK_RIGHT) || input_->StickInput(L_RIGHT))
+		else if (input_->PushKey(DIK_RIGHT) || input_->StickInput(R_RIGHT))
 		{
 
-			if (targetPosVelueToAdd_.y <= maxTargetPosVTA_.y) {
-				targetPosVelueToAdd_.y += diagonalSp;
+			if (targetPosVelueToAdd_.x <= maxTargetPosVTA_.x) {
+				targetPosVelueToAdd_.x += targetPosMoveSpeed_;
 
 
 			}
@@ -675,8 +676,8 @@ void FbxPlayer::MoveTarget()
 		else if (input_->PushKey(DIK_LEFT) || input_->StickInput(R_LEFT))
 		{
 
-			if (targetPosVelueToAdd_.y >= -maxTargetPosVTA_.y) {
-				targetPosVelueToAdd_.y -= diagonalSp;
+			if (targetPosVelueToAdd_.x >= -maxTargetPosVTA_.x) {
+				targetPosVelueToAdd_.x -= targetPosMoveSpeed_;
 
 			}
 
