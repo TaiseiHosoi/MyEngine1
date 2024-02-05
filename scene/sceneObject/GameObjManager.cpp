@@ -677,19 +677,21 @@ void GameObjManager::GameObjInitialize()
 		hitokunFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("Cube", true));
 		//Player
 		fbxPlayer_ = std::make_unique<FbxPlayer>();
-		fbxPlayer_.get()->Initialize(hitokunFbxM_.get());
+		fbxPlayer_->SetRailTargetPos(camera_->GetRailTargetPosPtr());	//レティクル用
+		fbxPlayer_->Initialize(hitokunFbxM_.get());
 
 		fbxPlayer_->SetRailCameraInfo(railCameraInfo_);
+		
 
 		camera_->SetFollowerPos(fbxPlayer_.get()->GetObject3d()->GetWorldTransformPtr());
 		camera_->SetPlayerParallelMoveVal_(fbxPlayer_->GetParallelMovePtr());
 		camera_->SetTargetPosVelueToAdd(fbxPlayer_->GetTargetPosVelueToAddPtr());
-
 	}
 
 	//ゲームオブジェクトクラスに情報セット
 	SetRailCamInfo(camera_->GetRailCameraInfo());
 	SetPlayerWorldTF(fbxPlayer_->GetObject3d()->GetWorldTransformPtr());
+
 
 }
 

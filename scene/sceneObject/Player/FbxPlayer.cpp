@@ -98,7 +98,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	std::srand(static_cast<int>(std::time(nullptr)));
 
 
-	reticle_.Initialize(gameObject_->GetWorldTransformPtr());
+	reticle_.Initialize(gameObject_->GetWorldTransformPtr(), railTargetPosPtr_);
 
 	//弾
 	bulletModel_ = Mesh::LoadFormOBJ("bume", true);
@@ -811,6 +811,11 @@ float* FbxPlayer::GetParallelMovePtr()
 Vector3* FbxPlayer::GetTargetPosVelueToAddPtr()
 {
 	return &targetPosVelueToAdd_;
+}
+
+void FbxPlayer::SetRailTargetPos(Vector3* v)
+{
+	railTargetPosPtr_ = v;
 }
 
 void FbxPlayer::PlayerPalamReset()

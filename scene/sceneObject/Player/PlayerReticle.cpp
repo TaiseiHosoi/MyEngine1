@@ -2,7 +2,7 @@
 #include "CollisionManager.h"
 #include "CollisionAttribute.h"
 
-void PlayerReticle::Initialize(WorldTransform* pairWTF)
+void PlayerReticle::Initialize(WorldTransform* pairWTF, Vector3* railTargetPos)
 {
 	nierReticleM_ = Mesh::LoadFormOBJ("3DReticle", false);
 	nierReticleO_ = Object3d::Create();
@@ -32,14 +32,17 @@ void PlayerReticle::Initialize(WorldTransform* pairWTF)
 	mediumRangeReticleO_->Update();
 	farReticleO_->Update();
 
+	//ターゲットポジションptrセット
+	railTargetPos_ = railTargetPos;
 	
 }
 
 void PlayerReticle::Update()
 {
-
+	
 	nierReticleO_->Update();
 	mediumRangeReticleO_->Update();
+	farReticleO_->worldTransform.translation_ = *railTargetPos_;
 	farReticleO_->Update();
 
 }

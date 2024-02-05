@@ -27,8 +27,6 @@ void CameraShake::Update()
 	//カメラに適用させる為の計算
 	magnitudeVec_ = MathFunc::RotateVecAngleY(nowMoveVec_, cameraDirAngle_);
 
-	
-
 }
 
 void CameraShake::SetCameraDirAngle(float angle)

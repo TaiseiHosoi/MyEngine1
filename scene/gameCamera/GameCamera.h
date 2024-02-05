@@ -136,6 +136,9 @@ public:	// アクセッサ
 	//プレイヤーからのターゲット移動セット
 	void SetTargetPosVelueToAdd(Vector3* vec);
 
+	//レールターゲット用ポジションベクトル取得
+	Vector3* GetRailTargetPosPtr();
+
 	// 1-> target ,0-> eye
 	WorldTransform swap_[2];
 private:

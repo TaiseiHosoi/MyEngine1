@@ -204,6 +204,6 @@ protected: // メンバ変数
 	float focalLengs = 50;
 	float sensor = 50;
 	float fovAngleY_ = 1.0f;
-	const float offsetFovAngleY = 1.0f;
+	const float offsetFovAngleY = 1.4f;
 };
 

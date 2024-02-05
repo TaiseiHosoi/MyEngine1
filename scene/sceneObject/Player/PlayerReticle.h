@@ -11,7 +11,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(WorldTransform* pairWTF);
+	void Initialize(WorldTransform* pairWTF , Vector3* railTargetPos);
 
 	/// <summary>
 	/// 更新処理
@@ -55,7 +55,8 @@ private:
 	const Vector3 mediumRangeReticleScale_ = { 0.1f,1.f,1.f };
 	const Vector3 farReticleScale_ = { 0.1f,1.f,1.f };
 
-	
+	//ターゲットのポジション
+	Vector3* railTargetPos_ = nullptr;
 
 
 

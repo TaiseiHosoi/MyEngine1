@@ -86,8 +86,6 @@ public:	//アクセッサ
 	//デスフラグのGetter
 	bool GetIsDead() { return isDead_; }
 
-
-
 	//死亡時演出のフェーズゲッタ
 	int GetIsDeadActNum();
 
@@ -106,18 +104,17 @@ public:	//アクセッサ
 	//カメラ移動のVector3ポインタゲット
 	Vector3* GetTargetPosVelueToAddPtr();
 
+	//ターゲット位置のベクトル
+	void SetRailTargetPos(Vector3* v);
+
 
 private:	
 	
-
-
 	//コライダー処理
 	void PColliderUpdate();
 
 	//ガード成功時
 	bool GetGuardExcute() { return isGuard; }
-
-
 
 
 public:
@@ -272,5 +269,8 @@ private:
 	Vector3 targetPosVelueToAdd_ = {};
 	const Vector3 maxTargetPosVTA_ = {30.f,30.f,0};
 	const float targetPosMoveSpeed_ = 0.5f;
+
+	//レールターゲットレティクル
+	Vector3* railTargetPosPtr_ = nullptr;
 
 };

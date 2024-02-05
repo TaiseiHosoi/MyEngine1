@@ -553,6 +553,11 @@ void GameCamera::SetTargetPosVelueToAdd(Vector3* vec)
 	targetPosVelueToAdd_ = vec;
 }
 
+Vector3* GameCamera::GetRailTargetPosPtr()
+{
+	return &railTargetPos_;
+}
+
 
 
 Vector3 GameCamera::splinePosition(const std::vector<Vector3>& pointsArg, size_t startIndex, float t)
