@@ -27,6 +27,11 @@ GameCamera::GameCamera(int window_width , int window_height , Input* input)
 	isPause_ = false;
 
 	input_ = input;
+
+	cameraShakeManager_ = std::make_unique<CameraShake>();
+	cameraShakeManager_->SetCameraDirAngle(&dirAngle_);
+	cameraShakeManager_->Initialize();
+
 	
 }
 
@@ -50,6 +55,8 @@ void GameCamera::GameInfoInitialize()
 	railCameraInfo_->oldStartIndex = oldStartIndex_;
 	railCameraInfo_->timeRate = timeRate_;
 	railCameraInfo_->points = points;
+
+	cameraShakeVec_ = cameraShakeManager_->GetShakeVec();
 	
 }
 
@@ -65,6 +72,10 @@ void GameCamera::Update()
 	}
 #pragma endregion マウス処理
 
+	if (input_->TriggerKey(DIK_G)) {
+		GameCameraRotateShake(CAMERA_SHAKE_TIMERATE::SHORT_TIME);
+	}
+
 #pragma region レールカメラ処理
 
 	oldStartIndex_ = startIndex_;	//前フレーム処理
@@ -79,10 +90,7 @@ void GameCamera::Update()
 		targetTimeRate -= maxTimeRate_;	//もし1を超えてたら-1
 	}
 	
-	//if (input_->TriggerKey(DIK_N)) {
-	//	gameOverDirectionNowCount_ = 0;
-	//	camMode_ = CAM_MODE::gameOver;
-	//}
+	
 
 	//進行上の向いている方向
 	directionLoot_ = MathFunc::TangentSplinePosition(railCameraInfo_->points, railCameraInfo_->startIndex, railCameraInfo_->timeRate + 0.005f)
@@ -90,7 +98,7 @@ void GameCamera::Update()
 	directionLoot_.nomalize();
 
 	Vector3 nowOffset;
-	float dirAngle = atan2(directionLoot_.x, directionLoot_.z);
+	dirAngle_ = atan2(directionLoot_.x, directionLoot_.z);
 
 	//プレイヤーの動きに合わせて動くカメラ挙動分のVec3
 	Vector3 parallelVal = { 0,0,0 };
@@ -99,13 +107,13 @@ void GameCamera::Update()
 	}
 
 	//進行状況に合わせて回転させる現在のVector3
-	Vector3 nowParalellVec = MathFunc::RotateVecAngleY(parallelVal, dirAngle);
-	Vector3 nowTargetPosVelueToAdd = MathFunc::RotateVecAngleY(*targetPosVelueToAdd_, dirAngle);
+	Vector3 nowParalellVec = MathFunc::RotateVecAngleY(parallelVal, dirAngle_);
+	Vector3 nowTargetPosVelueToAdd = MathFunc::RotateVecAngleY(*targetPosVelueToAdd_, dirAngle_);
 
 
 	if (camMode_ == CAM_MODE::title) {
 
-		nowOffset = MathFunc::RotateVecAngleY(titleScOffsetPos_, dirAngle);
+		nowOffset = MathFunc::RotateVecAngleY(titleScOffsetPos_, dirAngle_);
 
 		
 
@@ -289,7 +297,7 @@ void GameCamera::Update()
 
 		tempEye += adjustCamDirPos_;
 
-		SetEye(tempEye);
+		SetEye(tempEye );
 		SetTarget(railTargetPos_);
 
 
@@ -304,6 +312,7 @@ void GameCamera::Update()
 	
 
 	Camera::Update();
+	cameraShakeManager_->Update();
 	
 }
 
@@ -491,8 +500,8 @@ void GameCamera::FollowPlayer()
 		Vector3 tempEye = { basePos_.x,basePos_.y,basePos_.z };
 
 
-		SetEye(tempEye);
-		SetTarget(railTargetPos_);
+		SetEye(tempEye + *cameraShakeVec_);
+		SetTarget(railTargetPos_ + *cameraShakeVec_);
 }
 
 void GameCamera::ChangeFollowFlag(bool flag)
@@ -556,6 +565,11 @@ void GameCamera::SetTargetPosVelueToAdd(Vector3* vec)
 Vector3* GameCamera::GetRailTargetPosPtr()
 {
 	return &railTargetPos_;
+}
+
+void GameCamera::GameCameraRotateShake(int shakeCount)
+{
+	return cameraShakeManager_->ShakeRotateCamera(shakeCount);
 }
 
 

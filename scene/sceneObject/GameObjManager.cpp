@@ -692,7 +692,8 @@ void GameObjManager::GameObjInitialize()
 	SetRailCamInfo(camera_->GetRailCameraInfo());
 	SetPlayerWorldTF(fbxPlayer_->GetObject3d()->GetWorldTransformPtr());
 
-
+	
+	
 }
 
 void GameObjManager::RailCameraInit(RailCameraInfo* info)

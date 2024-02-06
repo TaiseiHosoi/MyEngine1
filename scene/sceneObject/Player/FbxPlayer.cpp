@@ -299,6 +299,7 @@ void FbxPlayer::CreateBulHitParticle(Vector3 posArg)
 void FbxPlayer::MinusHp(int damage)
 {
 	hp_ -= damage;
+	
 }
 
 int FbxPlayer::GetHp()

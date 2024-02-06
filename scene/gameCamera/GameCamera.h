@@ -8,6 +8,7 @@
 #include"Input.h"
 #include "Object3d.h"
 #include "RailCameraInfo.h"
+#include "CameraShake.h"
 #include<vector>
 
 enum CAM_MODE {
@@ -139,10 +140,16 @@ public:	// アクセッサ
 	//レールターゲット用ポジションベクトル取得
 	Vector3* GetRailTargetPosPtr();
 
-	// 1-> target ,0-> eye
-	WorldTransform swap_[2];
+	//カメラシェイク呼び出し
+	void GameCameraRotateShake(int shakeCount);
+
+
 private:
 	Input* input_ = nullptr;
+	//カメラシェイクのVector3
+	std::unique_ptr<CameraShake> cameraShakeManager_;
+	Vector3* cameraShakeVec_ = nullptr;
+
 	WorldTransform* targetPos_ = nullptr;
 	WorldTransform* eyePos_ = nullptr;
 	WorldTransform* followerPos_ = nullptr;
@@ -157,7 +164,7 @@ private:
 	const float MAX_CHANGE_TIMER = 30;
 	int cameraModeChangeCountTimer = 30;
 	float cameraHeight_ = 6;
-	
+	float dirAngle_ = 0;	//カメラVector3.yの値
 	
 
 	//マウスカメラ用
@@ -244,7 +251,7 @@ private:
 	//camMode
 	int camMode_ = 0;
 
-	//
+	
 
 };
 

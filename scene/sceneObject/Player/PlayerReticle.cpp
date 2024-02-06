@@ -39,17 +39,18 @@ void PlayerReticle::Initialize(WorldTransform* pairWTF, Vector3* railTargetPos)
 
 void PlayerReticle::Update()
 {
+	farReticleO_->worldTransform.translation_ = *railTargetPos_;
 	
 	nierReticleO_->Update();
 	mediumRangeReticleO_->Update();
-	farReticleO_->worldTransform.translation_ = *railTargetPos_;
+	
 	farReticleO_->Update();
 
 }
 
 void PlayerReticle::Draw(ID3D12GraphicsCommandList* cmdList)
 {
-	nierReticleO_->Draw(cmdList);
-	mediumRangeReticleO_->Draw(cmdList);
+	//nierReticleO_->Draw(cmdList);
+	//mediumRangeReticleO_->Draw(cmdList);
 	farReticleO_->Draw(cmdList);
 }
