@@ -100,9 +100,6 @@
     <Filter Include="ヘッダー ファイル\Effect">
       <UniqueIdentifier>{d94df0d5-870c-4100-814f-71060b485422}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\i/o\FBX">
-      <UniqueIdentifier>{449bcc78-8c55-44ef-b50b-d7fbebd47415}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\SummarizeEngine">
       <UniqueIdentifier>{7f6e30bc-da1f-443c-99fa-ad54592c1edc}</UniqueIdentifier>
     </Filter>
@@ -126,6 +123,21 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\PostEffect">
       <UniqueIdentifier>{9bcb0049-2a48-45ab-876d-0c1554351969}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scene\enemy\enemyUtility">
+      <UniqueIdentifier>{1aabcad0-804b-4e89-81ba-19a981987dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scene\enemy\bullet">
+      <UniqueIdentifier>{3f42c728-03c2-4b2c-a329-23107ea4ee9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\scene\enemy\enemyUtility">
+      <UniqueIdentifier>{968209ed-09df-46ac-8c1a-954a808c04dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\scene\enemy\bullet">
+      <UniqueIdentifier>{2faf357d-fe48-4270-b029-a150ca4a1314}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\FBX">
+      <UniqueIdentifier>{449bcc78-8c55-44ef-b50b-d7fbebd47415}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -285,44 +297,41 @@
     <ClCompile Include="scene\sceneObject\Enemy\WalkingEnemy.cpp">
       <Filter>ソース ファイル\scene\enemy</Filter>
     </ClCompile>
-    <ClCompile Include="scene\sceneObject\Enemy\FloatingEnemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\Enemy\EnemyBullet\EnemyNormalBullet.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\Enemy\OjamaFence.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\Enemy\CarryBallEnemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="engine\PostEffect\PostEffect.cpp">
       <Filter>ソース ファイル\PostEffect</Filter>
     </ClCompile>
+    <ClCompile Include="scene\sceneObject\GameObjManager.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
     <ClCompile Include="engine\PostEffect\MultiTex.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\gameCamera\CameraShake.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\Utility\EnemyDirectionUtility.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>
     <ClCompile Include="engine\input\GamePad.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\i/o</Filter>
     </ClCompile>
     <ClCompile Include="scene\sceneObject\Utility\EnemyActionUtility.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\scene\enemy\enemyUtility</Filter>
     </ClCompile>
-    <ClCompile Include="scene\jsonGameInfoManager\JsonGameInfoManager.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="scene\sceneObject\Utility\EnemyDirectionUtility.cpp">
+      <Filter>ソース ファイル\scene\enemy\enemyUtility</Filter>
     </ClCompile>
-    <ClCompile Include="scene\sceneObject\GameObjManager.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="scene\gameCamera\CameraShake.cpp">
+      <Filter>ソース ファイル\scene\gameCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\Enemy\CarryBallEnemy.cpp">
+      <Filter>ソース ファイル\scene\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.cpp">
+      <Filter>ソース ファイル\scene\enemy\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\Enemy\EnemyBullet\EnemyNormalBullet.cpp">
+      <Filter>ソース ファイル\scene\enemy\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\Enemy\FloatingEnemy.cpp">
+      <Filter>ソース ファイル\scene\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\Enemy\OjamaFence.cpp">
+      <Filter>ソース ファイル\scene\enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -408,13 +417,13 @@
       <Filter>ヘッダー ファイル\math</Filter>
     </ClInclude>
     <ClInclude Include="engine\fbx\FBXLoader.h">
-      <Filter>ヘッダー ファイル\i/o\FBX</Filter>
+      <Filter>ヘッダー ファイル\FBX</Filter>
     </ClInclude>
     <ClInclude Include="engine\fbx\FBXModel.h">
-      <Filter>ヘッダー ファイル\i/o\FBX</Filter>
+      <Filter>ヘッダー ファイル\FBX</Filter>
     </ClInclude>
     <ClInclude Include="engine\fbx\FBXObject3d.h">
-      <Filter>ヘッダー ファイル\i/o\FBX</Filter>
+      <Filter>ヘッダー ファイル\FBX</Filter>
     </ClInclude>
     <ClInclude Include="engine\3dObject\Mesh.h">
       <Filter>ヘッダー ファイル\3dObject</Filter>
@@ -545,47 +554,44 @@
     <ClInclude Include="scene\sceneObject\Enemy\WalkingEnemy.h">
       <Filter>ヘッダー ファイル\scene\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="scene\sceneObject\Enemy\FloatingEnemy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBullet.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyNormalBullet.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\Enemy\OjamaFence.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\Enemy\CarryBallEnemy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="engine\PostEffect\PostEffect.h">
       <Filter>ヘッダー ファイル\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="engine\PostEffect\MultiTex.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="scene\gameCamera\CameraShake.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\Utility\EnemyDirectionUtility.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\gameCamera\RailCameraInfo.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\input\GamePad.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\scene\gameCamera</Filter>
     </ClInclude>
     <ClInclude Include="scene\sceneObject\Utility\EnemyActionUtility.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\scene\enemy\enemyUtility</Filter>
     </ClInclude>
-    <ClInclude Include="scene\jsonGameInfoManager\JsonGameInfoManager.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="scene\sceneObject\Utility\EnemyDirectionUtility.h">
+      <Filter>ヘッダー ファイル\scene\enemy\enemyUtility</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Enemy\CarryBallEnemy.h">
+      <Filter>ヘッダー ファイル\scene\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Enemy\FloatingEnemy.h">
+      <Filter>ヘッダー ファイル\scene\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\PostEffect\MultiTex.h">
+      <Filter>ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\gameCamera\RailCameraInfo.h">
+      <Filter>ヘッダー ファイル\scene\gameCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Enemy\OjamaFence.h">
+      <Filter>ヘッダー ファイル\scene\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\input\GamePad.h">
+      <Filter>ヘッダー ファイル\i/o</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyNormalBullet.h">
+      <Filter>ヘッダー ファイル\scene\enemy\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.h">
+      <Filter>ヘッダー ファイル\scene\enemy\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBullet.h">
+      <Filter>ヘッダー ファイル\scene\enemy\bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

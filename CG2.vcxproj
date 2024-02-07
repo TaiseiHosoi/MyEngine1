@@ -165,7 +165,6 @@
     <ClCompile Include="engine\PostEffect\MultiTex.cpp" />
     <ClCompile Include="engine\PostEffect\PostEffect.cpp" />
     <ClCompile Include="scene\gameCamera\CameraShake.cpp" />
-    <ClCompile Include="scene\jsonGameInfoManager\JsonGameInfoManager.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\CarryBallEnemy.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\EnemyBullet\EnemyNormalBullet.cpp" />
@@ -327,7 +326,6 @@
     <ClInclude Include="engine\PostEffect\MultiTex.h" />
     <ClInclude Include="engine\PostEffect\PostEffect.h" />
     <ClInclude Include="scene\gameCamera\CameraShake.h" />
-    <ClInclude Include="scene\jsonGameInfoManager\JsonGameInfoManager.h" />
     <ClInclude Include="scene\gameCamera\RailCameraInfo.h" />
     <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.h" />
     <ClInclude Include="scene\sceneObject\Enemy\CarryBallEnemy.h" />
