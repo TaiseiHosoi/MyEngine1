@@ -113,8 +113,7 @@ private:
 	//コライダー処理
 	void PColliderUpdate();
 
-	//ガード成功時
-	bool GetGuardExcute() { return isGuard; }
+
 
 
 public:
@@ -130,6 +129,11 @@ public:
 	//ゲームオーバー遷移
 	void GoGameOver();
 
+	//ガード成功時
+	bool GetGuardExcute() { return isGuard; }
+
+	//攻撃に被弾しているか
+	bool GetIsHitByATK() { return isHitByATK_; };
 
 
 private:
@@ -207,8 +211,8 @@ private:
 	int nowShotDelayCount_ = 0;
 
 	//ヒット時パーティクルのサイズ
-	const int maxHitParticleLife_ = 20;
-	const float startHitParticleSize_ = 3.f;
+	const int maxHitParticleLife_ = 12;
+	const float startHitParticleSize_ = 2.f;
 	const float endHitParticleSize_ = 0.1f;
 	
 
@@ -237,7 +241,8 @@ private:
 	int hitDeley_ = 0;	//何フレーム連続で当たるか
 	int hp_ = 0;
 	const int maxHp_ = 100;
-	bool isHitStop = false;
+	bool isHitByATK_ = false;
+	bool isHitStop = false;	//
 
 	//生死フラグ
 	bool isDead_ = false;

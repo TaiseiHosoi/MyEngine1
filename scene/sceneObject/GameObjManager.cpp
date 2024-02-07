@@ -230,15 +230,6 @@ void GameObjManager::UpdateAllObjects()
 			
 		}
 
-		if (moaiState[i].isDead_ == true) {	//死去
-			//moaiObjs.erase(std::remove_if(moaiObjs.begin(), moaiObjs.end(),
-			//	[](const EnemyState& state) {
-			//		return state.isDead_;
-			//	}),
-			//	moaiObjs.end());
-			////moaiSpCollider.erase(std::cbegin(moaiSpCollider) + i);
-			//moaiState.erase(std::cbegin(moaiState) + i);
-		}
 		moaiSpCollider[i]->Update();
 		
 	}
@@ -263,7 +254,8 @@ void GameObjManager::UpdateAllObjects()
 		enemy->Update();
 	}
 
-	
+	//オブジェクト間の演出処理
+	DirectionProcessingBetweenObjects();
 
 }
 
@@ -543,7 +535,7 @@ void GameObjManager::UpdateCarryBallEnemyPopCommands()
 
 			// ID
 			std::getline(line_stream, word, ',');
-			//int ID = static_cast<int>(std::atof(word.c_str()));
+		
 
 
 
@@ -699,5 +691,13 @@ void GameObjManager::GameObjInitialize()
 void GameObjManager::RailCameraInit(RailCameraInfo* info)
 {
 	railCameraInfo_ = info;
+}
+
+void GameObjManager::DirectionProcessingBetweenObjects()
+{
+	//オブジェクト間の演出処理
+	if (fbxPlayer_->GetIsHitByATK() == true) {	//プレイヤー被弾シェイク
+		camera_->GameCameraRotateShake(CAMERA_SHAKE_TIMERATE::SHORT_TIME);
+	}
 }
 

@@ -72,10 +72,6 @@ void GameCamera::Update()
 	}
 #pragma endregion マウス処理
 
-	if (input_->TriggerKey(DIK_G)) {
-		GameCameraRotateShake(CAMERA_SHAKE_TIMERATE::SHORT_TIME);
-	}
-
 #pragma region レールカメラ処理
 
 	oldStartIndex_ = startIndex_;	//前フレーム処理

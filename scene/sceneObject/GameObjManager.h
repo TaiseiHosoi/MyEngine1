@@ -206,6 +206,9 @@ public:
     // レールカメラ情報初期化
     void RailCameraInit(RailCameraInfo* info);
 
+    // オブジェクト間の演出処理
+    void DirectionProcessingBetweenObjects();
+
 
 public:
     // camObjsのゲッタ

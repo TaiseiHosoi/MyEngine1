@@ -76,6 +76,7 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 
 	//ヒットポイント
 	hp_ = maxHp_;
+	isHitByATK_ = false;
 
 	//パーティクル
 	hitParticle_ = std::make_unique<ParticleManager>();
@@ -755,7 +756,7 @@ void FbxPlayer::PColliderUpdate()
 {
 	if (hitDeley_ > 0) {	//毎フレームヒットを防止
 		hitDeley_--;
-		
+		isHitByATK_ = false;
 	}
 	else {
 		for (int i = 0; i < SPHERE_COLISSION_NUM; i++)
@@ -768,7 +769,12 @@ void FbxPlayer::PColliderUpdate()
 				hitDeley_ = delayCount_;
 				SetMaxFramesToMaxAlpha(delayCount_);
 				MinusHp(damage_);
+				isHitByATK_ = true;
+				CreateBulHitParticle(hoverCarObject_->GetPosition());
 				break;
+			}
+			else {
+				isHitByATK_ = false;
 			}
 		}
 
