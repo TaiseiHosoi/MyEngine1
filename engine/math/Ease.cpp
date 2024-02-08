@@ -17,7 +17,7 @@ double Ease::InOutQuad(double change, double base, double duration, double time)
 	return -change / 2 * ((--time) * (time - 2) - 1) + base;
 }
 
-float Ease::LinearEasing(float start, float end, int count, int maxCount)
+float Ease::LinearEasing(float start, float end, int count, int maxCount, float exponent)
 {
     if (count <= 0) {
         return start;
@@ -27,12 +27,12 @@ float Ease::LinearEasing(float start, float end, int count, int maxCount)
     }
     else {
         float t = static_cast<float>(count) / maxCount;
-        t = t * t; // イージング関数を適用
+        t = powf(t, exponent); // 指数(exponent)による変化を適用
         return start + t * (end - start);
     }
 }
 
-float Ease::LinearEaseOutEasing(float start, float end, int count, int maxCount)
+float Ease::LinearEaseOutEasing(float start, float end, int count, int maxCount, float exponent)
 {
     if (count <= 0) {
         return start;
@@ -42,7 +42,22 @@ float Ease::LinearEaseOutEasing(float start, float end, int count, int maxCount)
     }
     else {
         float t = static_cast<float>(count) / maxCount;
-        t = 1 - (1 - t) * (1 - t); // イージング関数を適用
+        t = 1.f - powf(1.f - t, exponent); // 指数(exponent)による変化を逆向きに適用
+        return start + t * (end - start);
+    }
+}
+
+float Ease::LinierEaseInOutEasing(float start, float end, int count, int maxCount, float exponent)
+{
+    if (count <= 0) {
+        return start;
+    }
+    else if (count >= maxCount) {
+        return end;
+    }
+    else {
+        float t = static_cast<float>(count) / maxCount;
+        t = t < 0.5f ? 0.5f * powf(2.f * t, exponent) : 1.f - 0.5f * powf(2.f * (1.f - t), exponent); // 指数(exponent)による変化を中間点で逆転
         return start + t * (end - start);
     }
 }

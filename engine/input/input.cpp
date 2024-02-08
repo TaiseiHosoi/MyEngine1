@@ -4,6 +4,8 @@
 #pragma comment(lib,"dinput8.lib")
 #pragma comment(lib,"dxguid.lib")
 
+
+
 /// <summary>
 	/// 初期化
 	/// </summary>
@@ -36,6 +38,9 @@ void Input::Initialize(WinApp* winApp) {
 	result = mouse->SetCooperativeLevel(
 		winApp_->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	assert(SUCCEEDED(result));
+
+	//コントローラーの初期化
+	gamePad_ = new GamePad;
 }
 
 /// <summary>
@@ -46,6 +51,8 @@ void Input::Update() {
 
 	// 前回のキー保存
 	memcpy(keysPre, keys, sizeof(keys));
+
+
 
 	//キーボード情報の取得開始
 	result = keyboard->Acquire();
@@ -60,6 +67,9 @@ void Input::Update() {
 	}
 
 	mouse->GetDeviceState(sizeof(DIMOUSESTATE), &mouseButton);
+
+	//コントローラーデバイスの更新
+	gamePad_->Update();
 }
 
 /// <summary>
@@ -68,7 +78,7 @@ void Input::Update() {
 bool Input::PushKey(BYTE keyNumber) {
 
 	// 指定キーを押していればtrueを返す
-	if (keys[keyNumber]) {
+	if (isDontInput_ == false && keys[keyNumber]) {
 		return true;
 	}
 
@@ -80,7 +90,7 @@ bool Input::PushKey(BYTE keyNumber) {
 /// </summary>
 bool Input::TriggerKey(BYTE keyNumber) {
 	// 指定キーを押していればtrueを返す
-	if (keysPre[keyNumber] == 0 && keys[keyNumber]) {
+	if (isDontInput_ == false && keysPre[keyNumber] == 0 && keys[keyNumber]) {
 		return true;
 	}
 
@@ -89,7 +99,7 @@ bool Input::TriggerKey(BYTE keyNumber) {
 bool Input::ReleaseKey(BYTE keyNumber)
 {
 	// 指定キーを押していればtrueを返す
-	if (keysPre[keyNumber] && keys[keyNumber] == 0) {
+	if (isDontInput_ == false && keysPre[keyNumber] && keys[keyNumber] == 0) {
 		return true;
 	}
 
@@ -101,13 +111,106 @@ Input* Input::GetInstance() {
 }
 
 bool Input::PushMouseButton(unsigned char mouseButtons) {
+	if (isDontInput_ == true) {
+		return false;
+	}
 	return mouseButton.rgbButtons[mouseButtons];
 }
 
 bool Input::TriggerMouseButton(unsigned char mouseButtons) {
+
+	if (isDontInput_ == true) {
+		return false;
+	}
 	return mouseButton.rgbButtons[mouseButtons] && !oldMouseButton.rgbButtons[mouseButtons];
 }
 
 bool Input::ReleaseMouseButton(unsigned char mouseButtons) {
+	if (isDontInput_ == true) {
+		return false;
+	}
 	return !mouseButton.rgbButtons[mouseButtons] && oldMouseButton.rgbButtons[mouseButtons];;
+}
+
+void Input::SetIsDontInput(bool isDontInput)
+{
+	isDontInput_ = isDontInput;
+}
+
+bool Input::PButtonTrigger(GamePadButton button)
+{
+	if (isDontInput_ == true) {
+		return false;
+	}
+	return gamePad_->ButtonTrigger(button);
+}
+
+bool Input::PStickTrigger(GamePadStick stickInput, const float& deadRange, const Vector2& deadRate)
+{
+	if (isDontInput_ == true) {
+		return false;
+	}
+	return gamePad_->StickTrigger(stickInput, deadRange, deadRate);
+}
+
+bool Input::ButtonInput(GamePadButton button)
+{
+	if (isDontInput_ == true) {
+		return false;
+	}
+	return gamePad_->ButtonInput(button);
+}
+
+bool Input::StickInput(GamePadStick stickInput, const float& deadRange, const Vector2& deadRate)
+{
+	if (isDontInput_ == true) {
+		return false;
+	}
+	return gamePad_->StickInput(stickInput, deadRange, deadRate);
+}
+
+bool Input::LeftStickInput(const float& deadRange) {
+	if (isDontInput_ == true) {
+		return false;
+	}
+	return gamePad_->LeftStickInput(deadRange);
+}
+
+
+bool Input::ButtonOffTrigger(GamePadButton button)
+{
+	if (isDontInput_ == true) {
+		return false;
+	}
+	return gamePad_->ButtonOffTrigger(button);
+}
+
+bool Input::StickOffTrigger(GamePadStick stickInput, const float& deadRange, const Vector2& deadRate)
+{
+	if (isDontInput_ == true) {
+		return false;
+	}
+	return gamePad_->StickOffTrigger(stickInput, deadRange, deadRate);
+}
+
+Vector2 Input::GetLeftStickVec(const Vector2& deadRate)
+{
+	if (isDontInput_ == true) {
+		return Vector2(0,0);
+	}
+	return  gamePad_->GetLeftStickVec(deadRate);
+}
+
+Vector2 Input::GetRightStickVec(const Vector2& deadRate)
+{
+	if (isDontInput_ == true) {
+		return Vector2(0, 0);
+	}
+	return gamePad_->GetRightStickVec(deadRate);
+}
+
+void Input::ShakeGamePad(const float& power, const int& span)
+{
+
+	gamePad_->ShakeGamePad(power, span);
 }

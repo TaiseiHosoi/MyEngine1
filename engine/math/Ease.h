@@ -16,9 +16,11 @@ public:
 	// inOut
 	static double InOutQuad(double change, double base, double duration, double time) ;
 	// 始点終点から求めるEaseIn
-	static float LinearEasing(float start, float end, int count, int maxCount);
+	static float LinearEasing(float start, float end, int count, int maxCount, float exponent);
 	// 始点終点から求めるEaseOut
-	static float LinearEaseOutEasing(float start, float end, int count, int maxCount);
+	static float LinearEaseOutEasing(float start, float end, int count, int maxCount, float exponent);
+	// 始点終点から求めるEaseInOut
+	static float LinierEaseInOutEasing(float start, float end, int count, int maxCount, float exponent);
 	//↓ここから下は使いません。。↓
 	// 初期化
 	void Initialize();

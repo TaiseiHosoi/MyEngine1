@@ -17,7 +17,12 @@
 #include"PlayerHomingBullet.h"
 #include"PlayerRapidBullet.h"
 
-
+enum DEAD_ACT_NUM {
+	none,
+	crash,
+	bomb,
+	disappear
+};
 
 class FbxPlayer
 {
@@ -37,17 +42,40 @@ public:
 	//描画
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
+	void ParticleDraw(ID3D12GraphicsCommandList* cmdList);
+
 	//パーティクル発生
-	void CreateParticle();
+	void CreateBulHitParticle(Vector3 posArg);
 
 	//ダメージ
-	static void minusHp(int damage);
+	void MinusHp(int damage);
 
-	//移動処理
-	void Move();
+	//hpアクセッサ
+	int GetHp();
+
+	//hpアクセッサ
+	void SetHp(int hp);
+
+	//自機移動処理
+	void MoveBody();
+
+	//ターゲット移動処理
+	void MoveTarget();
 
 	//射撃
 	void BulletShot();
+
+	//死亡時アクション
+	void CrashAction();
+	void BombAction();
+
+	//パラメータリセット
+	void PlayerPalamReset();
+
+	//ダメージエフェクト
+	void DamageEffectUpdate();
+
+public:	//アクセッサ
 
 	// 自機Object3d変数のゲッタ
 	FBXObject3d* GetObject3d();
@@ -58,36 +86,34 @@ public:
 	//デスフラグのGetter
 	bool GetIsDead() { return isDead_; }
 
-	//スタティック用の変数アクセッサ
-	//攻撃に当たり判定が発生しているかのアクセッサ
-	static bool GetIsAtkCollide();
+	//死亡時演出のフェーズゲッタ
+	int GetIsDeadActNum();
 
-	//攻撃に当たり判定が発生しているかのアクセッサ
-	static void SetIsAtkCollide(bool isAtkCollide);
+	void SetIsDeadActNum(int arg);
 
-	//ガードの判定が出ているかのアクセッサ
-	static bool GetIsGuardCollide();
 
-	//ガードの判定が出ているかのアクセッサ
-	static void SetIsGuardCollide(bool isGuardCollide);
+	//現在のアルファ値取得
+	float GetCurrentAlpha();
 
-	//hpアクセッサ
-	static int GetHp();	
+	//ダメージエフェクト秒数カウント
+	void SetMaxFramesToMaxAlpha(int frame);
 
-	//hpアクセッサ
-	static void SetHp(int hp);	
-	
+	//平行移動の値ポインタゲット
+	float* GetParallelMovePtr();
+
+	//カメラ移動のVector3ポインタゲット
+	Vector3* GetTargetPosVelueToAddPtr();
+
+	//ターゲット位置のベクトル
+	void SetRailTargetPos(Vector3* v);
 
 
 private:	
 	
-
-
 	//コライダー処理
 	void PColliderUpdate();
 
-	//ガード成功時
-	bool GetGuardExcute() { return isGuard; }
+
 
 
 public:
@@ -99,6 +125,16 @@ public:
 
 	//ゲームオブジェクトの定数バッファゲッタ
 	ID3D12Resource* GetConstBuff() { return gameObject_->GetConstBuff(); };
+
+	//ゲームオーバー遷移
+	void GoGameOver();
+
+	//ガード成功時
+	bool GetGuardExcute() { return isGuard; }
+
+	//攻撃に被弾しているか
+	bool GetIsHitByATK() { return isHitByATK_; };
+
 
 private:
 
@@ -120,7 +156,9 @@ private:
 	//hpモデル
 	std::unique_ptr<Object3d> hpObject_;
 	std::unique_ptr<Mesh> hpModel_;
-	std::unique_ptr<ParticleManager> particle_;
+	std::unique_ptr<ParticleManager> hitParticle_;
+	std::unique_ptr<ParticleManager> bombParticle_;
+	std::unique_ptr<ParticleManager> slashParticle_;
 	//テスト用
 	std::vector<std::unique_ptr<Object3d>> coliderPosTest_;
 
@@ -129,15 +167,30 @@ private:
 	
 #pragma region 移動処理で使う変数
 	Vector3 velocity_;
-	const float kMoveSpeed_ = 0.4f;//移動速度
+	float moveSpeed_ = 0.0f;//移動速度
 	const float kTurnSpeed_ = MathFunc::Dig2Rad(10);//旋回速度
 	bool isRun_ = false;
 	Vector3 faceAngle_ = {};
-	const float faceMaxAngle_ = 0.4f; //自機回転の最大
-	float faceRotSpeed_ = 0.05f;
-	float returnRotSpeed = 0.03f;
+	const float minFaceAngleX_ = -0.02f;
+	const float maxFaceAngle_ = 0.02f;
+	const float faceMaxAngleY_ = 0.4f; //自機回転の最大
+	const float faceMaxAngleX_ = 0.3f; //自機回転の最大
+
+	const float offsetSpeed_ = 0.1f;
+	float increaseSpeed_ = 0.0f;
+	const float increaseSpeedVel_ = 0.03f;
+	const float maxIncreaseSpeed_ = 0.6f;
+	
+	float nowFlameParallelMove_ = 0;	//そのフレームの移動量
+	float faceRotSpeedY_ = 0.05f;
+	float faceRotSpeedX_ = 0.02f;
+	float returnRotSpeed_ = 0.015f;
+	float playerParalellMoveVal_ = 0;
+
 	Matrix4 pAngleMat = {};//自機の移動用Matrix
 	Vector3 nowPos = {};
+	const float maxParallelMovement_ = 25.f;	//最大平行Pos
+	
 #pragma endregion 移動処理で使う変数
 
 #pragma region 射撃処理変数
@@ -154,11 +207,16 @@ private:
 
 	//連射弾
 	std::list< std::unique_ptr<PlayerRapidBullet>> rapidBullets_;
+	const int shotDelay_ = 5;
+	int nowShotDelayCount_ = 0;
+
+	//ヒット時パーティクルのサイズ
+	const int maxHitParticleLife_ = 12;
+	const float startHitParticleSize_ = 2.f;
+	const float endHitParticleSize_ = 0.1f;
 	
 
 #pragma endregion 射撃処理変数
-
-
 	//カメラの向き
 	Vector3 cameraAngle_ = {0 , 0 , 0};
 	RailCameraInfo* railCameraInfo_ = nullptr;
@@ -171,9 +229,6 @@ private:
 	//攻撃フラグ
 	bool isAtk = false;
 
-	//当たり判定外部参照用
-	static bool isAtkCollide;
-	static bool isGuardCollide;
 
 	//防御時行動
 	bool isGuard = false;	//ガードをするかしないか
@@ -182,14 +237,45 @@ private:
 	//反撃フラグオン→反撃遷移モーション→反撃→反撃フラグオフ
 	bool isCounter = false;	//反撃フラグ
 
-	
-
 	//ヒットポイント
-	int hitDeley = 0;	//何フレーム連続で当たるか
-	static int hp;
-	bool isHitStop = false;
+	int hitDeley_ = 0;	//何フレーム連続で当たるか
+	int hp_ = 0;
+	const int maxHp_ = 100;
+	bool isHitByATK_ = false;
+	bool isHitStop = false;	//
+
+	//生死フラグ
 	bool isDead_ = false;
+	const int maxCrashActCount_ = 120;
+	int deadActCount_ = 0;
+	int oldDeadActNum_ = 0;
+	int deadActNum_ = 0;
+	Vector3 bombStartPos_ = {};
+	Vector3 bombStartRot_ = {};
+	const Vector3 bombPosVel_ = { 0.01f,0.6f,0.01f };	//吹っ飛び時のベロシティ
+	const Vector3 bombRotateVel_ = { 0.1f,0.1f,0.2f };	//吹っ飛び時回転量
+
+	 
 	//アニメーション
 	int oldPActNum_ = 0;	//アクション前フレーム保存変数
 	int count = 0;
+
+	//被弾変数固定値
+	const int delayCount_ = 30;
+	const int damage_ = 2;
+
+	//点滅エフェクト用
+	int maxFramesToMaxAlpha_ = 0; //最大アルファ値までのフレーム数
+	int currentDamageFrame_ = 0;        //現在のフレームカウント
+	bool increasingAlpha_ = true;    //アルファ値を増加させるかどうか
+	float currentAlpha_ = 1.0f;      //現在のアルファ値
+
+	//上下左右に始点操作するベクトル
+	Vector3 targetPosVelueToAdd_ = {};
+	const Vector3 maxTargetPosVTA_ = {30.f,30.f,0};
+	const float targetPosMoveSpeed_ = 0.5f;
+
+	//レールターゲットレティクル
+	Vector3* railTargetPosPtr_ = nullptr;
+
 };

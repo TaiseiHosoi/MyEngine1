@@ -3,6 +3,11 @@
 
 
 
+PlayerRapidBullet::~PlayerRapidBullet()
+{
+	CollisionManager::GetInstance()->RemoveCollider(sphere.get());
+}
+
 void PlayerRapidBullet::Initialize(Mesh* model, Vector3 setPos, Vector3 setRot)
 {
 	//ObjectInit
@@ -15,10 +20,10 @@ void PlayerRapidBullet::Initialize(Mesh* model, Vector3 setPos, Vector3 setRot)
 	object_->SetScale({ 1,1,1 });
 	object_->Update();
 
-	sphere = new SphereCollider;
-	CollisionManager::GetInstance()->AddCollider(sphere);
+	sphere = std::make_unique<SphereCollider>();
+	CollisionManager::GetInstance()->AddCollider(sphere.get());
 	pos = object_->worldTransform.matWorld_.GetWorldPos();
-	sphere->SetAttribute(COLLISION_ATTR_ALLIES);
+	sphere->SetAttribute(COLLISION_ATTR_ALLIESBULLETS);
 	sphere->SetBasisPos(&pos);
 	sphere->SetRadius(1.0f);
 	sphere->Update();
@@ -35,7 +40,10 @@ void PlayerRapidBullet::Initialize(Mesh* model, Vector3 setPos, Vector3 setRot)
 
 void PlayerRapidBullet::Update()
 {
-	
+	countSinceBirth_++;
+	if (countSinceBirth_ >= maxCountSinceBirth_) {
+		isDead_ = true;
+	}
 
 	//弾の方向ベクトル
 	Vector3 bulletVec = { 0,0,bulletSpeed_ };
@@ -52,23 +60,7 @@ void PlayerRapidBullet::Update()
 
 	testObject_->Update();
 
-	/*ImGui::Begin("bullocalPos");
-	ImGui::InputFloat3("nowpos", &object_->worldTransform.translation_.x);
 
-
-	ImGui::End();
-	ImGui::Begin("bulWorldPos");
-	ImGui::InputFloat3("nowpos", &object_->worldTransform.matWorld_.m[3][0]);
-
-
-	ImGui::End();
-
-	
-	ImGui::Begin("CollPos");
-	ImGui::InputFloat3("nowpos", &sphere->center.x);
-
-
-	ImGui::End();*/
 }
 
 void PlayerRapidBullet::Draw(ID3D12GraphicsCommandList* cmdList)
@@ -76,3 +68,4 @@ void PlayerRapidBullet::Draw(ID3D12GraphicsCommandList* cmdList)
 	//object_->Draw(cmdList);
 	testObject_->Draw(cmdList);
 }
+

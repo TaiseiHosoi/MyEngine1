@@ -25,50 +25,52 @@ void SceneManager::ObjectInitialize() {
 	//スプライト初期化
 	spriteCommon_ = std::make_unique<SpriteCommon>();
 	spriteCommon_->Initialize(_dxCommon);
+
+
+
 	// TITLE
-	spriteCommon_->LoadTexture(1, "title.png");
-	spriteCommon_->LoadTexture(2, "title2.png");
-	spriteCommon_->LoadTexture(3, "end.png");
+	spriteCommon_->LoadTexture("title1", "title.png");
+	spriteCommon_->LoadTexture("title2", "title2.dds");
+	spriteCommon_->LoadTexture("endScene", "end.png");
 
 	// UI
-	spriteCommon_->LoadTexture(6, "attack.png");
-	spriteCommon_->LoadTexture(7, "attack2.png");
-	spriteCommon_->LoadTexture(8, "guard.png");
-	spriteCommon_->LoadTexture(9, "guard2.png");
-	spriteCommon_->LoadTexture(10, "move.png");
-	spriteCommon_->LoadTexture(11, "mouse.png");
-	spriteCommon_->LoadTexture(12 , "purple.png");
-	spriteCommon_->LoadTexture(13 , "red.png");
-	spriteCommon_->LoadTexture(14 , "green.png");
-	spriteCommon_->LoadTexture(15, "kinmiraTitle1.png");
-	spriteCommon_->LoadTexture(16, "sceneCLeft.png");
-	spriteCommon_->LoadTexture(17, "sceneCRight.png");
-	spriteCommon_->LoadTexture(18, "LeftMouseButton.png");
+
+	spriteCommon_->LoadTexture("sceneChangeTitle", "kinmiraTitle1.png");
+	spriteCommon_->LoadTexture("leftMouseButton", "LeftMouseButton.png");
+	spriteCommon_->LoadTexture("exp", "exp.png");
+	spriteCommon_->LoadTexture("hpBar", "HpBar-sheet.png");
+	spriteCommon_->LoadTexture("hpGage", "HpGage-sheet.png");
+	spriteCommon_->LoadTexture("gameOverScene", "gameOver.png");
+	spriteCommon_->LoadTexture("gameClearScene", "gameClear.png");
+	spriteCommon_->LoadTexture("background", "background.png");
+	spriteCommon_->LoadTexture("outFlame", "sotowaku2.png");
+
+	spriteCommon_->LoadTexture("sceneCLeft", "sceneCLeft.png");
+	spriteCommon_->LoadTexture("sceneCRight", "sceneCRight.png");
 
 	audio = std::make_unique<Audio>();
 	audio->Initialize();
 
 
-	// fbx テスト
-	{
-		hitokunFbxM_.reset(FbxLoader::GetInstance()->LoadModelFromFile("Cube",true));
-		//Player
-		fbxPlayer_ = std::make_unique<FbxPlayer>();
-		fbxPlayer_.get()->Initialize(hitokunFbxM_.get());
-		fbxPlayer_->GetObject3d()->wtf.translation_.z = 0;
-		fbxPlayer_->SetRailCameraInfo(_camera->GetRailCameraInfo());
-		_camera->SetFollowerPos(fbxPlayer_.get()->GetObject3d()->GetWorldTransformPtr());
-		
 
-		//boss
-		/*boss_ = std::make_unique<Boss>();
-		boss_.get()->Initialize(_dxCommon);
-		boss_.get()->SetPlayer(fbxPlayer_.get());
-		boss_->GetObject3d()->wtf.translation_.z = 50;
-		_camera->SetTargetPos(boss_.get()->GetObject3d()->GetWorldTransformPtr());*/
-	}
 
-	
+	//暗転画像初期化
+	blackSc_ = std::make_unique<Sprite>();
+	blackSc_->Initialize(spriteCommon_.get(), "gameOverScene");
+	blackSc_->SetPozition({ 0,0 });
+	blackSc_->SetColor({ 1,1,1,blackScAlpha_ });
+
+	//背景スプライト
+	backGroundSp_ = std::make_unique<Sprite>();
+	backGroundSp_->Initialize(spriteCommon_.get(), "background");
+	backGroundSp_->SetPozition({ 0,0 });
+	backGroundSp_->SetSize({WinApp::window_width,WinApp::window_height });
+
+	//外枠スプライト
+	outerFrameSp_ = std::make_unique<Sprite>();
+	outerFrameSp_->Initialize(spriteCommon_.get(), "outFlame");
+	outerFrameSp_->SetPozition({ 0,0 });
+	outerFrameSp_->SetSize({ WinApp::window_width,WinApp::window_height });
 
 	//パーティクルのセット
 	particleManager_ = std::make_unique<ParticleManager>();
@@ -81,7 +83,7 @@ void SceneManager::ObjectInitialize() {
 	field_ = std::make_unique<Field>();
 	field_.get()->Initialize();
 
-	ResetParameters();
+	//ResetParameters();
 }
 
 void SceneManager::SceneInitialize() {
@@ -90,34 +92,121 @@ void SceneManager::SceneInitialize() {
 }
 
 void SceneManager::SceneUpdate(Input* input) {
-	/*ImGui::Begin("Info");
-	ImGui::Text("E : particle");
-	ImGui::Text("arrowkey : %f,%f,%f", fbxPlayer_->GetObject3d()->GetPosition().x, fbxPlayer_->GetObject3d()->GetPosition().y,fbxPlayer_->GetObject3d()->GetPosition().z);
-	ImGui::End();*/
+
 
 	_scene.get()->Update(input,_camera);	
+	BlackDisolve();
 }
 
 void SceneManager::SceneDraw() {
-	_scene.get()->Draw(_dxCommon);
+	
+	spriteCommon_->SpritePreDraw();
+	backGroundSp_->Draw();	//背景スプライト
+	spriteCommon_->SpritePostDraw();
 
+	_scene.get()->Draw(_dxCommon);
+	
+	if (isBlackDisolve_ == true) {
+		blackSc_->Draw();
+	}
+
+
+}
+
+void SceneManager::FrontSpriteSceneDraw()
+{
+	spriteCommon_->SpritePreDraw();
+	outerFrameSp_->Draw();	//背景スプライト
+	spriteCommon_->SpritePostDraw();
 }
 
 void SceneManager::ChangeScene(IScene* scene) {
+	
 	_camera->ChangeFollowFlag(true);
 	_scene.reset(scene);
-	ResetParameters();
+	//ResetParameters();
 	SceneInitialize();
+	
+	
 
 }
 
 
-void SceneManager::ResetParameters() {
-	//boss_->SetHp(100);
-	fbxPlayer_->SetHp(100);
-	/*boss_->Reset();
-	boss_->GetObject3d()->wtf.translation_ = { 0,0,0 };
-	boss_->Update();*/
-	fbxPlayer_->GetObject3d()->wtf.translation_ = { 0,10,0 };
-	fbxPlayer_->GetObject3d()->Update();
+//void SceneManager::ResetParameters() {
+//	//boss_->SetHp(100);
+//	fbxPlayer_->SetHp(100);
+//
+//	fbxPlayer_->GetObject3d()->Update();
+//}
+
+void SceneManager::BlackDisolve()
+{
+	if (oldDisolveMode_ != nowDisolveMode_) {
+		if (nowDisolveMode_ == DisolveMode::gameClearMode) {
+			blackSc_->SetTextureByName("gameClearScene");
+		}
+		else if (nowDisolveMode_ == DisolveMode::gameClearMode) {
+			blackSc_->SetTextureByName("gameOverScene");
+		}
+	}
+
+	if (oldIsBlackDisolve_ == false && isBlackDisolve_ == true) {
+		Input::GetInstance()->SetIsDontInput(true);
+	}
+
+	if (isBlackDisolve_ == true && isTurnBackDis_ == false) {
+		blackScAlpha_ += 0.02f;
+		if (blackScAlpha_ > maxBlackScAlpha_) {
+			isTurnBackDis_ = true;
+		}
+		
+	}
+	else if (isBlackDisolve_ == true && isTurnBackDis_ == true) {
+		blackScAlpha_ -= 0.02f;
+		if (blackScAlpha_ < 0) {
+			isTurnBackDis_ = false;
+			isBlackDisolve_ = false;
+			Input::GetInstance()->SetIsDontInput(false);
+		}
+		
+	}
+	
+	//入力受付セット
+	if (isBlackDisolve_ == true) {
+		Input::GetInstance()->SetIsDontInput(true);
+	}
+
+
+	//α値設定
+	blackSc_->SetColor({ 1.f,1.f,1.f,blackScAlpha_ });
+
+	//前フレーム処理
+	oldDisolveMode_ = nowDisolveMode_;
+	oldIsBlackDisolve_ = isBlackDisolve_;
+}
+
+void SceneManager::SetIsBlackDisolve(bool isDisolve, int mode)
+{
+	isBlackDisolve_ = isDisolve;
+	nowDisolveMode_ = mode;
+}
+
+bool SceneManager::GetIsTurnBackBlackDisolve()
+{
+	return isTurnBackDis_;
+}
+
+bool SceneManager::GetIsChangeScene_()
+{
+	return isChangeScene_;
+}
+
+void SceneManager::SetIsChangeScene_(bool arg)
+{
+	isChangeScene_ = arg;
+}
+
+void SceneManager::SetCollisionManager(CollisionManager* collisionManager)
+{
+	_collisionManager = collisionManager;
 }

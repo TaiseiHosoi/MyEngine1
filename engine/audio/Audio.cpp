@@ -12,7 +12,7 @@ void Audio::Initialize(const std::string directoryPath)
 	assert(SUCCEEDED(result));
 
 	result = xAudio2_->CreateMasteringVoice(&masterVoice);
-	assert(SUCCEEDED(result));
+	//assert(SUCCEEDED(result));
 }
 
 void Audio::Finalize()

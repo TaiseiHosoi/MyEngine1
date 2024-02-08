@@ -1,0 +1,17 @@
+//コマンド,発生するレーン,敵のID,
+POP,0,5
+WAIT,1,,
+POP,1,6
+WAIT,10,,
+POP,2,7
+WAIT,300,,
+
+POP,0,8
+WAIT,1,,
+POP,2,9
+WAIT,800,,
+
+POP,0,8
+WAIT,1,,
+POP,2,9
+WAIT,400,,

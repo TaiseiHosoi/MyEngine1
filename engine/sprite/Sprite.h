@@ -39,7 +39,7 @@ public:
 	};
 public:
 	// 初期化
-	void Initialize(SpriteCommon* spritecommon_, uint32_t texturerIndex = UINT32_MAX);
+	void Initialize(SpriteCommon* spritecommon_ , std::string texStr);
 
 	// 描画
 	void Draw();
@@ -80,11 +80,13 @@ public:
 	// テクスチャ番号セット
 	void SetTextureIndex(uint32_t texNmb) { textureIndex_ = texNmb; }
 
+	void SetTextureByName(std::string tex);
+
 	// テクスチャ番号ゲッタ
 	uint32_t GetTextureIndex() { return textureIndex_; }
 
 	// テクスチャサイズセット
-	void SetTexSize(XMFLOAT2 texSize) { textureSize = texSize; }
+	void SetTexSize(const XMFLOAT2& texSize) { textureSize = texSize; }
 
 	// テクスチャサイズゲット
 	XMFLOAT2 GetTexSize() { return textureSize; }
@@ -93,7 +95,7 @@ public:
 	XMFLOAT2 GetSize() { return size_; }
 
 	// サイズのセッタ
-	void SetSize(XMFLOAT2 size);
+	void SetSize(const XMFLOAT2& size);
 
 	// アンカーポイントゲッタ
 	XMFLOAT2 GetAnchorPonit() { return anchorpoint; }

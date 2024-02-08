@@ -274,7 +274,7 @@ public: // メンバ変数
 	////コライダー
 	//BaseCollider* collider = nullptr;
 
-	bool isRim = false;
+	bool isRim = true;
 
 	//Camera
 	static Camera* camera_;

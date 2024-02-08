@@ -7,9 +7,12 @@
 #include <DirectXTex.h>
 #include <array>
 #include <string>
+#include <locale>
+#include <codecvt>
+#include<map>
 
 using namespace DirectX;
-
+using namespace MyEngine;
 
 //スプライト共通部分
 class SpriteCommon {
@@ -29,9 +32,8 @@ public:
 	struct ConstBufferDataTransform {
 		XMMATRIX mat;	//3D変換行列
 	};
-public:
-	// 初期化
-	void Initialize(DirectXCommon* dxcommon);
+public:	//アクセッサ
+	
 
 	DirectXCommon* GetDxCommon() { return dxcommon_; }
 
@@ -47,11 +49,7 @@ public:
 
 	D3D12_RESOURCE_DESC& GetResourceDesc() { return resDesc; }
 
-	// テクスチャをロード
-	void LoadTexture(uint32_t index, const std::string& fileName);
-
-	// テクスチャのコマンドセット
-	void SetTextureCommands(uint32_t index);
+	std::vector<std::string>GetSpriteNames() { return spriteNames_; }
 
 	// texBuff[index]ゲッタ
 	Microsoft::WRL::ComPtr<ID3D12Resource> GetTexBuff(uint32_t index) { return texBuff[index]; }
@@ -59,6 +57,29 @@ public:
 	// texBuff[index].getゲッタ
 	ComPtr<ID3D12Resource> GetTextureBuffer(uint32_t index)const { return texBuff[index].Get(); }
 
+
+
+
+public://関数
+	// 初期化
+	void Initialize(DirectXCommon* dxcommon);
+
+	/// <summary>
+	/// テクスチャをロード
+	/// </summary>
+	/// <param name="texName"><識別用の名前>
+	/// <param name="fileName"><画像のファイルネーム>
+	void LoadTexture(const std::string& texName,const std::string& fileName);
+
+	// テクスチャのコマンドセット
+	void SetTextureCommands(uint32_t index);
+
+	// テクスチャのファイルネームセパレート
+	void SeparateFilePath(const std::string& filePath);
+
+	// std::vector<std::string>から文字列を検索してインデックスを返す関数
+	uint32_t FindIndex( const std::string& target);
+	
 	// スプライトの描画前処理
 	void SpritePreDraw();
 
@@ -124,6 +145,24 @@ private:
 	static std::string kDefaultTextureDirectoryPath;
 
 	UINT incrementSize;
+
+	///セパレート用(一時保存)
+	//ディレクトリパス
+	std::string directoryPath_;
+	//ファイル名
+	std::string fileName_;
+	//ファイル拡張子
+	std::string fileExt_;
+
+	//番号とスプライトをマップ
+	std::map<std::string,int> mapSpriteNum_;
+
+	//スプライトの引き出す名前
+	std::vector<std::string> spriteNames_;
+
+	//テクスチャバッファの最後尾番号
+	int texBuffEndNum_ = 0;
+
 
 
 };

@@ -28,6 +28,9 @@ public:
 	{
 		colliders.remove(collider);
 	}
+
+	//コライダーを全て削除
+	void CrearColliders();
 	
 	// すべての当たり判定処理
 	void CheckAllCollisions();

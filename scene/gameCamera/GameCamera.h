@@ -7,15 +7,19 @@
 #include"Camera.h"
 #include"Input.h"
 #include "Object3d.h"
+#include "RailCameraInfo.h"
+#include "CameraShake.h"
 #include<vector>
 
-struct RailCameraInfo {
-	int startIndex;
-	int oldStartIndex;
-	float timeRate;
-	int nowCount;
-	std::vector<Vector3>points;
+enum CAM_MODE {
+	title,
+	battle,
+	startDirection,
+	gameOver,
+	gameClear
 };
+
+
 
 class GameCamera :
 	public Camera
@@ -25,7 +29,7 @@ public:
 	GameCamera(int window_width , int window_height , Input* input);
 
 	// 初期化
-	void Initialize();
+	void GameInfoInitialize();
 
 	// 更新
 	void Update();
@@ -62,16 +66,9 @@ public:
 	// シェイク用
 	float randomFloat(float min , float max);	//ランダムを引き出す
 
-	// 画面シェイク関数
-	void ShakePrim();
 
-	/// <summary>
-	/// 画面シェイク関数情報セット
-	/// </summary>
-	/// <param name="dura"></時間>
-	/// <param name="mag"></大きさ>
-	/// <param name="isShakePrim"></シェイクさせるか>
-	static void SetShakePrimST(float dura , float mag , bool isShakePrim);
+
+
 
 	//カメラの向きを計算する関数
 	void CulDirection();
@@ -79,10 +76,11 @@ public:
 	// 移動にかかる時間に基づいてt値を計算する関数
 	float CalculateTValueBasedOnElapsedTime(float maxTime);
 
+	// timeRate用のデクリメント処理
+	float DecrimentTimeRate(float arg);
+
 public:	// アクセッサ
 
-	// シェイクのベクトルセット
-	void SetShakeVec(Vector3 shakeVec);
 
 	// シーン切り替え用
 	void ChangeFollowFlag(bool flag);
@@ -115,11 +113,43 @@ public:	// アクセッサ
 	// レールカメラ情報ゲッタ
 	RailCameraInfo* GetRailCameraInfo();	//レールカメラの進行状況とレール情報を渡す
 
+	// isCountIncゲッㇳ
+	bool GetIsCountInc();
 
-	// 1-> target ,0-> eye
-	WorldTransform swap_[2];
+	// isCountIncセット
+	void SetIsCountInc(bool setArg);
+
+	//カメラ演出終了時フラグゲッタ
+	bool GetIsGameClearDirectionEnd();
+
+	//カメラ演出終了時フラグセッタ
+	void SetIsGameClearDirectionEnd(bool arg);
+
+	// ゲームオーバー遷移
+	void GoGameOver();
+
+	// ゲームクリア遷移
+	void GoGameClear();
+
+	//player平行移動量セッタ
+	void SetPlayerParallelMoveVal_(float* val);
+
+	//プレイヤーからのターゲット移動セット
+	void SetTargetPosVelueToAdd(Vector3* vec);
+
+	//レールターゲット用ポジションベクトル取得
+	Vector3* GetRailTargetPosPtr();
+
+	//カメラシェイク呼び出し
+	void GameCameraRotateShake(int shakeCount);
+
+
 private:
 	Input* input_ = nullptr;
+	//カメラシェイクのVector3
+	std::unique_ptr<CameraShake> cameraShakeManager_;
+	Vector3* cameraShakeVec_ = nullptr;
+
 	WorldTransform* targetPos_ = nullptr;
 	WorldTransform* eyePos_ = nullptr;
 	WorldTransform* followerPos_ = nullptr;
@@ -134,15 +164,8 @@ private:
 	const float MAX_CHANGE_TIMER = 30;
 	int cameraModeChangeCountTimer = 30;
 	float cameraHeight_ = 6;
+	float dirAngle_ = 0;	//カメラVector3.yの値
 	
-	//ShakePrim用変数
-	static float magnitude;	//シェイクの強さ
-	static float duration;//シェイクを起こす時間
-	static bool isShake;
-	float elapsedTime = 0.0f;
-	const float deltaTime = 0.016f;	//1.0fを1秒(60FPS)と考えた際の1F
-	Vector3 loolAtPos = {};
-	Vector3 shakeVec_ = {0 , 0 , 0};
 
 	//マウスカメラ用
 	Vector3 rotation_ = {0 , 0 , 0};
@@ -154,9 +177,34 @@ private:
 	//レールカメラ用
 	Vector3 basePos_ = {};
 	Vector3 railTargetPos_ = {};
-	//シーン0用
+	//シーンタイトル用
 	Vector3 directionLoot_ = {};
-	Vector3 offsetPos_ = {10.f,0,20.f};
+	Vector3 titleScOffsetPos_ = {10.f,0,20.f};
+	const float gamepartCamPosY = 6.f;
+	//シーンスタート演出用
+	int startDirectionNowCount_ = 0;
+	const int maxStartDirectionNowCount_ = 120;
+	const float startDirectionSAFStrength_ = 6.f;
+	float startDirectionFOV_ = 0.5f;
+	const float offsetStartDirectionFOV_ = 1.4f;
+	bool isCountInc_ = false;
+
+	//ゲームオーバー演出用
+	int gameOverDirectionNowCount_ = 0;
+	const int maxGameOverDirectionCount_ = 180;
+	const float adjustGameOverDirectionLen_ = 35.f;
+
+	//ゲームクリア演出用
+	int gameClearDirectionNowCount_ = 0;
+	int oldGameClearDirectionNowCount_ = 0; //前フレーム処理
+	const int maxGameClearDirectionCount_ = 150;
+	const int stopCamDirectionCount_ = 100;
+	const float adjustGameCrearDirectionLen_ = 35.f;
+	float stopTimeRate_ = 0;
+	bool isGameClearDirectionEnd_ = false; //ゲームクリア演出終了フラグ
+	const Vector3 adjustCamDirPos_ = { 4.f,-2.f,4.f };
+
+
 	
 	//制御店の集合(vectorコンテナ),補完する区間の添字、時間経過率
 	Vector3 splinePosition(const std::vector<Vector3>& points, size_t startIndex, float t);
@@ -170,8 +218,7 @@ private:
 	std::vector<Vector3>points{};
 	std::vector<Object3d>* jsonObjsPtr = nullptr;
 	
-
-	float maxTime = 1.2f;				//全体時間[s]
+	//　レールカメラ変数	
 	float timeRate_;			//何％時間が進んだか
 	float oldTimeRate_;
 	float targetTimeRate;	//ターゲット用
@@ -183,11 +230,28 @@ private:
 	uint32_t elapsedCount_ = 0;
 	Vector3 oldPos_ = {};
 	int oldStartIndex_ = 0;
+	const float maxTimeVal = 90.0f; // 移動にかかる最大時間
+	const float targetTimeRateAdvancedVal_ = 0.003f;
+	const float maxTimeRate_ = 1.0f;
+	const float titleMinusVecLen_ = 10.f;
+	const float battleSCMinusVal_ = 15.f;
+	const float directionMagnification = 50.f;
+	const float directionShiftY = 20.f;
+	const float targetParalellVecMag_ = 1.5f;	//taigetカメラ平行移動倍率
 
 	std::unique_ptr<RailCameraInfo> railCameraInfo_;
 
+	
+	//プレイヤーの平行移動量
+	float* playerParallelMoveVal_ = nullptr;
+
+	//プレイヤーが操作するカメラ位置の値
+	Vector3* targetPosVelueToAdd_ = nullptr;
+
 	//camMode
 	int camMode_ = 0;
+
+	
 
 };
 

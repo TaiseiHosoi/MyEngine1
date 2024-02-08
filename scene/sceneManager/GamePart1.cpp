@@ -1,5 +1,5 @@
 #include "SceneIntegrate.h"
-
+using namespace MyEngine;
 
 
 GamePart1::GamePart1(SceneManager* controller) {
@@ -15,61 +15,10 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
 	static_cast<void>(dxCommon);
 
-	move_ = std::make_unique<Sprite>();
-	move_->Initialize(_controller->spriteCommon_.get(), 10);
-	move_->SetSize({ 128,80 });
-	move_->SetPozition({ 100,550 });
-
-	////音の初期化と読み込み
-	//audio_ = std::make_unique<Audio>();
-	//audio_->Initialize();
-	//audio_->LoadWave("newspaper.wav");
-
-	//attack_ = std::make_unique<Sprite>();
-	//attack_->Initialize(_controller->spriteCommon_.get(), 6);
-	//attack_->SetSize({ 128,112 });
-	//attack_->SetPozition({ 900,550 });
-
-	//attack2_ = std::make_unique<Sprite>();
-	//attack2_->Initialize(_controller->spriteCommon_.get(), 7);
-	//attack2_->SetSize({ 128,112 });
-	//attack2_->SetPozition({ 900,550 });
-
-	//guard_ = std::make_unique<Sprite>();
-	//guard_->Initialize(_controller->spriteCommon_.get(), 8);
-	//guard_->SetSize({ 160,256 });
-	//guard_->SetPozition({ 1100,450 });
-
-	//guard2_ = std::make_unique<Sprite>();
-	//guard2_->Initialize(_controller->spriteCommon_.get(), 9);
-	//guard2_->SetSize({ 160,256 });
-	//guard2_->SetPozition({ 1100,450 });
-
-
-
-	//enemyHp_ = std::make_unique<Sprite>();
-	//enemyHp_->Initialize(_controller->spriteCommon_.get(), 12);
-	//enemyHp_->SetAnchorPoint({ 0 , 0 });
-	//enemyHp_->SetSize({ 1280 , 32 });
-	//enemyHp_->SetPozition({ 0 , 10 });
-
-	//enemyHpRed_ = std::make_unique<Sprite>();
-	//enemyHpRed_->Initialize(_controller->spriteCommon_.get(), 13);
-	//enemyHpRed_->SetAnchorPoint({ 0 , 0 });
-	//enemyHpRed_->SetSize({ 1280 , 32 });
-	//enemyHpRed_->SetPozition({ 0 , 10 });
-
-	//playerHp_ = std::make_unique<Sprite>();
-	//playerHp_->Initialize(_controller->spriteCommon_.get(), 14);
-	//playerHp_->SetAnchorPoint({ 0 , 0 });
-	//playerHp_->SetSize({ 300 , 32 });
-	//playerHp_->SetPozition({ 50 , 650 });
-
-	//playerHpRed_ = std::make_unique<Sprite>();
-	//playerHpRed_->Initialize(_controller->spriteCommon_.get(), 13);
-	//playerHpRed_->SetAnchorPoint({ 0 , 0 });
-	//playerHpRed_->SetSize({ 300 , 32 });
-	//playerHpRed_->SetPozition({ 50 , 650 });
+	//音の初期化と読み込み
+	audio_ = std::make_unique<Audio>();
+	audio_->Initialize();
+	audio_->LoadWave("newspaper.wav");
 
 	isPause_ = false;
 	pauseMenuOptions_ = 0;
@@ -77,41 +26,91 @@ void GamePart1::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 
 	//ゲームオブジェクトクラスに情報セット
 	_controller->gameObjectManager_->SetRailCamInfo(camera->GetRailCameraInfo());
-	_controller->gameObjectManager_->SetPlayerWorldTF(_controller->fbxPlayer_->GetObject3d()->GetWorldTransformPtr());
+	_controller->gameObjectManager_->SetPlayerWorldTF(_controller->gameObjectManager_->GetPlayerPtr()->GetObject3d()->GetWorldTransformPtr());
+	exp_ = std::make_unique<Sprite>();
+	exp_->Initialize(_controller->spriteCommon_.get(), "exp");
+	exp_->SetPozition({ _controller->offsetExpPos_.x ,_controller->offsetExpPos_.y });
+
+	hpBar_ = std::make_unique<Sprite>();
+	hpBar_->Initialize(_controller->spriteCommon_.get(), "hpBar");
+	hpBar_->SetPozition({ _controller->offsetHpSpritePos_.x ,_controller->offsetHpSpritePos_.y });
+	hpBar_->SetAnchorPoint({0.5,1.f});
+	hpBar_->Update();
+
+	hpGage_ = std::make_unique<Sprite>();
+	hpGage_->Initialize(_controller->spriteCommon_.get(), "hpGage");
+	hpGage_->SetPozition({ _controller->offsetHpSpritePos_.x ,_controller->offsetHpSpritePos_.y });
+
 	
 	//camera->ResetGameCam();
+	gameSceneMode_ = GAME_SCENE_MODE::inGame;
+
+	//ポップコマンドモードセット
+	_controller->gameObjectManager_->SetIsEnemyPops(true);
+	_controller->gameObjectManager_->InitEnemyCommands();
+	_controller->gameObjectManager_->InitOjamaFence();
+	
+	
 
 }
 
 void GamePart1::Update(Input* input, GameCamera* camera) {
 
 	//BGMを流す
-	//PlaySounds();
-
-
+	PlaySounds();
 
 	if (isPause_ == false) {
-		//test-----------------------------//
-
-		if (camera->GetRailCameraInfo()->nowCount == 200 || camera->GetRailCameraInfo()->nowCount == 800) {
-
-			_controller->gameObjectManager_->AddEnemy(0,0,{0,0,0});
-			_controller->gameObjectManager_->GetWalkingEnemies().back()->SetRailCameraInfo(camera->GetRailCameraInfo());	//レールカメラ情報をセット
-			_controller->gameObjectManager_->GetWalkingEnemies().back()->SetPlayerWorldTransform(_controller->fbxPlayer_->GetObject3d()->GetWorldTransformPtr());	//
-		}
-
-
-		//test-----------------------------//
-
 
 		_controller->field_->Update();
-		_controller->fbxPlayer_->Update();
+		_controller->gameObjectManager_->GetPlayerPtr()->Update();
 		_controller->gameObjectManager_->UpdateAllObjects();
+		HpFlucture();
 
 		if (input->TriggerKey(DIK_ESCAPE)) {
 			isPause_ = true;
-			pauseMenuOptions_ = 0;
+			pauseMenuOptions_ = PauseMenu::RESUME;
 		}
+
+		if (_controller->gameObjectManager_->GetPlayerPtr()->GetIsDeadActNum() == DEAD_ACT_NUM::disappear) {
+			_controller->SetIsBlackDisolve(true,DisolveMode::gameOverMode);
+			if (_controller->GetIsTurnBackBlackDisolve() == true) {
+				_controller->gameObjectManager_->GetPlayerPtr()->PlayerPalamReset();
+				_controller->gameObjectManager_->DestroyAllEnemies();
+				camera->SetCamMode(CAM_MODE::title);
+				_controller->ChangeScene(new TitleScene(_controller));
+			}
+		}
+
+		if (camera->GetIsGameClearDirectionEnd() == true) {	//クリア演出終了
+			_controller->SetIsBlackDisolve(true,DisolveMode::gameClearMode);
+
+			if (_controller->GetIsTurnBackBlackDisolve() == true) {
+				_controller->gameObjectManager_->GetPlayerPtr()->PlayerPalamReset();
+				_controller->gameObjectManager_->DestroyAllEnemies();
+				camera->SetCamMode(CAM_MODE::title);
+				_controller->ChangeScene(new TitleScene(_controller));
+				camera->SetIsGameClearDirectionEnd(false);
+			}
+		}
+		gameCount_++;
+		//if (_controller->fbxPlayer_->GetHp() <= 10) {
+		//	camera->GoGameOver();
+		//	_controller->fbxPlayer_->GoGameOver();
+		//	gameSceneMode_ = GAME_SCENE_MODE::gameOver;
+		//	gameCount_ = 0;
+		//
+		//}
+		if ( gameCount_ == 2000) {
+			camera->GoGameClear();
+			gameSceneMode_ = GAME_SCENE_MODE::gameClear;
+			gameCount_ = 0;
+		}
+		else if (gameCount_ > 2000) {
+			gameCount_ = 0;
+		}
+		
+
+		
 		/*ImGui::Begin("Pause");
 		ImGui::SetWindowPos({200 , 200});
 		ImGui::InputInt("isPause" , &isPause_);
@@ -122,18 +121,6 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 	}
 
 
-
-	//playerHp_->SetSize({ 300 * _controller->fbxPlayer_->GetHp() / 100.0f, 32 });
-	//enemyHp_->SetSize({1280.0f * _controller->boss_->GetHp() / 100.0f , 32});
-
-	/*if (_controller->boss_->GetHp() <= 0) {
-		_controller->ChangeScene(new EndScene(_controller));
-	}else if (_controller->fbxPlayer_->GetHp() <= 0) {
-		_controller->ChangeScene(new GamePart2(_controller));
-	}
-	else if (backToTitle_ == true) {
-		_controller->ChangeScene(new TitleScene(_controller));
-	}*/
 	// ここから下にコード書くとメモリ君がエラー吐く
 }
 
@@ -141,16 +128,25 @@ void GamePart1::Draw(DirectXCommon* dxCommon) {
 
 	_controller->field_->Draw(dxCommon);
 	//_controller->boss_->Draw();
-	_controller->fbxPlayer_->Draw(dxCommon->GetCommandList());
+	_controller->gameObjectManager_->GetPlayerPtr()->Draw(dxCommon->GetCommandList());
 
-	_controller->gameObjectManager_->DrawAllEnemies(dxCommon->GetCommandList());
+	_controller->gameObjectManager_->DrawAllObjs(dxCommon->GetCommandList());
+	_controller->gameObjectManager_->GetPlayerPtr()->ParticleDraw(dxCommon->GetCommandList());
 
 	_controller->spriteCommon_->SpritePreDraw();
 
-	move_->Draw();
+	exp_->Draw();
+	hpBar_->Draw();
+	if (gameSceneMode_ != GAME_SCENE_MODE::gameOver) {
+		hpGage_->Draw();
+	}
+
 
 
 	_controller->spriteCommon_->SpritePostDraw();
+
+	
+
 
 }
 
@@ -214,5 +210,14 @@ void GamePart1::PlaySounds()
 	{
 		isSounds = true;
 		audio_->PlayWave("newspaper.wav"); //ループ再生はしない
+	}
+}
+
+void GamePart1::HpFlucture()
+{
+	float nowHp = static_cast<float>(_controller->gameObjectManager_->GetPlayerPtr()->GetHp());
+	//10段階
+	if (nowHp >= 0) {
+		hpGage_->SetSize({ 80.f,nowHp / 100.f * 160.f });
 	}
 }

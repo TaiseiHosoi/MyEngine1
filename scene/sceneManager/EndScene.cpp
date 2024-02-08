@@ -1,6 +1,6 @@
 #include "EndScene.h"
 #include "SceneManager.h"
-
+#include "WinApp.h"
 #include "TitleScene.h"
 
 
@@ -17,13 +17,13 @@ void EndScene::Initialize( DirectXCommon* dxCommon,GameCamera* camera) {
 	audio_ = std::make_unique<Audio>();
 	audio_->Initialize();
 	//audio_->LoadWave("newspaper.wav");
-
+	
 	end_ = std::make_unique<Sprite>();
-	end_->Initialize(_controller->spriteCommon_.get(), 3);
-	end_->SetSize({ 1280,720 });
+	end_->Initialize(_controller->spriteCommon_.get(), "endScene");
+	end_->SetSize({ static_cast<float>(WinApp::GetInstance()->window_width) ,static_cast<float>(WinApp::GetInstance()->window_height) });
 	end_->SetPozition({ 0,0 });
 
-	_controller->fbxPlayer_->GetObject3d()->SetPosition(Vector3(30, 0, 0));
+	
 
 	static_cast< void >(dxCommon);
 	static_cast<void>(camera);

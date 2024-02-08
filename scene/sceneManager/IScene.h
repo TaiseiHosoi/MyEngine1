@@ -23,6 +23,8 @@
 // シーン管理のための基底クラス
 // (純粋基底クラス)
 
+using namespace MyEngine;
+
 class IScene
 {
 protected:

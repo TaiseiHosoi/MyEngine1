@@ -6,6 +6,8 @@
 #include "IScene.h"
 #include "GameObjManager.h"
 
+using namespace MyEngine;
+
 // 追いかけパート
 class GamePart1 :
     public IScene
@@ -32,6 +34,10 @@ public:
 	// サウンド再生
 	void PlaySounds();
 
+	//hp変動
+	void HpFlucture();
+
+
 private:
 	enum PauseMenu{
 		RESUME,
@@ -40,20 +46,23 @@ private:
 	};
 
 private:
-	std::unique_ptr <Sprite> attack_;
-	std::unique_ptr <Sprite> attack2_;
-	std::unique_ptr <Sprite> guard_;
-	std::unique_ptr <Sprite> guard2_;
-	std::unique_ptr <Sprite> move_;
+
 	std::unique_ptr <Sprite> enemyHp_;
 	std::unique_ptr <Sprite> enemyHpRed_;
 	std::unique_ptr <Sprite> playerHp_;
 	std::unique_ptr <Sprite> playerHpRed_;
 
+	std::unique_ptr <Sprite> exp_;
+
+	//hp
+	std::unique_ptr <Sprite> hpBar_;
+	std::unique_ptr <Sprite> hpGage_;
+	
+
 	bool isClickL, isClickR;
 
 	//ポーズメニュー用変数
-	int isPause_;
+	bool isPause_;
 	int pauseMenuOptions_;
 	bool backToTitle_;
 
@@ -61,7 +70,19 @@ private:
 	bool isSounds = false;
 	std::unique_ptr<Audio> audio_;
 
-	
+	//画像用固定変数
+	const Vector2 moveSprPos_ = { 100,550 };
+	const Vector2 moveSprSize_ = { 128,80 };
+
+	//現在のモード
+	enum GAME_SCENE_MODE{
+		inGame,
+		gameOver,
+		gameClear
+
+	};
+	int gameSceneMode_ = 0;
+	int gameCount_ = 0;
 
 
 };

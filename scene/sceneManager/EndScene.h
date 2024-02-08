@@ -4,6 +4,7 @@
  */
 #pragma once
 #include "IScene.h"
+using namespace MyEngine;
 
 class EndScene :
     public IScene

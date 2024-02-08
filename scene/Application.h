@@ -29,7 +29,7 @@
 
 #include"Ground.h"
 
-
+using namespace MyEngine;
 
 class Application {
 public:
@@ -56,7 +56,8 @@ public:
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void PostEffectDraw();
+	void OutFlameDraw();
 
 
 	int gameLevel_ = 0;
@@ -71,7 +72,7 @@ private:
 	std::unique_ptr <SceneManager> sceneManager_;
 	HitStopManager* hitStopManager_;
 	CollisionManager* collisionManager_ = nullptr;
-	//敵マネージャ
-	std::unique_ptr<GameObjManager> JsonManager_;
+	//ゲームオブジェクトマネージャ
+	std::unique_ptr<GameObjManager> gameObjManager_;
 
 };

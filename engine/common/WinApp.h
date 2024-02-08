@@ -5,42 +5,46 @@
 #pragma once
 #include <Windows.h>
 
-class WinApp
-{
-public:// 静的メンバ関数
-	static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
-public:
-	// 初期化
-	void Initialize();
 
-	// 更新
-	bool ProcessMessage();
 
-	//ウィンドウクラスを登録解除
-	void Finalize();
+namespace MyEngine {
+	class WinApp
+	{
+	public:// 静的メンバ関数
+		static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
+	public:
+		// 初期化
+		void Initialize();
 
-	// getter
-	// hwndゲッタ
-	HWND GetHwnd()const { return hwnd; }
-	// hInstanceゲッタ
-	HINSTANCE GetHInstance() const { return w.hInstance; }
+		// 更新
+		bool ProcessMessage();
 
-	// シングルトンインスタンスの取得
-	static WinApp* GetInstance();
+		//ウィンドウクラスを登録解除
+		void Finalize();
 
-private:
-	// ウィンドウハンドル
-	HWND hwnd = nullptr;
-	//ウィンドウクラス
-	WNDCLASSEX w{};
+		// getter
+		// hwndゲッタ
+		HWND GetHwnd()const { return hwnd; }
+		// hInstanceゲッタ
+		HINSTANCE GetHInstance() const { return w.hInstance; }
 
-	
-public:
+		// シングルトンインスタンスの取得
+		static WinApp* GetInstance();
 
-	//ウィンドウサイズ
-	static const int window_width = 1280;	//横幅
-	static const int window_height = 720;	//縦幅
-	//シングルトン
-	static WinApp* WinApp_;
-};
+	private:
+		// ウィンドウハンドル
+		HWND hwnd = nullptr;
+		//ウィンドウクラス
+		WNDCLASSEX w{};
+
+
+	public:
+
+		//ウィンドウサイズ
+		static const int window_width = 1280;	//横幅
+		static const int window_height = 720;	//縦幅
+		//シングルトン
+		static WinApp* WinApp_;
+	};
+}
 

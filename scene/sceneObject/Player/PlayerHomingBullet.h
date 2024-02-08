@@ -30,6 +30,7 @@ private:
 	Vector3 angleVel_ = {};	//ワールド行列とvelをかけた値
 	WorldTransform* homingTargetPtr_ = nullptr;
 	Vector3 balletVel_ = {};	//弾のvel
+	const Vector3 strVec = { 0,0,1.f };	//直線z
 	float balletSpeed_ = 0.4f;
 
 };

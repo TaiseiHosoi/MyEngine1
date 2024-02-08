@@ -5,7 +5,7 @@
 #pragma once
 #include "IScene.h"
 
-
+using namespace MyEngine;
 
 class TitleScene :public IScene
 {
@@ -40,6 +40,11 @@ private://リソース
 	std::unique_ptr <Sprite> sceneChangeLeft_;
 	std::unique_ptr <Sprite> sceneChangeRight_;
 	std::unique_ptr <Sprite> leftMouseButtonStr_;
+	std::unique_ptr <Sprite> exp_;
+	std::unique_ptr <Sprite> hpBar_;
+	std::unique_ptr <Sprite> hpGage_;
+	//背景スプライト
+	std::unique_ptr <Sprite> backGroundSp_;
 private:
 
 	enum SceneSwapPhaseNum {
@@ -71,8 +76,17 @@ private:
 	const size_t MAX_BACK_SWAP_COUNT = 45;
 	size_t oldSSCount_ = 0;
 	size_t sceneSwapPhase_ = 0;
+	float easeStrength_ = 0;
+	const float offsetEaseStrength_ = 3.0f;
 
 	//音用変数
 	std::unique_ptr<Audio> audio_;
+	
+	//画像用固定変数
+	const Vector2 title1SprPos_ = { 100,550 };
+	const Vector2 title1SprSize_ = { 128,80 };
+	const Vector2 title2SprPos_ = { 100,550 };
+	const Vector2 title2SprSize_ = { 128,80 };
+
 
 };

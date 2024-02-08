@@ -3,6 +3,8 @@
 
 #pragma comment(lib, "winmm.lib")
 
+using namespace MyEngine;
+
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wPalam, LPARAM lParam);
 WinApp* WinApp::WinApp_  = nullptr;
 void WinApp::Initialize() {
@@ -25,7 +27,7 @@ void WinApp::Initialize() {
 
 	//ウィンドウオブジェクトの生成
 	hwnd = CreateWindow(w.lpszClassName,	//クラス名
-		"KINMIRA Shoter",			//タイトルバーの文字
+		"KINMIRA Shooter",			//タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,	//標準的なウィンドウスタイル
 		CW_USEDEFAULT,			//表示X座標（OS任せ）
 		CW_USEDEFAULT,			//表示Y座標（OS任せ）

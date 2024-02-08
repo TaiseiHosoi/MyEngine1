@@ -20,9 +20,9 @@ void GamePart2::Initialize(DirectXCommon* dxCommon, GameCamera* camera) {
 	//audio_->LoadWave("newspaper.wav");
 
 	title_ = std::make_unique<Sprite>();
-	title_->Initialize(_controller->spriteCommon_.get(), 1);
+	title_->Initialize(_controller->spriteCommon_.get(), "title1");
 	title2_ = std::make_unique<Sprite>();
-	title2_->Initialize(_controller->spriteCommon_.get(), 2);
+	title2_->Initialize(_controller->spriteCommon_.get(), "title2");
 
 	title_->SetSize({ 256,128 });
 	title2_->SetSize({ 256,128 });
