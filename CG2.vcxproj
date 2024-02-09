@@ -220,11 +220,7 @@
     <ClCompile Include="scene\sceneObject\Enemy\OjamaFence.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\WalkingEnemy.cpp" />
     <ClCompile Include="scene\sceneObject\Ground.cpp" />
-    <ClCompile Include="scene\sceneObject\Player\Atk1.cpp" />
     <ClCompile Include="scene\sceneObject\Player\FbxPlayer.cpp" />
-    <ClCompile Include="scene\sceneObject\Player\Move.cpp" />
-    <ClCompile Include="scene\sceneObject\Player\PlayerAction.cpp" />
-    <ClCompile Include="scene\sceneObject\Player\PlayerActionManager.cpp" />
     <ClCompile Include="scene\sceneObject\Player\PlayerHomingBullet.cpp" />
     <ClCompile Include="scene\sceneObject\Player\PlayerRapidBullet.cpp" />
     <ClCompile Include="scene\sceneObject\Player\PlayerReticle.cpp" />
@@ -387,11 +383,7 @@
     <ClInclude Include="scene\sceneObject\Enemy\Enemy.h" />
     <ClInclude Include="scene\sceneObject\Enemy\WalkingEnemy.h" />
     <ClInclude Include="scene\sceneObject\Ground.h" />
-    <ClInclude Include="scene\sceneObject\Player\Atk1.h" />
     <ClInclude Include="scene\sceneObject\Player\FbxPlayer.h" />
-    <ClInclude Include="scene\sceneObject\Player\Move.h" />
-    <ClInclude Include="scene\sceneObject\Player\PlayerAction.h" />
-    <ClInclude Include="scene\sceneObject\Player\PlayerActionManager.h" />
     <ClInclude Include="scene\sceneObject\Player\PlayerHomingBullet.h" />
     <ClInclude Include="scene\sceneObject\Player\PlayerRapidBullet.h" />
     <ClInclude Include="scene\sceneObject\Player\PlayerReticle.h" />

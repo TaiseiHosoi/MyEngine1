@@ -3,8 +3,7 @@
 #include "GameCamera.h"
 #include <random>
 #include "HitStopManager.h"
-#include"Move.h"
-#include"Atk1.h"
+
 
 
 #include"RaycastHit.h"
