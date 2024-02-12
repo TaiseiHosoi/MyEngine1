@@ -150,7 +150,7 @@ void GameCamera::Update()
 		float minusVal = battleSCMinusVal_;
 		minusVec *= minusVal;	//引きカメラ
 
-		basePos_ += minusVec + nowParalellVec;
+		basePos_ += minusVec + nowParalellVec - nowTargetPosVelueToAdd;
 		basePos_.y = gamepartCamPosY;
 
 		FollowPlayer();

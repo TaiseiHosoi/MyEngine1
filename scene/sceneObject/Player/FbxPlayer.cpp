@@ -3,7 +3,7 @@
 #include "GameCamera.h"
 #include <random>
 #include "HitStopManager.h"
-
+#include"PlayerMachineGun.h"
 
 
 #include"RaycastHit.h"
@@ -44,6 +44,11 @@ void FbxPlayer::Initialize(FBXModel* fbxModel)
 	hoverCarObject_->SetPosition(gameObject_->GetPosition());
 	hoverCarObject_->SetRotate(gameObject_->GetRotate());
 	hoverCarObject_->SetScale({ 1.f,1.f,1.f });
+
+	//銃砲
+	machinGun_ = Mesh::LoadFormOBJ("PlayerOuterShooter", true);
+	playerMachinGun_ = std::make_unique<PlayerMachinGun>();
+	playerMachinGun_->Initialize(machinGun_.get(), gameObject_->GetWorldTransformPtr());
 	
 
 	SPHERE_COLISSION_NUM = static_cast<int>(gameObject_->GetBonesMatPtr()->size());
@@ -124,6 +129,19 @@ void FbxPlayer::Update()
 			atan2(gameObject_.get()->GetCamera().GetTarget().x - gameObject_.get()->GetCamera().GetEye().x,
 				gameObject_.get()->GetCamera().GetTarget().z - gameObject_.get()->GetCamera().GetEye().z);
 
+		//playerからカメラへのアングルをとる
+		Vector3 railTargetNorm = *railTargetPosPtr_ - gameObject_.get()->GetCamera().GetEye();
+		railTargetNorm.nomalize();
+		railTargetNorm *= 200.f;	//長さ
+
+		Vector3 pTransNorm = gameObject_->GetWorldTransform().translation_;
+		playerToCamAngle_.y = atan2(railTargetNorm.x,
+			railTargetNorm.z );
+
+		playerToCamAngle_.x = gameObject_->GetRotate().x;
+	
+
+
 		//移動処理
 		MoveBody();
 		//ターゲット移動処理
@@ -142,7 +160,7 @@ void FbxPlayer::Update()
 
 				std::unique_ptr<PlayerRapidBullet> newRapidBullet;
 				newRapidBullet = std::make_unique<PlayerRapidBullet>();
-				newRapidBullet->Initialize(bulletModel_.get(), gameObject_->GetPosition(), gameObject_->GetRotate());
+				newRapidBullet->Initialize(bulletModel_.get(), gameObject_->GetPosition(), playerToCamAngle_);
 				rapidBullets_.push_back(std::move(newRapidBullet));
 
 				nowShotDelayCount_ = 0;
@@ -204,6 +222,7 @@ void FbxPlayer::Update()
 		slashParticle_->Update();
 		gameObject_->Update();
 		hoverCarObject_->Update();
+		
 
 		count++;
 
@@ -222,8 +241,9 @@ void FbxPlayer::Update()
 
 	reticle_.Update();
 	
-
-
+	//ImGui::Begin("PlayerRot");
+	//ImGui::InputFloat3("%f,%f,%f", &(gameObject_->GetWorldTransformPtr()->rotation_.x));
+	//ImGui::End();
 }
 
 
@@ -238,11 +258,6 @@ void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 	}
 
 
-
-	if (isDead_ == false) {
-		reticle_.Draw(cmdList);
-	}
-
 	for (int i = 0; i < homingBullets_.size(); i++) {
 		homingBullets_[i]->Draw(cmdList);
 	}
@@ -250,7 +265,7 @@ void FbxPlayer::Draw(ID3D12GraphicsCommandList* cmdList)
 		rapidBullet->Draw(cmdList);
 	}
 
-
+	
 
 }
 

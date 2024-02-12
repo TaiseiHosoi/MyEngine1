@@ -20,6 +20,7 @@ void PlayerRapidBullet::Initialize(Mesh* model, Vector3 setPos, Vector3 setRot)
 	object_->SetScale({ 1,1,1 });
 	object_->Update();
 
+
 	sphere = std::make_unique<SphereCollider>();
 	CollisionManager::GetInstance()->AddCollider(sphere.get());
 	pos = object_->worldTransform.matWorld_.GetWorldPos();
@@ -53,6 +54,7 @@ void PlayerRapidBullet::Update()
 
 	//更新
 	object_->Update();
+
 
 	testObject_->worldTransform.translation_ = object_->worldTransform.translation_;
 	sphere->SetBasisPos(&object_->worldTransform.translation_);

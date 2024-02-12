@@ -53,7 +53,7 @@ private:
 	const float offsetFarPosLength_ = 90.f;
 	const Vector3 nierReticleScale_ = { 0.1f,1.f,1.f };
 	const Vector3 mediumRangeReticleScale_ = { 0.1f,1.f,1.f };
-	const Vector3 farReticleScale_ = { 0.1f,1.f,1.f };
+	const Vector3 farReticleScale_ = { 2.f,2.f,1.f };
 
 	//ターゲットのポジション
 	Vector3* railTargetPos_ = nullptr;
