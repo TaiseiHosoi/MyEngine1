@@ -37,6 +37,8 @@ half4 gaussian_sample(float2 uv, float2 dx, float2 dy)
 	return col;
 }
 
+
+
 // easeIn
 float ease_in_out_cubic(const float x)
 {
@@ -54,12 +56,48 @@ float crt_ease(const float x, const float base, const float offset)
 	return ease * base + base * 0.8;
 }
 
+float GetGrayScale(float4 dCol){
+	 float grayScale = dCol.r * 0.299 + dCol.g * 0.587 + dCol.b * 0.114;
+	 return grayScale;
+}
+
+float4 GetHighLumi(float4 dCol ,float grayScale){
+    //高輝度部を抽出
+
+   
+    float extract = smoothstep(0.6f, 0.8f, grayScale);
+    float4 highLumi = dCol * extract;
+    
+    highLumi.a = 1;
+
+    //高輝度部を抽出
+    return highLumi;
+}
+
+
+
+// ブルーム用のガウシアンブラーを適用 (既存のgaussian_sampleを活用または拡張)
+// ここでは、gaussian_sample関数をそのまま使用していますが、
+// ブルームエフェクト専用のパラメータ調整を行うことを推奨します。
+
+// 最終的な合成を行う
+//float4 ApplyBloom(float4 sceneColor, float2 uv)
+//{
+//    float4 brightParts = ExtractBrightParts(sceneColor);
+//    
+//    // ガウシアンブラーを明るい部分に適用
+//    float4 blurredBrightParts = gaussian_sample(uv, float2(0.002, 0), float2(0, 0.002));
+//
+//}
+
+
 float4 main(VSOutput input) : SV_TARGET
 {
 
-	float shift = 0.0018f;
+	float yShift = 0.0018f;
+
 	float4 colortex0 = tex0.Sample(smp, input.uv);
-	float4 colortex1 = tex0.Sample(smp, input.uv);
+	float4 colortex1 = tex1.Sample(smp, input.uv);
 
 	float4 mainColor = colortex0;
 
@@ -75,31 +113,43 @@ float4 main(VSOutput input) : SV_TARGET
 	const float2 dx = float2(1 / 1280, 0);
 	const float2 dy = float2(0, 1 / 720);
 
-	// RGBごとにUVをずらす
-	uv += -1 * dy;
-	uv += 0 * dy;
-	uv += 1 * dy;
-
-
 
 	// ガウシアンフィルタによって、境界をぼかす
 	half4 col;
-	col.x = gaussian_sample(uv + float2(-shift,0), dx, dy).x;
+	col.x = gaussian_sample(uv + float2(-yShift,0), dx, dy).x;
 	col.y = gaussian_sample(uv, dx, dy).y;
-	col.z = gaussian_sample(uv + float2(shift,0), dx, dy).z;
+	col.z = gaussian_sample(uv + float2(yShift,0), dx, dy).z;
 
-
-	const float floor_y = fmod(uv.y * 720 / 6, 1);
-	const float ease_r = crt_ease(floor_y, col.r, rand(uv + float2(-shift,0)) * 0.1);
+	// 縦にずらしている
+	const float floor_y = fmod(uv.y * 720 / 6, 1);	
+	const float ease_r = crt_ease(floor_y, col.r, rand(uv + float2(-yShift,0)) * 0.1);
 	const float ease_g = crt_ease(floor_y, col.g, rand(uv) * 0.1);
-	const float ease_b = crt_ease(floor_y, col.b, rand(uv + float2(shift,0)) * 0.1);
+	const float ease_b = crt_ease(floor_y, col.b, rand(uv + float2(yShift,0)) * 0.1);
 
 	
-	float3 rgb =  float3(ease_r,ease_g,ease_b);
+	float4 rgba =  float4(ease_r,ease_g,ease_b,1);
+
+
+	//ブルーム
+	float grayS = GetGrayScale(tex0.Sample(smp, uv));
+
+	float4 brightParts;
+
+	brightParts = GetHighLumi(tex0.Sample(smp, uv),grayS);
+
+	if(grayS > 0.6f){
+	 brightParts =  gaussian_sample(uv, float2(0.002, 0), float2(0, 0.002));
+	}
+
 	
+		
+	
+	//まとめる
+
+	float4 finalCol = brightParts;
 
 
-	return half4(rgb, 1);
+	return rgba + finalCol;
 
 
 
