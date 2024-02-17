@@ -153,7 +153,7 @@ void FbxPlayer::Update()
 
 
 		nowShotDelayCount_++;
-		if (input_->PushMouseButton(0) || input_->ButtonInput(RT)) {
+		if (input_->PushMouseButton(0) || input_->ButtonInput(RT) || input_->PushKey(DIK_SPACE)) {
 
 			
 			if (nowShotDelayCount_ > shotDelay_) {

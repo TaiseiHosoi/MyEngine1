@@ -1,5 +1,6 @@
 #include"SummarizeEngine.h"
 #include"PostEffect.h"
+#include"HighLumi.h"
 using namespace MyEngine;
 
 void SummarizeEngine::Initialize() {
@@ -31,10 +32,14 @@ void SummarizeEngine::Initialize() {
 
 	//ポストエフェクト
 	PostEffect::Initialize(dxCommon_);	//ポストエフェクトのスタティックメンバ変数初期化
+	HighLumi::Initialize(dxCommon_);
 
+
+	//ImGui
 	imGuiManager_ = new ImGuiManager;
 	imGuiManager_->Initialize(winApp_, dxCommon_);
 
+	//ゲームが動いているかの初期化
 	isRunningGame = true;
 };
 
@@ -53,7 +58,7 @@ void SummarizeEngine::Update() {
 
 void SummarizeEngine::Draw() {
 	//描画
-#pragma region PostEffectDraw
+
 
 	PostEffect::PreDrawScene(dxCommon_->GetCommandList());
 
@@ -61,11 +66,22 @@ void SummarizeEngine::Draw() {
 
 	PostEffect::PostDrawScene();
 
+	//ブルーム処理
+	HighLumi::PreDrawScene(dxCommon_->GetCommandList());
+
+	application_->PostEffectDraw();
+
+	HighLumi::PostDrawScene();
+
+
+
 	dxCommon_->PreDraw();
 
 	PostEffect::Draw(dxCommon_->GetCommandList());
 
-#pragma endregion PostEffectDraw
+	HighLumi::Draw(dxCommon_->GetCommandList());
+
+
 	
 #pragma region OutFlameDraw
 
