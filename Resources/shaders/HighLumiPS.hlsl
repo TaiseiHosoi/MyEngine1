@@ -59,6 +59,7 @@ static const float weightSum = 16;
 
 // 閾値を超える輝度のピクセルにガウシアンブラーを適用
 float4 ApplyGaussianBlurToHighLumi(float2 uv) {
+    //9分割
     float2 offsets[9] = {
         {-1, -1}, {0, -1}, {1, -1},
         {-1,  0}, {0,  0}, {1,  0},
