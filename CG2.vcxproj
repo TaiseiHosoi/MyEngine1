@@ -162,9 +162,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\GamePad.cpp" />
+    <ClCompile Include="engine\PostEffect\HighLumi.cpp" />
+    <ClCompile Include="engine\PostEffect\IPostTexture.cpp" />
     <ClCompile Include="engine\PostEffect\MultiTex.cpp" />
     <ClCompile Include="engine\PostEffect\PostEffect.cpp" />
+    <ClCompile Include="engine\PostEffect\SCDistort.cpp" />
     <ClCompile Include="scene\gameCamera\CameraShake.cpp" />
+    <ClCompile Include="scene\sceneObject\Enemy\BossRobot.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\CarryBallEnemy.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\EnemyBullet\EnemyNormalBullet.cpp" />
@@ -203,6 +207,7 @@
     <ClCompile Include="engine\sprite\SpriteCommon.cpp" />
     <ClCompile Include="engine\SummarizeEngine\SummarizeEngine.cpp" />
     <ClCompile Include="scene\sceneObject\GameObjManager.cpp" />
+    <ClCompile Include="scene\sceneObject\Player\PlayerMachineGun.cpp" />
     <ClCompile Include="scene\sceneObject\Utility\EnemyActionUtility.cpp" />
     <ClCompile Include="scene\sceneObject\Utility\EnemyDirectionUtility.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\FloatingEnemy.cpp" />
@@ -220,11 +225,7 @@
     <ClCompile Include="scene\sceneObject\Enemy\OjamaFence.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\WalkingEnemy.cpp" />
     <ClCompile Include="scene\sceneObject\Ground.cpp" />
-    <ClCompile Include="scene\sceneObject\Player\Atk1.cpp" />
     <ClCompile Include="scene\sceneObject\Player\FbxPlayer.cpp" />
-    <ClCompile Include="scene\sceneObject\Player\Move.cpp" />
-    <ClCompile Include="scene\sceneObject\Player\PlayerAction.cpp" />
-    <ClCompile Include="scene\sceneObject\Player\PlayerActionManager.cpp" />
     <ClCompile Include="scene\sceneObject\Player\PlayerHomingBullet.cpp" />
     <ClCompile Include="scene\sceneObject\Player\PlayerRapidBullet.cpp" />
     <ClCompile Include="scene\sceneObject\Player\PlayerReticle.cpp" />
@@ -253,6 +254,22 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\HighLumiPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\HighLumiVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Resources\shaders\MultiTexturePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -320,17 +337,34 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="Resources\shaders\SCDistortPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\SCDistortVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\input\GamePad.h" />
+    <ClInclude Include="engine\PostEffect\SCDistort.h" />
+    <ClInclude Include="Resources\shaders\HighLumi.h" />
+    <ClInclude Include="engine\PostEffect\IPostTexture.h" />
     <ClInclude Include="engine\PostEffect\MultiTex.h" />
     <ClInclude Include="engine\PostEffect\PostEffect.h" />
     <ClInclude Include="scene\gameCamera\CameraShake.h" />
     <ClInclude Include="scene\gameCamera\RailCameraInfo.h" />
+    <ClInclude Include="scene\sceneObject\Enemy\BossRobot.h" />
     <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.h" />
     <ClInclude Include="scene\sceneObject\Enemy\CarryBallEnemy.h" />
     <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyNormalBullet.h" />
     <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBullet.h" />
+    <ClInclude Include="scene\sceneObject\Player\PlayerMachineGun.h" />
     <ClInclude Include="scene\sceneObject\Utility\EnemyActionUtility.h" />
     <ClInclude Include="scene\sceneObject\Utility\EnemyDirectionUtility.h" />
     <ClInclude Include="scene\sceneObject\Enemy\OjamaFence.h" />
@@ -387,11 +421,7 @@
     <ClInclude Include="scene\sceneObject\Enemy\Enemy.h" />
     <ClInclude Include="scene\sceneObject\Enemy\WalkingEnemy.h" />
     <ClInclude Include="scene\sceneObject\Ground.h" />
-    <ClInclude Include="scene\sceneObject\Player\Atk1.h" />
     <ClInclude Include="scene\sceneObject\Player\FbxPlayer.h" />
-    <ClInclude Include="scene\sceneObject\Player\Move.h" />
-    <ClInclude Include="scene\sceneObject\Player\PlayerAction.h" />
-    <ClInclude Include="scene\sceneObject\Player\PlayerActionManager.h" />
     <ClInclude Include="scene\sceneObject\Player\PlayerHomingBullet.h" />
     <ClInclude Include="scene\sceneObject\Player\PlayerRapidBullet.h" />
     <ClInclude Include="scene\sceneObject\Player\PlayerReticle.h" />
@@ -401,11 +431,13 @@
     <None Include="Resources\carryBallEnemyPop.csv" />
     <None Include="Resources\shaders\Basic.hlsli" />
     <None Include="Resources\shaders\FBX.hlsli" />
+    <None Include="Resources\shaders\HighLumi.hlsli" />
     <None Include="Resources\shaders\MultiTexture.hlsli" />
     <None Include="Resources\shaders\Obj.hlsli" />
     <None Include="Resources\shaders\Particle.hlsli" />
     <None Include="Resources\shaders\PostEffect.hlsli" />
     <None Include="Resources\shaders\RimLight.hlsli" />
+    <None Include="Resources\shaders\SCDistort.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="imgui\imgui.vcxproj">

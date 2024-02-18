@@ -482,22 +482,22 @@ Vector3 MathFunc::TangentSplinePosition(const std::vector<Vector3>& points, size
 
 
 	if (targetSegment == points.size() - 1) {
-		p0 = points[targetSegment];
+		p0 = points[points.size()];
 		p1 = points[0];
 		p2 = points[1];
 		p3 = points[2];
 	}
 	else if (targetSegment == points.size() - 2) {
-		p0 = points[targetSegment];
-		p1 = points[targetSegment + 1];
+		p0 = points[points.size()-2];
+		p1 = points[points.size()-1];
 		p2 = points[0];
 		p3 = points[1];
 	}
 	else if (targetSegment == points.size()-3) 
 	{
-		p0 = points[targetSegment];
-		p1 = points[targetSegment + 1];
-		p2 = points[targetSegment + 2];
+		p0 = points[points.size()-3];
+		p1 = points[points.size()-2];
+		p2 = points[points.size()-1];
 		p3 = points[0];
 	}
 	else {

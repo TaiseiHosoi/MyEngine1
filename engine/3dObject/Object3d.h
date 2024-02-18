@@ -199,6 +199,12 @@ public:
 	void SetPosition(const Vector3& position) { this->worldTransform.translation_ = position; }
 
 	/// <summary>
+/// 回転の取得
+/// </summary>
+/// <returns></returns>
+	const Vector3& GetRotate() const { return worldTransform.rotation_; }
+
+	/// <summary>
 	/// 倍率の取得
 	/// </summary>
 	/// <returns>座標</returns>

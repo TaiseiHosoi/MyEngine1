@@ -264,19 +264,7 @@
     <ClCompile Include="engine\math\SplineCurve.cpp">
       <Filter>ソース ファイル\math</Filter>
     </ClCompile>
-    <ClCompile Include="scene\sceneObject\Player\Atk1.cpp">
-      <Filter>ソース ファイル\scene\Player</Filter>
-    </ClCompile>
     <ClCompile Include="scene\sceneObject\Player\FbxPlayer.cpp">
-      <Filter>ソース ファイル\scene\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\Player\Move.cpp">
-      <Filter>ソース ファイル\scene\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\Player\PlayerAction.cpp">
-      <Filter>ソース ファイル\scene\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\Player\PlayerActionManager.cpp">
       <Filter>ソース ファイル\scene\Player</Filter>
     </ClCompile>
     <ClCompile Include="scene\sceneObject\Player\PlayerReticle.cpp">
@@ -333,6 +321,21 @@
     <ClCompile Include="scene\sceneObject\Enemy\OjamaFence.cpp">
       <Filter>ソース ファイル\scene\enemy</Filter>
     </ClCompile>
+    <ClCompile Include="scene\sceneObject\Player\PlayerMachineGun.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\sceneObject\Enemy\BossRobot.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\PostEffect\IPostTexture.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\PostEffect\HighLumi.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\PostEffect\SCDistort.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\ObjPS.hlsl">
@@ -372,6 +375,10 @@
     </FxCompile>
     <FxCompile Include="Resources\shaders\MultiTexturePS.hlsl" />
     <FxCompile Include="Resources\shaders\MultiTextureVS.hlsl" />
+    <FxCompile Include="Resources\shaders\HighLumiPS.hlsl" />
+    <FxCompile Include="Resources\shaders\HighLumiVS.hlsl" />
+    <FxCompile Include="Resources\shaders\SCDistortPS.hlsl" />
+    <FxCompile Include="Resources\shaders\SCDistortVS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scene\sceneManager\EndScene.h">
@@ -518,19 +525,7 @@
     <ClInclude Include="engine\math\SplineCurve.h">
       <Filter>ヘッダー ファイル\math</Filter>
     </ClInclude>
-    <ClInclude Include="scene\sceneObject\Player\Atk1.h">
-      <Filter>ヘッダー ファイル\scene\Player</Filter>
-    </ClInclude>
     <ClInclude Include="scene\sceneObject\Player\FbxPlayer.h">
-      <Filter>ヘッダー ファイル\scene\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\Player\Move.h">
-      <Filter>ヘッダー ファイル\scene\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\Player\PlayerAction.h">
-      <Filter>ヘッダー ファイル\scene\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\Player\PlayerActionManager.h">
       <Filter>ヘッダー ファイル\scene\Player</Filter>
     </ClInclude>
     <ClInclude Include="scene\sceneObject\Player\PlayerReticle.h">
@@ -593,6 +588,21 @@
     <ClInclude Include="scene\sceneObject\GameObjManager.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
+    <ClInclude Include="scene\sceneObject\Player\PlayerMachineGun.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Enemy\BossRobot.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\PostEffect\IPostTexture.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\shaders\HighLumi.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\PostEffect\SCDistort.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Obj.hlsli">
@@ -614,5 +624,7 @@
       <Filter>リソース ファイル</Filter>
     </None>
     <None Include="Resources\shaders\MultiTexture.hlsli" />
+    <None Include="Resources\shaders\HighLumi.hlsli" />
+    <None Include="Resources\shaders\SCDistort.hlsli" />
   </ItemGroup>
 </Project>

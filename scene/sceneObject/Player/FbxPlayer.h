@@ -12,7 +12,7 @@
 #include"ParticleManager.h"
 
 #include "audio.h"
-
+#include"PlayerMachineGun.h"
 #include "PlayerReticle.h"
 #include"PlayerHomingBullet.h"
 #include"PlayerRapidBullet.h"
@@ -205,6 +205,10 @@ private:
 	};
 	std::vector<PRockTarget> rockTargets_;
 
+	//銃口
+	std::unique_ptr<PlayerMachinGun> playerMachinGun_;
+	std::unique_ptr<Mesh> machinGun_;
+
 	//連射弾
 	std::list< std::unique_ptr<PlayerRapidBullet>> rapidBullets_;
 	const int shotDelay_ = 5;
@@ -220,6 +224,10 @@ private:
 	//カメラの向き
 	Vector3 cameraAngle_ = {0 , 0 , 0};
 	RailCameraInfo* railCameraInfo_ = nullptr;
+
+	//プレイヤーからターゲットポジションのアングルVec
+	Vector3 playerToCamAngle_ = {};
+
 	//ブレーキアニメーション用フラグ
 	bool isbrake = false;
 	int brakeFlameCount = 0;
@@ -272,7 +280,7 @@ private:
 
 	//上下左右に始点操作するベクトル
 	Vector3 targetPosVelueToAdd_ = {};
-	const Vector3 maxTargetPosVTA_ = {30.f,30.f,0};
+	const Vector3 maxTargetPosVTA_ = {30.f,6.f,0};
 	const float targetPosMoveSpeed_ = 0.5f;
 
 	//レールターゲットレティクル

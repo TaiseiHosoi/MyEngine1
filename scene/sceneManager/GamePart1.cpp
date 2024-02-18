@@ -93,9 +93,9 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 			}
 		}
 		gameCount_++;
-		//if (_controller->fbxPlayer_->GetHp() <= 10) {
+		//if (_controller->gameObjectManager_->GetPlayerPtr()->GetHp() <= 0) {
 		//	camera->GoGameOver();
-		//	_controller->fbxPlayer_->GoGameOver();
+		//	_controller->gameObjectManager_->GetPlayerPtr()->GoGameOver();
 		//	gameSceneMode_ = GAME_SCENE_MODE::gameOver;
 		//	gameCount_ = 0;
 		//
@@ -110,11 +110,7 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 		}
 		
 
-		
-		/*ImGui::Begin("Pause");
-		ImGui::SetWindowPos({200 , 200});
-		ImGui::InputInt("isPause" , &isPause_);
-		ImGui::End();*/
+
 	}
 	else {
 		Pause(input, camera);
