@@ -1,4 +1,4 @@
-﻿#include "MultiTex.h"
+﻿#include "SCDistort.h"
 #include<d3dx12.h>
 #include"WinApp.h"
 #include <cassert>
@@ -6,43 +6,37 @@
 
 #pragma comment(lib, "d3dcompiler.lib")
 
-ID3D12Device* MultiTex::device_;
+ID3D12Device* SCDistort::device_;
 
-ID3D12GraphicsCommandList* MultiTex::commandList;
+ID3D12GraphicsCommandList* SCDistort::commandList;
 
-MultiTex::VertexPosUv MultiTex::vertices[4];
+SCDistort::VertexPosUv SCDistort::vertices[4];
 
-MultiTex::VertexPosUv* MultiTex::vertMap;
+SCDistort::VertexPosUv* SCDistort::vertMap;
 
+Microsoft::WRL::ComPtr<ID3D12Resource> SCDistort::vertBuff;	//頂点バッファ
 
-Microsoft::WRL::ComPtr<ID3D12Resource> MultiTex::vertBuff;	//頂点バッファ
-
-Microsoft::WRL::ComPtr<ID3D12Resource> MultiTex::constBuffResourceB1;
 
 //頂点バッファビューの作成
-D3D12_VERTEX_BUFFER_VIEW MultiTex::vbView{};
-Microsoft::WRL::ComPtr<ID3D12Resource> MultiTex::texBuff[2];
-
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> MultiTex::descHeapSRV;
+D3D12_VERTEX_BUFFER_VIEW SCDistort::vbView{};
+Microsoft::WRL::ComPtr<ID3D12Resource> SCDistort::texBuff;
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> SCDistort::descHeapSRV;
 //深度バッファ
-Microsoft::WRL::ComPtr<ID3D12Resource> MultiTex::depthBuff;
+Microsoft::WRL::ComPtr<ID3D12Resource> SCDistort::depthBuff;
 //RTV用のデスクリプタヒープ
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> MultiTex::descHeapRTV;
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> SCDistort::descHeapRTV;
 //DSV用のデスクリプタヒープ
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> MultiTex::descHeapDSV;
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> SCDistort::descHeapDSV;
 
-Microsoft::WRL::ComPtr<ID3D12PipelineState> MultiTex::pipelineState;
-Microsoft::WRL::ComPtr<ID3D12RootSignature> MultiTex::rootSignature;
+Microsoft::WRL::ComPtr<ID3D12PipelineState> SCDistort::pipelineState;
+Microsoft::WRL::ComPtr<ID3D12RootSignature> SCDistort::rootSignature;
 
 
+const float SCDistort::clearColor[4] = { 0.0f,0.0f,0.0f,0 };
+Input* SCDistort::input_ = Input::GetInstance();
 
-const float MultiTex::clearColor[4] = { 0,0,0,0 };
-Input* MultiTex::input_ = Input::GetInstance();
-
-void MultiTex::Initialize(DirectXCommon* dxCommon)
+void SCDistort::Initialize(DirectXCommon* dxCommon)
 {
-
-
 
 	HRESULT result;
 
@@ -62,36 +56,36 @@ void MultiTex::Initialize(DirectXCommon* dxCommon)
 
 		CD3DX12_CLEAR_VALUE clearValue(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, clearColor);
 
-		for (int i = 0; i < 2; i++) {
 
-			result = device_->CreateCommittedResource(
-				&heapProp,
-				D3D12_HEAP_FLAG_NONE,
-				&texresDesc,
-				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-				&clearValue,
-				IID_PPV_ARGS(&texBuff[i]));
+
+		result = device_->CreateCommittedResource(
+			&heapProp,
+			D3D12_HEAP_FLAG_NONE,
+			&texresDesc,
+			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+			&clearValue,
+			IID_PPV_ARGS(&texBuff));
+		assert(SUCCEEDED(result));
+
+		{//テクスチャを赤クリア
+		//画素数(1280*720=921600ピクセル)
+			const UINT pixelCount = WinApp::window_width * WinApp::window_height;
+			//画像1行分のデータサイズ
+			const UINT rowPitch = sizeof(UINT) * WinApp::window_width;
+			//画像全体のデータサイズ
+			const UINT depthPitch = rowPitch * WinApp::window_height;
+			//画像イメージ
+			UINT* img = new UINT[pixelCount];
+			for (int j = 0; j < pixelCount; j++) { img[j] = 0xffffffff; }
+
+
+			result = texBuff->WriteToSubresource(0, nullptr,
+				img, rowPitch, depthPitch);
 			assert(SUCCEEDED(result));
-
-			{//テクスチャを赤クリア
-			//画素数(1280*720=921600ピクセル)
-				const UINT pixelCount = WinApp::window_width * WinApp::window_height;
-				//画像1行分のデータサイズ
-				const UINT rowPitch = sizeof(UINT) * WinApp::window_width;
-				//画像全体のデータサイズ
-				const UINT depthPitch = rowPitch * WinApp::window_height;
-				//画像イメージ
-				UINT* img = new UINT[pixelCount];
-				for (int j = 0; j < pixelCount; j++) { img[j] = 0xffffffff; }
-
-
-				result = texBuff[i]->WriteToSubresource(0, nullptr,
-					img, rowPitch, depthPitch);
-				assert(SUCCEEDED(result));
-				delete[] img;
-			}
-
+			delete[] img;
 		}
+
+
 
 	}
 	//SRV用のデスクリプタヒープ設定
@@ -109,15 +103,15 @@ void MultiTex::Initialize(DirectXCommon* dxCommon)
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = 1;
 
-	for (int i = 0; i < 2; i++) {
-		//デスクリプタヒープにSRVを作成
-		device_->CreateShaderResourceView(texBuff[i].Get(),
-			&srvDesc,
-			CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapSRV->GetCPUDescriptorHandleForHeapStart(), i,
-				device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV))
-		);
 
-	}
+	//デスクリプタヒープにSRVを作成
+	device_->CreateShaderResourceView(texBuff.Get(),
+		&srvDesc,
+		CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapSRV->GetCPUDescriptorHandleForHeapStart(), 0,
+			device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV))
+	);
+
+
 
 	//RTV用のデスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};
@@ -128,11 +122,11 @@ void MultiTex::Initialize(DirectXCommon* dxCommon)
 	result = device_->CreateDescriptorHeap(&rtvDescHeapDesc, IID_PPV_ARGS(&descHeapRTV));
 	assert(SUCCEEDED(result));
 	//RTV用のデスクリプタヒープを生成
-	for (int i = 0; i < 2; i++) {
+
 		//デスクリプタヒープにRTVを作成
-		device_->CreateRenderTargetView(texBuff[i].Get(), nullptr, CD3DX12_CPU_DESCRIPTOR_HANDLE(
-			descHeapRTV->GetCPUDescriptorHandleForHeapStart(), i, device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
-	}
+	device_->CreateRenderTargetView(texBuff.Get(), nullptr, CD3DX12_CPU_DESCRIPTOR_HANDLE(
+		descHeapRTV->GetCPUDescriptorHandleForHeapStart(), 0, device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
+
 
 
 	descHeapDSV = dxCommon->GetDsvHeap();
@@ -178,6 +172,7 @@ void MultiTex::Initialize(DirectXCommon* dxCommon)
 	assert(SUCCEEDED(result));
 
 
+
 	//GPU上のバッファに対応した仮想メモリ（メインメモリ上）を取得
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
@@ -199,13 +194,11 @@ void MultiTex::Initialize(DirectXCommon* dxCommon)
 
 }
 
-void MultiTex::Finalize()
+void SCDistort::Finalize()
 {
 
 	vertBuff.Reset();
-	for (int i = 0; i < 2; i++) {
-		texBuff[i].Reset();
-	}
+	texBuff.Reset();
 	descHeapSRV.Reset();
 	depthBuff.Reset();
 	descHeapRTV.Reset();
@@ -215,7 +208,7 @@ void MultiTex::Finalize()
 
 }
 
-void MultiTex::CreatGraphicsPipelineState()
+void SCDistort::CreatGraphicsPipelineState()
 {
 	HRESULT result;
 
@@ -226,7 +219,7 @@ void MultiTex::CreatGraphicsPipelineState()
 
 	//頂点シェーダーの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/shaders/MultiTextureVS.hlsl", //シェーダーファイル名
+		L"Resources/shaders/SCDistortVS.hlsl", //シェーダーファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,//インクルード可能にする
 		"main", "vs_5_0",//エントリーポイント名、シェーダーモデル指定
@@ -250,7 +243,7 @@ void MultiTex::CreatGraphicsPipelineState()
 	}
 	//ピクセルシェーダーの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/shaders/MultiTexturePS.hlsl",
+		L"Resources/shaders/SCDistortPS.hlsl",
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,
 		"main", "ps_5_0",
@@ -345,7 +338,7 @@ void MultiTex::CreatGraphicsPipelineState()
 	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;//加算
 	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;//ソースの値を100%使う
 	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;//デストの値を0%使う
-	//加算合成
+	////加算合成
 	blenddesc.BlendOp = D3D12_BLEND_OP_ADD;//加算
 	blenddesc.SrcBlend = D3D12_BLEND_ONE;//ソースの値を100%使う
 	blenddesc.DestBlend = D3D12_BLEND_ONE;//デストの値を100%使う
@@ -380,30 +373,29 @@ void MultiTex::CreatGraphicsPipelineState()
 	assert(SUCCEEDED(result));
 }
 
-/// <summary>
-/// 描画前準備
-/// </summary>
-/// <param name="cmdList"><ID3D12GraphicsCommandList* cmdList>
-/// <param name="num"><格納する番号>
-void MultiTex::PreDrawScene(ID3D12GraphicsCommandList* cmdList, int num)
+void SCDistort::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 {
 
+	//定数バッファをセット
 	commandList = cmdList;
-	
-	CD3DX12_RESOURCE_BARRIER resouceBar = CD3DX12_RESOURCE_BARRIER::Transition(texBuff[num].Get(),
+
+
+
+	CD3DX12_RESOURCE_BARRIER resouceBar = CD3DX12_RESOURCE_BARRIER::Transition(texBuff.Get(),
 		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 		D3D12_RESOURCE_STATE_RENDER_TARGET);
 
 	//リソースバリアを変更(シェーダーリソース→描画可能)
 	commandList->ResourceBarrier(1,
 		&resouceBar);
-	
+
 
 	//レンダーターゲットビュー用のディスクリプタヒープのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHs;
-	
-	rtvHs = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapRTV->GetCPUDescriptorHandleForHeapStart(), num,
-	device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
+
+	rtvHs = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapRTV->GetCPUDescriptorHandleForHeapStart(), 0,
+		device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
+
 
 	//深度ステンシルビュー用デスクリプタヒープのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvH = descHeapDSV->GetCPUDescriptorHandleForHeapStart();
@@ -412,29 +404,36 @@ void MultiTex::PreDrawScene(ID3D12GraphicsCommandList* cmdList, int num)
 
 	CD3DX12_VIEWPORT viewPorts;
 	CD3DX12_RECT scissorRects;
-	
+
+
 	viewPorts = CD3DX12_VIEWPORT(0.0f, 0.0f, WinApp::window_width, WinApp::window_height);
 	scissorRects = CD3DX12_RECT(0, 0, WinApp::window_width, WinApp::window_height);
 
+
 	//ビューポートの設定
-	commandList->RSSetViewports(1, &viewPorts);
+	commandList->RSSetViewports(2, &viewPorts);
 	//シザリング矩形の設定
-	commandList->RSSetScissorRects(1, &scissorRects);
+	commandList->RSSetScissorRects(2, &scissorRects);
 
 	//全画面のクリア
 	commandList->ClearRenderTargetView(rtvHs, clearColor, 0, nullptr);
-	
+
 	//深度バッファのクリア
 	commandList->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
-void MultiTex::Draw(ID3D12GraphicsCommandList* cmdList)
+void SCDistort::Draw(ID3D12GraphicsCommandList* cmdList)
 {
+
+
 	commandList = cmdList;
+
+
 
 	//パイプラインステートとルートシグネチャの設定コマンド
 	commandList->SetPipelineState(pipelineState.Get());
 	commandList->SetGraphicsRootSignature(rootSignature.Get());
+
 
 	//SRVヒープの設定コマンド
 	ID3D12DescriptorHeap* ppHeaps[] = { descHeapSRV.Get() };
@@ -446,21 +445,22 @@ void MultiTex::Draw(ID3D12GraphicsCommandList* cmdList)
 
 	//画像描画
 	//SRVヒープの先頭ハンドルを取得（SRVを指しているはず）
-	for (int i = 0; i < _countof(texBuff); i++) {
-		commandList->SetGraphicsRootDescriptorTable(i+1, CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeapSRV->GetGPUDescriptorHandleForHeapStart(), i,
-			device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
-	}
-	
+	commandList->SetGraphicsRootDescriptorTable(1, CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeapSRV->GetGPUDescriptorHandleForHeapStart(), 0,
+		device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
+
+	commandList->SetGraphicsRootDescriptorTable(2, CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeapSRV->GetGPUDescriptorHandleForHeapStart(), 1,
+		device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
+
 	//描画コマンド
 	commandList->DrawInstanced(_countof(vertices), 1, 0, 0);//すべての頂点を使って描画
 }
 
-void MultiTex::PostDrawScene(int num)
+void SCDistort::PostDrawScene()
 {
 
-	CD3DX12_RESOURCE_BARRIER RESOURCE_BARRIER = CD3DX12_RESOURCE_BARRIER::Transition(texBuff[num].Get(),
+	CD3DX12_RESOURCE_BARRIER RESOURCE_BARRIER = CD3DX12_RESOURCE_BARRIER::Transition(texBuff.Get(),
 		D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 
 	commandList->ResourceBarrier(1, &RESOURCE_BARRIER);
-	
+
 }

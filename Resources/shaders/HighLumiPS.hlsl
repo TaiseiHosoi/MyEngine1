@@ -34,8 +34,6 @@ half4 gaussian_sample(float2 uv, float2 dx, float2 dy)
 
 
 
-
-
 float GetGrayScale(float4 dCol){
 	 float grayScale = dCol.r * 0.299 + dCol.g * 0.587 + dCol.b * 0.114;
 	 return grayScale;
@@ -71,7 +69,7 @@ float4 ApplyGaussianBlurToHighLumi(float2 uv) {
 	float strong = 0.003;
     for (int i = 0; i < 9; ++i) {
         float4 texColor = tex0.Sample(smp, uv + offsets[i] * (strong)); // 仮のテクスチャサイズ
-        float luminance = dot(texColor.rgb, float3(0.299, 0.587, 0.114));
+        float luminance = dot(texColor.rgb, float3(0.7, 0.587, 0.114));
         float threshold = 0.5; // 高輝度部分の閾値
         if (luminance > threshold) {
 		texColor.a = 0.1;
@@ -88,13 +86,7 @@ float4 main(VSOutput input) : SV_TARGET
 
 	float4 mainColor = colortex0;
 
-
-
     float4 color = ApplyGaussianBlurToHighLumi(input.uv);
     return color;
-
-
-
-
 
 }

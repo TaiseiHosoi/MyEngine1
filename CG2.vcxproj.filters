@@ -333,6 +333,9 @@
     <ClCompile Include="engine\PostEffect\HighLumi.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="engine\PostEffect\SCDistort.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\ObjPS.hlsl">
@@ -374,6 +377,8 @@
     <FxCompile Include="Resources\shaders\MultiTextureVS.hlsl" />
     <FxCompile Include="Resources\shaders\HighLumiPS.hlsl" />
     <FxCompile Include="Resources\shaders\HighLumiVS.hlsl" />
+    <FxCompile Include="Resources\shaders\SCDistortPS.hlsl" />
+    <FxCompile Include="Resources\shaders\SCDistortVS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scene\sceneManager\EndScene.h">
@@ -595,6 +600,9 @@
     <ClInclude Include="Resources\shaders\HighLumi.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="engine\PostEffect\SCDistort.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Obj.hlsli">
@@ -617,5 +625,6 @@
     </None>
     <None Include="Resources\shaders\MultiTexture.hlsli" />
     <None Include="Resources\shaders\HighLumi.hlsli" />
+    <None Include="Resources\shaders\SCDistort.hlsli" />
   </ItemGroup>
 </Project>

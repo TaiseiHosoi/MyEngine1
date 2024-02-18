@@ -88,8 +88,6 @@ private:
     static Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
 
     static Input* input_;
-    //ブラーのプロパティ
-   static int blurTexNum_; //ぼかす枚数
-   static int breadth_;    //広さ
+    
 };
 

@@ -34,10 +34,8 @@ Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> PostEffect::descHeapDSV;
 Microsoft::WRL::ComPtr<ID3D12PipelineState> PostEffect::pipelineState;
 Microsoft::WRL::ComPtr<ID3D12RootSignature> PostEffect::rootSignature;
 
-int PostEffect::blurTexNum_ = 7;
-int PostEffect::breadth_ = 1;
 
-const float PostEffect::clearColor[4] = { 0.25f,0.5f,0.1f,0 };
+const float PostEffect::clearColor[4] = { 0,0,0,0 };
 Input* PostEffect::input_ = Input::GetInstance();
 
 void PostEffect::Initialize(DirectXCommon* dxCommon)
@@ -176,21 +174,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 		IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(result));
 
-#pragma region 定数バッファ生成
-	// ヒーププロパティ
-	CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-	// リソース設定
-	CD3DX12_RESOURCE_DESC resourceDesc =
-		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataB1) + 0xff) & ~0xff);
 
-
-	// 定数バッファの生成
-	result = device_->CreateCommittedResource(
-		&heapProps, // アップロード可能
-		D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&constBuffResourceB1));
-	assert(SUCCEEDED(result));
-#pragma endregion 定数バッファ生成
 
 	//GPU上のバッファに対応した仮想メモリ（メインメモリ上）を取得
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
@@ -209,26 +193,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 
 	CreatGraphicsPipelineState();
 
-	// ヒーププロパティ
-	CD3DX12_HEAP_PROPERTIES heapProps1= CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-	// リソース設定
-	CD3DX12_RESOURCE_DESC resourceDesc1 =
-		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataB1) + 0xff) & ~0xff);
 
-	// 定数バッファの生成
-	result = device_->CreateCommittedResource(
-		&heapProps1, // アップロード可能
-		D3D12_HEAP_FLAG_NONE, &resourceDesc1, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&constBuffResourceB1));
-	assert(SUCCEEDED(result));
-
-	//定数バッファのマッピング
-	result = constBuffResourceB1->Map(0, nullptr, (void**)&constBuffDataB1);
-	assert(SUCCEEDED(result));
-
-	//定数として10を入れておく(ぼかし度)
-	constBuffDataB1->blurTexNum = 1;
-	constBuffDataB1->breadth = 1;
 
 }
 
@@ -472,8 +437,6 @@ void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
 	commandList->SetPipelineState(pipelineState.Get());
 	commandList->SetGraphicsRootSignature(rootSignature.Get());
 
-	//定数バッファをセット
-	cmdList->SetGraphicsRootConstantBufferView(0, constBuffResourceB1->GetGPUVirtualAddress());
 
 	//SRVヒープの設定コマンド
 	ID3D12DescriptorHeap* ppHeaps[] = { descHeapSRV.Get() };

@@ -166,8 +166,6 @@ void SpriteCommon::Initialize(DirectXCommon* dxcommon)
 
 
 	// ルートシグネチャの設定
-
-
 	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
 	rootSignatureDesc.pParameters = rootParams;				//ルートパラメータの先頭アドレス

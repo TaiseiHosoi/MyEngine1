@@ -93,13 +93,13 @@ void GamePart1::Update(Input* input, GameCamera* camera) {
 			}
 		}
 		gameCount_++;
-		if (_controller->gameObjectManager_->GetPlayerPtr()->GetHp() <= 10) {
-			camera->GoGameOver();
-			_controller->gameObjectManager_->GetPlayerPtr()->GoGameOver();
-			gameSceneMode_ = GAME_SCENE_MODE::gameOver;
-			gameCount_ = 0;
-		
-		}
+		//if (_controller->gameObjectManager_->GetPlayerPtr()->GetHp() <= 0) {
+		//	camera->GoGameOver();
+		//	_controller->gameObjectManager_->GetPlayerPtr()->GoGameOver();
+		//	gameSceneMode_ = GAME_SCENE_MODE::gameOver;
+		//	gameCount_ = 0;
+		//
+		//}
 		if ( gameCount_ == 2000) {
 			camera->GoGameClear();
 			gameSceneMode_ = GAME_SCENE_MODE::gameClear;

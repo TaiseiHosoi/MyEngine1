@@ -5,13 +5,13 @@
 #include "Vector4.h"
 #include "Matrix4.h"
 #include"input.h"
-class HighLumi
+class SCDistort
 {
 public:
 
     /// <summary>
-       /// 頂点データ構造体
-       /// </summary>
+    /// 頂点データ構造体
+    /// </summary>
     struct VertexPosUv {
         Vector3 pos; // xyz座標
         Vector2 uv;  // uv座標
@@ -66,11 +66,7 @@ private:
 
     static VertexPosUv* vertMap;
 
-    static ConstBufferDataB1* constBuffDataB1;
-
     static Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff;
-
-    static Microsoft::WRL::ComPtr<ID3D12Resource> constBuffResourceB1;
 
     //頂点バッファビューの作成
     static D3D12_VERTEX_BUFFER_VIEW vbView;
@@ -88,8 +84,6 @@ private:
     static Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
 
     static Input* input_;
-    //ブラーのプロパティ
-    static int blurTexNum_; //ぼかす枚数
-    static int breadth_;    //広さ
 
 };
+

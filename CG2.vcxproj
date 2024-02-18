@@ -166,6 +166,7 @@
     <ClCompile Include="engine\PostEffect\IPostTexture.cpp" />
     <ClCompile Include="engine\PostEffect\MultiTex.cpp" />
     <ClCompile Include="engine\PostEffect\PostEffect.cpp" />
+    <ClCompile Include="engine\PostEffect\SCDistort.cpp" />
     <ClCompile Include="scene\gameCamera\CameraShake.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\BossRobot.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.cpp" />
@@ -336,9 +337,22 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="Resources\shaders\SCDistortPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\SCDistortVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\input\GamePad.h" />
+    <ClInclude Include="engine\PostEffect\SCDistort.h" />
     <ClInclude Include="Resources\shaders\HighLumi.h" />
     <ClInclude Include="engine\PostEffect\IPostTexture.h" />
     <ClInclude Include="engine\PostEffect\MultiTex.h" />
@@ -423,6 +437,7 @@
     <None Include="Resources\shaders\Particle.hlsli" />
     <None Include="Resources\shaders\PostEffect.hlsli" />
     <None Include="Resources\shaders\RimLight.hlsli" />
+    <None Include="Resources\shaders\SCDistort.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="imgui\imgui.vcxproj">
