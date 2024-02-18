@@ -22,8 +22,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> HighLumi::constBuffResourceB1;
 
 //頂点バッファビューの作成
 D3D12_VERTEX_BUFFER_VIEW HighLumi::vbView{};
-Microsoft::WRL::ComPtr<ID3D12Resource> HighLumi::texBuff[2];
-
+Microsoft::WRL::ComPtr<ID3D12Resource> HighLumi::texBuff;
 Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> HighLumi::descHeapSRV;
 //深度バッファ
 Microsoft::WRL::ComPtr<ID3D12Resource> HighLumi::depthBuff;
@@ -35,7 +34,10 @@ Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> HighLumi::descHeapDSV;
 Microsoft::WRL::ComPtr<ID3D12PipelineState> HighLumi::pipelineState;
 Microsoft::WRL::ComPtr<ID3D12RootSignature> HighLumi::rootSignature;
 
-const float HighLumi::clearColor[4] = { 1.f,1.f,1.f,0 };
+int HighLumi::blurTexNum_ = 7;
+int HighLumi::breadth_ = 1;
+
+const float HighLumi::clearColor[4] = { 0.25f,0.5f,0.1f,0 };
 Input* HighLumi::input_ = Input::GetInstance();
 
 void HighLumi::Initialize(DirectXCommon* dxCommon)
@@ -59,36 +61,36 @@ void HighLumi::Initialize(DirectXCommon* dxCommon)
 
 		CD3DX12_CLEAR_VALUE clearValue(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, clearColor);
 
-		for (int i = 0; i < 2; i++) {
 
-			result = device_->CreateCommittedResource(
-				&heapProp,
-				D3D12_HEAP_FLAG_NONE,
-				&texresDesc,
-				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-				&clearValue,
-				IID_PPV_ARGS(&texBuff[i]));
+
+		result = device_->CreateCommittedResource(
+			&heapProp,
+			D3D12_HEAP_FLAG_NONE,
+			&texresDesc,
+			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+			&clearValue,
+			IID_PPV_ARGS(&texBuff));
+		assert(SUCCEEDED(result));
+
+		{//テクスチャを赤クリア
+		//画素数(1280*720=921600ピクセル)
+			const UINT pixelCount = WinApp::window_width * WinApp::window_height;
+			//画像1行分のデータサイズ
+			const UINT rowPitch = sizeof(UINT) * WinApp::window_width;
+			//画像全体のデータサイズ
+			const UINT depthPitch = rowPitch * WinApp::window_height;
+			//画像イメージ
+			UINT* img = new UINT[pixelCount];
+			for (int j = 0; j < pixelCount; j++) { img[j] = 0xffffffff; }
+
+
+			result = texBuff->WriteToSubresource(0, nullptr,
+				img, rowPitch, depthPitch);
 			assert(SUCCEEDED(result));
-
-			{//テクスチャを赤クリア
-			//画素数(1280*720=921600ピクセル)
-				const UINT pixelCount = WinApp::window_width * WinApp::window_height;
-				//画像1行分のデータサイズ
-				const UINT rowPitch = sizeof(UINT) * WinApp::window_width;
-				//画像全体のデータサイズ
-				const UINT depthPitch = rowPitch * WinApp::window_height;
-				//画像イメージ
-				UINT* img = new UINT[pixelCount];
-				for (int j = 0; j < pixelCount; j++) { img[j] = 0xffffffff; }
-
-
-				result = texBuff[i]->WriteToSubresource(0, nullptr,
-					img, rowPitch, depthPitch);
-				assert(SUCCEEDED(result));
-				delete[] img;
-			}
-
+			delete[] img;
 		}
+
+
 
 	}
 	//SRV用のデスクリプタヒープ設定
@@ -106,15 +108,15 @@ void HighLumi::Initialize(DirectXCommon* dxCommon)
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = 1;
 
-	for (int i = 0; i < 2; i++) {
-		//デスクリプタヒープにSRVを作成
-		device_->CreateShaderResourceView(texBuff[i].Get(),
-			&srvDesc,
-			CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapSRV->GetCPUDescriptorHandleForHeapStart(), i,
-				device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV))
-		);
 
-	}
+	//デスクリプタヒープにSRVを作成
+	device_->CreateShaderResourceView(texBuff.Get(),
+		&srvDesc,
+		CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapSRV->GetCPUDescriptorHandleForHeapStart(), 0,
+			device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV))
+	);
+
+
 
 	//RTV用のデスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};
@@ -125,11 +127,11 @@ void HighLumi::Initialize(DirectXCommon* dxCommon)
 	result = device_->CreateDescriptorHeap(&rtvDescHeapDesc, IID_PPV_ARGS(&descHeapRTV));
 	assert(SUCCEEDED(result));
 	//RTV用のデスクリプタヒープを生成
-	for (int i = 0; i < 2; i++) {
+
 		//デスクリプタヒープにRTVを作成
-		device_->CreateRenderTargetView(texBuff[i].Get(), nullptr, CD3DX12_CPU_DESCRIPTOR_HANDLE(
-			descHeapRTV->GetCPUDescriptorHandleForHeapStart(), i, device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
-	}
+	device_->CreateRenderTargetView(texBuff.Get(), nullptr, CD3DX12_CPU_DESCRIPTOR_HANDLE(
+		descHeapRTV->GetCPUDescriptorHandleForHeapStart(), 0, device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
+
 
 
 	descHeapDSV = dxCommon->GetDsvHeap();
@@ -234,9 +236,7 @@ void HighLumi::Finalize()
 {
 
 	vertBuff.Reset();
-	for (int i = 0; i < 2; i++) {
-		texBuff[i].Reset();
-	}
+	texBuff.Reset();
 	descHeapSRV.Reset();
 	depthBuff.Reset();
 	descHeapRTV.Reset();
@@ -413,54 +413,49 @@ void HighLumi::CreatGraphicsPipelineState()
 
 void HighLumi::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 {
-	if (input_->TriggerKey(DIK_UP)) {
-		constBuffDataB1->blurTexNum += 1;
-	}
-	else if (input_->TriggerKey(DIK_DOWN)) {
-		constBuffDataB1->blurTexNum -= 1;
-	}
+
 	//定数バッファをセット
 	commandList = cmdList;
 
 
-	for (int i = 0; i < 2; i++) {
-		CD3DX12_RESOURCE_BARRIER resouceBar = CD3DX12_RESOURCE_BARRIER::Transition(texBuff[i].Get(),
-			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-			D3D12_RESOURCE_STATE_RENDER_TARGET);
 
-		//リソースバリアを変更(シェーダーリソース→描画可能)
-		commandList->ResourceBarrier(1,
-			&resouceBar);
-	}
+	CD3DX12_RESOURCE_BARRIER resouceBar = CD3DX12_RESOURCE_BARRIER::Transition(texBuff.Get(),
+		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+		D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+	//リソースバリアを変更(シェーダーリソース→描画可能)
+	commandList->ResourceBarrier(1,
+		&resouceBar);
+
 
 	//レンダーターゲットビュー用のディスクリプタヒープのハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHs[2];
-	for (int i = 0; i < 2; i++) {
-		rtvHs[i] = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapRTV->GetCPUDescriptorHandleForHeapStart(), i,
-			device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
-	}
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHs;
+
+	rtvHs = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapRTV->GetCPUDescriptorHandleForHeapStart(), 0,
+		device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
+
 
 	//深度ステンシルビュー用デスクリプタヒープのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvH = descHeapDSV->GetCPUDescriptorHandleForHeapStart();
 	//レンダーターゲットをセット
-	commandList->OMSetRenderTargets(2, rtvHs, false, &dsvH);
+	commandList->OMSetRenderTargets(1, &rtvHs, false, &dsvH);
 
-	CD3DX12_VIEWPORT viewPorts[2];
-	CD3DX12_RECT scissorRects[2];
+	CD3DX12_VIEWPORT viewPorts;
+	CD3DX12_RECT scissorRects;
 
-	for (int i = 0; i < 2; i++) {
-		viewPorts[i] = CD3DX12_VIEWPORT(0.0f, 0.0f, WinApp::window_width, WinApp::window_height);
-		scissorRects[i] = CD3DX12_RECT(0, 0, WinApp::window_width, WinApp::window_height);
-	}
+
+	viewPorts = CD3DX12_VIEWPORT(0.0f, 0.0f, WinApp::window_width, WinApp::window_height);
+	scissorRects = CD3DX12_RECT(0, 0, WinApp::window_width, WinApp::window_height);
+
 
 	//ビューポートの設定
-	commandList->RSSetViewports(2, viewPorts);
+	commandList->RSSetViewports(2, &viewPorts);
 	//シザリング矩形の設定
-	commandList->RSSetScissorRects(2, scissorRects);
-	for (int i = 0; i < 2; i++) {
-		//全画面のクリア
-		commandList->ClearRenderTargetView(rtvHs[i], clearColor, 0, nullptr);
-	}
+	commandList->RSSetScissorRects(2, &scissorRects);
+
+	//全画面のクリア
+	commandList->ClearRenderTargetView(rtvHs, clearColor, 0, nullptr);
+
 	//深度バッファのクリア
 	commandList->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
@@ -502,10 +497,10 @@ void HighLumi::Draw(ID3D12GraphicsCommandList* cmdList)
 
 void HighLumi::PostDrawScene()
 {
-	for (int i = 0; i < 2; i++) {
-		CD3DX12_RESOURCE_BARRIER RESOURCE_BARRIER = CD3DX12_RESOURCE_BARRIER::Transition(texBuff[i].Get(),
-			D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 
-		commandList->ResourceBarrier(1, &RESOURCE_BARRIER);
-	}
+	CD3DX12_RESOURCE_BARRIER RESOURCE_BARRIER = CD3DX12_RESOURCE_BARRIER::Transition(texBuff.Get(),
+		D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+
+	commandList->ResourceBarrier(1, &RESOURCE_BARRIER);
+
 }

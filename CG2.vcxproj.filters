@@ -592,7 +592,7 @@
     <ClInclude Include="engine\PostEffect\IPostTexture.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="engine\PostEffect\HighLumi.h">
+    <ClInclude Include="Resources\shaders\HighLumi.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

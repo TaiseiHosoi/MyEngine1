@@ -22,8 +22,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::constBuffResourceB1;
 
 //頂点バッファビューの作成
 D3D12_VERTEX_BUFFER_VIEW PostEffect::vbView{};
-Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::texBuff[2];
-
+Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::texBuff;
 Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> PostEffect::descHeapSRV;
 //深度バッファ
 Microsoft::WRL::ComPtr<ID3D12Resource> PostEffect::depthBuff;
@@ -62,7 +61,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 
 		CD3DX12_CLEAR_VALUE clearValue(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, clearColor);
 
-		for (int i = 0; i < 2; i++) {
+
 
 			result = device_->CreateCommittedResource(
 				&heapProp,
@@ -70,7 +69,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 				&texresDesc,
 				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 				&clearValue,
-				IID_PPV_ARGS(&texBuff[i]));
+				IID_PPV_ARGS(&texBuff));
 			assert(SUCCEEDED(result));
 
 			{//テクスチャを赤クリア
@@ -85,13 +84,13 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 				for (int j = 0; j < pixelCount; j++) { img[j] = 0xffffffff; }
 
 
-				result = texBuff[i]->WriteToSubresource(0, nullptr,
+				result = texBuff->WriteToSubresource(0, nullptr,
 					img, rowPitch, depthPitch);
 				assert(SUCCEEDED(result));
 				delete[] img;
 			}
 
-		}
+		
 
 	}
 	//SRV用のデスクリプタヒープ設定
@@ -109,15 +108,15 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = 1;
 
-	for (int i = 0; i < 2; i++) {
+	
 		//デスクリプタヒープにSRVを作成
-		device_->CreateShaderResourceView(texBuff[i].Get(),
+		device_->CreateShaderResourceView(texBuff.Get(),
 			&srvDesc,
-			CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapSRV->GetCPUDescriptorHandleForHeapStart(), i,
+			CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapSRV->GetCPUDescriptorHandleForHeapStart(), 0,
 				device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV))
 		);
 
-	}
+	
 
 	//RTV用のデスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};
@@ -128,11 +127,11 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	result = device_->CreateDescriptorHeap(&rtvDescHeapDesc, IID_PPV_ARGS(&descHeapRTV));
 	assert(SUCCEEDED(result));
 	//RTV用のデスクリプタヒープを生成
-	for (int i = 0; i < 2; i++) {
+
 		//デスクリプタヒープにRTVを作成
-		device_->CreateRenderTargetView(texBuff[i].Get(), nullptr, CD3DX12_CPU_DESCRIPTOR_HANDLE(
-			descHeapRTV->GetCPUDescriptorHandleForHeapStart(), i, device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
-	}
+		device_->CreateRenderTargetView(texBuff.Get(), nullptr, CD3DX12_CPU_DESCRIPTOR_HANDLE(
+			descHeapRTV->GetCPUDescriptorHandleForHeapStart(),0, device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
+	
 
 
 	descHeapDSV = dxCommon->GetDsvHeap();
@@ -237,9 +236,7 @@ void PostEffect::Finalize()
 {
 
 	vertBuff.Reset();
-	for (int i = 0; i < 2; i++) {
-		texBuff[i].Reset();
-	}
+	texBuff.Reset();
 	descHeapSRV.Reset();
 	depthBuff.Reset();
 	descHeapRTV.Reset();
@@ -416,54 +413,49 @@ void PostEffect::CreatGraphicsPipelineState()
 
 void PostEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 {
-	if (input_->TriggerKey(DIK_UP)) {
-		constBuffDataB1->blurTexNum += 1;
-	}
-	else if (input_->TriggerKey(DIK_DOWN)) {
-		constBuffDataB1->blurTexNum -= 1;
-	}
+
 	//定数バッファをセット
 	commandList = cmdList;
 	
 
-	for (int i = 0; i < 2; i++) {
-		CD3DX12_RESOURCE_BARRIER resouceBar = CD3DX12_RESOURCE_BARRIER::Transition(texBuff[i].Get(),
-			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-			D3D12_RESOURCE_STATE_RENDER_TARGET);
 
-		//リソースバリアを変更(シェーダーリソース→描画可能)
-		commandList->ResourceBarrier(1,
+	CD3DX12_RESOURCE_BARRIER resouceBar = CD3DX12_RESOURCE_BARRIER::Transition(texBuff.Get(),
+		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+		D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+	//リソースバリアを変更(シェーダーリソース→描画可能)
+	commandList->ResourceBarrier(1,
 			&resouceBar);
-	}
+	
 
 	//レンダーターゲットビュー用のディスクリプタヒープのハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHs[2];
-	for (int i = 0; i < 2; i++) {
-		rtvHs[i] = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapRTV->GetCPUDescriptorHandleForHeapStart(), i,
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHs;
+	
+		rtvHs= CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapRTV->GetCPUDescriptorHandleForHeapStart(), 0,
 			device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
-	}
+	
 
 	//深度ステンシルビュー用デスクリプタヒープのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvH = descHeapDSV->GetCPUDescriptorHandleForHeapStart();
 	//レンダーターゲットをセット
-	commandList->OMSetRenderTargets(2, rtvHs, false, &dsvH);
+	commandList->OMSetRenderTargets(1, &rtvHs, false, &dsvH);
 
-	CD3DX12_VIEWPORT viewPorts[2];
-	CD3DX12_RECT scissorRects[2];
+	CD3DX12_VIEWPORT viewPorts;
+	CD3DX12_RECT scissorRects;
 
-	for (int i = 0; i < 2; i++) {
-		viewPorts[i] = CD3DX12_VIEWPORT(0.0f, 0.0f, WinApp::window_width, WinApp::window_height);
-		scissorRects[i] = CD3DX12_RECT(0, 0, WinApp::window_width, WinApp::window_height);
-	}
+	
+	viewPorts = CD3DX12_VIEWPORT(0.0f, 0.0f, WinApp::window_width, WinApp::window_height);
+	scissorRects= CD3DX12_RECT(0, 0, WinApp::window_width, WinApp::window_height);
+	
 
 	//ビューポートの設定
-	commandList->RSSetViewports(2, viewPorts);
+	commandList->RSSetViewports(2, &viewPorts);
 	//シザリング矩形の設定
-	commandList->RSSetScissorRects(2, scissorRects);
-	for (int i = 0; i < 2; i++) {
-		//全画面のクリア
-		commandList->ClearRenderTargetView(rtvHs[i], clearColor, 0, nullptr);
-	}
+	commandList->RSSetScissorRects(2, &scissorRects);
+	
+	//全画面のクリア
+	commandList->ClearRenderTargetView(rtvHs, clearColor, 0, nullptr);
+	
 	//深度バッファのクリア
 	commandList->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
@@ -505,10 +497,10 @@ void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
 
 void PostEffect::PostDrawScene()
 {
-	for (int i = 0; i < 2; i++) {
-		CD3DX12_RESOURCE_BARRIER RESOURCE_BARRIER = CD3DX12_RESOURCE_BARRIER::Transition(texBuff[i].Get(),
+
+		CD3DX12_RESOURCE_BARRIER RESOURCE_BARRIER = CD3DX12_RESOURCE_BARRIER::Transition(texBuff.Get(),
 			D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 
 		commandList->ResourceBarrier(1, &RESOURCE_BARRIER);
-	}
+	
 }

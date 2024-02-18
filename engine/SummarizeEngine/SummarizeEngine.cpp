@@ -69,7 +69,7 @@ void SummarizeEngine::Draw() {
 	//ブルーム処理
 	HighLumi::PreDrawScene(dxCommon_->GetCommandList());
 
-	application_->PostEffectDraw();
+	PostEffect::Draw(dxCommon_->GetCommandList());
 
 	HighLumi::PostDrawScene();
 

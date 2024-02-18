@@ -339,7 +339,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\input\GamePad.h" />
-    <ClInclude Include="engine\PostEffect\HighLumi.h" />
+    <ClInclude Include="Resources\shaders\HighLumi.h" />
     <ClInclude Include="engine\PostEffect\IPostTexture.h" />
     <ClInclude Include="engine\PostEffect\MultiTex.h" />
     <ClInclude Include="engine\PostEffect\PostEffect.h" />

@@ -74,7 +74,7 @@ private:
 
     //頂点バッファビューの作成
     static D3D12_VERTEX_BUFFER_VIEW vbView;
-    static Microsoft::WRL::ComPtr<ID3D12Resource> texBuff[2];
+    static Microsoft::WRL::ComPtr<ID3D12Resource> texBuff;
 
     static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeapSRV;
     //深度バッファ
