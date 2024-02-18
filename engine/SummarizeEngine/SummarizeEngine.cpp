@@ -60,8 +60,6 @@ void SummarizeEngine::Update() {
 };
 
 void SummarizeEngine::Draw() {
-	//描画
-
 
 
 	PostEffect::PreDrawScene(dxCommon_->GetCommandList());

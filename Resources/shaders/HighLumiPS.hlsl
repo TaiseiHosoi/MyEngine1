@@ -41,8 +41,6 @@ float GetGrayScale(float4 dCol){
 
 float4 GetHighLumi(float4 dCol ,float grayScale){
     //高輝度部を抽出
-
-   
     float extract = smoothstep(0.6f, 0.8f, grayScale);
     float4 highLumi = dCol * extract;
     
@@ -71,7 +69,7 @@ float4 ApplyGaussianBlurToHighLumi(float2 uv) {
     for (int i = 0; i < 9; ++i) {
         float4 texColor = tex0.Sample(smp, uv + offsets[i] * (strong)); // 仮のテクスチャサイズ
         float luminance = dot(texColor.rgb, float3(0.7, 0.587, 0.114));
-        float threshold = 0.5; // 高輝度部分の閾値
+        float threshold = 0.5; //高輝度部分の閾値
         if (luminance > threshold) {
 		texColor.a = 0.1;
             sum += texColor * weights[i];
