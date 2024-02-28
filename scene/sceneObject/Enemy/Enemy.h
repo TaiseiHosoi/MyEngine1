@@ -16,6 +16,9 @@ struct EnemyState {
 class Enemy
 {
 public:
+    // 仮想デストラクター
+    virtual ~Enemy() = default;
+
     // 初期化
     virtual void Initialize(Mesh* Model) = 0;
     // 更新
@@ -25,6 +28,9 @@ public:
     //レールカメラ情報セッタ
     virtual void SetRailCameraInfo(RailCameraInfo* info) = 0;
     // その他の敵の共通機能
+
+    // 敵情報構造体ゲッタ
+    virtual EnemyState* GetState() = 0;
 
 };
 

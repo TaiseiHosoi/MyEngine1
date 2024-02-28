@@ -48,7 +48,7 @@ public: // アクセッサ
     void SetIsDead(bool isDead) { state_.isDead_ = isDead; };
     
     // 敵情報構造体ゲッタ
-    EnemyState* GetState();
+    EnemyState* GetState()override;
 
     // 強制true
     bool compultionTrue();

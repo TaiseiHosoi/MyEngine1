@@ -98,15 +98,16 @@ private:
     int moaiDigRot = 0; //自機の回転用クロック変数
     const int offsetEnemyHp_ = 3;
 
+    //敵用変数
+    std::list<std::unique_ptr<Enemy>> enemies_;
+
     //歩兵用変数
-    std::list<std::unique_ptr<WalkingEnemy>> walkingEnemies;
     std::stringstream walkingEnemyPopCommands_; //csv
     bool walkingEIsStand_ = false;  //待機フラグ
     int walkingEstandTime_ = 0; //ポップデータの待機時間
     const float adjustWalkingESpownLen_ = 15.f;
 
     //浮遊敵用変数
-    std::list <std::unique_ptr<FloatingEnemy>> floatingEnemies;
     std::stringstream floatingEnemyPopCommands_; //csv
     bool floatingEIsStand_ = false;  //待機フラグ
     int floatingEstandTime_ = 0; //ポップデータの待機時間
@@ -116,7 +117,6 @@ private:
     bool isEnemyPops_ = false;
 
     //抱玉敵用変数
-    std::list <std::unique_ptr<CarryBallEnemy>> carryBallEnemies;
     std::stringstream carryBallEnemyPopCommands_; //csv
     bool carryBallEIsStand_ = false;  //待機フラグ
     int carryBallEstandTime_ = 0; //ポップデータの待機時間
@@ -142,8 +142,7 @@ private:
     //プレイヤー情報
     WorldTransform* playerWorldTF_ = nullptr;
 
-    //歩兵全削除
-    void DeleteWalkingEnemy();
+
 
 
 public:
@@ -213,9 +212,6 @@ public:
 public:
     // camObjsのゲッタ
     std::vector<Object3d>* GetCamObjsPtr() { return &camObjs; };
-
-    // 歩兵敵のゲッタ
-    std::list<std::unique_ptr<WalkingEnemy>>*GetWalkingEnemies() { return &walkingEnemies; }
 
     void SetGameCamPtr(GameCamera* camPtr) { camera_ = camPtr; };
 

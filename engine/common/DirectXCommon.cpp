@@ -302,7 +302,7 @@ void DirectXCommon::PreDraw() {
 
 
 	// 3.画面クリア			R	G		B	A
-	FLOAT clearColor[] = {0.001f,0.001f, 0.001f,1 }; // 青っぽい色
+	FLOAT clearColor[] = {0.001f,0.001f, 0.001f,1 }; // ほぼ黒
 	commandList_->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
 	commandList_->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
@@ -334,8 +334,6 @@ void DirectXCommon::PreDraw() {
 void DirectXCommon::PostDraw() {
 	HRESULT result;
 
-	// バックバッファの番号を取得(2つなので0番か1番)
-	//UINT bbIndex = swapChain_->GetCurrentBackBufferIndex();
 
 	// 5.リソースバリアを戻す
 	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;		// 描画状態から

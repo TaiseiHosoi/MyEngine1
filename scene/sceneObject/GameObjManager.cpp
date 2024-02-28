@@ -11,13 +11,7 @@ GameObjManager::~GameObjManager()
 	
 }
 
-void GameObjManager::DeleteWalkingEnemy()
-{
-	// Listのremove
-	walkingEnemies.remove_if([](std::unique_ptr<WalkingEnemy>& enemy) {
-		return enemy->compultionTrue();
-		});
-}
+
 
 void GameObjManager::StaticInit()
 {
@@ -55,11 +49,7 @@ void GameObjManager::StaticInit()
 		if (it != models.end()) {
 			model = it->second;
 		}
-		
-		//// 建物を一時的に消去
-		//if (objectData.fileName == "bill1" || objectData.fileName == "tower1") {
-		//	continue;
-		//}
+	
 		
 		// モデルを指定して3Dオブジェクトを生成
 		Object3d newObject;
@@ -133,37 +123,36 @@ void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
 		//オブジェクト処理
 		std::unique_ptr<WalkingEnemy> newWalkingEnemy;
 		newWalkingEnemy = std::make_unique<WalkingEnemy>();
-		walkingEnemies.push_back(std::move(newWalkingEnemy));
-		walkingEnemies.back()->Initialize(modelWalkRobo.get());
-		walkingEnemies.back()->SetOffsetVec3(offsetPos);
-		walkingEnemies.back()->SetRailCameraInfo(railCameraInfo_);
-		walkingEnemies.back()->SetPlayerWorldTransform(playerWorldTF_);
-		walkingEnemies.back()->SetBulletModel(enemyBulletModel_.get());
+		newWalkingEnemy->Initialize(modelWalkRobo.get());
+		newWalkingEnemy->SetOffsetVec3(offsetPos);
+		newWalkingEnemy->SetRailCameraInfo(railCameraInfo_);
+		newWalkingEnemy->SetPlayerWorldTransform(playerWorldTF_);
+		newWalkingEnemy->SetBulletModel(enemyBulletModel_.get());
+		enemies_.push_back(std::move(newWalkingEnemy));
 
 	}
 	else if (enemyNum == ENEMY_NUM::FLOATING_ENEMY) {
 		//オブジェクト処理
 		std::unique_ptr<FloatingEnemy> newFloatingEnemy;
 		newFloatingEnemy = std::make_unique<FloatingEnemy>();
-		floatingEnemies.push_back(std::move(newFloatingEnemy));
-		floatingEnemies.back()->Initialize(modelFly.get());
-		floatingEnemies.back()->SetOffsetVec3(offsetPos);
-		floatingEnemies.back()->SetRailCameraInfo(railCameraInfo_);
-		floatingEnemies.back()->SetPlayerWorldTransform(playerWorldTF_);
-		floatingEnemies.back()->SetBulletModel(enemyBulletModel_.get());
+		newFloatingEnemy->Initialize(modelFly.get());
+		newFloatingEnemy->SetOffsetVec3(offsetPos);
+		newFloatingEnemy->SetRailCameraInfo(railCameraInfo_);
+		newFloatingEnemy->SetPlayerWorldTransform(playerWorldTF_);
+		newFloatingEnemy->SetBulletModel(enemyBulletModel_.get());
+		enemies_.push_back(std::move(newFloatingEnemy));
 
 	}
 	else if (enemyNum == ENEMY_NUM::CARRY_BALL_ENEMY) {
 		//オブジェクト処理
 		std::unique_ptr<CarryBallEnemy> newCarryBallEnemy;
 		newCarryBallEnemy = std::make_unique<CarryBallEnemy>();
-		carryBallEnemies.push_back(std::move(newCarryBallEnemy));
-		carryBallEnemies.back()->Initialize(carryBallEnemyModel_.get());
-		carryBallEnemies.back()->SetOffsetVec3(offsetPos);
-		carryBallEnemies.back()->SetRailCameraInfo(railCameraInfo_);
-		carryBallEnemies.back()->SetPlayerWorldTransform(playerWorldTF_);
-		carryBallEnemies.back()->SetBulletModel(icoBallModel_.get());
-
+		newCarryBallEnemy->Initialize(carryBallEnemyModel_.get());
+		newCarryBallEnemy->SetOffsetVec3(offsetPos);
+		newCarryBallEnemy->SetRailCameraInfo(railCameraInfo_);
+		newCarryBallEnemy->SetPlayerWorldTransform(playerWorldTF_);
+		newCarryBallEnemy->SetBulletModel(icoBallModel_.get());
+		enemies_.push_back(std::move(newCarryBallEnemy));
 	}
 }
 
@@ -174,16 +163,7 @@ void GameObjManager::AddEnemy(int enemyNum, int popTime,Vector3 offsetPos)
 void GameObjManager::UpdateAllObjects()
 {
 	// Listのremove
-	walkingEnemies.remove_if([](std::unique_ptr<WalkingEnemy>& enemy) {
-		return enemy->GetState()->isDead_;
-		});
-	floatingEnemies.remove_if([](std::unique_ptr<FloatingEnemy>& enemy) {
-		return enemy->GetState()->isDead_;
-		});
-	carryBallEnemies.remove_if([](std::unique_ptr<CarryBallEnemy>& enemy) {
-		return enemy->GetState()->isDead_;
-		});
-	ojamaFences.remove_if([](std::unique_ptr<OjamaFence>& enemy) {
+	enemies_.remove_if([](std::unique_ptr<Enemy>& enemy) {
 		return enemy->GetState()->isDead_;
 		});
 
@@ -203,51 +183,13 @@ void GameObjManager::UpdateAllObjects()
 	}
 
 
-	moaiDigRot++;
-	if (moaiDigRot >= 360) {
-		moaiDigRot = 0;
-	}
-	for (int i = 0; i < moaiObjs.size(); i++) {
-		float moveSpeed = 0.1f;
 
-		
-		moaiObjs[i].worldTransform.translation_.x += cosf(moaiDigRot * 3.14f/180.f) * moveSpeed;
-		moaiObjs[i].worldTransform.translation_.y += sinf(moaiDigRot * 3.14f / 180.f) * moveSpeed;
-
-		moaiObjs[i].Update();
-
-		moaiSpCollider[i]->SetBasisPos(&moaiObjs[i].worldTransform.translation_);
-
-		
-		if (moaiSpCollider[i]->GetIsHit() == true) {
-			if (moaiSpCollider[i]->GetCollisionInfo().collider->GetAttribute() == COLLISION_ATTR_ALLIES) {
-				moaiState[i].hp_--;
-			}
-		}
-		if (moaiState[i].hp_ <= 0) {
-			moaiState[i].isDead_ = true;
-			moaiSpCollider[i]->RemoveAttribute(8);
-			
-		}
-
-		moaiSpCollider[i]->Update();
-		
-	}
 
 	//歩兵更新
-	for (const unique_ptr<WalkingEnemy>& enemy : walkingEnemies) {
+	for (const unique_ptr<Enemy>& enemy : enemies_) {
 		enemy->Update();
 	}
 
-	//浮遊敵更新
-	for (const unique_ptr<FloatingEnemy>& enemy : floatingEnemies) {
-		enemy->Update();
-	}
-
-	//抱玉敵更新
-	for (const unique_ptr<CarryBallEnemy>& enemy : carryBallEnemies) {
-		enemy->Update();
-	}
 
 	//おじゃまフェンス
 	for (const unique_ptr<OjamaFence>& enemy : ojamaFences) {
@@ -262,15 +204,7 @@ void GameObjManager::UpdateAllObjects()
 void GameObjManager::DrawAllObjs(ID3D12GraphicsCommandList* cmdList)
 {
 
-	for (const unique_ptr<WalkingEnemy>& enemy : walkingEnemies) {
-		enemy->Draw(cmdList);
-	}
-
-	for (const unique_ptr<FloatingEnemy>& enemy : floatingEnemies) {
-		enemy->Draw(cmdList);
-	}
-
-	for (const unique_ptr<CarryBallEnemy>& enemy :carryBallEnemies) {
+	for (const unique_ptr<Enemy>& enemy : enemies_) {
 		enemy->Draw(cmdList);
 	}
 
@@ -296,9 +230,7 @@ void GameObjManager::DestroyAllEnemies()
 {
  
 	// 敵オブジェをクリア
-	walkingEnemies.clear();
-	floatingEnemies.clear();
-	carryBallEnemies.clear();
+	enemies_.clear();
 	ojamaFences.clear();
 
 }
@@ -674,7 +606,6 @@ void GameObjManager::GameObjInitialize()
 
 		fbxPlayer_->SetRailCameraInfo(railCameraInfo_);
 		
-
 		camera_->SetFollowerPos(fbxPlayer_.get()->GetObject3d()->GetWorldTransformPtr());
 		camera_->SetPlayerParallelMoveVal_(fbxPlayer_->GetParallelMovePtr());
 		camera_->SetTargetPosVelueToAdd(fbxPlayer_->GetTargetPosVelueToAddPtr());
