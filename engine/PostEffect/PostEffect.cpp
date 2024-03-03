@@ -154,7 +154,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
 	//頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapProp{};  //ヒープ設定
-	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; //GPUへの転送用
+	heapProp.Type = D3D12_HEAP_TYPE_DEFAULT; //GPUへの転送用
 	//リソース設定
 	D3D12_RESOURCE_DESC resDesc{};
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
@@ -169,7 +169,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 		&heapProp, //ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&resDesc, //リソース設定
-		D3D12_RESOURCE_STATE_GENERIC_READ,
+		D3D12_RESOURCE_STATE_COPY_DEST,
 		nullptr,
 		IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(result));
@@ -374,6 +374,16 @@ void PostEffect::CreatGraphicsPipelineState()
 	//パイプランスステートの生成
 	result = device_->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(result));
+}
+
+ID3D12Resource* PostEffect::UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages, ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+{
+
+	std::vector<D3D12_SUBRESOURCE_DATA>subresources;
+	DirectX::PrepareUpload(device, mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresources);
+	uint64_t intermeduateSize = GetRequiredIntermediateSize(texture, 0, UINT(subresources.size()));
+	ID3D12Resource
+
 }
 
 void PostEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
