@@ -62,47 +62,14 @@ void SummarizeEngine::Update() {
 void SummarizeEngine::Draw() {
 
 
-	PostEffect::PreDrawScene(dxCommon_->GetCommandList());
 
-	application_->PostEffectDraw();
-
-	PostEffect::PostDrawScene();
-
-	//ブルーム処理
-	HighLumi::PreDrawScene(dxCommon_->GetCommandList());
-
-	application_->PostEffectDraw();
-
-	HighLumi::PostDrawScene();
-
-	///テクスチャ合体
-	//tex0
-	MultiTex::PreDrawScene(dxCommon_->GetCommandList(),0);
-
-	PostEffect::Draw(dxCommon_->GetCommandList());
-
-	MultiTex::PostDrawScene(0);
-
-	//tex1
-	MultiTex::PreDrawScene(dxCommon_->GetCommandList(), 1);
-
-	HighLumi::Draw(dxCommon_->GetCommandList());
-
-	MultiTex::PostDrawScene(1);
-
-	//画面ゆがみ処理
-	SCDistort::PreDrawScene(dxCommon_->GetCommandList());
-
-	MultiTex::Draw(dxCommon_->GetCommandList());
-
-	SCDistort::PostDrawScene();
 
 
 	//Drawを重ねる
 	dxCommon_->PreDraw();
+	application_->PostEffectDraw();
 
 
-	SCDistort::Draw(dxCommon_->GetCommandList());
 
 	
 #pragma region OutFlameDraw
