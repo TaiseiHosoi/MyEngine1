@@ -168,7 +168,6 @@
     <ClCompile Include="engine\PostEffect\PostEffect.cpp" />
     <ClCompile Include="engine\PostEffect\SCDistort.cpp" />
     <ClCompile Include="scene\gameCamera\CameraShake.cpp" />
-    <ClCompile Include="scene\sceneObject\Enemy\BossRobot.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\CarryBallEnemy.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\EnemyBullet\EnemyNormalBullet.cpp" />
@@ -359,7 +358,6 @@
     <ClInclude Include="engine\PostEffect\PostEffect.h" />
     <ClInclude Include="scene\gameCamera\CameraShake.h" />
     <ClInclude Include="scene\gameCamera\RailCameraInfo.h" />
-    <ClInclude Include="scene\sceneObject\Enemy\BossRobot.h" />
     <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.h" />
     <ClInclude Include="scene\sceneObject\Enemy\CarryBallEnemy.h" />
     <ClInclude Include="scene\sceneObject\Enemy\EnemyBullet\EnemyNormalBullet.h" />

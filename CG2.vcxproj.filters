@@ -322,19 +322,16 @@
       <Filter>ソース ファイル\scene\enemy</Filter>
     </ClCompile>
     <ClCompile Include="scene\sceneObject\Player\PlayerMachineGun.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\sceneObject\Enemy\BossRobot.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\PostEffect\IPostTexture.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\scene\Player</Filter>
     </ClCompile>
     <ClCompile Include="engine\PostEffect\HighLumi.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\PostEffect\IPostTexture.cpp">
+      <Filter>ソース ファイル\PostEffect</Filter>
     </ClCompile>
     <ClCompile Include="engine\PostEffect\SCDistort.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -588,20 +585,17 @@
     <ClInclude Include="scene\sceneObject\GameObjManager.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
-    <ClInclude Include="scene\sceneObject\Player\PlayerMachineGun.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\sceneObject\Enemy\BossRobot.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\PostEffect\IPostTexture.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Resources\shaders\HighLumi.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="engine\PostEffect\SCDistort.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\PostEffect\IPostTexture.h">
+      <Filter>ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\sceneObject\Player\PlayerMachineGun.h">
+      <Filter>ヘッダー ファイル\scene\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
