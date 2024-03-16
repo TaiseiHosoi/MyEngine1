@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "DirectXCommon.h"
+#include"DirectXTex.h"
 #include "Vector3.h"
 #include "Vector2.h"
 #include "Vector4.h"
@@ -39,6 +40,9 @@ public:
     /// パイプライン生成
     /// </summary>
     static void CreatGraphicsPipelineState();
+
+    ID3D12Resource* UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages,
+        ID3D12Device* device,ID3D12GraphicsCommandList* commandList);
 
     /// <summary>
     /// シーン描画前処理

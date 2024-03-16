@@ -57,8 +57,7 @@ void MultiTex::Initialize(DirectXCommon* dxCommon)
 
 		//テクスチャバッファの生成
 		//ヒープ設定
-		CD3DX12_HEAP_PROPERTIES heapProp(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK,
-			D3D12_MEMORY_POOL_L0);
+		CD3DX12_HEAP_PROPERTIES heapProp(D3D12_HEAP_TYPE_DEFAULT);
 
 		CD3DX12_CLEAR_VALUE clearValue(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, clearColor);
 
@@ -73,23 +72,6 @@ void MultiTex::Initialize(DirectXCommon* dxCommon)
 				IID_PPV_ARGS(&texBuff[i]));
 			assert(SUCCEEDED(result));
 
-			{//テクスチャを赤クリア
-			//画素数(1280*720=921600ピクセル)
-				const UINT pixelCount = WinApp::window_width * WinApp::window_height;
-				//画像1行分のデータサイズ
-				const UINT rowPitch = sizeof(UINT) * WinApp::window_width;
-				//画像全体のデータサイズ
-				const UINT depthPitch = rowPitch * WinApp::window_height;
-				//画像イメージ
-				UINT* img = new UINT[pixelCount];
-				for (int j = 0; j < pixelCount; j++) { img[j] = 0xffffffff; }
-
-
-				result = texBuff[i]->WriteToSubresource(0, nullptr,
-					img, rowPitch, depthPitch);
-				assert(SUCCEEDED(result));
-				delete[] img;
-			}
 
 		}
 

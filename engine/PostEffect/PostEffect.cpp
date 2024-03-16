@@ -54,41 +54,21 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 
 		//テクスチャバッファの生成
 		//ヒープ設定
-		CD3DX12_HEAP_PROPERTIES heapProp(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK,
-			D3D12_MEMORY_POOL_L0);
+		CD3DX12_HEAP_PROPERTIES heapProp(D3D12_HEAP_TYPE_DEFAULT);
 
 		CD3DX12_CLEAR_VALUE clearValue(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, clearColor);
 
 
 
-			result = device_->CreateCommittedResource(
-				&heapProp,
-				D3D12_HEAP_FLAG_NONE,
-				&texresDesc,
-				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-				&clearValue,
-				IID_PPV_ARGS(&texBuff));
-			assert(SUCCEEDED(result));
+		result = device_->CreateCommittedResource(
+			&heapProp,
+			D3D12_HEAP_FLAG_NONE,
+			&texresDesc,
+			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+			&clearValue,
+			IID_PPV_ARGS(&texBuff));
+		assert(SUCCEEDED(result));
 
-			{//テクスチャを赤クリア
-			//画素数(1280*720=921600ピクセル)
-				const UINT pixelCount = WinApp::window_width * WinApp::window_height;
-				//画像1行分のデータサイズ
-				const UINT rowPitch = sizeof(UINT) * WinApp::window_width;
-				//画像全体のデータサイズ
-				const UINT depthPitch = rowPitch * WinApp::window_height;
-				//画像イメージ
-				UINT* img = new UINT[pixelCount];
-				for (int j = 0; j < pixelCount; j++) { img[j] = 0xffffffff; }
-
-
-				result = texBuff->WriteToSubresource(0, nullptr,
-					img, rowPitch, depthPitch);
-				assert(SUCCEEDED(result));
-				delete[] img;
-			}
-
-		
 
 	}
 	//SRV用のデスクリプタヒープ設定
@@ -106,15 +86,15 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = 1;
 
-	
-		//デスクリプタヒープにSRVを作成
-		device_->CreateShaderResourceView(texBuff.Get(),
-			&srvDesc,
-			CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapSRV->GetCPUDescriptorHandleForHeapStart(), 0,
-				device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV))
-		);
 
-	
+	//デスクリプタヒープにSRVを作成
+	device_->CreateShaderResourceView(texBuff.Get(),
+		&srvDesc,
+		CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapSRV->GetCPUDescriptorHandleForHeapStart(), 0,
+			device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV))
+	);
+
+
 
 	//RTV用のデスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};
@@ -127,9 +107,9 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	//RTV用のデスクリプタヒープを生成
 
 		//デスクリプタヒープにRTVを作成
-		device_->CreateRenderTargetView(texBuff.Get(), nullptr, CD3DX12_CPU_DESCRIPTOR_HANDLE(
-			descHeapRTV->GetCPUDescriptorHandleForHeapStart(),0, device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
-	
+	device_->CreateRenderTargetView(texBuff.Get(), nullptr, CD3DX12_CPU_DESCRIPTOR_HANDLE(
+		descHeapRTV->GetCPUDescriptorHandleForHeapStart(), 0, device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
+
 
 
 	descHeapDSV = dxCommon->GetDsvHeap();
@@ -148,7 +128,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 		vertices[i] = vertices_[i];
 	}
 
-	
+
 
 	//頂点データ全体のサイズ=頂点データ一つ分のサイズ*頂点データの要素数
 	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
@@ -192,7 +172,6 @@ void PostEffect::Initialize(DirectXCommon* dxCommon)
 	vbView.StrideInBytes = sizeof(vertices[0]);
 
 	CreatGraphicsPipelineState();
-
 
 
 }
@@ -375,6 +354,16 @@ void PostEffect::CreatGraphicsPipelineState()
 	result = device_->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(result));
 }
+
+//ID3D12Resource* PostEffect::UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages, ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+//{
+//
+//	std::vector<D3D12_SUBRESOURCE_DATA>subresources;
+//	DirectX::PrepareUpload(device, mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresources);
+//	uint64_t intermeduateSize = GetRequiredIntermediateSize(texture, 0, UINT(subresources.size()));
+//	ID3D12Resource
+//
+//}
 
 void PostEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 {

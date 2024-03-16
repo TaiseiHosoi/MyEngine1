@@ -20,10 +20,10 @@ void SummarizeEngine::Initialize() {
 
 	input_->Initialize(winApp_);
 
-	// FBX関連静的初期化
+	//FBX関連静的初期化
 	FbxLoader::GetInstance()->Initialize(dxCommon_->GetDevice());
 
-	// 3Dオブジェクト静的初期化
+	//3Dオブジェクト静的初期化
 	Object3d::StaticInitialize(dxCommon_->GetDevice());
 
 	//パーティクル静的初期化
