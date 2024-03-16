@@ -6,8 +6,6 @@
 #include <string>
 #include <vector>
 #include"MathFunc.h"
-//#include "BaseCollider.h"
-//#include "CollisionManager.h"
 using namespace std;
 
 
@@ -29,27 +27,13 @@ ComPtr<ID3D12PipelineState> Object3d::rimPipelinestate;
 
 Camera* Object3d::camera_ = nullptr;
 
-//
+
 Matrix4 Object3d::matView{};
 Matrix4 Object3d::matProjection{};
-//
-
-
-//XMFLOAT3 Object3d::eye = { 0.0f, 0.0f, -5.0f };
-//XMFLOAT3 Object3d::up = { 0, 1, 0 };
-//XMFLOAT3 Object3d::target = { 0, 0, 300.0f };
-
-//Object3d::Object3d()
-//{
-//}
 
 Object3d::~Object3d()
 {
-	//if (collider)
-	//{
-	//	CollisionManager::GetInstance()->RemoveCollider(collider);
-	//	delete collider;
-	//}
+
 }
 
 void Object3d::StaticInitialize(ID3D12Device* deviceArg)
@@ -60,9 +44,6 @@ void Object3d::StaticInitialize(ID3D12Device* deviceArg)
 	Object3d::device = deviceArg;
 
 	Mesh::SetDevice(deviceArg);
-
-	// カメラ初期化
-	//InitializeCamera(window_width, window_height);
 
 	// パイプライン初期化
 	InitializeGraphicsPipeline();
@@ -101,7 +82,7 @@ std::unique_ptr<Object3d> Object3d::Create()
 
 	// 初期化
 	if (!object3d->Initialize(true)) {
-		//delete object3d;
+		
 		assert(0);
 		return nullptr;
 	}
@@ -112,35 +93,13 @@ std::unique_ptr<Object3d> Object3d::Create()
 	return object3d;
 }
 
-//void Object3d::SetEye(XMFLOAT3 eye)
-//{
-//	Object3d::eye = eye;
-//
-//	UpdateViewMatrix();
-//}
-//
-//void Object3d::SetTarget(XMFLOAT3 target)
-//{
-//	Object3d::target = target;
-//
-//	UpdateViewMatrix();
-//}
-
-
-
-
-
-
 void Object3d::InitializeCamera()
 {
 	// ビュー行列の生成
 	matView.identity();
-	
 
 	// 透視投影による射影行列の生成
 	matProjection.identity();
-
-	
 
 }
 
@@ -265,10 +224,6 @@ void Object3d::InitializeGraphicsPipeline()
 		CD3DX12_DESCRIPTOR_RANGE descRangeSRV;
 		descRangeSRV.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0); // t0 レジスタ
 
-		// ルートパラメータ
-		/*CD3DX12_ROOT_PARAMETER rootparams[2];
-		rootparams[0].InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
-		rootparams[1].InitAsDescriptorTable(1, &descRangeSRV, D3D12_SHADER_VISIBILITY_ALL);*/
 
 		CD3DX12_ROOT_PARAMETER rootparams[3];
 		rootparams[0].InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
@@ -449,12 +404,6 @@ void Object3d::InitializeGraphicsPipeline()
 }
 
 
-//void Object3d::UpdateViewMatrix()
-//{
-//	// ビュー行列の更新
-//	matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-//}
-
 bool Object3d::Initialize(bool isRimArg)
 {
 	// nullptrチェック
@@ -512,7 +461,7 @@ void Object3d::Update()
 	// 定数バッファへデータ転送
 	ConstBufferDataB0* constMap = nullptr;
 	result = constBuffB0->Map(0, nullptr, (void**)&constMap);
-	//constMap->color = color;
+	
 	Matrix4 myMat = worldTransform.matWorld_;
 	myMat *= camera_->GetViewProjectionMatrix();	// 行列の合成 
 	constMap->mat = myMat;

@@ -67,6 +67,11 @@ void GameCamera::Update()
 	if (GetActiveWindow() == WinApp::GetInstance()->GetHwnd())
 	{
 		ShowCursor(false);
+
+		#ifdef _DEBUG
+		ShowCursor(true);
+		#endif
+		
 		//ViewPointMovement();
 		//CulDirection();
 	}

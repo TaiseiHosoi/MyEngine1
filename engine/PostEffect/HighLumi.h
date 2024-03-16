@@ -27,11 +27,12 @@ public:
 
     struct ConstBufferDataB1
     {
-        int blurTexNum; //ぼかす枚数
-        int breadth;    //広さ
+        float breadth;    //広さ
     };
 
     static void Initialize(DirectXCommon* dxCommon);
+
+    static void Update();
 
     static void Finalize();
 
@@ -89,7 +90,6 @@ private:
 
     static Input* input_;
     //ブラーのプロパティ
-    static int blurTexNum_; //ぼかす枚数
-    static int breadth_;    //広さ
+    static float breadth_;    //広さ
 
 };

@@ -36,7 +36,7 @@ float4 ApplyGaussianBlurToHighLumi(float2 uv) {
     };
 
     float4 sum = float4(0, 0, 0, 0);
-	float strong = 0.003;
+	float strong = breadth;
     
     for (int i = 0; i < 9; ++i) {
         float4 texColor = tex0.Sample(smp, uv + offsets[i] * (strong)); //仮のテクスチャサイズ

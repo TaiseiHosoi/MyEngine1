@@ -1,6 +1,7 @@
 ﻿#include "HighLumi.h"
 #include<d3dx12.h>
 #include"WinApp.h"
+#include"ImGuiManager.h"
 #include <cassert>
 #include <d3dcompiler.h>
 
@@ -34,8 +35,8 @@ Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> HighLumi::descHeapDSV;
 Microsoft::WRL::ComPtr<ID3D12PipelineState> HighLumi::pipelineState;
 Microsoft::WRL::ComPtr<ID3D12RootSignature> HighLumi::rootSignature;
 
-int HighLumi::blurTexNum_ = 7;
-int HighLumi::breadth_ = 1;
+
+float HighLumi::breadth_ = 0.003f;
 
 const float HighLumi::clearColor[4] = { 0.25f,0.5f,0.1f,0 };
 Input* HighLumi::input_ = Input::GetInstance();
@@ -196,20 +197,29 @@ void HighLumi::Initialize(DirectXCommon* dxCommon)
 	CD3DX12_RESOURCE_DESC resourceDesc1 =
 		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataB1) + 0xff) & ~0xff);
 
-	// 定数バッファの生成
-	result = device_->CreateCommittedResource(
-		&heapProps1, // アップロード可能
-		D3D12_HEAP_FLAG_NONE, &resourceDesc1, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&constBuffResourceB1));
-	assert(SUCCEEDED(result));
+
 
 	//定数バッファのマッピング
 	result = constBuffResourceB1->Map(0, nullptr, (void**)&constBuffDataB1);
 	assert(SUCCEEDED(result));
 
-	//定数として10を入れておく(ぼかし度)
-	constBuffDataB1->blurTexNum = 1;
-	constBuffDataB1->breadth = 1;
+
+}
+
+void HighLumi::Update()
+{
+	#ifdef _DEBUG
+	ImGui::Begin("HighLumi");
+	ImGui::SliderFloat("breath", &breadth_, 0.001f, 0.005f);
+	ImGui::End();
+	#endif
+
+	//定数バッファのマッピング
+	HRESULT result;
+	result = constBuffResourceB1->Map(0, nullptr, (void**)&constBuffDataB1);
+	constBuffDataB1->breadth = breadth_;
+	assert(SUCCEEDED(result));
+
 
 }
 

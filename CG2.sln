@@ -11,6 +11,8 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
 		Debug|x64 = Debug|x64
+		PostEffectManager|ARM64 = PostEffectManager|ARM64
+		PostEffectManager|x64 = PostEffectManager|x64
 		Profile|ARM64 = Profile|ARM64
 		Profile|x64 = Profile|x64
 		Release|ARM64 = Release|ARM64
@@ -21,6 +23,10 @@ Global
 		{BA7C204C-188D-48F2-B6E6-477377EFAF7F}.Debug|ARM64.Build.0 = Debug|x64
 		{BA7C204C-188D-48F2-B6E6-477377EFAF7F}.Debug|x64.ActiveCfg = Debug|x64
 		{BA7C204C-188D-48F2-B6E6-477377EFAF7F}.Debug|x64.Build.0 = Debug|x64
+		{BA7C204C-188D-48F2-B6E6-477377EFAF7F}.PostEffectManager|ARM64.ActiveCfg = PostEffectManager|Win32
+		{BA7C204C-188D-48F2-B6E6-477377EFAF7F}.PostEffectManager|ARM64.Build.0 = PostEffectManager|Win32
+		{BA7C204C-188D-48F2-B6E6-477377EFAF7F}.PostEffectManager|x64.ActiveCfg = PostEffectManager|x64
+		{BA7C204C-188D-48F2-B6E6-477377EFAF7F}.PostEffectManager|x64.Build.0 = PostEffectManager|x64
 		{BA7C204C-188D-48F2-B6E6-477377EFAF7F}.Profile|ARM64.ActiveCfg = Release|Win32
 		{BA7C204C-188D-48F2-B6E6-477377EFAF7F}.Profile|ARM64.Build.0 = Release|Win32
 		{BA7C204C-188D-48F2-B6E6-477377EFAF7F}.Profile|x64.ActiveCfg = Release|x64
@@ -33,6 +39,10 @@ Global
 		{4A6C89D9-E9A1-4F46-8403-7A559E4F166C}.Debug|ARM64.Build.0 = Debug|x64
 		{4A6C89D9-E9A1-4F46-8403-7A559E4F166C}.Debug|x64.ActiveCfg = Debug|x64
 		{4A6C89D9-E9A1-4F46-8403-7A559E4F166C}.Debug|x64.Build.0 = Debug|x64
+		{4A6C89D9-E9A1-4F46-8403-7A559E4F166C}.PostEffectManager|ARM64.ActiveCfg = PostEffectManager|Win32
+		{4A6C89D9-E9A1-4F46-8403-7A559E4F166C}.PostEffectManager|ARM64.Build.0 = PostEffectManager|Win32
+		{4A6C89D9-E9A1-4F46-8403-7A559E4F166C}.PostEffectManager|x64.ActiveCfg = PostEffectManager|x64
+		{4A6C89D9-E9A1-4F46-8403-7A559E4F166C}.PostEffectManager|x64.Build.0 = PostEffectManager|x64
 		{4A6C89D9-E9A1-4F46-8403-7A559E4F166C}.Profile|ARM64.ActiveCfg = Debug|x64
 		{4A6C89D9-E9A1-4F46-8403-7A559E4F166C}.Profile|ARM64.Build.0 = Debug|x64
 		{4A6C89D9-E9A1-4F46-8403-7A559E4F166C}.Profile|x64.ActiveCfg = Debug|x64

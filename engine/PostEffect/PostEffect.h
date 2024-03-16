@@ -28,8 +28,7 @@ public:
 
     struct ConstBufferDataB1
     {
-        int blurTexNum; //ぼかす枚数
-        int breadth;    //広さ
+        float yShiftVal;    //広さ
     };
 
     static void Initialize(DirectXCommon* dxCommon);
@@ -93,5 +92,6 @@ private:
 
     static Input* input_;
     
+    static float yShiftVal_;
 };
 

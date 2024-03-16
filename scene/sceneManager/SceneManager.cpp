@@ -132,12 +132,6 @@ void SceneManager::ChangeScene(IScene* scene) {
 }
 
 
-//void SceneManager::ResetParameters() {
-//	//boss_->SetHp(100);
-//	fbxPlayer_->SetHp(100);
-//
-//	fbxPlayer_->GetObject3d()->Update();
-//}
 
 void SceneManager::BlackDisolve()
 {

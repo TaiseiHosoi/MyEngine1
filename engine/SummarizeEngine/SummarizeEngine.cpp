@@ -56,6 +56,7 @@ void SummarizeEngine::Update() {
 	imGuiManager_->Begin();
 	application_->Update();
 
+	HighLumi::Update();
 
 };
 
@@ -124,15 +125,7 @@ void SummarizeEngine::Finalize() {
 	imGuiManager_->Finalize();
 	audio_->Finalize();
 
-	//ID3D12DebugDevice* debugInterface;
-	//
-	//if (SUCCEEDED(dxCommon_->GetDevice()->QueryInterface(&debugInterface))) {
-	//	debugInterface->ReportLiveDeviceObjects(D3D12_RLDO_DETAIL | D3D12_RLDO_IGNORE_INTERNAL);
-	//	debugInterface->Release();
-	//}
-	//元データ解放
-	//delete[] imageData;
-	//入力開放
+
 
 	delete application_;
 	delete imGuiManager_;

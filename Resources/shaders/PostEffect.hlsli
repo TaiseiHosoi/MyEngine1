@@ -10,6 +10,6 @@ struct VSOutput
 };
 
 cbuffer  cbuff1 : register(b0) {
-	int blurTexNum; //‚Ú‚©‚·–‡”
-	int breadth;    //L‚³
+
+	float yShiftVal;    //L‚³
 }

@@ -48,7 +48,7 @@ float crt_ease(const float x, const float base, const float offset)
 float4 main(VSOutput input) : SV_TARGET
 {
 
-	float yShift = 0.00001f;
+    float yShift = 0.00001;
 
 
 	// 隣のピクセルまでのUV座標での差を計算しておく
