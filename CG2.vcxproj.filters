@@ -336,6 +336,12 @@
     <ClCompile Include="engine\EffectEditor\EffectEditor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="engine\PostEffect\PostEffectManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\PostEffect\NormalTex.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\ObjPS.hlsl">
@@ -379,6 +385,8 @@
     <FxCompile Include="Resources\shaders\HighLumiVS.hlsl" />
     <FxCompile Include="Resources\shaders\SCDistortPS.hlsl" />
     <FxCompile Include="Resources\shaders\SCDistortVS.hlsl" />
+    <FxCompile Include="Resources\shaders\NormalTexPS.hlsl" />
+    <FxCompile Include="Resources\shaders\NormalTexVS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scene\sceneManager\EndScene.h">
@@ -603,6 +611,12 @@
     <ClInclude Include="engine\EffectEditor\EffectEditor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="engine\PostEffect\PostEffectManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\PostEffect\NormalTex.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Obj.hlsli">
@@ -626,5 +640,6 @@
     <None Include="Resources\shaders\MultiTexture.hlsli" />
     <None Include="Resources\shaders\HighLumi.hlsli" />
     <None Include="Resources\shaders\SCDistort.hlsli" />
+    <None Include="Resources\shaders\NormalTex.hlsli" />
   </ItemGroup>
 </Project>

@@ -6,37 +6,9 @@
 
 #pragma comment(lib, "d3dcompiler.lib")
 
-ID3D12Device* SCDistort::device_;
-
-ID3D12GraphicsCommandList* SCDistort::commandList;
-
-SCDistort::VertexPosUv SCDistort::vertices[4];
-
-SCDistort::VertexPosUv* SCDistort::vertMap;
-
-Microsoft::WRL::ComPtr<ID3D12Resource> SCDistort::vertBuff;	//頂点バッファ
-
-
-//頂点バッファビューの作成
-D3D12_VERTEX_BUFFER_VIEW SCDistort::vbView{};
-Microsoft::WRL::ComPtr<ID3D12Resource> SCDistort::texBuff;
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> SCDistort::descHeapSRV;
-//深度バッファ
-Microsoft::WRL::ComPtr<ID3D12Resource> SCDistort::depthBuff;
-//RTV用のデスクリプタヒープ
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> SCDistort::descHeapRTV;
-//DSV用のデスクリプタヒープ
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> SCDistort::descHeapDSV;
-
-Microsoft::WRL::ComPtr<ID3D12PipelineState> SCDistort::pipelineState;
-Microsoft::WRL::ComPtr<ID3D12RootSignature> SCDistort::rootSignature;
-
-
-const float SCDistort::clearColor[4] = { 0.0f,0.0f,0.0f,0 };
-Input* SCDistort::input_ = Input::GetInstance();
-
 void SCDistort::Initialize(DirectXCommon* dxCommon)
 {
+	input_ = Input::GetInstance();
 
 	HRESULT result;
 
@@ -129,7 +101,7 @@ void SCDistort::Initialize(DirectXCommon* dxCommon)
 
 
 	//頂点データ全体のサイズ=頂点データ一つ分のサイズ*頂点データの要素数
-	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
+	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * vertices.size());
 	//頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapProp{};  //ヒープ設定
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; //GPUへの転送用
@@ -158,7 +130,7 @@ void SCDistort::Initialize(DirectXCommon* dxCommon)
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
 	//前頂点に対して
-	for (int i = 0; i < _countof(vertices); i++) {
+	for (int i = 0; i < vertices.size(); i++) {
 		vertMap[i] = vertices[i]; //座標コピー
 	}
 
@@ -433,7 +405,7 @@ void SCDistort::Draw(ID3D12GraphicsCommandList* cmdList)
 		device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
 
 	//描画コマンド
-	commandList->DrawInstanced(_countof(vertices), 1, 0, 0);//すべての頂点を使って描画
+	commandList->DrawInstanced(static_cast<int>(vertices.size()), 1, 0, 0);//すべての頂点を使って描画
 }
 
 void SCDistort::PostDrawScene()

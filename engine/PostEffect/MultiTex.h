@@ -26,59 +26,59 @@ public:
         Matrix4 mat;   // ３Ｄ変換行列
     };
 
-    static void Initialize(DirectXCommon* dxCommon);
+    void Initialize(DirectXCommon* dxCommon);
 
-    static void Finalize();
+    void Finalize();
 
     /// <summary>
     /// パイプライン生成
     /// </summary>
-    static void CreatGraphicsPipelineState();
+    void CreatGraphicsPipelineState();
 
     /// <summary>
     /// シーン描画前処理
     /// </summary>
     /// <param name="cmdList">コマンドリスト</param>
-    static void PreDrawScene(ID3D12GraphicsCommandList* cmdList, int num);
+    void PreDrawScene(ID3D12GraphicsCommandList* cmdList, int num);
 
-    static void Draw(ID3D12GraphicsCommandList* cmdList);
+    void Draw(ID3D12GraphicsCommandList* cmdList);
 
     /// <summary>
     /// シーン描画後処理
     /// </summary>
     /// <param name="cmdList">コマンド処理</param>
-    static void PostDrawScene(int num);
+    void PostDrawScene(int num);
 
 private:
 
-    static const float clearColor[4];
+    const float clearColor[4] = { 0,0,0,0 };;
 
-    static ID3D12Device* device_;
+    ID3D12Device* device_;
 
-    static ID3D12GraphicsCommandList* commandList;
+    ID3D12GraphicsCommandList* commandList;
 
-    static VertexPosUv vertices[4];
+    VertexPosUv vertices[4];
 
-    static VertexPosUv* vertMap;
+    VertexPosUv* vertMap;
 
-    static Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff;
+    Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff;
 
-    static Microsoft::WRL::ComPtr<ID3D12Resource> constBuffResourceB1;
+    Microsoft::WRL::ComPtr<ID3D12Resource> constBuffResourceB1;
 
     //頂点バッファビューの作成
-    static D3D12_VERTEX_BUFFER_VIEW vbView;
-    static Microsoft::WRL::ComPtr<ID3D12Resource> texBuff[2];
+    D3D12_VERTEX_BUFFER_VIEW vbView;
+    Microsoft::WRL::ComPtr<ID3D12Resource> texBuff[2];
 
-    static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeapSRV;
+    Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeapSRV;
     //深度バッファ
-    static Microsoft::WRL::ComPtr<ID3D12Resource> depthBuff;
+    Microsoft::WRL::ComPtr<ID3D12Resource> depthBuff;
     //RTV用のデスクリプタヒープ
-    static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeapRTV;
+    Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeapRTV;
     //DSV用のデスクリプタヒープ
-    static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeapDSV;
+    Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeapDSV;
 
-    static Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState;
-    static Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+    Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState;
+    Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
 
-    static Input* input_;
+    Input* input_ = nullptr;
 };

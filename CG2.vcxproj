@@ -233,7 +233,9 @@
     <ClCompile Include="engine\PostEffect\HighLumi.cpp" />
     <ClCompile Include="engine\PostEffect\IPostTexture.cpp" />
     <ClCompile Include="engine\PostEffect\MultiTex.cpp" />
+    <ClCompile Include="engine\PostEffect\NormalTex.cpp" />
     <ClCompile Include="engine\PostEffect\PostEffect.cpp" />
+    <ClCompile Include="engine\PostEffect\PostEffectManager.cpp" />
     <ClCompile Include="engine\PostEffect\SCDistort.cpp" />
     <ClCompile Include="scene\gameCamera\CameraShake.cpp" />
     <ClCompile Include="scene\sceneObject\Enemy\EnemyBullet\EnemyBoundBall.cpp" />
@@ -370,6 +372,22 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="Resources\shaders\NormalTexPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='PostEffectManager|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='PostEffectManager|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\NormalTexVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='PostEffectManager|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='PostEffectManager|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="Resources\shaders\ObjPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='PostEffectManager|x64'">Pixel</ShaderType>
@@ -462,6 +480,8 @@
   <ItemGroup>
     <ClInclude Include="engine\EffectEditor\EffectEditor.h" />
     <ClInclude Include="engine\input\GamePad.h" />
+    <ClInclude Include="engine\PostEffect\NormalTex.h" />
+    <ClInclude Include="engine\PostEffect\PostEffectManager.h" />
     <ClInclude Include="engine\PostEffect\SCDistort.h" />
     <ClInclude Include="Resources\shaders\HighLumi.h" />
     <ClInclude Include="engine\PostEffect\IPostTexture.h" />
@@ -542,6 +562,7 @@
     <None Include="Resources\shaders\FBX.hlsli" />
     <None Include="Resources\shaders\HighLumi.hlsli" />
     <None Include="Resources\shaders\MultiTexture.hlsli" />
+    <None Include="Resources\shaders\NormalTex.hlsli" />
     <None Include="Resources\shaders\Obj.hlsli" />
     <None Include="Resources\shaders\Particle.hlsli" />
     <None Include="Resources\shaders\PostEffect.hlsli" />

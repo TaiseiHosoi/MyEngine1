@@ -14,6 +14,7 @@
 #include"Application.h"
 #include"ImGuiManager.h"
 #include"fbxsdk.h"
+#include"PostEffectManager.h"
 
 const float PI = 3.14f;
 
@@ -43,6 +44,8 @@ private:
 	Input* input_ = Input::GetInstance();
 	Application* application_ = nullptr;
 	ImGuiManager* imGuiManager_ = nullptr;
+	std::unique_ptr<PostEffectManager> postEffectManager_;
+	
 
 public:
 	bool isRunningGame = true;

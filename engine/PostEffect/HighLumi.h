@@ -5,7 +5,10 @@
 #include "Vector4.h"
 #include "Matrix4.h"
 #include"input.h"
-class HighLumi
+#include<array>
+#include"IPostTexture.h"
+
+class HighLumi final:IPostTexture
 {
 public:
 
@@ -30,66 +33,41 @@ public:
         float breadth;    //広さ
     };
 
-    static void Initialize(DirectXCommon* dxCommon);
+    void Initialize(DirectXCommon* dxCommon) override;
 
-    static void Update();
+    void Update();
 
-    static void Finalize();
+    void Finalize() override;
 
     /// <summary>
     /// パイプライン生成
     /// </summary>
-    static void CreatGraphicsPipelineState();
+    void CreatGraphicsPipelineState() override;
 
     /// <summary>
     /// シーン描画前処理
     /// </summary>
     /// <param name="cmdList">コマンドリスト</param>
-    static void PreDrawScene(ID3D12GraphicsCommandList* cmdList);
+    void PreDrawScene(ID3D12GraphicsCommandList* cmdList) override;
 
-    static void Draw(ID3D12GraphicsCommandList* cmdList);
+    void Draw(ID3D12GraphicsCommandList* cmdList) override;
 
     /// <summary>
     /// シーン描画後処理
     /// </summary>
     /// <param name="cmdList">コマンド処理</param>
-    static void PostDrawScene();
+    void PostDrawScene() override;
 
 private:
 
-    static const float clearColor[4];
+    std::array < VertexPosUv, 4 > vertices;
 
-    static ID3D12Device* device_;
+    VertexPosUv* vertMap = nullptr;
 
-    static ID3D12GraphicsCommandList* commandList;
+    ConstBufferDataB1* constBuffDataB1 = nullptr;
 
-    static VertexPosUv vertices[4];
-
-    static VertexPosUv* vertMap;
-
-    static ConstBufferDataB1* constBuffDataB1;
-
-    static Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff;
-
-    static Microsoft::WRL::ComPtr<ID3D12Resource> constBuffResourceB1;
-
-    //頂点バッファビューの作成
-    static D3D12_VERTEX_BUFFER_VIEW vbView;
-    static Microsoft::WRL::ComPtr<ID3D12Resource> texBuff;
-
-    static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeapSRV;
-    //深度バッファ
-    static Microsoft::WRL::ComPtr<ID3D12Resource> depthBuff;
-    //RTV用のデスクリプタヒープ
-    static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeapRTV;
-    //DSV用のデスクリプタヒープ
-    static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeapDSV;
-
-    static Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState;
-    static Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
-
-    static Input* input_;
+    Microsoft::WRL::ComPtr<ID3D12Resource> constBuffResourceB1;
     //ブラーのプロパティ
-    static float breadth_;    //広さ
+    float breadth_ = 0.003f;    //広さ
 
 };

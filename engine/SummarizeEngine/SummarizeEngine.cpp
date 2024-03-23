@@ -1,8 +1,5 @@
 #include"SummarizeEngine.h"
-#include"PostEffect.h"
-#include"HighLumi.h"
-#include"SCDistort.h"
-#include"MultiTex.h"
+
 using namespace MyEngine;
 
 void SummarizeEngine::Initialize() {
@@ -32,11 +29,9 @@ void SummarizeEngine::Initialize() {
 	application_ = new Application();
 	application_->Initialize(dxCommon_);
 
-	//ポストエフェクト
-	PostEffect::Initialize(dxCommon_);	//ポストエフェクトのスタティックメンバ変数初期化
-	HighLumi::Initialize(dxCommon_);
-	SCDistort::Initialize(dxCommon_);
-	MultiTex::Initialize(dxCommon_);
+	//ポストエフェクト初期化
+	postEffectManager_ = std::make_unique<PostEffectManager>();
+	postEffectManager_->Initialize(dxCommon_);
 
 	//ImGui
 	imGuiManager_ = new ImGuiManager;
@@ -55,55 +50,25 @@ void SummarizeEngine::Update() {
 	input_->Update();
 	imGuiManager_->Begin();
 	application_->Update();
-
-	HighLumi::Update();
+	postEffectManager_->Update();
 
 };
 
 void SummarizeEngine::Draw() {
 
 
-	PostEffect::PreDrawScene(dxCommon_->GetCommandList());
+	postEffectManager_->PreDrawScene(dxCommon_->GetCommandList());
 
 	application_->PostEffectDraw();
 
-	PostEffect::PostDrawScene();
-
-	//ブルーム処理
-	HighLumi::PreDrawScene(dxCommon_->GetCommandList());
-
-	application_->PostEffectDraw();
-
-	HighLumi::PostDrawScene();
-
-	///テクスチャ合体
-	//tex0
-	MultiTex::PreDrawScene(dxCommon_->GetCommandList(),0);
-
-	PostEffect::Draw(dxCommon_->GetCommandList());
-
-	MultiTex::PostDrawScene(0);
-
-	//tex1
-	MultiTex::PreDrawScene(dxCommon_->GetCommandList(), 1);
-
-	HighLumi::Draw(dxCommon_->GetCommandList());
-
-	MultiTex::PostDrawScene(1);
-
-	//画面ゆがみ処理
-	SCDistort::PreDrawScene(dxCommon_->GetCommandList());
-
-	MultiTex::Draw(dxCommon_->GetCommandList());
-
-	SCDistort::PostDrawScene();
+	postEffectManager_->PostDrawScene(dxCommon_->GetCommandList());
 
 
 	//Drawを重ねる
 	dxCommon_->PreDraw();
 
 
-	SCDistort::Draw(dxCommon_->GetCommandList());
+	postEffectManager_->Draw(dxCommon_->GetCommandList());
 
 	
 #pragma region OutFlameDraw

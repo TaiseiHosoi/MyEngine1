@@ -1,13 +1,15 @@
 ﻿#pragma once
 #include "DirectXCommon.h"
+#include"DirectXTex.h"
 #include "Vector3.h"
 #include "Vector2.h"
 #include "Vector4.h"
 #include "Matrix4.h"
 #include"input.h"
+#include<array>
 #include"IPostTexture.h"
 
-class SCDistort final :IPostTexture
+class NormalTex final : IPostTexture
 {
 public:
 
@@ -29,8 +31,7 @@ public:
 
     struct ConstBufferDataB1
     {
-        int blurTexNum; //ぼかす枚数
-        int breadth;    //広さ
+        float yShiftVal;    //広さ
     };
 
     void Initialize(DirectXCommon* dxCommon) override;
@@ -66,5 +67,6 @@ private:
 
     Microsoft::WRL::ComPtr<ID3D12Resource> constBuffResourceB1;
 
+    float yShiftVal_ = 0.00001f;
 };
 
